@@ -10,7 +10,9 @@ const seo = {
   image: new URL('/images/og-default.svg', site).href,
   url: canonicalUrl,
 };
----
+// Safe fallbacks for envs so builds don't fail if not configured yet
+const paymentLink = import.meta.env.PUBLIC_STRIPE_PAYMENT_LINK ?? '#';
+const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
 
 <html lang="en">
   <head>
@@ -67,7 +69,7 @@ const seo = {
         </div>
 
         <a
-          href={import.meta.env.PUBLIC_STRIPE_PAYMENT_LINK}
+          href={paymentLink}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-block w-full rounded-lg bg-blue-600 px-8 py-4 text-center text-lg font-bold text-white shadow-md transition-all duration-300 hover:bg-blue-700"
@@ -78,12 +80,7 @@ const seo = {
         <p class="mt-6 text-xs text-gray-500">
           After a successful payment, you will be redirected to a simple form to submit your job
           details. It's fast and easy. If not redirected, you can open the form here:
-          <a
-            class="text-blue-700 underline"
-            href={import.meta.env.PUBLIC_JOB_FORM_URL}
-            target="_blank"
-            rel="noopener noreferrer">Submit Job Details</a
-          >.
+          <a class="text-blue-700 underline" href={jobFormUrl} target="_blank" rel="noopener noreferrer">Submit Job Details</a>.
         </p>
       </div>
     </main>

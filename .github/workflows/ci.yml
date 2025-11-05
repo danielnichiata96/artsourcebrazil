@@ -1,0 +1,32 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [ main ]
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Prettier check
+        run: npm run format:check
+
+      - name: Build
+        run: npm run build
+        env:
+          PUBLIC_STRIPE_PAYMENT_LINK: ${{ secrets.PUBLIC_STRIPE_PAYMENT_LINK }}
+          PUBLIC_JOB_FORM_URL: ${{ secrets.PUBLIC_JOB_FORM_URL }}
