@@ -74,6 +74,7 @@ const { categories = [], tags = [] } = Astro.props as Props;
       btn.classList.toggle('text-white', active);
       btn.classList.toggle('bg-gray-200', !active);
       btn.classList.toggle('text-gray-700', !active);
+      btn.setAttribute('aria-pressed', String(active));
     });
     // tags
     const setSel = new Set(selectedTags.map((t) => t.toLowerCase()));
@@ -83,6 +84,7 @@ const { categories = [], tags = [] } = Astro.props as Props;
       btn.classList.toggle('text-white', active);
       btn.classList.toggle('bg-gray-200', !active);
       btn.classList.toggle('text-gray-700', !active);
+      btn.setAttribute('aria-pressed', String(active));
     });
     // search
     if (searchInput) searchInput.value = q;

@@ -57,13 +57,15 @@ const formattedDate = (() => {
     <div class="mt-4 flex flex-wrap gap-2">
       {
         job.tags.map((tag) => (
-          <span
+          <button
+            type="button"
             data-tag={tag}
-            class="cursor-pointer rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="cursor-pointer rounded-full bg-gray-200 px-3 py-1 text-xs font-semibold text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
             title={`Filter by ${tag}`}
+            aria-label={`Filter by ${tag}`}
           >
             {tag}
-          </span>
+          </button>
         ))
       }
     </div>
@@ -73,7 +75,7 @@ const formattedDate = (() => {
       href={job.applyLink}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-block rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-blue-700"
+      class="inline-block rounded-lg bg-blue-600 px-6 py-3 font-semibold text-white shadow-md transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
     >
       Apply Now
     </a>

@@ -6,10 +6,14 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
+    "prebuild": "npm run validate:jobs",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier . --write",
-    "format:check": "prettier . --check"
+    "format:check": "prettier . --check",
+    "validate:jobs": "node scripts/validate-jobs.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
@@ -18,8 +22,11 @@
     "tailwindcss": "^3.4.7"
   },
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.0",
-    "prettier-plugin-tailwindcss": "^0.6.8"
+    "prettier-plugin-tailwindcss": "^0.6.8",
+    "vitest": "^2.1.9",
+    "zod": "^3.23.8"
   }
 }

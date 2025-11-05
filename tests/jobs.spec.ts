@@ -1,0 +1,83 @@
+import { describe, it, expect } from 'vitest';
+import { sortJobsByDateDesc, collectFacets, type Job } from '../src/lib/jobs';
+
+describe('sortJobsByDateDesc', () => {
+  const base: Job[] = [
+    {
+      id: '1',
+      companyName: 'A',
+      companyLogo: '/images/a.svg',
+      jobTitle: 'Old',
+      applyLink: 'https://example.com/1',
+      postedDate: '2024-01-01T00:00:00Z',
+      category: 'Game Dev',
+      tags: ['Unity'],
+    },
+    {
+      id: '2',
+      companyName: 'B',
+      companyLogo: '/images/b.svg',
+      jobTitle: 'New',
+      applyLink: 'https://example.com/2',
+      postedDate: '2025-11-04T09:00:00Z',
+      category: 'Design (UI/UX)',
+      tags: ['Figma'],
+    },
+    {
+      id: '3',
+      companyName: 'C',
+      companyLogo: '/images/c.svg',
+      jobTitle: 'Invalid date',
+      applyLink: 'https://example.com/3',
+      postedDate: 'not-a-date',
+      category: '3D & Animation',
+      tags: ['Blender'],
+    },
+  ];
+
+  it('orders newest to oldest and pushes invalid dates to the end', () => {
+    const result = sortJobsByDateDesc(base);
+    expect(result.map((j) => j.id)).toEqual(['2', '1', '3']);
+  });
+
+  it('is stable for equal timestamps/invalids', () => {
+    const withTie: Job[] = [
+      { ...base[2], id: '3a' },
+      { ...base[2], id: '3b' },
+    ];
+    const result = sortJobsByDateDesc(withTie);
+    expect(result.map((j) => j.id)).toEqual(['3a', '3b']);
+  });
+});
+
+describe('collectFacets', () => {
+  const jobs: Job[] = [
+    {
+      id: '1',
+      companyName: 'A',
+      companyLogo: '/images/a.svg',
+      jobTitle: 'One',
+      applyLink: 'https://example.com/1',
+      postedDate: '2024-01-01T00:00:00Z',
+      category: 'Game Dev',
+      tags: ['Unity', 'C#'],
+    },
+    {
+      id: '2',
+      companyName: 'B',
+      companyLogo: '/images/b.svg',
+      jobTitle: 'Two',
+      applyLink: 'https://example.com/2',
+      postedDate: '2024-02-01T00:00:00Z',
+      category: 'Design (UI/UX)',
+      tags: ['Figma', 'unity'],
+    },
+  ];
+
+  it('returns unique sorted categories and tags (tags case-insensitive unique)', () => {
+    const { categories, tags } = collectFacets(jobs);
+    expect(categories).toEqual(['Design (UI/UX)', 'Game Dev']);
+    // Expect only one Unity, preserving first casing, and overall A→Z
+    expect(tags).toEqual(['C#', 'Figma', 'Unity']);
+  });
+});

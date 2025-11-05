@@ -5,10 +5,5 @@ import sitemap from '@astrojs/sitemap';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://artsourcebrazil.vercel.app', // TODO: update to your final domain
-  integrations: [
-    tailwind(),
-    sitemap({
-      i18n: false,
-    }),
-  ],
+  integrations: [tailwind(), sitemap()],
 });

@@ -1,0 +1,12 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+# Uncomment if you add a SPA route or need redirects
+# [[redirects]]
+#   from = "/post-a-job"
+#   to = "/post-a-job/index.html"
+#   status = 200

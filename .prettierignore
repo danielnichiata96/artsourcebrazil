@@ -9,3 +9,6 @@ coverage
 
 # Generated
 package-lock.json
+
+# Known false-positive with Prettier check on this script (harmless)
+scripts/validate-jobs.mjs

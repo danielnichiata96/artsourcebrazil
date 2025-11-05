@@ -4,7 +4,7 @@
     "companyName": "PixelStorm",
     "companyLogo": "/images/pixelstorm-logo.svg",
     "jobTitle": "Senior Game Developer",
-    "applyLink": "#",
+    "applyLink": "https://example.com/jobs/senior-game-developer",
     "postedDate": "2025-11-04T09:00:00Z",
     "category": "Game Dev",
     "tags": ["Unity", "C#", "Mobile", "Senior"]
@@ -14,7 +14,7 @@
     "companyName": "Mythic Realms",
     "companyLogo": "/images/mythic-realms-logo.svg",
     "jobTitle": "3D Character Artist",
-    "applyLink": "#",
+    "applyLink": "https://example.com/jobs/3d-character-artist",
     "postedDate": "2025-11-03T14:30:00Z",
     "category": "3D & Animation",
     "tags": ["ZBrush", "Maya", "Substance Painter"]
@@ -24,7 +24,7 @@
     "companyName": "Creative Solutions",
     "companyLogo": "/images/creative-solutions-logo.svg",
     "jobTitle": "UI/UX Designer",
-    "applyLink": "#",
+    "applyLink": "https://example.com/jobs/ui-ux-designer",
     "postedDate": "2025-11-02T11:00:00Z",
     "category": "Design (UI/UX)",
     "tags": ["Figma", "Adobe XD", "User Research"]
@@ -34,7 +34,7 @@
     "companyName": "Quantum Leap Games",
     "companyLogo": "/images/quantum-leap-logo.svg",
     "jobTitle": "Lead Gameplay Programmer",
-    "applyLink": "#",
+    "applyLink": "https://example.com/jobs/lead-gameplay-programmer",
     "postedDate": "2025-11-01T18:00:00Z",
     "category": "Game Dev",
     "tags": ["Unreal", "C++", "Multiplayer", "Lead"]
