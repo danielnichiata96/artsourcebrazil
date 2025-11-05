@@ -1,0 +1,36 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+const seo = {
+  title: 'Payment Successful — ArtSource Brazil',
+  description: 'Your payment was successful. Please submit your job details.',
+};
+---
+
+<Layout seo={seo}>
+  <main class="container mx-auto px-6 py-12">
+    <div
+      class="prose prose-lg mx-auto max-w-3xl rounded-xl border border-gray-200 bg-white p-10 text-center shadow-lg"
+    >
+      <h1>Thank You!</h1>
+      <p class="lead">Your payment was successful.</p>
+      <p>
+        Please click the button below to submit your job details. Your job post will be reviewed and
+        published within 24 hours.
+      </p>
+      <a
+        href={import.meta.env.PUBLIC_JOB_FORM_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 inline-block rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700"
+      >
+        Submit Job Details
+      </a>
+      <p class="text-sm text-gray-500">
+        If you have any questions, please contact us at <a href="mailto:support@artsourcebrazil.com"
+          >support@artsourcebrazil.com</a
+        >.
+      </p>
+    </div>
+  </main>
+</Layout>

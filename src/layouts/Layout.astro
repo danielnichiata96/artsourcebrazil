@@ -1,0 +1,66 @@
+interface SEO {
+  title: string;
+  description: string;
+  image?: string;
+  url?: string;
+}
+
+export interface Props {
+  seo: SEO;
+}
+
+const { seo } = Astro.props;
+
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const ogImage = new URL(seo.image ?? '/images/og-default.svg', site).href;
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <slot name="head" />
+  </head>
+  <body class="bg-gray-100 font-sans text-gray-900">
+    <header class="sticky top-0 z-10 bg-white shadow-sm">
+      <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+        <a
+          href="/"
+          class="text-2xl font-bold text-gray-800 transition-colors hover:text-blue-600"
+          >ArtSource Brazil</a
+        >
+        <a
+          href="/post-a-job"
+          class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700"
+          >Post a Job</a
+        >
+      </nav>
+    </header>
+
+    <slot />
+
+    <footer class="mt-12 border-t bg-white py-6 text-center text-gray-500">
+      <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+    </footer>
+  </body>
+</html>

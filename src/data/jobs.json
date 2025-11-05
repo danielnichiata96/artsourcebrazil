@@ -1,0 +1,42 @@
+[
+  {
+    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
+    "companyName": "PixelStorm",
+    "companyLogo": "/images/pixelstorm-logo.svg",
+    "jobTitle": "Senior Game Developer",
+    "applyLink": "#",
+    "postedDate": "2025-11-04T09:00:00Z",
+    "category": "Game Dev",
+    "tags": ["Unity", "C#", "Mobile", "Senior"]
+  },
+  {
+    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
+    "companyName": "Mythic Realms",
+    "companyLogo": "/images/mythic-realms-logo.svg",
+    "jobTitle": "3D Character Artist",
+    "applyLink": "#",
+    "postedDate": "2025-11-03T14:30:00Z",
+    "category": "3D & Animation",
+    "tags": ["ZBrush", "Maya", "Substance Painter"]
+  },
+  {
+    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
+    "companyName": "Creative Solutions",
+    "companyLogo": "/images/creative-solutions-logo.svg",
+    "jobTitle": "UI/UX Designer",
+    "applyLink": "#",
+    "postedDate": "2025-11-02T11:00:00Z",
+    "category": "Design (UI/UX)",
+    "tags": ["Figma", "Adobe XD", "User Research"]
+  },
+  {
+    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
+    "companyName": "Quantum Leap Games",
+    "companyLogo": "/images/quantum-leap-logo.svg",
+    "jobTitle": "Lead Gameplay Programmer",
+    "applyLink": "#",
+    "postedDate": "2025-11-01T18:00:00Z",
+    "category": "Game Dev",
+    "tags": ["Unreal", "C++", "Multiplayer", "Lead"]
+  }
+]

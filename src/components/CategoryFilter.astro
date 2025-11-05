@@ -1,0 +1,170 @@
+---
+export interface Props {
+  categories: string[];
+  tags?: string[];
+}
+
+const { categories = [], tags = [] } = Astro.props as Props;
+---
+
+<div class="mb-8 space-y-4">
+  <!-- Category buttons -->
+  <div class="flex flex-wrap items-center justify-center gap-2">
+    <button
+      class="filter-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      data-category="">All</button
+    >
+    {
+      categories.map((cat) => (
+        <button
+          class="filter-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          data-category={cat}
+        >
+          {cat}
+        </button>
+      ))
+    }
+  </div>
+
+  <!-- Search input -->
+  <div class="flex justify-center">
+    <input
+      id="job-search"
+      type="search"
+      inputmode="search"
+      placeholder="Search title, company or tags"
+      class="w-full max-w-2xl rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+    />
+  </div>
+
+  <!-- Tag chips -->
+  {
+    tags.length > 0 && (
+      <div class="flex flex-wrap items-center justify-center gap-2">
+        {tags.map((t) => (
+          <button
+            class="tag-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            data-tag={t}
+          >
+            {t}
+          </button>
+        ))}
+      </div>
+    )
+  }
+</div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  let category = params.get('category') || '';
+  let q = params.get('q') || '';
+  let selectedTags = (params.get('tags') || '').split(',').filter(Boolean);
+
+  const container = document.querySelector('[data-jobs]');
+  const items = Array.from(container ? container.children : []);
+  const catButtons = Array.from(document.querySelectorAll('.filter-btn'));
+  const tagButtons = Array.from(document.querySelectorAll('.tag-btn'));
+  const searchInput = document.getElementById('job-search');
+
+  function reflectUI() {
+    // categories
+    catButtons.forEach((btn) => {
+      const active = (btn.dataset.category || '') === category;
+      btn.classList.toggle('bg-blue-600', active);
+      btn.classList.toggle('text-white', active);
+      btn.classList.toggle('bg-gray-200', !active);
+      btn.classList.toggle('text-gray-700', !active);
+    });
+    // tags
+    const setSel = new Set(selectedTags.map((t) => t.toLowerCase()));
+    tagButtons.forEach((btn) => {
+      const active = setSel.has((btn.dataset.tag || '').toLowerCase());
+      btn.classList.toggle('bg-blue-600', active);
+      btn.classList.toggle('text-white', active);
+      btn.classList.toggle('bg-gray-200', !active);
+      btn.classList.toggle('text-gray-700', !active);
+    });
+    // search
+    if (searchInput) searchInput.value = q;
+  }
+
+  function applyFilters() {
+    const qLower = (q || '').toLowerCase();
+    const tagsLower = selectedTags.map((t) => t.toLowerCase());
+
+    items.forEach((el) => {
+      const c = (el.getAttribute('data-category') || '').trim();
+      const tagsStr = (el.getAttribute('data-tags') || '').toLowerCase();
+      const text = (el.getAttribute('data-text') || '').toLowerCase();
+
+      const categoryPass = !category || c === category;
+      const searchPass = !qLower || text.includes(qLower) || tagsStr.includes(qLower);
+      const tagsPass =
+        tagsLower.length === 0 || tagsLower.every((t) => tagsStr.split(/\s+/).includes(t));
+
+      const show = categoryPass && searchPass && tagsPass;
+      el.classList.toggle('hidden', !show);
+    });
+
+    // update URL
+    if (category) params.set('category', category);
+    else params.delete('category');
+    if (q) params.set('q', q);
+    else params.delete('q');
+    if (selectedTags.length) params.set('tags', selectedTags.join(','));
+    else params.delete('tags');
+    const url = `${location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
+    history.replaceState({}, '', url);
+
+    reflectUI();
+  }
+
+  // events
+  catButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      category = btn.dataset.category || '';
+      applyFilters();
+    });
+  });
+
+  tagButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const t = btn.dataset.tag || '';
+      if (!t) return;
+      const idx = selectedTags.indexOf(t);
+      if (idx >= 0) selectedTags.splice(idx, 1);
+      else selectedTags.push(t);
+      applyFilters();
+    });
+  });
+
+  if (searchInput) {
+    let to;
+    searchInput.addEventListener('input', () => {
+      clearTimeout(to);
+      to = setTimeout(() => {
+        q = searchInput.value || '';
+        applyFilters();
+      }, 150);
+    });
+  }
+
+  // Delegate clicks on tags inside job cards
+  if (container) {
+    container.addEventListener('click', (e) => {
+      const target = e.target;
+      if (target && target.getAttribute && target.hasAttribute('data-tag')) {
+        const t = target.getAttribute('data-tag') || '';
+        if (!t) return;
+        const idx = selectedTags.indexOf(t);
+        if (idx >= 0) selectedTags.splice(idx, 1);
+        else selectedTags.push(t);
+        applyFilters();
+      }
+    });
+  }
+
+  // init on load from URL
+  reflectUI();
+  applyFilters();
+</script>

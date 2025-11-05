@@ -1,0 +1,11 @@
+# Output and caches
+node_modules
+.dist
+.astro
+.vscode
+.vercel
+.netlify
+coverage
+
+# Generated
+package-lock.json

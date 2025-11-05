@@ -99,8 +99,17 @@ If you deploy to a real domain, update the `site` field in `astro.config.mjs` an
 
 ## Monetization (Post a Job)
 
-- Update the Payment Link in `src/pages/post-a-job.astro` (anchor `href`).
-- After payment, redirect to a simple external form (e.g., Tally/Typeform/Google Forms).
+Use environment variables (see `.env.example`):
+
+```
+PUBLIC_STRIPE_PAYMENT_LINK="https://buy.stripe.com/your-payment-link"
+PUBLIC_JOB_FORM_URL="https://tally.so/r/your-form-id"
+```
+
+- Fill your `.env` with real values (the file is ignored by Git).
+- In Stripe Payment Link settings, set the success redirect to:
+  - `https://YOUR-DOMAIN/post-a-job/success`
+- The success page shows a button to the external job submission form (PUBLIC_JOB_FORM_URL).
 
 ## Formatting
 
@@ -126,4 +135,5 @@ npm run format:check  # checks only
 - Tailwind styles missing: ensure `tailwind.config.mjs` has `content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}']` and restart dev server.
 - Logos 404: place files in `public/images` or update `companyLogo` URLs.
 - Canonical/OG URLs: set the `site` in `astro.config.mjs` to your domain.
+
 # artsourcebrazil

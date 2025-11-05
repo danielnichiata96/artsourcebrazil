@@ -1,0 +1,129 @@
+---
+import jobs from '../data/jobs.json';
+import JobCard from '../components/JobCard.astro';
+import CategoryFilter from '../components/CategoryFilter.astro';
+import '../styles/global.css';
+
+interface Job {
+  id: string;
+  companyName: string;
+  companyLogo: string;
+  jobTitle: string;
+  applyLink: string;
+  postedDate: string;
+  category: string;
+  tags: string[];
+}
+
+// Sort newest -> oldest to ensure consistent ordering regardless of JSON file order
+const sortedJobs = [...(jobs as Job[])].sort(
+  (a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime(),
+);
+
+const categories = Array.from(new Set((jobs as Job[]).map((j) => j.category)));
+const tags = Array.from(new Set((jobs as Job[]).flatMap((j) => j.tags))).sort();
+
+// SEO helpers
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const seo = {
+  title: 'ArtSource Brazil — Remote Creative Jobs',
+  description:
+    'Niche job board for Brazil-based creative talent: Game Dev, 3D & Animation, and UI/UX Design. Find curated remote roles from international studios.',
+  image: new URL('/images/og-default.svg', site).href,
+  url: canonicalUrl,
+};
+
+// JSON-LD: one JobPosting per job
+const jobPostings = sortedJobs.map((j) => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: j.jobTitle,
+  datePosted: j.postedDate,
+  employmentType: 'CONTRACT',
+  jobLocationType: 'TELECOMMUTE',
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: j.companyName,
+    logo: new URL(j.companyLogo, site).href,
+  },
+  description: `${j.category} — ${j.tags.join(', ')}`,
+  directApply: true,
+  applicationContact: undefined,
+  applicantLocationRequirements: {
+    '@type': 'Country',
+    name: 'Brazil',
+  },
+  identifier: {
+    '@type': 'PropertyValue',
+    name: j.companyName,
+    value: j.id,
+  },
+  url: j.applyLink,
+}));
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{seo.title}</title>
+    <meta name="description" content={seo.description} />
+    <link rel="canonical" href={seo.url} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={seo.title} />
+    <meta property="og:description" content={seo.description} />
+    <meta property="og:url" content={seo.url} />
+    <meta property="og:image" content={seo.image} />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={seo.title} />
+    <meta name="twitter:description" content={seo.description} />
+    <meta name="twitter:image" content={seo.image} />
+
+    <!-- JSON-LD: JobPostings -->
+    <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
+  </head>
+  <body class="bg-gray-100 font-sans text-gray-900">
+    <header class="sticky top-0 z-10 bg-white shadow-sm">
+      <nav class="container mx-auto flex items-center justify-between px-6 py-4">
+        <a href="/" class="text-2xl font-bold text-gray-800 transition-colors hover:text-blue-600"
+          >ArtSource Brazil</a
+        >
+        <a
+          href="/post-a-job"
+          class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700"
+          >Post a Job</a
+        >
+      </nav>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+      <h1 class="mb-8 text-center text-4xl font-extrabold text-gray-800">
+        Find Your Next Creative Role
+      </h1>
+      <CategoryFilter categories={categories} tags={tags} />
+      <div class="space-y-6" data-jobs>
+        {
+          sortedJobs.map((job: Job) => (
+            <JobCard
+              job={job}
+              data-category={job.category}
+              data-tags={job.tags.join(' ')}
+              data-text={`${job.jobTitle} ${job.companyName}`}
+            />
+          ))
+        }
+      </div>
+    </main>
+
+    <footer class="mt-12 border-t bg-white py-6 text-center text-gray-500">
+      <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
