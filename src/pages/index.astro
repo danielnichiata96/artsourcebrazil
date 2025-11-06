@@ -3,25 +3,13 @@ import jobs from '../data/jobs.json';
 import JobCard from '../components/JobCard.astro';
 import CategoryFilter from '../components/CategoryFilter.astro';
 import '../styles/global.css';
+import { sortJobsByDateDesc, collectFacets } from '../lib/jobs';
 
-interface Job {
-  id: string;
-  companyName: string;
-  companyLogo: string;
-  jobTitle: string;
-  applyLink: string;
-  postedDate: string;
-  category: string;
-  tags: string[];
-}
+import type { Job } from '../lib/jobs';
 
-// Sort newest -> oldest to ensure consistent ordering regardless of JSON file order
-const sortedJobs = [...(jobs as Job[])].sort(
-  (a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime(),
-);
-
-const categories = Array.from(new Set((jobs as Job[]).map((j) => j.category)));
-const tags = Array.from(new Set((jobs as Job[]).flatMap((j) => j.tags))).sort();
+// Use shared helpers so behavior is covered by unit tests
+const sortedJobs = sortJobsByDateDesc(jobs as Job[]);
+const { categories, tags } = collectFacets(jobs as Job[]);
 
 // SEO helpers
 const site = Astro.site ?? new URL('http://localhost:4321');
