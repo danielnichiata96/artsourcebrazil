@@ -15,6 +15,7 @@ const { seo } = Astro.props;
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(seo.image ?? '/images/og-default.svg', site).href;
+const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined;
 ---
 
 <html lang="en">
@@ -41,6 +42,17 @@ const ogImage = new URL(seo.image ?? '/images/og-default.svg', site).href;
     <meta name="twitter:image" content={ogImage} />
 
     <slot name="head" />
+
+    <!-- Vercel Web Analytics (no-code, cookie-free). Requires enabling in Vercel Dashboard. -->
+    <script defer src="/_vercel/insights/script.js"></script>
+
+    {plausibleDomain && (
+      <script
+        defer
+        data-domain={plausibleDomain}
+        src="https://plausible.io/js/script.js"
+      ></script>
+    )}
   </head>
   <body class="bg-gray-100 font-sans text-gray-900">
     <header class="sticky top-0 z-10 bg-white shadow-sm">

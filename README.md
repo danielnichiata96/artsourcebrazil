@@ -130,6 +130,16 @@ npm run format:check  # checks only
 - Vercel: set the project to build with `npm run build` and serve `dist/`.
 - Netlify: same build command/output; use the Astro preset if desired.
 
+### Analytics
+
+- Vercel Web Analytics (cookie-free)
+  - Enable in Vercel Dashboard for the project
+  - We include the script tag by default in `src/layouts/Layout.astro`:
+    `<script defer src="/_vercel/insights/script.js"></script>`
+- Plausible (optional)
+  - Set `PUBLIC_PLAUSIBLE_DOMAIN` in your env (e.g., `artsourcebrazil.vercel.app` or your custom domain)
+  - The script will auto-load when the env is present
+
 ## Troubleshooting
 
 - Tailwind styles missing: ensure `tailwind.config.mjs` has `content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}']` and restart dev server.

@@ -31,8 +31,8 @@ This file is the single source of truth for what to do next. Coding agents and h
   - Success page: button opens Tally (assert new tab URL contains `tally.so`)
   - Home: toggle one filter and verify list updates
 - [ ] Monitoring & basics
-  - Enable Vercel Analytics (or Plausible) on production
-  - Add a simple Uptime/Checkly probe for `/` and `/post-a-job`
+  - [x] Enable Vercel Analytics (script added; enable in Vercel Dashboard)
+  - [ ] Add a simple Uptime/Checkly probe for `/` and `/post-a-job`
 - [ ] Minimal tests
   - Add Vitest with 2–3 unit tests for utilities (e.g., date sorting, unique tags)
   - Optional: Playwright smoke test (render home, toggle one filter)
