@@ -73,7 +73,7 @@ const formattedDate = (() => {
       }
     </div>
   </div>
-  <div class="flex-shrink-0 flex flex-col items-end gap-2">
+  <div class="flex-shrink-0">
     <a
       href={job.applyLink}
       target="_blank"
@@ -82,23 +82,5 @@ const formattedDate = (() => {
     >
       Apply Now
     </a>
-    <div class="flex items-center gap-3 text-sm">
-      <span class="text-gray-500">Share:</span>
-      <a
-        href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(job.jobTitle + ' — ' + job.companyName)}&url=${encodeURIComponent(job.applyLink)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-gray-600 hover:text-blue-600"
-        aria-label="Share on Twitter"
-      >Twitter</a>
-      <span class="text-gray-300">·</span>
-      <a
-        href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(job.applyLink)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-gray-600 hover:text-blue-600"
-        aria-label="Share on LinkedIn"
-      >LinkedIn</a>
-    </div>
   </div>
 </div>
