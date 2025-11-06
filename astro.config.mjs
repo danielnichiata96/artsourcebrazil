@@ -4,6 +4,6 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://artsourcebrazil-p7soyqy8v-daniel-nichiatas-projects.vercel.app/', // TODO: update to your final domain
+  site: 'https://artsourcebrazil.vercel.app/', // Production URL - update with custom domain when available
   integrations: [tailwind(), sitemap()],
 });
