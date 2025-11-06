@@ -1,28 +1,46 @@
 ---
+import { slugify } from '../lib/jobs';
+
 export interface Props {
   categories: string[];
   tags?: string[];
 }
 
 const { categories = [], tags = [] } = Astro.props as Props;
+const currentPath = Astro.url.pathname;
 ---
 
 <div class="mb-8 space-y-4">
   <!-- Category buttons -->
   <div class="flex flex-wrap items-center justify-center gap-2">
-    <button
-      class="filter-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-      data-category="">All</button
+    <a
+      href="/"
+      class:list={[
+        'rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500',
+        currentPath === '/'
+          ? 'bg-blue-600 text-white'
+          : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+      ]}>All</a
     >
     {
-      categories.map((cat) => (
-        <button
-          class="filter-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-          data-category={cat}
-        >
-          {cat}
-        </button>
-      ))
+      categories.map((cat) => {
+        const slug = slugify(cat);
+        const href = `/category/${slug}`;
+        const isActive = currentPath === href;
+        return (
+          <a
+            href={href}
+            class:list={[
+              'rounded-full px-3 py-1.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500',
+              isActive
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300',
+            ]}
+          >
+            {cat}
+          </a>
+        );
+      })
     }
   </div>
 
@@ -56,26 +74,15 @@ const { categories = [], tags = [] } = Astro.props as Props;
 
 <script>
   const params = new URLSearchParams(location.search);
-  let category = params.get('category') || '';
   let q = params.get('q') || '';
   let selectedTags = (params.get('tags') || '').split(',').filter(Boolean);
 
   const container = document.querySelector('[data-jobs]');
   const items = Array.from(container ? container.children : []);
-  const catButtons = Array.from(document.querySelectorAll('.filter-btn'));
   const tagButtons = Array.from(document.querySelectorAll('.tag-btn'));
   const searchInput = document.getElementById('job-search');
 
   function reflectUI() {
-    // categories
-    catButtons.forEach((btn) => {
-      const active = (btn.dataset.category || '') === category;
-      btn.classList.toggle('bg-blue-600', active);
-      btn.classList.toggle('text-white', active);
-      btn.classList.toggle('bg-gray-200', !active);
-      btn.classList.toggle('text-gray-700', !active);
-      btn.setAttribute('aria-pressed', String(active));
-    });
     // tags
     const setSel = new Set(selectedTags.map((t) => t.toLowerCase()));
     tagButtons.forEach((btn) => {
@@ -95,22 +102,18 @@ const { categories = [], tags = [] } = Astro.props as Props;
     const tagsLower = selectedTags.map((t) => t.toLowerCase());
 
     items.forEach((el) => {
-      const c = (el.getAttribute('data-category') || '').trim();
       const tagsStr = (el.getAttribute('data-tags') || '').toLowerCase();
       const text = (el.getAttribute('data-text') || '').toLowerCase();
 
-      const categoryPass = !category || c === category;
       const searchPass = !qLower || text.includes(qLower) || tagsStr.includes(qLower);
       const tagsPass =
         tagsLower.length === 0 || tagsLower.every((t) => tagsStr.split(/\s+/).includes(t));
 
-      const show = categoryPass && searchPass && tagsPass;
+      const show = searchPass && tagsPass;
       el.classList.toggle('hidden', !show);
     });
 
     // update URL
-    if (category) params.set('category', category);
-    else params.delete('category');
     if (q) params.set('q', q);
     else params.delete('q');
     if (selectedTags.length) params.set('tags', selectedTags.join(','));
@@ -122,13 +125,6 @@ const { categories = [], tags = [] } = Astro.props as Props;
   }
 
   // events
-  catButtons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      category = btn.dataset.category || '';
-      applyFilters();
-    });
-  });
-
   tagButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const t = btn.dataset.tag || '';

@@ -74,18 +74,65 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
         <a href="/" class="text-2xl font-bold text-gray-800 transition-colors hover:text-blue-600"
           >ArtSource Brazil</a
         >
-        <a
-          href="/post-a-job"
-          class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700"
-          >Post a Job</a
-        >
+        <div class="flex items-center gap-4">
+          <a href="/about" class="text-base font-medium text-gray-600 hover:text-blue-600"
+            >About</a
+          >
+          <a
+            href="/post-a-job"
+            class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700"
+            >Post a Job</a
+          >
+        </div>
       </nav>
     </header>
 
     <slot />
 
-    <footer class="mt-12 border-t bg-white py-6 text-center text-gray-500">
-      <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+    <footer class="mt-12 border-t bg-white py-8 text-center">
+      <div class="container mx-auto px-6">
+        <!-- Newsletter Section -->
+        <div class="mx-auto max-w-md">
+          <h3 class="text-xl font-semibold text-gray-800">Stay Updated</h3>
+          <p class="mt-2 text-gray-600">
+            Subscribe to our newsletter to get the latest job postings delivered straight to your
+            inbox.
+          </p>
+          <form
+            action={import.meta.env.PUBLIC_NEWSLETTER_SUBSCRIBE_URL}
+            method="post"
+            target="_blank"
+            class="mt-4 flex flex-col items-center sm:flex-row sm:justify-center"
+          >
+            <input
+              type="email"
+              name="email"
+              required
+              placeholder="your-email@example.com"
+              class="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:max-w-xs"
+            />
+            <input type="hidden" name="tag" value="artsource-brazil-website" />
+            <button
+              type="submit"
+              class="mt-3 w-full rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700 sm:ml-3 sm:mt-0 sm:w-auto"
+            >
+              Subscribe
+            </button>
+          </form>
+          <p class="mt-3 text-xs text-gray-500">
+            We respect your privacy. No spam. Powered by <a
+              href="https://buttondown.email"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="underline hover:text-blue-600">Buttondown</a
+            >.
+          </p>
+        </div>
+
+        <div class="mt-8 border-t pt-6 text-gray-500">
+          <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>

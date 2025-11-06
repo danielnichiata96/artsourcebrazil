@@ -50,3 +50,22 @@ export function collectFacets(jobs: Job[]): { categories: string[]; tags: string
   );
   return { categories, tags };
 }
+
+/**
+ * Slugify a string for use in a URL.
+ * - Converts to lowercase
+ * - Replaces spaces and special characters with hyphens
+ * - Removes trailing hyphens
+ */
+export function slugify(text: string): string {
+  if (!text) return '';
+  return text
+    .toString()
+    .toLowerCase()
+    .trim()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(/[^\w-]+/g, '') // Remove all non-word chars
+    .replace(/--+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+}
