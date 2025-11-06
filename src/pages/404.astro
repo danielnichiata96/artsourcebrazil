@@ -1,0 +1,24 @@
+---
+import Layout from "@layouts/Layout.astro";
+---
+
+<Layout
+  title="Página Não Encontrada"
+  description="Opa! Parece que esta página não existe."
+>
+  <div class="flex flex-col items-center justify-center text-center py-20">
+    <h1 class="text-6xl font-bold text-gray-800 dark:text-white">404</h1>
+    <p class="text-2xl font-semibold mt-4 text-gray-600 dark:text-gray-300">
+      Página Não Encontrada
+    </p>
+    <p class="mt-2 text-gray-500 dark:text-gray-400">
+      Opa! A página que você está procurando não existe ou foi movida.
+    </p>
+    <a
+      href="/"
+      class="mt-8 inline-block rounded bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
+    >
+      Voltar para a Home
+    </a>
+  </div>
+</Layout>

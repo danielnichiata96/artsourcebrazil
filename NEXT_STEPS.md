@@ -45,6 +45,8 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-START -->
 
+- [x] 404 page
+  - Custom 404.astro with links back to home and categories
 - [ ] **Uptime Monitoring**
   - Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
   - Alert on downtime or slow response (>3s)
@@ -55,8 +57,6 @@ This file is the single source of truth for what to do next. Coding agents and h
   - Add Twitter/LinkedIn share buttons on individual blog posts
 - [ ] **OG images per page**
   - Generate unique OG images for category pages and blog posts (Satori/og-image or manual)
-- [ ] **404 page**
-  - Custom 404.astro with links back to home and categories
 - [ ] **Discord/Slack community**
   - Set up Discord server or Slack workspace for community
   - Update /about page with real invite link
@@ -117,6 +117,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-06: **Custom 404 page**: Created `src/pages/404.astro` for a better user experience on missing pages.
 - 2025-11-06: **SEO/Community milestone COMPLETED**: Category pages, JSON-LD (Organization, JobPosting, BlogPosting), feeds (jobs RSS/JSON, blog RSS), newsletter footer, About page, Blog setup. Homepage refactored to use global Layout.
 - 2025-11-06: Adicionados smoke tests E2E (Playwright): success page e homepage filters; CI atualizado para rodar testes automaticamente.
 - 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
