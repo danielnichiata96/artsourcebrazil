@@ -5,8 +5,11 @@ const seo = {
   title: 'Payment Successful — ArtSource Brazil',
   description: 'Your payment was successful. Please submit your job details.',
 };
-// Safe fallback if env is not set in the current environment
-const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
+// Safe fallback if env is not set in the current environment or is an empty string
+const rawFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL;
+const jobFormUrl = typeof rawFormUrl === 'string' && rawFormUrl.trim()
+  ? rawFormUrl.trim()
+  : '#';
 ---
 
 <Layout seo={seo}>
@@ -22,9 +25,13 @@ const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
       </p>
       <a
         href={jobFormUrl}
+        data-url={jobFormUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-4 inline-block rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700"
+        class="mt-4 inline-block cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
+        role="button"
+        aria-label="Submit Job Details"
+        title={jobFormUrl === '#' ? 'Form URL not configured' : 'Open job details form'}
       >
         Submit Job Details
       </a>
