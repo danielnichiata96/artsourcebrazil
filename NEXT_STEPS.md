@@ -16,17 +16,17 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
-- [ ] Deploy to Vercel or Netlify
+- [x] Deploy to Vercel or Netlify
   - Connect repo, set build command `astro build`, output dir `dist`
   - Configure preview deployments for PRs
   - Update `astro.config.mjs` `site` to the real domain
   - Verify `robots.txt` sitemap URL resolves
-- [ ] Configure production env vars
+- [x] Configure production env vars
   - `PUBLIC_STRIPE_PAYMENT_LINK`
   - `PUBLIC_JOB_FORM_URL`
-- [ ] Post-a-Job flow polish
-  - Ensure payment success redirects to `/post-a-job/success`
-  - Verify fallback link works when env is missing
+- [x] Post-a-Job flow polish
+  - Ensure payment success redirects to `/post-a-job/success` (Stripe success URL fixed)
+  - Verify fallback link works when env is missing (page de sucesso segura)
 - [ ] Minimal tests
   - Add Vitest with 2–3 unit tests for utilities (e.g., date sorting, unique tags)
   - Optional: Playwright smoke test (render home, toggle one filter)
@@ -87,6 +87,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
 - 2025-11-05: Added Zod validator (prebuild), improved a11y (focus, buttons), fixed Astro frontmatter issues, cleaned sitemap warning.
 <!-- AI-ANCHOR:CHANGELOG-END -->
 
