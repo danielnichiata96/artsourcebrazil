@@ -23,14 +23,23 @@ const jobFormUrl = typeof rawFormUrl === 'string' && rawFormUrl.trim()
         Please click the button below to submit your job details. Your job post will be reviewed and
         published within 24 hours.
       </p>
-      <a
-        href={jobFormUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="mt-4 inline-block cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-      >
-        Submit Job Details
-      </a>
+      
+      <div style="margin-top: 2rem;">
+        <a
+          href={jobFormUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          style="display: inline-block; background-color: #2563eb; color: white; padding: 1rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: bold; font-size: 1.125rem;"
+        >
+          Submit Job Details
+        </a>
+      </div>
+
+      <p class="mt-4 text-sm text-gray-600">
+        Or copy and paste this link: <br>
+        <a href={jobFormUrl} target="_blank" rel="noopener noreferrer" class="text-blue-600 underline break-all">{jobFormUrl}</a>
+      </p>
+
       <p class="mt-6 text-sm text-gray-500">
         If you have any questions, please contact us at <a href="mailto:support@artsourcebrazil.com" class="text-blue-600 underline hover:text-blue-700"
           >support@artsourcebrazil.com</a
