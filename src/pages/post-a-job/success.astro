@@ -9,41 +9,30 @@ const seo = {
 const rawFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL;
 const jobFormUrl = typeof rawFormUrl === 'string' && rawFormUrl.trim()
   ? rawFormUrl.trim()
-  : '#';
+  : 'https://tally.so/r/9qGdD5'; // Direct fallback to your Tally form
 ---
 
 <Layout seo={seo}>
   <main class="container mx-auto px-6 py-12">
     <div
-      class="prose prose-lg mx-auto max-w-3xl rounded-xl border border-gray-200 bg-white p-10 text-center shadow-lg"
+      class="mx-auto max-w-3xl rounded-xl border border-gray-200 bg-white p-10 text-center shadow-lg"
     >
-      <h1>Thank You!</h1>
-      <p class="lead">Your payment was successful.</p>
-      <p>
+      <h1 class="mb-4 text-4xl font-bold text-gray-800">Thank You!</h1>
+      <p class="mb-2 text-xl text-gray-700">Your payment was successful.</p>
+      <p class="mb-8 text-gray-600">
         Please click the button below to submit your job details. Your job post will be reviewed and
         published within 24 hours.
       </p>
       <a
         href={jobFormUrl}
-        data-url={jobFormUrl}
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-4 inline-block cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
-        role="button"
-        aria-label="Submit Job Details"
-        title={jobFormUrl === '#' ? 'Form URL not configured' : 'Open job details form'}
+        class="mt-4 inline-block cursor-pointer rounded-lg bg-blue-600 px-8 py-4 text-lg font-bold text-white no-underline shadow-md transition-all duration-300 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
       >
         Submit Job Details
       </a>
-      {jobFormUrl === '#' && (
-        <p class="mt-2 text-xs text-amber-700">
-          Form link is not configured for this deploy. Please set <code>PUBLIC_JOB_FORM_URL</code>
-          in your Vercel Environment Variables for this environment (Preview/Production) and
-          redeploy.
-        </p>
-      )}
-      <p class="text-sm text-gray-500">
-        If you have any questions, please contact us at <a href="mailto:support@artsourcebrazil.com"
+      <p class="mt-6 text-sm text-gray-500">
+        If you have any questions, please contact us at <a href="mailto:support@artsourcebrazil.com" class="text-blue-600 underline hover:text-blue-700"
           >support@artsourcebrazil.com</a
         >.
       </p>
