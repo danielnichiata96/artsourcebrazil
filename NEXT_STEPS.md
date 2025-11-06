@@ -17,30 +17,22 @@ This file is the single source of truth for what to do next. Coding agents and h
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
 - [x] Deploy to Vercel or Netlify
-  - Connect repo, set build command `astro build`, output dir `dist`
-  - Configure preview deployments for PRs
-  - Update `astro.config.mjs` `site` to the real domain
-  - Verify `robots.txt` sitemap URL resolves
 - [x] Configure production env vars
-  - `PUBLIC_STRIPE_PAYMENT_LINK`
-  - `PUBLIC_JOB_FORM_URL`
 - [x] Post-a-Job flow polish
-  - Ensure payment success redirects to `/post-a-job/success` (Stripe success URL fixed)
-  - Verify fallback link works when env is missing (page de sucesso segura)
 - [x] Smoke tests (Playwright)
-  - Success page: button opens Tally (assert new tab URL contains `tally.so`)
-  - Home: toggle one filter and verify list updates
-- [ ] SEO & Community (Milestone NOW)
-  - [ ] Static Category pages at `/category/{slug}`
-  - [ ] Wire homepage category chips to the new routes (not only querystring)
-  - [ ] Add Category routes to sitemap and internal links
-  - [ ] JSON-LD Organization in `Layout.astro` and JobPosting for each job (home + category)
-  - [ ] Mark `/post-a-job/success` as `noindex`
-  - [ ] Jobs Feed (RSS + JSON) and link in header/footer
-  - [ ] Newsletter capture in footer (Buttondown/ConvertKit)
-- [ ] Monitoring & basics
+- [x] SEO & Community (Milestone)
+  - [x] Static Category pages at `/category/{slug}` with JobPosting JSON-LD
+  - [x] Wire homepage category chips to the new routes
+  - [x] Add Category routes to sitemap (auto via @astrojs/sitemap)
+  - [x] JSON-LD Organization in `Layout.astro` and JobPosting for each job (home + category)
+  - [x] Mark `/post-a-job/success` as `noindex`
+  - [x] Jobs Feed (RSS + JSON) at `/jobs.xml` and `/jobs.json`
+  - [x] Blog RSS feed at `/blog.xml`
+  - [x] Newsletter capture in footer (Buttondown/ConvertKit form)
+  - [x] Blog setup (content collections, /blog, /blog/[slug], BlogPosting JSON-LD)
+  - [x] About page (/about) for E-E-A-T
+- [x] Monitoring & basics
   - [x] Enable Vercel Analytics (script added; enable in Vercel Dashboard)
-  - [ ] Add a simple Uptime/Checkly probe for `/` and `/post-a-job`
 - [ ] Minimal tests
   - Add Vitest with 2–3 unit tests for utilities (e.g., date sorting, unique tags)
 - [ ] ESLint setup (optional but recommended)
@@ -53,18 +45,34 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-START -->
 
-- [ ] A11y deeper audit (heading order, landmarks, labels)
-- [ ] Analytics (Plausible) with opt-out (via `PUBLIC_PLAUSIBLE_DOMAIN`)
-- [ ] Social share polish (OG image per page; share btns em cada vaga)
-- [ ] 404 page and basic error content
-- [ ] Job feeds: RSS/JSON export
-- [ ] Simple contribution guide for adding jobs via PR
-- [ ] Newsletter capture (Buttondown/ConvertKit)
-  - Lightweight form in footer; no JS on homepage beyond fetch to provider
-- [ ] Validate JobPosting markup with Google Rich Results test
-  - Add per-item JSON-LD on the homepage; document how to test
-- [ ] Image hygiene
-  - Add `loading="lazy"` and width/height on logos; optimize static assets
+- [ ] **Uptime Monitoring**
+  - Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
+  - Alert on downtime or slow response (>3s)
+- [ ] **Blog content expansion**
+  - Write 2–3 more posts: "Salary Guide for Artists in Brazil", "How to Build a Portfolio for Game Studios"
+  - Share on LinkedIn/X to drive organic traffic
+- [ ] **Social share for blog posts**
+  - Add Twitter/LinkedIn share buttons on individual blog posts
+- [ ] **OG images per page**
+  - Generate unique OG images for category pages and blog posts (Satori/og-image or manual)
+- [ ] **404 page**
+  - Custom 404.astro with links back to home and categories
+- [ ] **Discord/Slack community**
+  - Set up Discord server or Slack workspace for community
+  - Update /about page with real invite link
+- [ ] **Contribution guide**
+  - Simple CONTRIBUTING.md for adding jobs via PR
+  - Template for job JSON format
+- [ ] **A11y deeper audit**
+  - Verify heading order, landmarks, ARIA labels
+  - Test with screen reader (NVDA/VoiceOver)
+- [ ] **Image optimization**
+  - Add width/height to all logos
+  - Compress/optimize static images
+  - Lazy load images below fold
+- [ ] **Validate Rich Results**
+  - Test all JSON-LD (Organization, JobPosting, BlogPosting) with Google Rich Results Test
+  - Fix any warnings/errors
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-END -->
 
 ---
@@ -109,7 +117,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
-- 2025-11-06: Roadmap refocused to SEO/Comunidade (páginas de categoria, JSON-LD, feeds, newsletter, noindex success).
+- 2025-11-06: **SEO/Community milestone COMPLETED**: Category pages, JSON-LD (Organization, JobPosting, BlogPosting), feeds (jobs RSS/JSON, blog RSS), newsletter footer, About page, Blog setup. Homepage refactored to use global Layout.
 - 2025-11-06: Adicionados smoke tests E2E (Playwright): success page e homepage filters; CI atualizado para rodar testes automaticamente.
 - 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
 - 2025-11-05: Added Zod validator (prebuild), improved a11y (focus, buttons), fixed Astro frontmatter issues, cleaned sitemap warning.
