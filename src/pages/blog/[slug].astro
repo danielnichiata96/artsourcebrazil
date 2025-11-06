@@ -1,6 +1,6 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
-import Layout from '../../../layouts/Layout.astro';
+import Layout from '../../layouts/Layout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -20,9 +20,43 @@ const seo = {
   description: post.data.description,
   image: post.data.heroImage,
 };
+
+// Compute canonical URL and assets for JSON-LD
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const logoUrl = new URL('/images/og-default.svg', site).href;
 ---
 
 <Layout seo={seo}>
+  <Fragment slot="head">
+    <script type="application/ld+json">
+      {JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: post.data.title,
+        description: post.data.description,
+        image: post.data.heroImage ? [new URL(post.data.heroImage, site).href] : undefined,
+        datePublished: post.data.publishDate.toISOString(),
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+        author: {
+          '@type': 'Organization',
+          name: 'ArtSource Brazil',
+          url: new URL('/', site).href,
+        },
+        publisher: {
+          '@type': 'Organization',
+          name: 'ArtSource Brazil',
+          logo: {
+            '@type': 'ImageObject',
+            url: logoUrl,
+          },
+        },
+      })}
+    </script>
+  </Fragment>
   <main class="container mx-auto max-w-4xl px-6 py-12">
     <article class="prose prose-lg mx-auto max-w-none">
       {post.data.heroImage && <img src={post.data.heroImage} alt="" class="w-full rounded-lg mb-8" />}
