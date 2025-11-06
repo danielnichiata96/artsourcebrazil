@@ -95,6 +95,24 @@ const jobPostings = sortedJobs.map((j) => ({
       <h1 class="mb-8 text-center text-4xl font-extrabold text-gray-800">
         Find Your Next Creative Role
       </h1>
+      <!-- SEO-friendly links to category pages -->
+      <nav class="mb-6 flex flex-wrap justify-center gap-2" aria-label="Browse by category">
+        {categories.map((cat) => {
+          const slug = cat
+            .toLowerCase()
+            .replace(/&/g, 'and')
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+          return (
+            <a
+              href={`/category/${slug}`}
+              class="rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-700 hover:border-blue-500 hover:text-blue-600"
+            >
+              {cat} jobs
+            </a>
+          );
+        })}
+      </nav>
       <CategoryFilter categories={categories} tags={tags} />
       <div class="space-y-6" data-jobs>
         {

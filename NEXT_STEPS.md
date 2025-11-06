@@ -30,12 +30,19 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [x] Smoke tests (Playwright)
   - Success page: button opens Tally (assert new tab URL contains `tally.so`)
   - Home: toggle one filter and verify list updates
+- [ ] SEO & Community (Milestone NOW)
+  - [ ] Static Category pages at `/category/{slug}`
+  - [ ] Wire homepage category chips to the new routes (not only querystring)
+  - [ ] Add Category routes to sitemap and internal links
+  - [ ] JSON-LD Organization in `Layout.astro` and JobPosting for each job (home + category)
+  - [ ] Mark `/post-a-job/success` as `noindex`
+  - [ ] Jobs Feed (RSS + JSON) and link in header/footer
+  - [ ] Newsletter capture in footer (Buttondown/ConvertKit)
 - [ ] Monitoring & basics
   - [x] Enable Vercel Analytics (script added; enable in Vercel Dashboard)
   - [ ] Add a simple Uptime/Checkly probe for `/` and `/post-a-job`
 - [ ] Minimal tests
   - Add Vitest with 2–3 unit tests for utilities (e.g., date sorting, unique tags)
-  - Optional: Playwright smoke test (render home, toggle one filter)
 - [ ] ESLint setup (optional but recommended)
   - Add Astro ESLint plugin and CI check
   <!-- AI-ANCHOR:IMMEDIATE-TASKS-END -->
@@ -47,8 +54,8 @@ This file is the single source of truth for what to do next. Coding agents and h
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-START -->
 
 - [ ] A11y deeper audit (heading order, landmarks, labels)
-- [ ] Analytics (Plausible) with opt-out
-- [ ] Social share polish (OG image per page)
+- [ ] Analytics (Plausible) with opt-out (via `PUBLIC_PLAUSIBLE_DOMAIN`)
+- [ ] Social share polish (OG image per page; share btns em cada vaga)
 - [ ] 404 page and basic error content
 - [ ] Job feeds: RSS/JSON export
 - [ ] Simple contribution guide for adding jobs via PR
@@ -67,7 +74,6 @@ This file is the single source of truth for what to do next. Coding agents and h
 <!-- AI-ANCHOR:FUTURE-IDEAS-START -->
 
 - [ ] Auto-generate OG images (Satori/og-image)
-- [ ] Category pages (static) for SEO
 - [ ] Basic admin script to lint/normalize job entries
 - [ ] Scheduled data validation in CI (nightly)
 - [ ] Tag popularity insights
@@ -103,6 +109,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-06: Roadmap refocused to SEO/Comunidade (páginas de categoria, JSON-LD, feeds, newsletter, noindex success).
 - 2025-11-06: Adicionados smoke tests E2E (Playwright): success page e homepage filters; CI atualizado para rodar testes automaticamente.
 - 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
 - 2025-11-05: Added Zod validator (prebuild), improved a11y (focus, buttons), fixed Astro frontmatter issues, cleaned sitemap warning.

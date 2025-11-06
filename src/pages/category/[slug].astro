@@ -1,0 +1,65 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JobCard from '../../components/JobCard.astro';
+import jobs from '../../data/jobs.json';
+
+type Job = typeof jobs[number];
+
+function slugify(s: string) {
+  return s.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, '-');
+}
+
+export async function getStaticPaths() {
+  const categories = Array.from(new Set((jobs as Job[]).map((j) => j.category)));
+  return categories.map((cat) => ({
+    params: {
+      slug: cat
+        .toLowerCase()
+        .replace(/&/g, 'and')
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, ''),
+    },
+    props: { category: cat },
+  }));
+}
+
+const { category } = Astro.props as { category: string };
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const seo = {
+  title: `${category} Jobs — ArtSource Brazil`,
+  description: `Browse curated remote ${category} jobs for Brazil-based creative talent.`,
+};
+
+const list = (jobs as Job[]).filter((j) => j.category === category);
+
+// JSON-LD for the jobs on this category page
+const jobPostings = list.map((j) => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: j.jobTitle,
+  datePosted: j.postedDate,
+  jobLocationType: 'TELECOMMUTE',
+  hiringOrganization: { '@type': 'Organization', name: j.companyName, logo: new URL(j.companyLogo, site).href },
+  description: `${j.category} — ${j.tags.join(', ')}`,
+  directApply: true,
+  identifier: { '@type': 'PropertyValue', name: j.companyName, value: j.id },
+  url: j.applyLink,
+}));
+---
+
+<Layout seo={seo}>
+  <main class="container mx-auto px-6 py-12">
+    <h1 class="mb-8 text-center text-4xl font-extrabold text-gray-800">{category} Jobs</h1>
+
+    {list.length === 0 ? (
+      <p class="text-center text-gray-600">No jobs found in this category.</p>
+    ) : (
+      <div class="space-y-6">
+        {list.map((job) => (<JobCard job={job} data-testid="job-card" />))}
+      </div>
+    )}
+
+    <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
+  </main>
+</Layout>
