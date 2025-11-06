@@ -27,6 +27,12 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [x] Post-a-Job flow polish
   - Ensure payment success redirects to `/post-a-job/success` (Stripe success URL fixed)
   - Verify fallback link works when env is missing (page de sucesso segura)
+- [ ] Smoke tests (Playwright)
+  - Success page: button opens Tally (assert new tab URL contains `tally.so`)
+  - Home: toggle one filter and verify list updates
+- [ ] Monitoring & basics
+  - Enable Vercel Analytics (or Plausible) on production
+  - Add a simple Uptime/Checkly probe for `/` and `/post-a-job`
 - [ ] Minimal tests
   - Add Vitest with 2–3 unit tests for utilities (e.g., date sorting, unique tags)
   - Optional: Playwright smoke test (render home, toggle one filter)
@@ -46,6 +52,12 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [ ] 404 page and basic error content
 - [ ] Job feeds: RSS/JSON export
 - [ ] Simple contribution guide for adding jobs via PR
+- [ ] Newsletter capture (Buttondown/ConvertKit)
+  - Lightweight form in footer; no JS on homepage beyond fetch to provider
+- [ ] Validate JobPosting markup with Google Rich Results test
+  - Add per-item JSON-LD on the homepage; document how to test
+- [ ] Image hygiene
+  - Add `loading="lazy"` and width/height on logos; optimize static assets
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-END -->
 
 ---
@@ -59,6 +71,10 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [ ] Basic admin script to lint/normalize job entries
 - [ ] Scheduled data validation in CI (nightly)
 - [ ] Tag popularity insights
+- [ ] Intake automation (no backend): Tally → GitHub Issue/PR via Zapier/Make
+  - Each new submission becomes an Issue or PR with a filled job JSON stub
+- [ ] i18n (PT → EN) minimal
+  - Static alternate homepage in PT-BR and `/post-a-job` page copy for BR companies
 <!-- AI-ANCHOR:FUTURE-IDEAS-END -->
 
 ---
