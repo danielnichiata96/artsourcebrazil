@@ -132,8 +132,18 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
           </p>
         </div>
 
-        <div class="mt-8 border-t pt-6 text-gray-500">
-          <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+        <div class="mt-8 grid gap-6 border-t pt-6 text-gray-500 md:grid-cols-2">
+          <div class="text-center md:text-left">
+            <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+          </div>
+          <div class="text-center md:text-right">
+            <span class="mr-2">Feeds:</span>
+            <a href="/jobs.xml" class="underline hover:text-blue-600">Jobs RSS</a>
+            <span class="mx-2 text-gray-300">·</span>
+            <a href="/jobs.json" class="underline hover:text-blue-600">Jobs JSON</a>
+            <span class="mx-2 text-gray-300">·</span>
+            <a href="/blog.xml" class="underline hover:text-blue-600">Blog RSS</a>
+          </div>
         </div>
       </div>
     </footer>
