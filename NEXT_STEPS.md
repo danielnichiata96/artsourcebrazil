@@ -27,7 +27,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [x] Post-a-Job flow polish
   - Ensure payment success redirects to `/post-a-job/success` (Stripe success URL fixed)
   - Verify fallback link works when env is missing (page de sucesso segura)
-- [ ] Smoke tests (Playwright)
+- [x] Smoke tests (Playwright)
   - Success page: button opens Tally (assert new tab URL contains `tally.so`)
   - Home: toggle one filter and verify list updates
 - [ ] Monitoring & basics
@@ -103,6 +103,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-06: Adicionados smoke tests E2E (Playwright): success page e homepage filters; CI atualizado para rodar testes automaticamente.
 - 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
 - 2025-11-05: Added Zod validator (prebuild), improved a11y (focus, buttons), fixed Astro frontmatter issues, cleaned sitemap warning.
 <!-- AI-ANCHOR:CHANGELOG-END -->

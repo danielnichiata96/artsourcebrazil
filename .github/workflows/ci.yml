@@ -33,3 +33,9 @@ jobs:
         env:
           PUBLIC_STRIPE_PAYMENT_LINK: ${{ secrets.PUBLIC_STRIPE_PAYMENT_LINK }}
           PUBLIC_JOB_FORM_URL: ${{ secrets.PUBLIC_JOB_FORM_URL }}
+
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+
+      - name: Run E2E tests
+        run: npm run test:e2e

@@ -101,6 +101,7 @@ const jobPostings = sortedJobs.map((j) => ({
           sortedJobs.map((job: Job) => (
             <JobCard
               job={job}
+              data-testid="job-card"
               data-category={job.category}
               data-tags={job.tags.join(' ')}
               data-text={`${job.jobTitle} ${job.companyName}`}

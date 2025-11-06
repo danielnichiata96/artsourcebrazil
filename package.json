@@ -13,7 +13,9 @@
     "format:check": "prettier . --check",
     "validate:jobs": "node scripts/validate-jobs.mjs",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
@@ -22,6 +24,7 @@
     "tailwindcss": "^3.4.7"
   },
   "devDependencies": {
+    "@playwright/test": "^1.56.1",
     "@types/node": "^24.10.0",
     "prettier": "^3.3.3",
     "prettier-plugin-astro": "^0.14.0",
