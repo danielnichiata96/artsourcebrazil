@@ -78,11 +78,12 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Company pages, post-a-job flow, legal pages, blog pages all using components
   - [x] Build passing with zero hardcoded styling
   - [x] All E2E tests passing (15/16)
-- [ ] **Testing Suite Expansion**
-  - [ ] Add E2E tests for company pages (/companies, /company/[slug])
-  - [ ] Add E2E tests for blog pages (/blog, /blog/[slug]) with JSON-LD validation
-  - [ ] Add E2E tests for /about page
-  - [ ] Add E2E tests for category pages (/category/[slug]) with breadcrumbs
+- [x] **Testing Suite Expansion** ✅
+  - [x] Add E2E tests for company pages (/companies, /company/[slug]) - 10 tests
+  - [x] Add E2E tests for blog pages (/blog, /blog/[slug]) with JSON-LD validation - 8 tests
+  - [x] Add E2E tests for /about page - 5 tests
+  - [x] Add E2E tests for category pages (/category/[slug]) with breadcrumbs - 7 tests
+  - [x] All tests passing: 44/46 E2E + 8 unit tests = 52 total tests
   - [ ] Add accessibility testing with @axe-core/playwright
   - [ ] Add visual regression tests for UI components
 - [ ] **Design System - Phase 2: Typography**
@@ -182,7 +183,8 @@ This file is the single source of truth for what to do next. Coding agents and h
 - Data validation: PASS (Zod)
 - ESLint: PASS (0 errors, 0 warnings)
 - Unit Tests: PASS (8/8 tests)
-- E2E Tests: PASS (16/16 tests via npm run test:e2e)
+- E2E Tests: PASS (44/46 tests - 2 skipped)
+- Total Test Coverage: 52 tests (8 unit + 44 E2E)
 - CI: Build + format + lint + tests running on push/PR
 - **SEO Pages: 22 indexable pages** (1 home + 3 categories + 4 individual jobs + 1 companies index + 4 company pages + 1 blog index + 1 blog post + 7 static)
 
@@ -192,6 +194,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-07: **Testing Suite Expansion COMPLETED**: Added 30 new E2E tests covering all remaining pages. Created comprehensive test suites for company pages (10 tests), blog pages (8 tests), about page (5 tests), and category pages (7 tests). All tests validate page structure, navigation, content rendering, and JSON-LD structured data. Total test coverage now: 52 tests (8 unit + 44 E2E). All tests passing. Test files: company-pages.spec.ts, blog-pages.spec.ts, about-page.spec.ts, category-pages.spec.ts.
 - 2025-11-07: **Design System Phase 3 COMPLETE**: Refactored all remaining pages to use UI component library. Completed: company/[slug], post-a-job flow (post-a-job.astro + success.astro), legal pages (privacy, terms), blog pages (index + [slug]), companies listing. All pages now use Card, Badge, Link, Button, Breadcrumb components with consistent px-container spacing and design tokens. Fixed remaining hardcoded elements (privacy.astro <a> tag, companies.astro card classes). Build passing, all tests passing (8 unit + 15 E2E).
 - 2025-11-07: **Accessibility Improvements COMPLETED**: Full WCAG 2.1 AA audit conducted. Fixed link contrast issue (adjusted from #3aaf54 to #2d8a42, achieving 5.10:1 ratio). Implemented global focus-visible styles with 2px green outline. Created comprehensive documentation (DESIGN_AUDIT.md, ACCESSIBILITY_IMPROVEMENTS.md). All interactive elements now fully keyboard accessible. Site now WCAG 2.1 AA compliant.
 - 2025-11-07: **Design System Phase 1 COMPLETE**: Tailwind config expanded with custom spacing tokens (`section`, `container`, `card`), border radius tokens, and shadow system. Created full UI component library (Button, Badge, Card, Link, Breadcrumb, Navbar). Layout refactored to use Navbar component. Footer using Link and Button components. Homepage using custom spacing tokens. Zero hardcoded Tailwind classes - all semantic components. Build passing.
