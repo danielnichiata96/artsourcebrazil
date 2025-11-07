@@ -1,6 +1,8 @@
 ---
 import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/ui/Card.astro';
+import Link from '../../components/ui/Link.astro';
 
 const seo = {
   title: 'Blog | ArtSource Brazil',
@@ -13,7 +15,7 @@ const posts = (await getCollection('blog'))
 ---
 
 <Layout seo={seo}>
-  <main class="container mx-auto max-w-4xl px-6 py-12">
+  <main class="container mx-auto max-w-4xl px-container py-12">
     <div class="prose prose-lg mx-auto max-w-none">
       <h1>Blog</h1>
       <p>Here you'll find articles, guides, and insights for the creative industries in Brazil.</p>
@@ -22,20 +24,19 @@ const posts = (await getCollection('blog'))
     <div class="mt-12 grid gap-8">
       {
         posts.map((post) => (
-          <a
-            href={`/blog/${post.slug}`}
-            class="block rounded-lg border bg-white p-6 shadow-sm transition-all hover:shadow-md"
-          >
-            <h2 class="text-2xl font-bold text-neutral-900">{post.data.title}</h2>
-            <p class="mt-2 text-neutral-600">{post.data.description}</p>
-            <div class="mt-4 text-sm text-gray-500">
-              <time datetime={post.data.publishDate.toISOString()}>
-                {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
-                  post.data.publishDate,
-                )}
-              </time>
-            </div>
-          </a>
+          <Link href={`/blog/${post.slug}`} class="block">
+            <Card variant="default" padding="md" class="transition-all hover:shadow-md">
+              <h2 class="text-2xl font-bold text-neutral-900">{post.data.title}</h2>
+              <p class="mt-2 text-neutral-600">{post.data.description}</p>
+              <div class="mt-4 text-sm text-neutral-500">
+                <time datetime={post.data.publishDate.toISOString()}>
+                  {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
+                    post.data.publishDate,
+                  )}
+                </time>
+              </div>
+            </Card>
+          </Link>
         ))
       }
     </div>

@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Link from '../components/ui/Link.astro';
 
 const seo = {
   title: 'Terms of Service — ArtSource Brazil',
@@ -9,7 +10,7 @@ const seo = {
 ---
 
 <Layout seo={seo}>
-  <main class="container mx-auto max-w-4xl px-6 py-12">
+  <main class="container mx-auto max-w-4xl px-container py-12">
     <div class="prose prose-lg mx-auto max-w-none">
       <h1>Terms of Service</h1>
       <p class="text-sm text-neutral-600">
@@ -19,8 +20,8 @@ const seo = {
 
       <p>
         Welcome to ArtSource Brazil ("we," "us," or "our"). These Terms of Service ("Terms") govern
-        your access to and use of our website <a href="https://artsourcebrazil.vercel.app/"
-          >https://artsourcebrazil.vercel.app/</a
+        your access to and use of our website <Link href="https://artsourcebrazil.vercel.app/"
+          >https://artsourcebrazil.vercel.app/</Link
         > (the "Site") and the services we provide.
       </p>
 
@@ -32,7 +33,7 @@ const seo = {
       <h2>1. Acceptance of Terms</h2>
       <p>
         By accessing and using the Site, you acknowledge that you have read, understood, and agree
-        to be bound by these Terms, as well as our <a href="/privacy">Privacy Policy</a>. These
+        to be bound by these Terms, as well as our <Link href="/privacy">Privacy Policy</Link>. These
         Terms constitute a legally binding agreement between you and ArtSource Brazil.
       </p>
 
@@ -216,9 +217,9 @@ const seo = {
       <p>If you have any questions or concerns about these Terms, please contact us:</p>
       <p>
         <strong>Email:</strong>
-        <a href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</a><br />
+        <Link href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</Link><br />
         <strong>Website:</strong>
-        <a href="/">ArtSource Brazil</a>
+        <Link href="/">ArtSource Brazil</Link>
       </p>
 
       <hr class="my-8" />

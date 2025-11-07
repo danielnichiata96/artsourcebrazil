@@ -1,5 +1,8 @@
 ---
-import '../styles/global.css';
+import Layout from '../layouts/Layout.astro';
+import Card from '../components/ui/Card.astro';
+import Button from '../components/ui/Button.astro';
+import Link from '../components/ui/Link.astro';
 
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
@@ -15,86 +18,36 @@ const paymentLink = import.meta.env.PUBLIC_STRIPE_PAYMENT_LINK ?? '#';
 const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{seo.title}</title>
-    <meta name="description" content={seo.description} />
-    <link rel="canonical" href={seo.url} />
+<Layout seo={seo}>
+  <main class="container mx-auto px-container py-12">
+    <Card variant="elevated" padding="lg" class="mx-auto max-w-3xl text-center">
+      <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Post Your Job Opportunity</h1>
+      <p class="mb-8 text-lg text-neutral-600">
+        Connect with Brazil's top creative talent in Game Dev, 3D, and Design.
+      </p>
 
-    <!-- Open Graph -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content={seo.title} />
-    <meta property="og:description" content={seo.description} />
-    <meta property="og:url" content={seo.url} />
-    <meta property="og:image" content={seo.image} />
-
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={seo.title} />
-    <meta name="twitter:description" content={seo.description} />
-    <meta name="twitter:image" content={seo.image} />
-  </head>
-  <body class="bg-gray-100 font-sans text-neutral-900">
-    <header class="sticky top-0 z-10 bg-white shadow-sm">
-      <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-        <a href="/" class="text-2xl font-bold text-neutral-900 transition-colors hover:text-primary"
-          >ArtSource Brazil</a
-        >
-        <a
-          href="/post-a-job"
-          class="rounded-lg bg-primary px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-primary-hover"
-          >Post a Job</a
-        >
-      </nav>
-    </header>
-
-    <main class="container mx-auto px-6 py-12">
-      <div
-        class="mx-auto max-w-3xl rounded-xl border border-gray-200 bg-white p-10 text-center shadow-lg"
-      >
-        <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Post Your Job Opportunity</h1>
-        <p class="mb-8 text-lg text-neutral-600">
-          Connect with Brazil's top creative talent in Game Dev, 3D, and Design.
-        </p>
-
-        <div class="mb-8 rounded-r-lg border-l-4 border-blue-500 bg-blue-50 p-6">
-          <p class="text-2xl font-bold text-blue-800">$99 USD</p>
-          <p class="mt-2 text-blue-700">
-            Your job post will be featured for 30 days, reaching a dedicated community of
-            professionals.
-          </p>
-        </div>
-
-        <a
-          href={paymentLink}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block w-full cursor-pointer rounded-lg bg-primary px-8 py-4 text-center text-lg font-bold text-white shadow-md transition-all duration-300 hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 focus:ring-offset-white"
-          role="button"
-          aria-label="Proceed to Payment and Post Job"
-        >
-          Proceed to Payment & Post Job
-        </a>
-
-        <p class="mt-6 text-xs text-gray-500">
-          After a successful payment, you will be redirected to a simple form to submit your job
-          details. It's fast and easy. If not redirected, you can open the form here:
-          <a
-            class="text-blue-700 underline"
-            href={jobFormUrl}
-            target="_blank"
-            rel="noopener noreferrer">Submit Job Details</a
-          >.
+      <div class="mb-8 rounded-lg border-l-4 border-accent bg-accent-light p-6">
+        <p class="text-2xl font-bold text-neutral-900">$99 USD</p>
+        <p class="mt-2 text-neutral-700">
+          Your job post will be featured for 30 days, reaching a dedicated community of
+          professionals.
         </p>
       </div>
-    </main>
 
-    <footer class="mt-12 border-t bg-white py-6 text-center text-gray-500">
-      <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
-    </footer>
-  </body>
-</html>
+      <Button
+        href={paymentLink}
+        size="lg"
+        class="w-full"
+        aria-label="Proceed to Payment and Post Job"
+      >
+        Proceed to Payment & Post Job
+      </Button>
+
+      <p class="mt-6 text-xs text-neutral-600">
+        After a successful payment, you will be redirected to a simple form to submit your job
+        details. It's fast and easy. If not redirected, you can open the form here:
+        <Link href={jobFormUrl} target="_blank" rel="noopener noreferrer">Submit Job Details</Link>.
+      </p>
+    </Card>
+  </main>
+</Layout>

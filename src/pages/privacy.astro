@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Link from '../components/ui/Link.astro';
 
 const seo = {
   title: 'Privacy Policy — ArtSource Brazil',
@@ -9,7 +10,7 @@ const seo = {
 ---
 
 <Layout seo={seo}>
-  <main class="container mx-auto max-w-4xl px-6 py-12">
+  <main class="container mx-auto max-w-4xl px-container py-12">
     <div class="prose prose-lg mx-auto max-w-none">
       <h1>Privacy Policy</h1>
       <p class="text-sm text-neutral-600">
@@ -20,8 +21,8 @@ const seo = {
       <p>
         ArtSource Brazil ("we," "us," or "our") is committed to protecting your privacy. This
         Privacy Policy explains how we collect, use, disclose, and safeguard your information when
-        you visit our website <a href="https://artsourcebrazil.vercel.app/"
-          >https://artsourcebrazil.vercel.app/</a
+        you visit our website <Link href="https://artsourcebrazil.vercel.app/"
+          >https://artsourcebrazil.vercel.app/</Link
         > (the "Site").
       </p>
 
@@ -216,9 +217,9 @@ const seo = {
       </p>
       <p>
         <strong>Email:</strong>
-        <a href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</a><br />
+        <Link href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</Link><br />
         <strong>Website:</strong>
-        <a href="/">ArtSource Brazil</a>
+        <Link href="/">ArtSource Brazil</Link>
       </p>
 
       <hr class="my-8" />

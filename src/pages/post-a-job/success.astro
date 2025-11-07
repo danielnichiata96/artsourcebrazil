@@ -1,5 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/ui/Card.astro';
+import Button from '../../components/ui/Button.astro';
+import Link from '../../components/ui/Link.astro';
 
 const seo = {
   title: 'Payment Successful — ArtSource Brazil',
@@ -14,34 +17,24 @@ const jobFormUrl =
 ---
 
 <Layout seo={seo} noindex={true}>
-  <main class="container mx-auto px-6 py-12">
-    <div
-      class="mx-auto max-w-3xl rounded-xl border border-gray-200 bg-white p-10 text-center shadow-lg"
-    >
-      <h1 class="mb-4 text-4xl font-bold text-neutral-900">Thank You!</h1>
+  <main class="container mx-auto px-container py-12">
+    <Card variant="elevated" padding="lg" class="mx-auto max-w-3xl text-center">
+      <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Thank You!</h1>
       <p class="mb-2 text-xl text-neutral-700">Your payment was successful.</p>
       <p class="mb-8 text-neutral-600">
         Please click the button below to submit your job details. Your job post will be reviewed and
         published within 24 hours.
       </p>
 
-      <div style="margin-top: 2rem;">
-        <a
-          href={jobFormUrl}
-          target="_blank"
-          rel="noopener noreferrer"
-          style="display: inline-block; background-color: #2563eb; color: white; padding: 1rem 2rem; border-radius: 0.5rem; text-decoration: none; font-weight: bold; font-size: 1.125rem;"
-        >
-          Submit Job Details
-        </a>
-      </div>
+      <Button href={jobFormUrl} target="_blank" rel="noopener noreferrer" size="lg">
+        Submit Job Details
+      </Button>
 
-      <p class="mt-6 text-sm text-gray-500">
-        If you have any questions, please contact us at <a
-          href="mailto:artsourcebrazil@gmail.com"
-          class="text-blue-600 underline hover:text-blue-700">artsourcebrazil@gmail.com</a
+      <p class="mt-6 text-sm text-neutral-600">
+        If you have any questions, please contact us at <Link
+          href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</Link
         >.
       </p>
-    </div>
+    </Card>
   </main>
 </Layout>

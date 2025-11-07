@@ -58,21 +58,22 @@ const logoUrl = new URL('/images/og-default.svg', site).href;
         },
       })}
     />
-    <main class="container mx-auto max-w-4xl px-6 py-12">
-      <article class="prose prose-lg mx-auto max-w-none">
-        {
-          post.data.heroImage && (
-            <img src={post.data.heroImage} alt="" class="mb-8 w-full rounded-lg" />
-          )
-        }
-        <h1>{post.data.title}</h1>
-        <div class="mb-8 text-sm text-gray-500">
-          Published on <time datetime={post.data.publishDate.toISOString()}>
-            {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(post.data.publishDate)}
-          </time>
-        </div>
-        <Content />
-      </article>
-    </main>
   </Fragment>
+
+  <main class="container mx-auto max-w-4xl px-container py-12">
+    <article class="prose prose-lg mx-auto max-w-none">
+      {
+        post.data.heroImage && (
+          <img src={post.data.heroImage} alt="" class="mb-8 w-full rounded-lg" />
+        )
+      }
+      <h1>{post.data.title}</h1>
+      <div class="mb-8 text-sm text-neutral-500">
+        Published on <time datetime={post.data.publishDate.toISOString()}>
+          {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(post.data.publishDate)}
+        </time>
+      </div>
+      <Content />
+    </article>
+  </main>
 </Layout>
