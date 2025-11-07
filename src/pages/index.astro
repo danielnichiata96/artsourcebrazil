@@ -70,12 +70,12 @@ const jobPostings = sortedJobs.map((j) => ({
     </div>
 
     <!-- Search Bar (Primary filtering method) -->
-    <div class="animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;">
+    <div class="relative z-30 animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;">
       <SearchBar />
     </div>
 
     <!-- Category Buttons (Active filters) -->
-    <div class="animate-fade-in" style="animation-delay: 0.15s; animation-fill-mode: both;">
+    <div class="relative z-10 animate-fade-in" style="animation-delay: 0.15s; animation-fill-mode: both;">
       <CategoryButtons categories={categories} />
     </div>
 
