@@ -3,12 +3,12 @@
 // Hidden by default, shown when user clicks "Advanced Filters" button
 ---
 
-<div class="relative inline-block text-left">
+<div class="relative inline-block text-left min-h-[60px]">
   <!-- Advanced Filters Button -->
   <button
     id="advanced-filters-toggle"
     type="button"
-    class="inline-flex items-center gap-2 rounded-lg border-2 border-neutral-200 bg-background-paper px-4 py-2 text-sm font-medium text-neutral-700 transition-all duration-200 hover:border-neutral-300 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    class="inline-flex h-[60px] items-center gap-2 rounded-xl border-2 border-neutral-200 bg-background-paper px-5 py-4 text-base font-medium text-neutral-700 transition-all duration-200 hover:border-neutral-300 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
     aria-expanded="false"
     aria-haspopup="true"
   >
@@ -32,7 +32,7 @@
   <!-- Dropdown Panel (hidden by default) -->
   <div
     id="advanced-filters-panel"
-    class="absolute right-0 z-10 mt-2 hidden w-80 origin-top-right rounded-xl border border-neutral-200 bg-white p-6 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+    class="absolute right-0 z-50 mt-2 hidden w-80 origin-top-right rounded-xl border border-neutral-200 bg-white p-6 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="advanced-filters-toggle"
