@@ -38,6 +38,12 @@
 @layer base {
   html {
     font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    background-color: theme('colors.background.DEFAULT');
+  }
+
+  body {
+    background-color: theme('colors.background.DEFAULT');
+    color: theme('colors.neutral.900');
   }
 
   /* Typography hierarchy with serif font for headings */

@@ -47,21 +47,28 @@ export default {
           brown: '#bd7855',      // Terra
           'brown-dark': '#b5805a',
         },
-        // Neutral editorial palette
+        // Warm neutral palette (replacing cold grays)
         neutral: {
-          950: '#0A0A0A',        // Preto profundo
-          900: '#1A1A1A',        // Texto principal
-          800: '#373733',        // Logo dark
-          700: '#4A4A4A',
-          600: '#666666',        // Texto secundário
-          500: '#808080',
-          400: '#A0A0A0',
-          300: '#C0C0C0',
-          200: '#E0E0E0',        // Bordas suaves
-          100: '#F0F0F0',        // Background alternativo
-          50: '#FAFAFA',         // Background principal
+          950: '#1a1612',        // Preto caloroso (brown-black)
+          900: '#2d2821',        // Texto principal (warm dark)
+          800: '#3d362e',        // Texto escuro suave
+          700: '#57504a',        // Texto secundário
+          600: '#74696a',        // Texto terciário
+          500: '#9a8f8a',        // Texto desabilitado
+          400: '#b5aca7',        // Bordas escuras
+          300: '#d4cdc7',        // Bordas médias
+          200: '#e8e2dc',        // Bordas suaves (warm)
+          100: '#f5f1ed',        // Background alternativo (cream)
+          50: '#faf8f5',         // Background principal (warm white)
         },
-        // Semantic colors
+        // Background variants for depth
+        background: {
+          DEFAULT: '#faf8f5',    // Warm white principal
+          cream: '#f5f1ed',      // Cream suave
+          sand: '#f0ebe5',       // Sand mais escuro
+          paper: '#fefdfb',      // Paper white (quase branco)
+        },
+        // Semantic colors (mantém os mesmos)
         primary: {
           DEFAULT: '#3aaf54',    // Verde do logo
           hover: '#2d8a42',
@@ -74,7 +81,8 @@ export default {
         accent: {
           DEFAULT: '#f7d55c',    // Amarelo do logo
           hover: '#f5d03b',
-          light: '#fffbea',
+          light: '#fffbea',      // Amarelo bem claro
+          lightest: '#fffef5',   // Amarelo quase imperceptível
         },
       },
       spacing: {

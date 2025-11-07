@@ -58,12 +58,16 @@ const jobPostings = sortedJobs.map((j) => ({
   </Fragment>
 
   <main class="container mx-auto px-container py-section-sm">
-    <h1 class="mb-4 text-center font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
-      Find Your Next Creative Role
-    </h1>
-    <p class="mx-auto mb-8 max-w-2xl text-center text-lg text-neutral-600">
-      Remote opportunities for Brazilian artists, designers, and game developers
-    </p>
+    <!-- Hero section with subtle warm background -->
+    <div class="mb-12 rounded-2xl bg-gradient-to-br from-accent-lightest via-background-cream to-background-paper p-8 text-center">
+      <h1 class="mb-4 font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
+        Find Your Next Creative Role
+      </h1>
+      <p class="mx-auto max-w-2xl text-lg text-neutral-700">
+        Remote opportunities for Brazilian artists, designers, and game developers
+      </p>
+    </div>
+
     <!-- SEO-friendly links to category pages -->
     <nav class="mb-6 flex flex-wrap justify-center gap-2" aria-label="Browse by category">
       {
@@ -72,7 +76,7 @@ const jobPostings = sortedJobs.map((j) => ({
           return (
             <a
               href={`/category/${slug}`}
-              class="rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:bg-primary-light hover:text-primary"
+              class="rounded-full border border-neutral-300 bg-background-paper px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:bg-primary-light hover:text-primary"
             >
               {cat} jobs
             </a>

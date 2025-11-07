@@ -7,12 +7,12 @@ export interface Props {
 
 const { variant = 'default', padding = 'md', class: className = '', ...rest } = Astro.props;
 
-const baseClasses = 'bg-white rounded-lg transition-all duration-300';
+const baseClasses = 'bg-background-paper rounded-lg transition-all duration-300';
 
 const variantClasses = {
   default: 'border border-neutral-200 shadow-sm hover:shadow-md',
   bordered: 'border-2 border-neutral-200 hover:border-primary',
-  elevated: 'shadow-md hover:shadow-lg',
+  elevated: 'shadow-md hover:shadow-lg border border-neutral-100',
 };
 
 const paddingClasses = {
