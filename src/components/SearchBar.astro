@@ -42,14 +42,19 @@ import AdvancedFilters from './AdvancedFilters.astro';
 </div>
 
 <script>
+  // Ensure we don't query DOM nodes that aren't parsed yet
   const params = new URLSearchParams(location.search);
   let q = params.get('q') || '';
 
-  const container = document.querySelector('[data-jobs]');
-  const items = Array.from(container ? container.children : []);
   const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
 
+  function getItems() {
+    const container = document.querySelector('[data-jobs]');
+    return Array.from(container ? container.children : []) as HTMLElement[];
+  }
+
   function applyFilters() {
+    const items = getItems();
     const qLower = (q || '').toLowerCase();
 
     items.forEach((el) => {
@@ -57,7 +62,7 @@ import AdvancedFilters from './AdvancedFilters.astro';
       const text = (el.getAttribute('data-text') || '').toLowerCase();
 
       const searchPass = !qLower || text.includes(qLower) || tagsStr.includes(qLower);
-      
+
       el.classList.toggle('hidden', !searchPass);
     });
 
@@ -68,35 +73,47 @@ import AdvancedFilters from './AdvancedFilters.astro';
     history.replaceState({}, '', url);
   }
 
-  // Search input event
-  if (searchInput) {
-    searchInput.value = q;
-    let to: ReturnType<typeof setTimeout> | undefined;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(to);
-      to = setTimeout(() => {
-        q = searchInput.value || '';
-        applyFilters();
-      }, 150);
-    });
-  }
+  // Initialize after DOM is ready to avoid empty lists
+  function init() {
+    // Prime search input
+    if (searchInput) searchInput.value = q;
 
-  // Delegate clicks on tags inside job cards (for quick search)
-  if (container) {
-    container.addEventListener('click', (e) => {
-      const target = e.target as HTMLElement;
-      if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
-        const tagText = target.getAttribute('data-tag') || '';
-        if (tagText && searchInput) {
-          searchInput.value = tagText;
-          q = tagText;
+    // Search input event
+    if (searchInput) {
+      let to: ReturnType<typeof setTimeout> | undefined;
+      searchInput.addEventListener('input', () => {
+        clearTimeout(to);
+        to = setTimeout(() => {
+          q = searchInput.value || '';
           applyFilters();
-          searchInput.focus();
+        }, 150);
+      });
+    }
+
+    // Delegate clicks on tags inside job cards (for quick search)
+    const container = document.querySelector('[data-jobs]');
+    if (container) {
+      container.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
+          const tagText = target.getAttribute('data-tag') || '';
+          if (tagText && searchInput) {
+            searchInput.value = tagText;
+            q = tagText;
+            applyFilters();
+            searchInput.focus();
+          }
         }
-      }
-    });
+      });
+    }
+
+    // initial run
+    applyFilters();
   }
 
-  // init on load from URL
-  applyFilters();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
 </script>
