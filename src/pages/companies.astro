@@ -4,6 +4,8 @@ import Layout from '../layouts/Layout.astro';
 import Button from '../components/ui/Button.astro';
 import Badge from '../components/ui/Badge.astro';
 import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import Card from '../components/ui/Card.astro';
+import Link from '../components/ui/Link.astro';
 import { slugify } from '../lib/jobs';
 import type { Job } from '../lib/jobs';
 
@@ -95,46 +97,45 @@ const breadcrumbs = {
     <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
       {
         companies.map((company) => (
-          <a
-            href={`/company/${company.slug}`}
-            class="group flex flex-col rounded-card border border-neutral-200 bg-white p-card shadow-card transition-all duration-300 hover:border-primary hover:shadow-card-hover"
-          >
-            <!-- Company Logo -->
-            <div class="mb-4 flex items-center justify-center">
-              <img
-                src={company.logo}
-                alt={`${company.name} logo`}
-                class="h-20 w-20 rounded-lg border border-neutral-200 object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-            </div>
-
-            <!-- Company Name -->
-            <h2 class="mb-2 text-center text-xl font-bold text-neutral-900 transition-colors group-hover:text-primary">
-              {company.name}
-            </h2>
-
-            <!-- Job Count -->
-            <p class="mb-3 text-center text-sm text-neutral-600">
-              {company.jobCount} open position{company.jobCount > 1 ? 's' : ''}
-            </p>
-
-            <!-- Categories -->
-            <div class="mt-auto">
-              <div class="flex flex-wrap justify-center gap-2">
-                {company.categories.slice(0, 2).map((category) => (
-                  <Badge variant="accent">{category}</Badge>
-                ))}
-                {company.categories.length > 2 && (
-                  <Badge variant="neutral">+{company.categories.length - 2}</Badge>
-                )}
+          <Link href={`/company/${company.slug}`} class="group">
+            <Card class="flex h-full flex-col transition-all duration-300 hover:border-primary hover:shadow-card-hover">
+              <!-- Company Logo -->
+              <div class="mb-4 flex items-center justify-center">
+                <img
+                  src={company.logo}
+                  alt={`${company.name} logo`}
+                  class="h-20 w-20 rounded-lg border border-neutral-200 object-cover transition-transform duration-300 group-hover:scale-110"
+                />
               </div>
-            </div>
 
-            <!-- View Jobs Arrow -->
-            <div class="mt-4 text-center text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
-              View jobs →
-            </div>
-          </a>
+              <!-- Company Name -->
+              <h2 class="mb-2 text-center text-xl font-bold text-neutral-900 transition-colors group-hover:text-primary">
+                {company.name}
+              </h2>
+
+              <!-- Job Count -->
+              <p class="mb-3 text-center text-sm text-neutral-600">
+                {company.jobCount} open position{company.jobCount > 1 ? 's' : ''}
+              </p>
+
+              <!-- Categories -->
+              <div class="mt-auto">
+                <div class="flex flex-wrap justify-center gap-2">
+                  {company.categories.slice(0, 2).map((category) => (
+                    <Badge variant="accent">{category}</Badge>
+                  ))}
+                  {company.categories.length > 2 && (
+                    <Badge variant="neutral">+{company.categories.length - 2}</Badge>
+                  )}
+                </div>
+              </div>
+
+              <!-- View Jobs Arrow -->
+              <div class="mt-4 text-center text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
+                View jobs →
+              </div>
+            </Card>
+          </Link>
         ))
       }
     </section>
