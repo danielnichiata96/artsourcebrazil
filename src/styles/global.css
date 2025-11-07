@@ -36,5 +36,61 @@
 }
 
 @layer base {
-		html { font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif; }
+  html {
+    font-family: 'Outfit', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  }
+
+  /* Typography hierarchy with serif font for headings */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Crimson Pro', Georgia, serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: theme('colors.neutral.900');
+  }
+
+  h1 {
+    font-size: theme('fontSize.5xl');
+    line-height: theme('fontSize.5xl[1].lineHeight');
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: theme('fontSize.4xl');
+    line-height: theme('fontSize.4xl[1].lineHeight');
+    font-weight: 700;
+  }
+
+  h3 {
+    font-size: theme('fontSize.3xl');
+    line-height: theme('fontSize.3xl[1].lineHeight');
+    font-weight: 600;
+  }
+
+  h4 {
+    font-size: theme('fontSize.2xl');
+    line-height: theme('fontSize.2xl[1].lineHeight');
+    font-weight: 600;
+  }
+
+  h5 {
+    font-size: theme('fontSize.xl');
+    line-height: theme('fontSize.xl[1].lineHeight');
+    font-weight: 600;
+  }
+
+  h6 {
+    font-size: theme('fontSize.lg');
+    line-height: theme('fontSize.lg[1].lineHeight');
+    font-weight: 600;
+  }
+
+  /* Enhanced paragraph spacing */
+  p {
+    margin-bottom: 1rem;
+  }
+
+  /* Better link styling */
+  a {
+    text-decoration-skip-ink: auto;
+  }
 }

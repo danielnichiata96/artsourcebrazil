@@ -17,8 +17,10 @@ const posts = (await getCollection('blog'))
 <Layout seo={seo}>
   <main class="container mx-auto max-w-4xl px-container py-12">
     <div class="prose prose-lg mx-auto max-w-none">
-      <h1>Blog</h1>
-      <p>Here you'll find articles, guides, and insights for the creative industries in Brazil.</p>
+      <h1 class="font-serif">Blog</h1>
+      <p class="text-xl leading-relaxed text-neutral-600">
+        Here you'll find articles, guides, and insights for the creative industries in Brazil.
+      </p>
     </div>
 
     <div class="mt-12 grid gap-8">
@@ -26,8 +28,8 @@ const posts = (await getCollection('blog'))
         posts.map((post) => (
           <Link href={`/blog/${post.slug}`} class="block">
             <Card variant="default" padding="md" class="transition-all hover:shadow-md">
-              <h2 class="text-2xl font-bold text-neutral-900">{post.data.title}</h2>
-              <p class="mt-2 text-neutral-600">{post.data.description}</p>
+              <h2 class="font-serif text-3xl font-bold text-neutral-900">{post.data.title}</h2>
+              <p class="mt-2 text-lg text-neutral-600">{post.data.description}</p>
               <div class="mt-4 text-sm text-neutral-500">
                 <time datetime={post.data.publishDate.toISOString()}>
                   {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
