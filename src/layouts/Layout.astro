@@ -29,13 +29,23 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
-    <!-- Google Fonts - Outfit -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Preload critical self-hosted fonts for performance -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
+      rel="preload"
+      href="/fonts/outfit-v15-latin-regular.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
     />
+    <link
+      rel="preload"
+      href="/fonts/outfit-v15-latin-700.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={canonicalUrl} />
