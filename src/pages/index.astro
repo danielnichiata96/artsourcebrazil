@@ -3,6 +3,7 @@ import jobs from '../data/jobs.json';
 import JobCard from '../components/JobCard.astro';
 import CategoryFilter from '../components/CategoryFilter.astro';
 import Layout from '../layouts/Layout.astro';
+import Badge from '../components/ui/Badge.astro';
 import '../styles/global.css';
 import { sortJobsByDateDesc, collectFacets, slugify } from '../lib/jobs';
 
@@ -18,7 +19,7 @@ const seo = {
   title: 'ArtSource Brazil — Remote Creative Jobs',
   description:
     'Niche job board for Brazil-based creative talent: Game Dev, 3D & Animation, and UI/UX Design. Find curated remote roles from international studios.',
-  image: '/images/og-default.svg',
+  image: '/images/artsource-brazil-logo.svg',
 };
 
 // JSON-LD: one JobPosting per job
@@ -56,23 +57,25 @@ const jobPostings = sortedJobs.map((j) => ({
     <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
   </Fragment>
 
-  <main class="container mx-auto px-6 py-12">
-    <h1 class="mb-8 text-center text-4xl font-extrabold text-gray-800">
+  <main class="container mx-auto px-container py-section-sm">
+    <h1 class="mb-8 text-center text-4xl font-extrabold text-neutral-900">
       Find Your Next Creative Role
     </h1>
     <!-- SEO-friendly links to category pages -->
     <nav class="mb-6 flex flex-wrap justify-center gap-2" aria-label="Browse by category">
-      {categories.map((cat) => {
-        const slug = slugify(cat);
-        return (
-          <a
-            href={`/category/${slug}`}
-            class="rounded-full border border-gray-300 px-3 py-1 text-sm text-gray-700 hover:border-blue-500 hover:text-blue-600"
-          >
-            {cat} jobs
-          </a>
-        );
-      })}
+      {
+        categories.map((cat) => {
+          const slug = slugify(cat);
+          return (
+            <a
+              href={`/category/${slug}`}
+              class="rounded-full border border-neutral-300 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:bg-primary-light hover:text-primary"
+            >
+              {cat} jobs
+            </a>
+          );
+        })
+      }
     </nav>
     <CategoryFilter categories={categories} tags={tags} />
     <div class="space-y-6" data-jobs>

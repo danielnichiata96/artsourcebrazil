@@ -1,0 +1,80 @@
+---
+export interface Props {
+  url: string;
+  title: string;
+  className?: string;
+}
+
+const { url, title, className } = Astro.props;
+
+const shareLinks = {
+  twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+  linkedin: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+  whatsapp: `https://api.whatsapp.com/send?text=${encodeURIComponent(`${title} ${url}`)}`,
+};
+---
+
+<div class:list={['flex items-center gap-4', className]}>
+  <p class="text-sm font-semibold text-gray-700">Share this job:</p>
+  <div class="flex items-center gap-2">
+    <a
+      href={shareLinks.twitter}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-blue-100"
+      aria-label="Share on Twitter"
+      title="Share on Twitter"
+    >
+      𝕏
+    </a>
+    <a
+      href={shareLinks.linkedin}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-blue-100"
+      aria-label="Share on LinkedIn"
+      title="Share on LinkedIn"
+    >
+      in
+    </a>
+    <a
+      href={shareLinks.whatsapp}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-green-100"
+      aria-label="Share on WhatsApp"
+      title="Share on WhatsApp"
+    >
+      📱
+    </a>
+    <button
+      id="copy-link-button"
+      type="button"
+      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-gray-200"
+      aria-label="Copy link to clipboard"
+      title="Copy link"
+    >
+      🔗
+    </button>
+  </div>
+</div>
+
+<script>
+  document.getElementById('copy-link-button')?.addEventListener('click', async () => {
+    const button = document.getElementById('copy-link-button');
+    if (!button) return;
+
+    const url = window.location.href;
+    
+    try {
+      await navigator.clipboard.writeText(url);
+      const originalText = button.innerHTML;
+      button.innerHTML = '✓';
+      setTimeout(() => {
+        button.innerHTML = originalText;
+      }, 2000);
+    } catch (err) {
+      console.error('Failed to copy:', err);
+    }
+  });
+</script>

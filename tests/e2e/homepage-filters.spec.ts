@@ -14,7 +14,7 @@ test.describe('Homepage Job Filters', () => {
 
     // Find and click a category button (if exists)
     const categoryButton = page.locator('button:has-text("Game Dev")').first();
-    
+
     // Only run the filter test if the button exists
     if (await categoryButton.isVisible()) {
       await categoryButton.click();
@@ -24,7 +24,7 @@ test.describe('Homepage Job Filters', () => {
 
       // Verify jobs are still visible (filtered list)
       await expect(page.locator('[data-testid="job-card"]').first()).toBeVisible();
-      
+
       // The filtered count should be <= initial (or possibly same if all are Game Dev)
       const filteredJobCount = await page.locator('[data-testid="job-card"]').count();
       expect(filteredJobCount).toBeLessThanOrEqual(initialJobCount);
@@ -42,17 +42,17 @@ test.describe('Homepage Job Filters', () => {
 
     // Find search input
     const searchInput = page.locator('input[type="search"]');
-    
+
     if (await searchInput.isVisible()) {
       // Type a search term (use a common word like "Senior" or "Designer")
       await searchInput.fill('Senior');
-      
+
       // Wait for URL to update (flexible encoding)
       await expect(page).toHaveURL(/q=Senior/);
 
       // Verify at least one job is visible (assuming the test data has "Senior")
       const jobCount = await page.locator('[data-testid="job-card"]').count();
-      
+
       // If no results, that's okay (data dependent), but the filter should work
       expect(jobCount).toBeGreaterThanOrEqual(0);
     } else {

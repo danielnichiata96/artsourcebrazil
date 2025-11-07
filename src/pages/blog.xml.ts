@@ -10,7 +10,8 @@ export const GET: APIRoute = async () => {
     .sort((a: any, b: any) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf());
 
   const items = posts
-    .map((p: any) => `
+    .map(
+      (p: any) => `
       <item>
         <title><![CDATA[${p.data.title}]]></title>
         <link>${site}/blog/${p.slug}</link>
@@ -18,7 +19,8 @@ export const GET: APIRoute = async () => {
         <pubDate>${p.data.publishDate.toUTCString()}</pubDate>
         <description><![CDATA[${p.data.description}]]></description>
       </item>
-    `)
+    `,
+    )
     .join('\n');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>

@@ -1,0 +1,301 @@
+---
+import jobs from '../../data/jobs.json';
+import Layout from '../../layouts/Layout.astro';
+import JobCard from '../../components/JobCard.astro';
+import ShareButtons from '../../components/ShareButtons.astro';
+import Button from '../../components/ui/Button.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Card from '../../components/ui/Card.astro';
+import Link from '../../components/ui/Link.astro';
+import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import { slugify, sortJobsByDateDesc } from '../../lib/jobs';
+import type { Job } from '../../lib/jobs';
+
+export async function getStaticPaths() {
+  const allJobs = jobs as Job[];
+  return allJobs.map((job) => ({
+    params: {
+      id: job.id,
+      slug: slugify(job.jobTitle),
+    },
+    props: { job },
+  }));
+}
+
+interface Props {
+  job: Job;
+}
+
+const { job } = Astro.props;
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+
+// Related jobs: same category, excluding current
+const relatedJobs = (jobs as Job[])
+  .filter((j) => j.category === job.category && j.id !== job.id)
+  .slice(0, 3);
+
+// Format date for display
+const postedDate = new Date(job.postedDate);
+const formattedDate = postedDate.toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+// SEO
+const seo = {
+  title: `${job.jobTitle} at ${job.companyName} | ArtSource Brazil`,
+  description: `Apply for ${job.jobTitle} at ${job.companyName}. ${job.category} remote position for Brazil-based creative talent. Tags: ${job.tags.join(', ')}.`,
+  image: `/og/${job.id}-${slugify(job.jobTitle)}.png`,
+};
+
+// JobPosting JSON-LD (more complete than homepage)
+const jobPosting = {
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: job.jobTitle,
+  description: `${job.category} position at ${job.companyName}. Skills: ${job.tags.join(', ')}. Remote work opportunity for creative professionals based in Brazil.`,
+  datePosted: job.postedDate,
+  validThrough: new Date(
+    new Date(job.postedDate).getTime() + 30 * 24 * 60 * 60 * 1000,
+  ).toISOString(), // 30 days validity
+  employmentType: 'CONTRACTOR',
+  jobLocationType: 'TELECOMMUTE',
+  applicantLocationRequirements: {
+    '@type': 'Country',
+    name: 'Brazil',
+  },
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: job.companyName,
+    sameAs: job.applyLink,
+    logo: new URL(job.companyLogo, site).href,
+  },
+  jobLocation: {
+    '@type': 'Place',
+    address: {
+      '@type': 'PostalAddress',
+      addressCountry: 'BR',
+      addressLocality: 'Remote',
+    },
+  },
+  directApply: true,
+  identifier: {
+    '@type': 'PropertyValue',
+    name: job.companyName,
+    value: job.id,
+  },
+};
+
+// BreadcrumbList JSON-LD
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: job.category,
+      item: new URL(`/category/${slugify(job.category)}`, site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: job.jobTitle,
+      item: canonicalUrl,
+    },
+  ],
+};
+---
+
+<Layout seo={seo}>
+  <Fragment slot="head">
+    <!-- JobPosting JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(jobPosting)} />
+    <!-- Breadcrumbs JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />
+  </Fragment>
+
+  <main class="container mx-auto px-6 py-12">
+    <!-- Breadcrumbs -->
+    <Breadcrumb
+      class="mb-6"
+      items={[
+        { label: 'Home', href: '/' },
+        { label: job.category, href: `/category/${slugify(job.category)}` },
+        { label: job.jobTitle },
+      ]}
+    />
+
+    <!-- Job Details -->
+    <article class="mx-auto max-w-4xl">
+      <!-- Header -->
+      <Card padding="lg" class="mb-8">
+        <div class="flex items-start gap-6">
+          <!-- Company Logo -->
+          <div class="flex-shrink-0">
+            <img
+              src={job.companyLogo}
+              alt={`${job.companyName} logo`}
+              class="h-20 w-20 rounded-lg border border-neutral-200 object-cover"
+            />
+          </div>
+
+          <!-- Job Info -->
+          <div class="flex-grow">
+            <h1 class="mb-2 text-3xl font-bold text-neutral-900">{job.jobTitle}</h1>
+            <p class="mb-3 text-xl text-neutral-700">
+              <Link href={`/company/${slugify(job.companyName)}`} variant="secondary" underline={true}>
+                {job.companyName}
+              </Link>
+            </p>
+
+            <!-- Meta Info -->
+            <div class="flex flex-wrap gap-4 text-sm text-neutral-600">
+              <span class="flex items-center gap-1"> 📍 Remote (Brazil) </span>
+              <span class="flex items-center gap-1">
+                📅 Posted {formattedDate}
+              </span>
+              <span class="flex items-center gap-1">
+                📂 {job.category}
+              </span>
+            </div>
+
+            <!-- Tags -->
+            <div class="mt-4 flex flex-wrap gap-2">
+              {job.tags.map((tag) => <Badge variant="accent">{tag}</Badge>)}
+            </div>
+          </div>
+        </div>
+
+        <!-- Apply Button -->
+        <div class="mt-6">
+          <Button
+            href={job.applyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="lg"
+            class="w-full sm:w-auto"
+          >
+            Apply for this position →
+          </Button>
+        </div>
+      </Card>
+
+      <!-- Share Buttons -->
+      <ShareButtons url={canonicalUrl} title={job.jobTitle} className="my-6 justify-center" />
+
+      <!-- Job Description Section -->
+      <Card padding="lg" class="mb-8">
+        <h2 class="mb-4 text-2xl font-bold text-neutral-900">About this role</h2>
+        <div class="prose prose-lg max-w-none">
+          <p class="text-neutral-700">
+            We're looking for a talented <strong>{job.jobTitle}</strong> to join{' '}
+            <strong>{job.companyName}</strong> remotely. This is a {job.category} position perfect for
+            creative professionals based in Brazil.
+          </p>
+
+          <h3>Key Skills</h3>
+          <ul>
+            {job.tags.map((tag) => <li>{tag}</li>)}
+          </ul>
+
+          <h3>Requirements</h3>
+          <ul>
+            <li>Based in Brazil</li>
+            <li>Strong portfolio showcasing relevant work</li>
+            <li>Excellent communication skills in English</li>
+            <li>Ability to work remotely and manage time effectively</li>
+          </ul>
+
+          <h3>What We Offer</h3>
+          <ul>
+            <li>100% remote work</li>
+            <li>Flexible schedule</li>
+            <li>Work with international clients and teams</li>
+            <li>Competitive compensation</li>
+          </ul>
+
+          <p class="mt-6">
+            <em
+              >Note: This job listing is curated by ArtSource Brazil. Please click "Apply" to visit
+              the company's application page.</em
+            >
+          </p>
+        </div>
+      </Card>
+
+      <!-- Company Info -->
+      <Card padding="lg" class="mb-8 bg-neutral-50">
+        <h2 class="mb-4 text-2xl font-bold text-neutral-900">About {job.companyName}</h2>
+        <div class="flex items-start gap-4">
+          <img
+            src={job.companyLogo}
+            alt={`${job.companyName} logo`}
+            class="h-16 w-16 rounded-lg border border-neutral-300 object-cover"
+          />
+          <div>
+            <p class="text-neutral-700">
+              {job.companyName} is hiring for {job.category} positions. Check out their other opportunities
+              and learn more about their company culture.
+            </p>
+            <Link
+              href={job.applyLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="mt-3 inline-block"
+            >
+              Visit company website →
+            </Link>
+          </div>
+        </div>
+      </Card>
+
+      <!-- CTA -->
+      <div class="mb-12 text-center">
+        <Button
+          href={job.applyLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          size="lg"
+        >
+          Apply for {job.jobTitle} →
+        </Button>
+      </div>
+    </article>
+
+    <!-- Related Jobs -->
+    {
+      relatedJobs.length > 0 && (
+        <section class="mx-auto max-w-4xl">
+          <h2 class="mb-6 text-2xl font-bold text-neutral-900">More {job.category} opportunities</h2>
+          <div class="space-y-6">
+            {relatedJobs.map((relatedJob) => (
+              <JobCard
+                job={relatedJob}
+                data-testid="related-job-card"
+                data-category={relatedJob.category}
+              />
+            ))}
+          </div>
+          <div class="mt-8 text-center">
+            <Button
+              href={`/category/${slugify(job.category)}`}
+              variant="outline"
+              size="md"
+            >
+              View all {job.category} jobs →
+            </Button>
+          </div>
+        </section>
+      )
+    }
+  </main>
+</Layout>

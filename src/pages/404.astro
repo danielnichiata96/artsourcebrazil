@@ -1,24 +1,49 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/ui/Button.astro';
+
+const seo = {
+  title: '404 — Page Not Found | ArtSource Brazil',
+  description: "The page you're looking for doesn't exist or has been moved.",
+};
 ---
 
-<Layout
-  title="Página Não Encontrada"
-  description="Opa! Parece que esta página não existe."
->
-  <div class="flex flex-col items-center justify-center text-center py-20">
-    <h1 class="text-6xl font-bold text-gray-800 dark:text-white">404</h1>
-    <p class="text-2xl font-semibold mt-4 text-gray-600 dark:text-gray-300">
-      Página Não Encontrada
-    </p>
-    <p class="mt-2 text-gray-500 dark:text-gray-400">
-      Opa! A página que você está procurando não existe ou foi movida.
-    </p>
-    <a
-      href="/"
-      class="mt-8 inline-block rounded bg-indigo-600 px-6 py-3 text-sm font-medium text-white transition hover:scale-110 hover:shadow-xl focus:outline-none focus:ring active:bg-indigo-500"
-    >
-      Voltar para a Home
-    </a>
-  </div>
+<Layout seo={seo}>
+  <main class="container mx-auto px-container py-section">
+    <div class="flex flex-col items-center justify-center text-center">
+      <h1 class="text-6xl font-bold text-neutral-900">404</h1>
+      <p class="mt-4 text-2xl font-semibold text-neutral-600">Page Not Found</p>
+      <p class="mt-2 text-neutral-500">
+        Oops! The page you're looking for doesn't exist or has been moved.
+      </p>
+      <div class="mt-8 flex flex-wrap justify-center gap-4">
+        <Button href="/">Back to Home</Button>
+        <Button href="/blog" variant="outline">Browse Blog</Button>
+      </div>
+
+      <div class="mt-12 text-left">
+        <h2 class="mb-4 text-xl font-semibold text-neutral-900">Popular Categories</h2>
+        <div class="flex flex-wrap justify-center gap-3">
+          <a
+            href="/category/game-dev"
+            class="rounded-full border border-neutral-300 px-4 py-2 text-sm text-neutral-700 transition-colors hover:border-primary hover:text-primary"
+          >
+            Game Dev jobs
+          </a>
+          <a
+            href="/category/3d-and-animation"
+            class="rounded-full border border-neutral-300 px-4 py-2 text-sm text-neutral-700 transition-colors hover:border-primary hover:text-primary"
+          >
+            3D & Animation jobs
+          </a>
+          <a
+            href="/category/design-ui-ux"
+            class="rounded-full border border-neutral-300 px-4 py-2 text-sm text-neutral-700 transition-colors hover:border-primary hover:text-primary"
+          >
+            Design (UI/UX) jobs
+          </a>
+        </div>
+      </div>
+    </div>
+  </main>
 </Layout>

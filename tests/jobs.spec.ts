@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { sortJobsByDateDesc, collectFacets, type Job } from '../src/lib/jobs';
+import { sortJobsByDateDesc, collectFacets, slugify, type Job } from '../src/lib/jobs';
 
 describe('sortJobsByDateDesc', () => {
   const base: Job[] = [
@@ -79,5 +79,31 @@ describe('collectFacets', () => {
     expect(categories).toEqual(['Design (UI/UX)', 'Game Dev']);
     // Expect only one Unity, preserving first casing, and overall A→Z
     expect(tags).toEqual(['C#', 'Figma', 'Unity']);
+  });
+});
+
+describe('slugify', () => {
+  it('converts text to lowercase slug', () => {
+    expect(slugify('Game Dev')).toBe('game-dev');
+    expect(slugify('UI/UX Designer')).toBe('ui-ux-designer');
+  });
+
+  it('handles special characters and ampersand', () => {
+    expect(slugify('3D & Animation')).toBe('3d-and-animation');
+    expect(slugify('Design (UI/UX)')).toBe('design-ui-ux');
+  });
+
+  it('removes trailing and leading hyphens', () => {
+    expect(slugify('---test---')).toBe('test');
+    expect(slugify('  spaces  ')).toBe('spaces');
+  });
+
+  it('handles empty string', () => {
+    expect(slugify('')).toBe('');
+  });
+
+  it('replaces multiple special chars with single hyphen', () => {
+    expect(slugify('Hello!!!World')).toBe('hello-world');
+    expect(slugify('Test   Multiple   Spaces')).toBe('test-multiple-spaces');
   });
 });

@@ -3,7 +3,7 @@ import Layout from '../../layouts/Layout.astro';
 import JobCard from '../../components/JobCard.astro';
 import jobs from '../../data/jobs.json';
 
-type Job = typeof jobs[number];
+type Job = (typeof jobs)[number];
 
 function slugify(s: string) {
   return s.toLowerCase().replace(/&/g, 'and').replace(/\s+/g, '-');
@@ -40,7 +40,11 @@ const jobPostings = list.map((j) => ({
   title: j.jobTitle,
   datePosted: j.postedDate,
   jobLocationType: 'TELECOMMUTE',
-  hiringOrganization: { '@type': 'Organization', name: j.companyName, logo: new URL(j.companyLogo, site).href },
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: j.companyName,
+    logo: new URL(j.companyLogo, site).href,
+  },
   description: `${j.category} — ${j.tags.join(', ')}`,
   directApply: true,
   identifier: { '@type': 'PropertyValue', name: j.companyName, value: j.id },
@@ -50,15 +54,19 @@ const jobPostings = list.map((j) => ({
 
 <Layout seo={seo}>
   <main class="container mx-auto px-6 py-12">
-    <h1 class="mb-8 text-center text-4xl font-extrabold text-gray-800">{category} Jobs</h1>
+    <h1 class="mb-8 text-center text-4xl font-extrabold text-neutral-900">{category} Jobs</h1>
 
-    {list.length === 0 ? (
-      <p class="text-center text-gray-600">No jobs found in this category.</p>
-    ) : (
-      <div class="space-y-6">
-        {list.map((job) => (<JobCard job={job} data-testid="job-card" />))}
-      </div>
-    )}
+    {
+      list.length === 0 ? (
+        <p class="text-center text-neutral-600">No jobs found in this category.</p>
+      ) : (
+        <div class="space-y-6">
+          {list.map((job) => (
+            <JobCard job={job} data-testid="job-card" />
+          ))}
+        </div>
+      )
+    }
 
     <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
   </main>

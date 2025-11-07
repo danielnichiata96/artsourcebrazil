@@ -1,4 +1,8 @@
 ---
+import Navbar from '../components/ui/Navbar.astro';
+import Button from '../components/ui/Button.astro';
+import Link from '../components/ui/Link.astro';
+
 interface SEO {
   title: string;
   description: string;
@@ -15,7 +19,7 @@ const { seo, noindex = false } = Astro.props as { seo: SEO; noindex?: boolean };
 
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
-const ogImage = new URL(seo.image ?? '/images/og-default.svg', site).href;
+const ogImage = new URL(seo.image ?? '/images/artsource-brazil-logo.svg', site).href;
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined;
 ---
 
@@ -25,10 +29,17 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
+    <!-- Google Fonts - Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={canonicalUrl} />
-  {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -45,59 +56,39 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
 
     <slot name="head" />
 
-    <!-- Vercel Web Analytics (no-code, cookie-free). Requires enabling in Vercel Dashboard. -->
-    <script defer src="/_vercel/insights/script.js"></script>
+  <!-- Vercel Web Analytics (no-code, cookie-free). Load only in production to avoid 404s in dev. -->
+  {import.meta.env.PROD && <script defer src="/_vercel/insights/script.js"></script>}
 
-    {plausibleDomain && (
-      <script
-        defer
-        data-domain={plausibleDomain}
-        src="https://plausible.io/js/script.js"
-      ></script>
-    )}
+    {
+      plausibleDomain && (
+        <script defer data-domain={plausibleDomain} src="https://plausible.io/js/script.js" />
+      )
+    }
 
     <!-- Organization JSON-LD for the whole site -->
-    <script type="application/ld+json">
-      {JSON.stringify({
+    <script
+      type="application/ld+json"
+      set:html={JSON.stringify({
         '@context': 'https://schema.org',
         '@type': 'Organization',
         name: 'ArtSource Brazil',
         url: new URL('/', site).href,
-        email: 'support@artsourcebrazil.com',
-        logo: new URL('/images/og-default.svg', site).href,
+        email: 'artsourcebrazil@gmail.com',
+  logo: new URL('/images/artsource-brazil-logo.svg', site).href,
       })}
-    </script>
+    />
   </head>
-  <body class="bg-gray-100 font-sans text-gray-900">
-    <header class="sticky top-0 z-10 bg-white shadow-sm">
-      <nav class="container mx-auto flex items-center justify-between px-6 py-4">
-        <a href="/" class="text-2xl font-bold text-gray-800 transition-colors hover:text-blue-600"
-          >ArtSource Brazil</a
-        >
-        <div class="flex items-center gap-4">
-          <a href="/blog" class="text-base font-medium text-gray-600 hover:text-blue-600"
-            >Blog</a
-          >
-          <a href="/about" class="text-base font-medium text-gray-600 hover:text-blue-600"
-            >About</a
-          >
-          <a
-            href="/post-a-job"
-            class="rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700"
-            >Post a Job</a
-          >
-        </div>
-      </nav>
-    </header>
+  <body class="bg-neutral-50 font-sans text-neutral-900">
+    <Navbar />
 
     <slot />
 
-    <footer class="mt-12 border-t bg-white py-8 text-center">
-      <div class="container mx-auto px-6">
+    <footer class="mt-12 border-t border-neutral-200 bg-white py-8 text-center">
+      <div class="container mx-auto px-container">
         <!-- Newsletter Section -->
         <div class="mx-auto max-w-md">
-          <h3 class="text-xl font-semibold text-gray-800">Stay Updated</h3>
-          <p class="mt-2 text-gray-600">
+          <h3 class="text-xl font-semibold text-neutral-900">Stay Updated</h3>
+          <p class="mt-2 text-neutral-600">
             Subscribe to our newsletter to get the latest job postings delivered straight to your
             inbox.
           </p>
@@ -112,38 +103,52 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
               name="email"
               required
               placeholder="your-email@example.com"
-              class="w-full rounded-md border-gray-300 px-4 py-2 shadow-sm focus:border-blue-500 focus:ring-blue-500 sm:max-w-xs"
+              class="w-full rounded-md border-neutral-300 px-4 py-2 shadow-sm transition-colors focus:border-primary focus:ring-primary sm:max-w-xs"
             />
             <input type="hidden" name="tag" value="artsource-brazil-website" />
-            <button
-              type="submit"
-              class="mt-3 w-full rounded-lg bg-blue-600 px-5 py-2 font-semibold text-white shadow-sm transition-all duration-300 hover:bg-blue-700 sm:ml-3 sm:mt-0 sm:w-auto"
-            >
+            <Button type="submit" class="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto">
               Subscribe
-            </button>
+            </Button>
           </form>
-          <p class="mt-3 text-xs text-gray-500">
-            We respect your privacy. No spam. Powered by <a
+          <p class="mt-3 text-xs text-neutral-500">
+            We respect your privacy. No spam. Powered by <Link
               href="https://buttondown.email"
               target="_blank"
               rel="noopener noreferrer"
-              class="underline hover:text-blue-600">Buttondown</a
+              variant="muted">Buttondown</Link
             >.
           </p>
         </div>
 
-        <div class="mt-8 grid gap-6 border-t pt-6 text-gray-500 md:grid-cols-2">
-          <div class="text-center md:text-left">
-            <p>&copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.</p>
+        <div class="mt-8 border-t border-neutral-200 pt-6 text-neutral-500">
+          <!-- Footer Links -->
+          <div class="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
+            <Link href="/about" variant="muted">About</Link>
+            <Link href="/contact" variant="muted">Contact</Link>
+            <Link href="/privacy" variant="muted">Privacy Policy</Link>
+            <Link href="/terms" variant="muted">Terms of Service</Link>
+            <Link href="/blog" variant="muted">Blog</Link>
           </div>
-          <div class="text-center md:text-right">
-            <span class="mr-2">Feeds:</span>
-            <a href="/jobs.xml" class="underline hover:text-blue-600">Jobs RSS</a>
-            <span class="mx-2 text-gray-300">·</span>
-            <a href="/jobs.json" class="underline hover:text-blue-600">Jobs JSON</a>
-            <span class="mx-2 text-gray-300">·</span>
-            <a href="/blog.xml" class="underline hover:text-blue-600">Blog RSS</a>
+
+          <!-- Email -->
+          <div class="mb-4 text-center text-sm">
+            <Link href="mailto:artsourcebrazil@gmail.com" variant="muted">
+              artsourcebrazil@gmail.com
+            </Link>
           </div>
+
+          <!-- Feeds -->
+          <div class="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
+            <span class="text-neutral-400">Feeds:</span>
+            <Link href="/jobs.xml" variant="muted">Jobs RSS</Link>
+            <Link href="/jobs.json" variant="muted">Jobs JSON</Link>
+            <Link href="/blog.xml" variant="muted">Blog RSS</Link>
+          </div>
+
+          <!-- Copyright -->
+          <p class="text-center text-sm">
+            &copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

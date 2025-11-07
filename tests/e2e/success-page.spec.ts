@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Post-a-Job Success Page', () => {
-  test('Submit Job Details button opens Tally form in new tab', async ({ page, context }) => {
+  test('Submit Job Details button opens Tally form in new tab', async ({ page }) => {
     // Navigate to the success page
     await page.goto('/post-a-job/success');
 

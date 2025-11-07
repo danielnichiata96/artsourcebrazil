@@ -1,0 +1,150 @@
+---
+import jobs from '../data/jobs.json';
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/ui/Button.astro';
+import Badge from '../components/ui/Badge.astro';
+import Breadcrumb from '../components/ui/Breadcrumb.astro';
+import { slugify } from '../lib/jobs';
+import type { Job } from '../lib/jobs';
+
+const allJobs = jobs as Job[];
+
+// Group jobs by company
+const companiesMap = new Map<
+  string,
+  { name: string; logo: string; jobCount: number; categories: Set<string> }
+>();
+
+allJobs.forEach((job) => {
+  const slug = slugify(job.companyName);
+  if (!companiesMap.has(slug)) {
+    companiesMap.set(slug, {
+      name: job.companyName,
+      logo: job.companyLogo,
+      jobCount: 0,
+      categories: new Set(),
+    });
+  }
+  const company = companiesMap.get(slug)!;
+  company.jobCount++;
+  company.categories.add(job.category);
+});
+
+// Convert to array and sort by job count (descending)
+const companies = Array.from(companiesMap.entries())
+  .map(([slug, company]) => ({
+    slug,
+    ...company,
+    categories: Array.from(company.categories),
+  }))
+  .sort((a, b) => b.jobCount - a.jobCount);
+
+const site = Astro.site ?? new URL('http://localhost:4321');
+
+// SEO
+const seo = {
+  title: 'Companies Hiring in Brazil | ArtSource Brazil',
+  description: `Browse ${companies.length} companies hiring remote creative professionals in Brazil. Find opportunities in Game Dev, 3D & Animation, UI/UX Design, and more.`,
+  image: '/images/og-default.svg',
+};
+
+// BreadcrumbList JSON-LD
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Companies',
+      item: new URL('/companies', site).href,
+    },
+  ],
+};
+---
+
+<Layout seo={seo}>
+  <Fragment slot="head">
+    <!-- Breadcrumbs JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />
+  </Fragment>
+
+  <main class="container mx-auto px-container py-section">
+    <!-- Breadcrumbs -->
+    <Breadcrumb
+      class="mb-6"
+      items={[{ label: 'Home', href: '/' }, { label: 'Companies' }]}
+    />
+
+    <!-- Header -->
+    <header class="mb-12 text-center">
+      <h1 class="mb-4 text-4xl font-bold text-neutral-900">Companies Hiring in Brazil</h1>
+      <p class="mx-auto max-w-2xl text-lg text-neutral-600">
+        Explore {companies.length} companies actively hiring remote creative professionals based in
+        Brazil. From Game Dev to UI/UX Design, find your next opportunity.
+      </p>
+    </header>
+
+    <!-- Companies Grid -->
+    <section class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {
+        companies.map((company) => (
+          <a
+            href={`/company/${company.slug}`}
+            class="group flex flex-col rounded-card border border-neutral-200 bg-white p-card shadow-card transition-all duration-300 hover:border-primary hover:shadow-card-hover"
+          >
+            <!-- Company Logo -->
+            <div class="mb-4 flex items-center justify-center">
+              <img
+                src={company.logo}
+                alt={`${company.name} logo`}
+                class="h-20 w-20 rounded-lg border border-neutral-200 object-cover transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+
+            <!-- Company Name -->
+            <h2 class="mb-2 text-center text-xl font-bold text-neutral-900 transition-colors group-hover:text-primary">
+              {company.name}
+            </h2>
+
+            <!-- Job Count -->
+            <p class="mb-3 text-center text-sm text-neutral-600">
+              {company.jobCount} open position{company.jobCount > 1 ? 's' : ''}
+            </p>
+
+            <!-- Categories -->
+            <div class="mt-auto">
+              <div class="flex flex-wrap justify-center gap-2">
+                {company.categories.slice(0, 2).map((category) => (
+                  <Badge variant="accent">{category}</Badge>
+                ))}
+                {company.categories.length > 2 && (
+                  <Badge variant="neutral">+{company.categories.length - 2}</Badge>
+                )}
+              </div>
+            </div>
+
+            <!-- View Jobs Arrow -->
+            <div class="mt-4 text-center text-sm font-semibold text-primary transition-transform group-hover:translate-x-1">
+              View jobs →
+            </div>
+          </a>
+        ))
+      }
+    </section>
+
+    <!-- CTA -->
+    <div class="mt-12 text-center">
+      <p class="mb-4 text-neutral-600">Don't see your company here?</p>
+      <Button href="/post-a-job" size="lg">
+        Post a Job →
+      </Button>
+    </div>
+  </main>
+</Layout>

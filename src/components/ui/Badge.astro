@@ -1,0 +1,29 @@
+---
+export interface Props {
+  variant?: 'default' | 'primary' | 'accent' | 'neutral';
+  size?: 'sm' | 'md';
+  class?: string;
+}
+
+const { variant = 'default', size = 'md', class: className = '', ...rest } = Astro.props;
+
+const baseClasses = 'inline-block font-medium rounded-full transition-colors';
+
+const variantClasses = {
+  default: 'bg-neutral-100 text-neutral-700 hover:bg-neutral-200',
+  primary: 'bg-primary-light text-primary hover:bg-primary hover:text-white',
+  accent: 'bg-accent-light text-neutral-900 hover:bg-accent',
+  neutral: 'bg-neutral-200 text-neutral-700',
+};
+
+const sizeClasses = {
+  sm: 'px-2 py-1 text-xs',
+  md: 'px-3 py-1.5 text-sm',
+};
+
+const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+---
+
+<span class={classes} {...rest}>
+  <slot />
+</span>

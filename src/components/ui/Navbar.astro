@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import Button from './Button.astro';
+import Link from './Link.astro';
+
+export interface NavItem {
+  label: string;
+  href: string;
+}
+
+export interface Props {
+  items?: NavItem[];
+  ctaText?: string;
+  ctaHref?: string;
+}
+
+const {
+  items = [
+    { label: 'Companies', href: '/companies' },
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
+  ],
+  ctaText = 'Post a Job',
+  ctaHref = '/post-a-job',
+} = Astro.props;
+---
+
+<header class="sticky top-0 z-10 border-b border-neutral-200 bg-white shadow-sm">
+  <nav class="container mx-auto flex items-center justify-between px-container py-4">
+    <!-- Logo -->
+    <a href="/" class="flex items-center gap-3 group">
+      <Image
+        src="/images/artsource-brazil-logo.svg"
+        alt="Mascote ArtSource Brazil com camisa do brasil sentado usando laptop"
+        width={64}
+        height={64}
+        loading="eager"
+        class="h-10 w-10 transition-transform duration-300 group-hover:scale-105 md:h-12 md:w-12 lg:h-16 lg:w-16"
+      />
+      <span class="text-2xl font-bold text-neutral-900 transition-colors group-hover:text-primary">
+        ArtSource Brazil
+      </span>
+    </a>
+
+    <!-- Navigation Items -->
+    <div class="flex items-center gap-4">
+      {items.map((item) => (
+        <Link href={item.href} variant="secondary">
+          {item.label}
+        </Link>
+      ))}
+      <Button href={ctaHref}>
+        {ctaText}
+      </Button>
+    </div>
+  </nav>
+</header>

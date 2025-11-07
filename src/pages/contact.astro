@@ -1,0 +1,103 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Button from '../components/ui/Button.astro';
+import Link from '../components/ui/Link.astro';
+import Card from '../components/ui/Card.astro';
+
+const seo = {
+  title: 'Contact Us — ArtSource Brazil',
+  description:
+    'Get in touch with ArtSource Brazil. We are here to help with questions about job postings, partnerships, or general inquiries.',
+};
+---
+
+<Layout seo={seo}>
+  <main class="container mx-auto max-w-4xl px-container py-section">
+    <div class="prose prose-lg mx-auto max-w-none">
+      <h1>Contact Us</h1>
+      <p>
+        We'd love to hear from you! Whether you have a question about posting a job, need
+        assistance, want to partner with us, or have legal/privacy concerns, feel free to reach out.
+      </p>
+
+      <h2>Get in Touch</h2>
+      <p>For all inquiries including job postings, support, partnerships, and general questions:</p>
+      <p class="not-prose text-center">
+        <Button
+          href="mailto:artsourcebrazil@gmail.com"
+          size="lg"
+        >
+          📧 artsourcebrazil@gmail.com
+        </Button>
+      </p>
+      <p class="text-center text-neutral-600">
+        <strong>Response Time:</strong> We typically respond within 24-48 hours during business days.
+      </p>
+
+      <h2>Social Media</h2>
+      <p>Connect with us on social media for updates, industry news, and community discussions:</p>
+      <ul class="not-prose flex flex-wrap gap-4">
+        <li>
+          <Button
+            href="https://twitter.com/artsourcebrazil"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+          >
+            🐦 Twitter
+          </Button>
+        </li>
+        <li>
+          <Button
+            href="https://linkedin.com/company/artsourcebrazil"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="outline"
+          >
+            💼 LinkedIn
+          </Button>
+        </li>
+        <li>
+          <Button href="#" variant="outline">
+            💬 Discord (Coming Soon)
+          </Button>
+        </li>
+      </ul>
+
+      <h2>Office Location</h2>
+      <p>
+        ArtSource Brazil is a digital-first company. We operate remotely to better serve the
+        creative community across Brazil. For official correspondence, please use the email
+        addresses above.
+      </p>
+
+      <Card padding="lg" class="not-prose my-12 bg-primary-light">
+        <h3 class="mb-4 text-2xl font-bold text-neutral-900">Frequently Asked Questions</h3>
+        <p class="mb-4 text-neutral-700">
+          Before reaching out, you might find the answer to your question in our resources:
+        </p>
+        <ul class="space-y-2">
+          <li>
+            <Link href="/about" underline={true}>About ArtSource Brazil</Link>
+          </li>
+          <li>
+            <Link href="/post-a-job" underline={true}>
+              How to Post a Job (Pricing & Process)
+            </Link>
+          </li>
+          <li>
+            <Link href="/blog/how-to-post-a-successful-job" underline={true}>
+              Tips for Writing Effective Job Posts
+            </Link>
+          </li>
+          <li>
+            <Link href="/privacy" underline={true}>Privacy Policy</Link>
+          </li>
+          <li>
+            <Link href="/terms" underline={true}>Terms of Service</Link>
+          </li>
+        </ul>
+      </Card>
+    </div>
+  </main>
+</Layout>

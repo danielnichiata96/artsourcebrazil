@@ -5,7 +5,8 @@ const site = 'https://artsourcebrazil.vercel.app';
 export const GET: APIRoute = async () => {
   const items = (jobs as any[])
     .sort((a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
-    .map((j) => `
+    .map(
+      (j) => `
       <item>
         <title><![CDATA[${j.jobTitle} — ${j.companyName}]]></title>
         <link>${j.applyLink}</link>
@@ -13,7 +14,8 @@ export const GET: APIRoute = async () => {
         <pubDate>${new Date(j.postedDate).toUTCString()}</pubDate>
         <description><![CDATA[Category: ${j.category} | Tags: ${(j.tags || []).join(', ')}]]></description>
       </item>
-    `)
+    `,
+    )
     .join('\n');
 
   const rss = `<?xml version="1.0" encoding="UTF-8"?>

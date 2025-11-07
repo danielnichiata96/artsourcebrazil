@@ -1,0 +1,215 @@
+---
+import jobs from '../../data/jobs.json';
+import Layout from '../../layouts/Layout.astro';
+import JobCard from '../../components/JobCard.astro';
+import { slugify, sortJobsByDateDesc } from '../../lib/jobs';
+import type { Job } from '../../lib/jobs';
+
+export async function getStaticPaths() {
+  const allJobs = jobs as Job[];
+  
+  // Group jobs by company
+  const companiesMap = new Map<string, { name: string; logo: string; jobs: Job[] }>();
+  
+  allJobs.forEach((job) => {
+    const slug = slugify(job.companyName);
+    if (!companiesMap.has(slug)) {
+      companiesMap.set(slug, {
+        name: job.companyName,
+        logo: job.companyLogo,
+        jobs: [],
+      });
+    }
+    companiesMap.get(slug)!.jobs.push(job);
+  });
+
+  // Generate paths for each company
+  return Array.from(companiesMap.entries()).map(([slug, company]) => ({
+    params: { slug },
+    props: { company },
+  }));
+}
+
+interface Props {
+  company: {
+    name: string;
+    logo: string;
+    jobs: Job[];
+  };
+}
+
+const { company } = Astro.props;
+const site = Astro.site ?? new URL('http://localhost:4321');
+const canonicalUrl = new URL(Astro.url.pathname, site).href;
+
+// Sort jobs by date
+const sortedJobs = sortJobsByDateDesc(company.jobs);
+
+// Get unique categories and tags
+const categories = [...new Set(company.jobs.map((job) => job.category))];
+const allTags = company.jobs.flatMap((job) => job.tags);
+const uniqueTags = [...new Set(allTags.map((tag) => tag.toLowerCase()))].map(
+  (lower) => allTags.find((tag) => tag.toLowerCase() === lower)!,
+);
+
+// SEO
+const seo = {
+  title: `${company.name} Jobs | ArtSource Brazil`,
+  description: `Browse ${company.jobs.length} remote job${company.jobs.length > 1 ? 's' : ''} at ${company.name} for creative professionals in Brazil. Categories: ${categories.join(', ')}.`,
+  image: company.logo,
+};
+
+// Organization JSON-LD for the company
+const companySchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: company.name,
+  logo: new URL(company.logo, site).href,
+  url: canonicalUrl,
+  numberOfEmployees: {
+    '@type': 'QuantitativeValue',
+    value: company.jobs.length,
+  },
+};
+
+// BreadcrumbList JSON-LD
+const breadcrumbs = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: 'Home',
+      item: new URL('/', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 2,
+      name: 'Companies',
+      item: new URL('/companies', site).href,
+    },
+    {
+      '@type': 'ListItem',
+      position: 3,
+      name: company.name,
+      item: canonicalUrl,
+    },
+  ],
+};
+---
+
+<Layout seo={seo}>
+  <Fragment slot="head">
+    <!-- Organization JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(companySchema)} />
+    <!-- Breadcrumbs JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(breadcrumbs)} />
+  </Fragment>
+
+  <main class="container mx-auto px-6 py-12">
+    <!-- Breadcrumbs -->
+    <nav class="mb-6 text-sm text-neutral-600" aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-2">
+        <li>
+          <a href="/" class="hover:text-primary">Home</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href="/companies" class="hover:text-primary">Companies</a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li class="text-neutral-900" aria-current="page">{company.name}</li>
+      </ol>
+    </nav>
+
+    <!-- Company Header -->
+    <header class="mb-12 rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+      <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
+        <!-- Company Logo -->
+        <div class="flex-shrink-0">
+          <img
+            src={company.logo}
+            alt={`${company.name} logo`}
+            class="h-32 w-32 rounded-xl border border-gray-200 object-cover shadow-md"
+          />
+        </div>
+
+        <!-- Company Info -->
+        <div class="flex-grow text-center sm:text-left">
+          <h1 class="mb-3 text-4xl font-bold text-neutral-900">{company.name}</h1>
+          <p class="mb-4 text-lg text-neutral-600">
+            {company.jobs.length} open position{company.jobs.length > 1 ? 's' : ''} for creative professionals
+            in Brazil
+          </p>
+
+          <!-- Categories -->
+          <div class="mb-4">
+            <p class="mb-2 text-sm font-semibold text-neutral-700">Hiring for:</p>
+            <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
+              {
+                categories.map((category) => (
+                  <a
+                    href={`/category/${slugify(category)}`}
+                    class="rounded-full bg-blue-100 px-4 py-2 text-sm font-medium text-blue-700 transition-colors hover:bg-blue-200"
+                  >
+                    {category}
+                  </a>
+                ))
+              }
+            </div>
+          </div>
+
+          <!-- Tags -->
+          {
+            uniqueTags.length > 0 && (
+              <div>
+                <p class="mb-2 text-sm font-semibold text-neutral-700">Required skills:</p>
+                <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
+                  {uniqueTags.slice(0, 8).map((tag) => (
+                    <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-neutral-700">
+                      {tag}
+                    </span>
+                  ))}
+                  {uniqueTags.length > 8 && (
+                    <span class="rounded-full bg-gray-100 px-3 py-1 text-sm text-neutral-600">
+                      +{uniqueTags.length - 8} more
+                    </span>
+                  )}
+                </div>
+              </div>
+            )
+          }
+        </div>
+      </div>
+    </header>
+
+    <!-- Jobs List -->
+    <section>
+      <h2 class="mb-6 text-2xl font-bold text-neutral-900">
+        Open Positions ({company.jobs.length})
+      </h2>
+      <div class="space-y-6">
+        {
+          sortedJobs.map((job) => (
+            <JobCard
+              job={job}
+              data-company={company.name}
+              data-category={job.category}
+            />
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Back to all companies -->
+    <div class="mt-12 text-center">
+      <a
+        href="/companies"
+        class="inline-block rounded-lg border border-gray-300 px-6 py-3 font-semibold text-neutral-700 transition-all duration-300 hover:border-blue-500 hover:text-primary"
+      >
+        ← View all companies
+      </a>
+    </div>
+  </main>
+</Layout>

@@ -18,7 +18,7 @@ const currentPath = Astro.url.pathname;
       type="search"
       inputmode="search"
       placeholder="Search title, company or tags"
-      class="w-full max-w-2xl rounded-lg border border-gray-300 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      class="w-full max-w-2xl rounded-lg border border-neutral-300 bg-white px-4 py-2 transition-colors focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary"
     />
   </div>
 
@@ -28,7 +28,7 @@ const currentPath = Astro.url.pathname;
       <div class="flex flex-wrap items-center justify-center gap-2">
         {tags.map((t) => (
           <button
-            class="tag-btn rounded-full bg-gray-200 px-3 py-1.5 text-sm font-medium text-gray-700 hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            class="tag-btn rounded-full bg-neutral-100 px-3 py-1.5 text-sm font-medium text-neutral-700 transition-colors hover:bg-accent-light focus:outline-none focus:ring-2 focus:ring-primary"
             data-tag={t}
           >
             {t}
@@ -46,18 +46,18 @@ const currentPath = Astro.url.pathname;
 
   const container = document.querySelector('[data-jobs]');
   const items = Array.from(container ? container.children : []);
-  const tagButtons = Array.from(document.querySelectorAll('.tag-btn'));
-  const searchInput = document.getElementById('job-search');
+  const tagButtons = Array.from(document.querySelectorAll('.tag-btn')) as HTMLButtonElement[];
+  const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
 
   function reflectUI() {
     // tags
     const setSel = new Set(selectedTags.map((t) => t.toLowerCase()));
     tagButtons.forEach((btn) => {
       const active = setSel.has((btn.dataset.tag || '').toLowerCase());
-      btn.classList.toggle('bg-blue-600', active);
+      btn.classList.toggle('bg-primary', active);
       btn.classList.toggle('text-white', active);
-      btn.classList.toggle('bg-gray-200', !active);
-      btn.classList.toggle('text-gray-700', !active);
+      btn.classList.toggle('bg-neutral-100', !active);
+      btn.classList.toggle('text-neutral-700', !active);
       btn.setAttribute('aria-pressed', String(active));
     });
     // search
@@ -104,7 +104,7 @@ const currentPath = Astro.url.pathname;
   });
 
   if (searchInput) {
-    let to;
+    let to: ReturnType<typeof setTimeout> | undefined;
     searchInput.addEventListener('input', () => {
       clearTimeout(to);
       to = setTimeout(() => {
@@ -117,8 +117,8 @@ const currentPath = Astro.url.pathname;
   // Delegate clicks on tags inside job cards
   if (container) {
     container.addEventListener('click', (e) => {
-      const target = e.target;
-      if (target && target.getAttribute && target.hasAttribute('data-tag')) {
+      const target = e.target as HTMLElement;
+      if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
         const t = target.getAttribute('data-tag') || '';
         if (!t) return;
         const idx = selectedTags.indexOf(t);
