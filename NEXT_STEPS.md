@@ -86,10 +86,13 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] All tests passing: 44/46 E2E + 8 unit tests = 52 total tests
   - [ ] Add accessibility testing with @axe-core/playwright
   - [ ] Add visual regression tests for UI components
-- [ ] **Design System - Phase 2: Typography**
-  - [ ] Add editorial serif font for headings (Crimson Pro or Lora)
-  - [ ] Improve font hierarchy and spacing
-  - [ ] Update heading sizes for better visual impact
+- [x] **Design System - Phase 2: Typography** ✅
+  - [x] Add editorial serif font (Crimson Pro from Google Fonts)
+  - [x] Improve font hierarchy and heading sizes (h1-h6)
+  - [x] Enhanced line-height and letter-spacing scale
+  - [x] Display font sizes for hero sections with tighter tracking
+  - [x] Better paragraph spacing and text density
+  - [x] Applied to homepage, about, blog, companies pages
 - [ ] **Design System - Phase 4: Micro-interactions**
   - [ ] Smooth transitions on hover states
   - [ ] Loading states
@@ -194,6 +197,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-07: **Design System Phase 2 COMPLETE - Typography Overhaul**: Added Crimson Pro serif font from Google Fonts for editorial headings. Enhanced Tailwind typography scale with improved line heights (26px base for readability), letter spacing (-0.02em for headings), and display sizes for hero sections. Updated global.css with semantic heading hierarchy (h1-h6) using serif font. Applied refined typography to homepage (5xl/6xl hero), about page, blog pages, and companies listing. Improved paragraph spacing and text density. All pages now have better visual hierarchy and readability. Build passing, all tests passing (8 unit + 44 E2E).
 - 2025-11-07: **Testing Suite Expansion COMPLETED**: Added 30 new E2E tests covering all remaining pages. Created comprehensive test suites for company pages (10 tests), blog pages (8 tests), about page (5 tests), and category pages (7 tests). All tests validate page structure, navigation, content rendering, and JSON-LD structured data. Total test coverage now: 52 tests (8 unit + 44 E2E). All tests passing. Test files: company-pages.spec.ts, blog-pages.spec.ts, about-page.spec.ts, category-pages.spec.ts.
 - 2025-11-07: **Design System Phase 3 COMPLETE**: Refactored all remaining pages to use UI component library. Completed: company/[slug], post-a-job flow (post-a-job.astro + success.astro), legal pages (privacy, terms), blog pages (index + [slug]), companies listing. All pages now use Card, Badge, Link, Button, Breadcrumb components with consistent px-container spacing and design tokens. Fixed remaining hardcoded elements (privacy.astro <a> tag, companies.astro card classes). Build passing, all tests passing (8 unit + 15 E2E).
 - 2025-11-07: **Accessibility Improvements COMPLETED**: Full WCAG 2.1 AA audit conducted. Fixed link contrast issue (adjusted from #3aaf54 to #2d8a42, achieving 5.10:1 ratio). Implemented global focus-visible styles with 2px green outline. Created comprehensive documentation (DESIGN_AUDIT.md, ACCESSIBILITY_IMPROVEMENTS.md). All interactive elements now fully keyboard accessible. Site now WCAG 2.1 AA compliant.
