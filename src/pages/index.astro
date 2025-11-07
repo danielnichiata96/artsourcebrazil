@@ -59,7 +59,7 @@ const jobPostings = sortedJobs.map((j) => ({
 
   <main class="container mx-auto px-container py-section-sm">
     <!-- Hero section -->
-    <div class="mb-12 text-center">
+    <div class="mb-12 text-center animate-fade-in-up">
       <h1 class="mb-4 font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
         Find Your Next Creative Role
       </h1>
@@ -69,7 +69,7 @@ const jobPostings = sortedJobs.map((j) => ({
     </div>
 
     <!-- SEO-friendly links to category pages -->
-    <nav class="mb-6 flex flex-wrap justify-center gap-2" aria-label="Browse by category">
+    <nav class="mb-6 flex flex-wrap justify-center gap-2 animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;" aria-label="Browse by category">
       {
         categories.map((cat) => {
           const slug = slugify(cat);
@@ -85,7 +85,7 @@ const jobPostings = sortedJobs.map((j) => ({
       }
     </nav>
     <CategoryFilter categories={categories} tags={tags} />
-    <div class="space-y-6" data-jobs>
+    <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;" data-jobs>
       {
         sortedJobs.map((job: Job) => (
           <JobCard

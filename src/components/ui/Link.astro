@@ -18,7 +18,7 @@ const {
   ...rest
 } = Astro.props;
 
-const baseClasses = 'transition-colors';
+const baseClasses = 'transition-all duration-200 ease-out relative';
 
 const variantClasses = {
   primary: 'text-link hover:text-link-hover',
@@ -26,7 +26,9 @@ const variantClasses = {
   muted: 'text-neutral-500 hover:text-neutral-700',
 };
 
-const underlineClass = underline ? 'hover:underline underline-offset-2' : '';
+const underlineClass = underline 
+  ? 'after:content-[""] after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-current after:transition-all after:duration-300 hover:after:w-full' 
+  : '';
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${underlineClass} ${className}`;
 ---

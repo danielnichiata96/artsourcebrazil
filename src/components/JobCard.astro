@@ -35,7 +35,7 @@ const formattedDate = (() => {
 
 <Card
   {...attrs}
-  class="flex items-start space-x-6 hover:border-primary"
+  class="flex items-start space-x-6 hover:border-primary group"
 >
   <Image
     src={job.companyLogo}
@@ -43,7 +43,7 @@ const formattedDate = (() => {
     width={64}
     height={64}
     loading="lazy"
-    class="h-16 w-16 flex-shrink-0 rounded-lg object-cover"
+    class="h-16 w-16 flex-shrink-0 rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
   />
   <div class="flex-grow">
     <p class="text-sm font-medium text-neutral-600">{job.companyName}</p>
@@ -71,7 +71,7 @@ const formattedDate = (() => {
           <button
             type="button"
             data-tag={tag}
-            class="cursor-pointer rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 transition-colors hover:bg-accent-light hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white"
+            class="cursor-pointer rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 transition-all duration-200 ease-out hover:scale-105 hover:bg-accent-light hover:text-neutral-900 hover:shadow-sm active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white"
             title={`Filter by ${tag}`}
             aria-label={`Filter by ${tag}`}
           >
