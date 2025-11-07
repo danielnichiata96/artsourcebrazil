@@ -174,10 +174,15 @@
 </div>
 
 <script>
+  // @ts-nocheck
   const toggleBtn = document.getElementById('advanced-filters-toggle');
   const panel = document.getElementById('advanced-filters-panel');
   const applyBtn = document.getElementById('apply-advanced-filters');
   const clearBtn = document.getElementById('clear-advanced-filters');
+
+  function dispatchChange(partial) {
+    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
+  }
 
   // Toggle panel visibility
   toggleBtn?.addEventListener('click', () => {
@@ -197,21 +202,29 @@
 
   // Apply filters (to be implemented with full filtering logic)
   applyBtn?.addEventListener('click', () => {
-    const checkboxes = panel?.querySelectorAll('input[type="checkbox"]:checked') || [];
-    const selectedFilters: Record<string, string[]> = {};
-
-    checkboxes.forEach((checkbox) => {
-      const input = checkbox as HTMLInputElement;
-      const name = input.name;
-      const value = input.value;
-      if (!selectedFilters[name]) selectedFilters[name] = [];
-      selectedFilters[name].push(value);
+    const checked = panel?.querySelectorAll('input[type="checkbox"]:checked') || [];
+    const level = [];
+    const tools = [];
+    const contract = [];
+    const location = [];
+    checked.forEach((el) => {
+      const inp = el;
+      switch (inp.name) {
+        case 'level':
+          level.push(inp.value);
+          break;
+        case 'tools':
+          tools.push(inp.value);
+          break;
+        case 'contract':
+          contract.push(inp.value);
+          break;
+        case 'location':
+          location.push(inp.value);
+          break;
+      }
     });
-
-    console.log('Advanced filters applied:', selectedFilters);
-    // TODO: Implement actual filtering logic
-    
-    // Close panel
+    dispatchChange({ level, tools, contract, location });
     toggleBtn?.setAttribute('aria-expanded', 'false');
     panel?.classList.add('hidden');
   });
@@ -220,7 +233,8 @@
   clearBtn?.addEventListener('click', () => {
     const checkboxes = panel?.querySelectorAll('input[type="checkbox"]') || [];
     checkboxes.forEach((checkbox) => {
-      (checkbox as HTMLInputElement).checked = false;
+      checkbox.checked = false;
     });
+    dispatchChange({ level: [], tools: [], contract: [], location: [] });
   });
 </script>

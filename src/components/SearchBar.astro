@@ -42,73 +42,48 @@ import AdvancedFilters from './AdvancedFilters.astro';
 </div>
 
 <script>
-  // Ensure we don't query DOM nodes that aren't parsed yet
-  const params = new URLSearchParams(location.search);
-  let q = params.get('q') || '';
+  // @ts-nocheck
+  const searchInput = document.getElementById('job-search');
 
-  const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
-
-  function getItems() {
-    const container = document.querySelector('[data-jobs]');
-    return Array.from(container ? container.children : []) as HTMLElement[];
+  function dispatchChange(partial) {
+    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
   }
 
-  function applyFilters() {
-    const items = getItems();
-    const qLower = (q || '').toLowerCase();
-
-    items.forEach((el) => {
-      const tagsStr = (el.getAttribute('data-tags') || '').toLowerCase();
-      const text = (el.getAttribute('data-text') || '').toLowerCase();
-
-      const searchPass = !qLower || text.includes(qLower) || tagsStr.includes(qLower);
-
-      el.classList.toggle('hidden', !searchPass);
-    });
-
-    // update URL
-    if (q) params.set('q', q);
-    else params.delete('q');
-    const url = `${location.pathname}${params.toString() ? `?${params.toString()}` : ''}`;
-    history.replaceState({}, '', url);
-  }
-
-  // Initialize after DOM is ready to avoid empty lists
   function init() {
-    // Prime search input
-    if (searchInput) searchInput.value = q;
-
-    // Search input event
+    // Debounced input -> update global filters
     if (searchInput) {
-      let to: ReturnType<typeof setTimeout> | undefined;
+      let to;
       searchInput.addEventListener('input', () => {
         clearTimeout(to);
         to = setTimeout(() => {
-          q = searchInput.value || '';
-          applyFilters();
+          dispatchChange({ search: searchInput.value || '' });
         }, 150);
       });
     }
 
-    // Delegate clicks on tags inside job cards (for quick search)
+    // Sync from global state to input
+    window.addEventListener('jobfilters:applied', (e) => {
+      const detail = /** @type {CustomEvent} */ (e).detail || {};
+      if (searchInput && typeof detail.search === 'string') {
+        searchInput.value = detail.search;
+      }
+    });
+
+    // Delegate clicks on tags inside job cards -> quick search
     const container = document.querySelector('[data-jobs]');
     if (container) {
-      container.addEventListener('click', (e) => {
-        const target = e.target as HTMLElement;
+      container.addEventListener('click', (ev) => {
+        const target = ev.target;
         if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
           const tagText = target.getAttribute('data-tag') || '';
           if (tagText && searchInput) {
             searchInput.value = tagText;
-            q = tagText;
-            applyFilters();
+            dispatchChange({ search: tagText });
             searchInput.focus();
           }
         }
       });
     }
-
-    // initial run
-    applyFilters();
   }
 
   if (document.readyState === 'loading') {

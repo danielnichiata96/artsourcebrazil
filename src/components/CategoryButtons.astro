@@ -44,20 +44,18 @@ const categoryIcons: Record<string, string> = {
 </nav>
 
 <script>
+  // @ts-nocheck
   let selectedCategory = 'all';
 
   const categoryButtons = Array.from(
     document.querySelectorAll('.category-btn')
-  ) as HTMLButtonElement[];
-  const container = document.querySelector('[data-jobs]');
-  const items = Array.from(container ? container.children : []);
+  );
 
   function updateCategoryUI() {
     categoryButtons.forEach((btn) => {
       const cat = btn.dataset.category || '';
       const isActive = cat === selectedCategory;
-      
-      // Update styles
+
       if (isActive) {
         btn.classList.add('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
         btn.classList.remove('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
@@ -65,51 +63,35 @@ const categoryIcons: Record<string, string> = {
         btn.classList.remove('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
         btn.classList.add('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
       }
-      
       btn.setAttribute('aria-pressed', String(isActive));
     });
   }
 
-  function applyFilters() {
-    items.forEach((el) => {
-      const jobCategory = el.getAttribute('data-category') || '';
-      
-      // Check if job matches selected category
-      const categoryPass = selectedCategory === 'all' || jobCategory === selectedCategory;
-      
-      // Respect existing search filter (if any)
-      const alreadyHidden = el.classList.contains('hidden');
-      
-      // Only show if passes category filter AND not hidden by search
-      if (!categoryPass) {
-        el.classList.add('hidden');
-      } else if (categoryPass && !alreadyHidden) {
-        el.classList.remove('hidden');
-      }
-    });
-
-    updateCategoryUI();
+  function dispatchChange(partial) {
+    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
   }
 
-  // Category button click handlers
+  // Category button click handlers -> update global state
   categoryButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const cat = btn.dataset.category || 'all';
       selectedCategory = cat;
-      
-      // Reset search filter when changing category
-      const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
-      if (searchInput) {
-        searchInput.value = '';
-      }
-      
-      // Show all items first, then apply category filter
-      items.forEach((el) => el.classList.remove('hidden'));
-      applyFilters();
+      // Reset search value in UI; global orchestrator will handle filtering
+      const searchInput = document.getElementById('job-search');
+      if (searchInput) searchInput.value = '';
+      dispatchChange({ category: selectedCategory, search: '' });
     });
   });
 
-  // Initialize
+  // Listen for applied state to keep UI in sync (e.g., on reload via URL params)
+  window.addEventListener('jobfilters:applied', (e) => {
+    const detail = /** @type {CustomEvent} */ (e).detail || {};
+    if (detail.category) {
+      selectedCategory = detail.category;
+      updateCategoryUI();
+    }
+  });
+
+  // Initial UI sync
   updateCategoryUI();
-  applyFilters();
 </script>
