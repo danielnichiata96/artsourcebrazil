@@ -1,0 +1,115 @@
+---
+// CategoryButtons component - Active filters for job categories
+export interface Props {
+  categories: string[];
+}
+
+const { categories = [] } = Astro.props as Props;
+
+// Map categories to emoji icons
+const categoryIcons: Record<string, string> = {
+  'Game Dev': '🎮',
+  '3D & Animation': '🎨',
+  'Design (UI/UX)': '🎯',
+};
+---
+
+<nav class="mb-8 flex flex-wrap justify-center gap-3" aria-label="Filter by category">
+  <!-- All Jobs button -->
+  <button
+    data-category="all"
+    class="category-btn category-btn-active rounded-full border-2 border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    aria-pressed="true"
+  >
+    All Jobs
+  </button>
+
+  {
+    categories.map((cat) => {
+      const icon = categoryIcons[cat] || '📋';
+      return (
+        <button
+          data-category={cat}
+          class="category-btn rounded-full border-2 border-neutral-200 bg-background-paper px-6 py-3 text-base font-semibold text-neutral-700 transition-all duration-200 hover:scale-105 hover:border-neutral-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          aria-pressed="false"
+        >
+          <span class="mr-2" aria-hidden="true">
+            {icon}
+          </span>
+          {cat}
+        </button>
+      );
+    })
+  }
+</nav>
+
+<script>
+  let selectedCategory = 'all';
+
+  const categoryButtons = Array.from(
+    document.querySelectorAll('.category-btn')
+  ) as HTMLButtonElement[];
+  const container = document.querySelector('[data-jobs]');
+  const items = Array.from(container ? container.children : []);
+
+  function updateCategoryUI() {
+    categoryButtons.forEach((btn) => {
+      const cat = btn.dataset.category || '';
+      const isActive = cat === selectedCategory;
+      
+      // Update styles
+      if (isActive) {
+        btn.classList.add('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
+        btn.classList.remove('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
+      } else {
+        btn.classList.remove('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
+        btn.classList.add('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
+      }
+      
+      btn.setAttribute('aria-pressed', String(isActive));
+    });
+  }
+
+  function applyFilters() {
+    items.forEach((el) => {
+      const jobCategory = el.getAttribute('data-category') || '';
+      
+      // Check if job matches selected category
+      const categoryPass = selectedCategory === 'all' || jobCategory === selectedCategory;
+      
+      // Respect existing search filter (if any)
+      const alreadyHidden = el.classList.contains('hidden');
+      
+      // Only show if passes category filter AND not hidden by search
+      if (!categoryPass) {
+        el.classList.add('hidden');
+      } else if (categoryPass && !alreadyHidden) {
+        el.classList.remove('hidden');
+      }
+    });
+
+    updateCategoryUI();
+  }
+
+  // Category button click handlers
+  categoryButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.category || 'all';
+      selectedCategory = cat;
+      
+      // Reset search filter when changing category
+      const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
+      if (searchInput) {
+        searchInput.value = '';
+      }
+      
+      // Show all items first, then apply category filter
+      items.forEach((el) => el.classList.remove('hidden'));
+      applyFilters();
+    });
+  });
+
+  // Initialize
+  updateCategoryUI();
+  applyFilters();
+</script>

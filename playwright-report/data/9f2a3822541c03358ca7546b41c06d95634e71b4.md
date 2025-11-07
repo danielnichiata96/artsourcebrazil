@@ -1,0 +1,133 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e5]
+        - generic [ref=e6]: ArtSource Brazil
+      - generic [ref=e7]:
+        - link "Companies" [ref=e8] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Post a Job" [ref=e11] [cursor=pointer]:
+          - /url: /post-a-job
+  - main [ref=e12]:
+    - generic [ref=e13]:
+      - heading "Find Your Next Creative Role" [level=1] [ref=e14]
+      - paragraph [ref=e15]: Remote opportunities for Brazilian artists, designers, and game developers
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - img [ref=e20]
+        - searchbox "Search jobs" [ref=e22]
+      - button "Advanced Filters" [ref=e25] [cursor=pointer]:
+        - img [ref=e26]
+        - text: Advanced Filters
+    - navigation "Filter by category" [ref=e29]:
+      - button "All Jobs" [ref=e30] [cursor=pointer]
+      - button "3D & Animation" [ref=e31] [cursor=pointer]: 🎨 3D & Animation
+      - button "Design (UI/UX)" [ref=e32] [cursor=pointer]: 🎯 Design (UI/UX)
+      - button "Game Dev" [active] [pressed] [ref=e33] [cursor=pointer]: 🎮 Game Dev
+    - navigation "Browse by category" [ref=e34]:
+      - link "3D & Animation jobs" [ref=e35] [cursor=pointer]:
+        - /url: /category/3d-and-animation
+      - link "Design (UI/UX) jobs" [ref=e36] [cursor=pointer]:
+        - /url: /category/design-ui-ux
+      - link "Game Dev jobs" [ref=e37] [cursor=pointer]:
+        - /url: /category/game-dev
+    - generic [ref=e38]:
+      - generic [ref=e39]:
+        - img "PixelStorm logo" [ref=e40]
+        - generic [ref=e41]:
+          - paragraph [ref=e42]: PixelStorm
+          - heading "Senior Game Developer" [level=2] [ref=e43]:
+            - link "Senior Game Developer" [ref=e44] [cursor=pointer]:
+              - /url: /jobs/a1b2c3d4-e5f6-7890-1234-567890abcdef-senior-game-developer
+          - generic [ref=e45]:
+            - link "Game Dev" [ref=e46] [cursor=pointer]:
+              - /url: /category/game-dev
+            - generic [ref=e47]: "|"
+            - generic [ref=e48]: "Posted on: November 4, 2025"
+          - generic [ref=e49]:
+            - button "Filter by Unity" [ref=e50] [cursor=pointer]: Unity
+            - button "Filter by C#" [ref=e51] [cursor=pointer]: C#
+            - button "Filter by Mobile" [ref=e52] [cursor=pointer]: Mobile
+            - button "Filter by Senior" [ref=e53] [cursor=pointer]: Senior
+        - link "Apply Now" [ref=e55] [cursor=pointer]:
+          - /url: https://example.com/jobs/senior-game-developer
+      - generic [ref=e56]:
+        - img "Quantum Leap Games logo" [ref=e57]
+        - generic [ref=e58]:
+          - paragraph [ref=e59]: Quantum Leap Games
+          - heading "Lead Gameplay Programmer" [level=2] [ref=e60]:
+            - link "Lead Gameplay Programmer" [ref=e61] [cursor=pointer]:
+              - /url: /jobs/d4e5f6a7-b8c9-0123-4567-890abcdef123-lead-gameplay-programmer
+          - generic [ref=e62]:
+            - link "Game Dev" [ref=e63] [cursor=pointer]:
+              - /url: /category/game-dev
+            - generic [ref=e64]: "|"
+            - generic [ref=e65]: "Posted on: November 1, 2025"
+          - generic [ref=e66]:
+            - button "Filter by Unreal" [ref=e67] [cursor=pointer]: Unreal
+            - button "Filter by C++" [ref=e68] [cursor=pointer]: C++
+            - button "Filter by Multiplayer" [ref=e69] [cursor=pointer]: Multiplayer
+            - button "Filter by Lead" [ref=e70] [cursor=pointer]: Lead
+        - link "Apply Now" [ref=e72] [cursor=pointer]:
+          - /url: https://example.com/jobs/lead-gameplay-programmer
+  - contentinfo [ref=e73]:
+    - generic [ref=e74]:
+      - generic [ref=e75]:
+        - heading "Stay Updated" [level=3] [ref=e76]
+        - paragraph [ref=e77]: Subscribe to our newsletter to get the latest job postings delivered straight to your inbox.
+        - generic [ref=e78]:
+          - textbox "your-email@example.com" [ref=e79]
+          - button "Subscribe" [ref=e80] [cursor=pointer]
+        - paragraph [ref=e81]:
+          - text: We respect your privacy. No spam. Powered by
+          - link "Buttondown" [ref=e82] [cursor=pointer]:
+            - /url: https://buttondown.email
+          - text: .
+      - generic [ref=e83]:
+        - generic [ref=e84]:
+          - link "About" [ref=e85] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e86] [cursor=pointer]:
+            - /url: /contact
+          - link "Privacy Policy" [ref=e87] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e88] [cursor=pointer]:
+            - /url: /terms
+          - link "Blog" [ref=e89] [cursor=pointer]:
+            - /url: /blog
+        - link "artsourcebrazil@gmail.com" [ref=e91] [cursor=pointer]:
+          - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e92]:
+          - generic [ref=e93]: "Feeds:"
+          - link "Jobs RSS" [ref=e94] [cursor=pointer]:
+            - /url: /jobs.xml
+          - link "Jobs JSON" [ref=e95] [cursor=pointer]:
+            - /url: /jobs.json
+          - link "Blog RSS" [ref=e96] [cursor=pointer]:
+            - /url: /blog.xml
+        - paragraph [ref=e97]: © 2025 ArtSource Brazil. All rights reserved.
+  - generic [ref=e100]:
+    - button "Menu" [ref=e101]:
+      - img [ref=e103]
+      - generic: Menu
+    - button "Inspect" [ref=e107]:
+      - img [ref=e109]
+      - generic: Inspect
+    - button "Audit" [ref=e111]:
+      - generic [ref=e112]:
+        - img [ref=e113]
+        - img [ref=e116]
+      - generic: Audit
+    - button "Settings" [ref=e119]:
+      - img [ref=e121]
+      - generic: Settings
+```

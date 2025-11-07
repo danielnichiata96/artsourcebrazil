@@ -1,0 +1,226 @@
+---
+// AdvancedFilters component - Optional hierarchical filtering
+// Hidden by default, shown when user clicks "Advanced Filters" button
+---
+
+<div class="relative inline-block text-left">
+  <!-- Advanced Filters Button -->
+  <button
+    id="advanced-filters-toggle"
+    type="button"
+    class="inline-flex items-center gap-2 rounded-lg border-2 border-neutral-200 bg-background-paper px-4 py-2 text-sm font-medium text-neutral-700 transition-all duration-200 hover:border-neutral-300 hover:shadow-sm focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    aria-expanded="false"
+    aria-haspopup="true"
+  >
+    <svg
+      class="h-5 w-5"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+      />
+    </svg>
+    Advanced Filters
+  </button>
+
+  <!-- Dropdown Panel (hidden by default) -->
+  <div
+    id="advanced-filters-panel"
+    class="absolute right-0 z-10 mt-2 hidden w-80 origin-top-right rounded-xl border border-neutral-200 bg-white p-6 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+    role="menu"
+    aria-orientation="vertical"
+    aria-labelledby="advanced-filters-toggle"
+  >
+    <div class="space-y-6">
+      <!-- Level Filter -->
+      <div>
+        <h3 class="mb-3 font-semibold text-neutral-900">👔 Nível</h3>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="level"
+              value="Junior"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Junior</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="level"
+              value="Pleno"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Pleno</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="level"
+              value="Senior"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Senior</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="level"
+              value="Lead"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Lead</span>
+          </label>
+        </div>
+      </div>
+
+      <hr class="border-neutral-200" />
+
+      <!-- Tools Filter -->
+      <div>
+        <h3 class="mb-3 font-semibold text-neutral-900">🔧 Ferramentas</h3>
+        <div class="grid grid-cols-2 gap-2">
+          {
+            ['Figma', 'ZBrush', 'Unity', 'Maya', 'Adobe XD', 'Blender'].map((tool) => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="tools"
+                  value={tool}
+                  class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+                />
+                <span class="text-sm text-neutral-700">{tool}</span>
+              </label>
+            ))
+          }
+        </div>
+      </div>
+
+      <hr class="border-neutral-200" />
+
+      <!-- Contract Type Filter -->
+      <div>
+        <h3 class="mb-3 font-semibold text-neutral-900">📄 Contrato</h3>
+        <div class="space-y-2">
+          {
+            ['CLT', 'PJ', 'Freelance'].map((contract) => (
+              <label class="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  name="contract"
+                  value={contract}
+                  class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+                />
+                <span class="text-sm text-neutral-700">{contract}</span>
+              </label>
+            ))
+          }
+        </div>
+      </div>
+
+      <hr class="border-neutral-200" />
+
+      <!-- Location Filter -->
+      <div>
+        <h3 class="mb-3 font-semibold text-neutral-900">🌍 Localização</h3>
+        <div class="space-y-2">
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="location"
+              value="Brazil-Only"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Brazil-Only</span>
+          </label>
+          <label class="flex items-center gap-2 cursor-pointer">
+            <input
+              type="checkbox"
+              name="location"
+              value="Global"
+              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            />
+            <span class="text-sm text-neutral-700">Global</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex gap-2 pt-4">
+        <button
+          id="apply-advanced-filters"
+          type="button"
+          class="flex-1 rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-white transition-all hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
+          Apply Filters
+        </button>
+        <button
+          id="clear-advanced-filters"
+          type="button"
+          class="rounded-lg border border-neutral-300 px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:bg-neutral-50 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const toggleBtn = document.getElementById('advanced-filters-toggle');
+  const panel = document.getElementById('advanced-filters-panel');
+  const applyBtn = document.getElementById('apply-advanced-filters');
+  const clearBtn = document.getElementById('clear-advanced-filters');
+
+  // Toggle panel visibility
+  toggleBtn?.addEventListener('click', () => {
+    const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
+    toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+    panel?.classList.toggle('hidden');
+  });
+
+  // Close panel when clicking outside
+  document.addEventListener('click', (e) => {
+    const target = e.target as HTMLElement;
+    if (!toggleBtn?.contains(target) && !panel?.contains(target)) {
+      toggleBtn?.setAttribute('aria-expanded', 'false');
+      panel?.classList.add('hidden');
+    }
+  });
+
+  // Apply filters (to be implemented with full filtering logic)
+  applyBtn?.addEventListener('click', () => {
+    const checkboxes = panel?.querySelectorAll('input[type="checkbox"]:checked') || [];
+    const selectedFilters: Record<string, string[]> = {};
+
+    checkboxes.forEach((checkbox) => {
+      const input = checkbox as HTMLInputElement;
+      const name = input.name;
+      const value = input.value;
+      if (!selectedFilters[name]) selectedFilters[name] = [];
+      selectedFilters[name].push(value);
+    });
+
+    console.log('Advanced filters applied:', selectedFilters);
+    // TODO: Implement actual filtering logic
+    
+    // Close panel
+    toggleBtn?.setAttribute('aria-expanded', 'false');
+    panel?.classList.add('hidden');
+  });
+
+  // Clear all filters
+  clearBtn?.addEventListener('click', () => {
+    const checkboxes = panel?.querySelectorAll('input[type="checkbox"]') || [];
+    checkboxes.forEach((checkbox) => {
+      (checkbox as HTMLInputElement).checked = false;
+    });
+  });
+</script>

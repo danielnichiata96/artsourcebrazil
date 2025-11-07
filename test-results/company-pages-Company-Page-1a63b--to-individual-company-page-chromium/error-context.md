@@ -1,0 +1,123 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e5]
+        - generic [ref=e6]: ArtSource Brazil
+      - generic [ref=e7]:
+        - link "Companies" [ref=e8] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Post a Job" [ref=e11] [cursor=pointer]:
+          - /url: /post-a-job
+  - main [ref=e12]:
+    - navigation "Breadcrumb" [ref=e13]:
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e17]: /
+        - listitem [ref=e18]:
+          - link "Companies" [ref=e19] [cursor=pointer]:
+            - /url: /companies
+          - generic [ref=e20]: /
+        - listitem [ref=e21]:
+          - generic [ref=e22]: PixelStorm
+    - generic [ref=e25]:
+      - img "PixelStorm logo" [ref=e27]
+      - generic [ref=e28]:
+        - heading "PixelStorm" [level=1] [ref=e29]
+        - paragraph [ref=e30]: 1 open position for creative professionals in Brazil
+        - generic [ref=e31]:
+          - paragraph [ref=e32]: "Hiring for:"
+          - link "Game Dev" [ref=e34] [cursor=pointer]:
+            - /url: /category/game-dev
+        - generic [ref=e35]:
+          - paragraph [ref=e36]: "Required skills:"
+          - generic [ref=e37]:
+            - generic [ref=e38]: Unity
+            - generic [ref=e39]: C#
+            - generic [ref=e40]: Mobile
+            - generic [ref=e41]: Senior
+    - generic [ref=e42]:
+      - heading "Open Positions (1)" [level=2] [ref=e43]
+      - generic [ref=e45]:
+        - img "PixelStorm logo" [ref=e46]
+        - generic [ref=e47]:
+          - paragraph [ref=e48]: PixelStorm
+          - heading "Senior Game Developer" [level=2] [ref=e49]:
+            - link "Senior Game Developer" [ref=e50] [cursor=pointer]:
+              - /url: /jobs/a1b2c3d4-e5f6-7890-1234-567890abcdef-senior-game-developer
+          - generic [ref=e51]:
+            - link "Game Dev" [ref=e52] [cursor=pointer]:
+              - /url: /category/game-dev
+            - generic [ref=e53]: "|"
+            - generic [ref=e54]: "Posted on: November 4, 2025"
+          - generic [ref=e55]:
+            - button "Filter by Unity" [ref=e56] [cursor=pointer]: Unity
+            - button "Filter by C#" [ref=e57] [cursor=pointer]: C#
+            - button "Filter by Mobile" [ref=e58] [cursor=pointer]: Mobile
+            - button "Filter by Senior" [ref=e59] [cursor=pointer]: Senior
+        - link "Apply Now" [ref=e61] [cursor=pointer]:
+          - /url: https://example.com/jobs/senior-game-developer
+    - link "← View all companies" [ref=e63] [cursor=pointer]:
+      - /url: /companies
+  - contentinfo [ref=e64]:
+    - generic [ref=e65]:
+      - generic [ref=e66]:
+        - heading "Stay Updated" [level=3] [ref=e67]
+        - paragraph [ref=e68]: Subscribe to our newsletter to get the latest job postings delivered straight to your inbox.
+        - generic [ref=e69]:
+          - textbox "your-email@example.com" [ref=e70]
+          - button "Subscribe" [ref=e71] [cursor=pointer]
+        - paragraph [ref=e72]:
+          - text: We respect your privacy. No spam. Powered by
+          - link "Buttondown" [ref=e73] [cursor=pointer]:
+            - /url: https://buttondown.email
+          - text: .
+      - generic [ref=e74]:
+        - generic [ref=e75]:
+          - link "About" [ref=e76] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e77] [cursor=pointer]:
+            - /url: /contact
+          - link "Privacy Policy" [ref=e78] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e79] [cursor=pointer]:
+            - /url: /terms
+          - link "Blog" [ref=e80] [cursor=pointer]:
+            - /url: /blog
+        - link "artsourcebrazil@gmail.com" [ref=e82] [cursor=pointer]:
+          - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e83]:
+          - generic [ref=e84]: "Feeds:"
+          - link "Jobs RSS" [ref=e85] [cursor=pointer]:
+            - /url: /jobs.xml
+          - link "Jobs JSON" [ref=e86] [cursor=pointer]:
+            - /url: /jobs.json
+          - link "Blog RSS" [ref=e87] [cursor=pointer]:
+            - /url: /blog.xml
+        - paragraph [ref=e88]: © 2025 ArtSource Brazil. All rights reserved.
+  - generic [ref=e91]:
+    - button "Menu" [ref=e92]:
+      - img [ref=e94]
+      - generic: Menu
+    - button "Inspect" [ref=e98]:
+      - img [ref=e100]
+      - generic: Inspect
+    - button "Audit" [ref=e102]:
+      - generic [ref=e103]:
+        - img [ref=e104]
+        - img [ref=e107]
+      - generic: Audit
+    - button "Settings" [ref=e110]:
+      - img [ref=e112]
+      - generic: Settings
+```

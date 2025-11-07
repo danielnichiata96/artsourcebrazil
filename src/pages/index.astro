@@ -1,7 +1,8 @@
 ---
 import jobs from '../data/jobs.json';
 import JobCard from '../components/JobCard.astro';
-import CategoryFilter from '../components/CategoryFilter.astro';
+import SearchBar from '../components/SearchBar.astro';
+import CategoryButtons from '../components/CategoryButtons.astro';
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/ui/Badge.astro';
 import '../styles/global.css';
@@ -68,23 +69,31 @@ const jobPostings = sortedJobs.map((j) => ({
       </p>
     </div>
 
-    <!-- SEO-friendly links to category pages -->
-    <nav class="mb-6 flex flex-wrap justify-center gap-2 animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;" aria-label="Browse by category">
+    <!-- Search Bar (Primary filtering method) -->
+    <div class="animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;">
+      <SearchBar />
+    </div>
+
+    <!-- Category Buttons (Active filters) -->
+    <div class="animate-fade-in" style="animation-delay: 0.15s; animation-fill-mode: both;">
+      <CategoryButtons categories={categories} />
+    </div>
+
+    <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
+    <nav class="sr-only" aria-label="Browse by category">
       {
         categories.map((cat) => {
           const slug = slugify(cat);
           return (
-            <a
-              href={`/category/${slug}`}
-              class="rounded-full border border-neutral-300 bg-background-paper px-4 py-2 text-sm font-medium text-neutral-700 transition-all hover:border-primary hover:bg-primary-light hover:text-primary"
-            >
+            <a href={`/category/${slug}`}>
               {cat} jobs
             </a>
           );
         })
       }
     </nav>
-    <CategoryFilter categories={categories} tags={tags} />
+
+    <!-- Job Cards Results -->
     <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;" data-jobs>
       {
         sortedJobs.map((job: Job) => (

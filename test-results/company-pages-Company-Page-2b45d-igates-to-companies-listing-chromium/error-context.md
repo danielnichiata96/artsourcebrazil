@@ -1,0 +1,120 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e5]
+        - generic [ref=e6]: ArtSource Brazil
+      - generic [ref=e7]:
+        - link "Companies" [ref=e8] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Post a Job" [ref=e11] [cursor=pointer]:
+          - /url: /post-a-job
+  - main [ref=e12]:
+    - navigation "Breadcrumb" [ref=e13]:
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: /
+          - generic [ref=e17]: /
+        - listitem [ref=e18]:
+          - generic [ref=e19]: Companies
+    - generic [ref=e20]:
+      - heading "Companies Hiring in Brazil" [level=1] [ref=e21]
+      - paragraph [ref=e22]: Explore 4 companies actively hiring remote creative professionals based in Brazil. From Game Dev to UI/UX Design, find your next opportunity.
+    - generic [ref=e23]:
+      - link "PixelStorm logo PixelStorm 1 open position Game Dev View jobs →" [ref=e24] [cursor=pointer]:
+        - /url: /company/pixelstorm
+        - generic [ref=e25]:
+          - img "PixelStorm logo" [ref=e27]
+          - heading "PixelStorm" [level=2] [ref=e28]
+          - paragraph [ref=e29]: 1 open position
+          - generic [ref=e32]: Game Dev
+          - generic [ref=e33]: View jobs →
+      - link "Mythic Realms logo Mythic Realms 1 open position 3D & Animation View jobs →" [ref=e34] [cursor=pointer]:
+        - /url: /company/mythic-realms
+        - generic [ref=e35]:
+          - img "Mythic Realms logo" [ref=e37]
+          - heading "Mythic Realms" [level=2] [ref=e38]
+          - paragraph [ref=e39]: 1 open position
+          - generic [ref=e42]: 3D & Animation
+          - generic [ref=e43]: View jobs →
+      - link "Creative Solutions logo Creative Solutions 1 open position Design (UI/UX) View jobs →" [ref=e44] [cursor=pointer]:
+        - /url: /company/creative-solutions
+        - generic [ref=e45]:
+          - img "Creative Solutions logo" [ref=e47]
+          - heading "Creative Solutions" [level=2] [ref=e48]
+          - paragraph [ref=e49]: 1 open position
+          - generic [ref=e52]: Design (UI/UX)
+          - generic [ref=e53]: View jobs →
+      - link "Quantum Leap Games logo Quantum Leap Games 1 open position Game Dev View jobs →" [ref=e54] [cursor=pointer]:
+        - /url: /company/quantum-leap-games
+        - generic [ref=e55]:
+          - img "Quantum Leap Games logo" [ref=e57]
+          - heading "Quantum Leap Games" [level=2] [ref=e58]
+          - paragraph [ref=e59]: 1 open position
+          - generic [ref=e62]: Game Dev
+          - generic [ref=e63]: View jobs →
+    - generic [ref=e64]:
+      - paragraph [ref=e65]: Don't see your company here?
+      - link "Post a Job →" [ref=e66] [cursor=pointer]:
+        - /url: /post-a-job
+  - contentinfo [ref=e67]:
+    - generic [ref=e68]:
+      - generic [ref=e69]:
+        - heading "Stay Updated" [level=3] [ref=e70]
+        - paragraph [ref=e71]: Subscribe to our newsletter to get the latest job postings delivered straight to your inbox.
+        - generic [ref=e72]:
+          - textbox "your-email@example.com" [ref=e73]
+          - button "Subscribe" [ref=e74] [cursor=pointer]
+        - paragraph [ref=e75]:
+          - text: We respect your privacy. No spam. Powered by
+          - link "Buttondown" [ref=e76] [cursor=pointer]:
+            - /url: https://buttondown.email
+          - text: .
+      - generic [ref=e77]:
+        - generic [ref=e78]:
+          - link "About" [ref=e79] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e80] [cursor=pointer]:
+            - /url: /contact
+          - link "Privacy Policy" [ref=e81] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e82] [cursor=pointer]:
+            - /url: /terms
+          - link "Blog" [ref=e83] [cursor=pointer]:
+            - /url: /blog
+        - link "artsourcebrazil@gmail.com" [ref=e85] [cursor=pointer]:
+          - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e86]:
+          - generic [ref=e87]: "Feeds:"
+          - link "Jobs RSS" [ref=e88] [cursor=pointer]:
+            - /url: /jobs.xml
+          - link "Jobs JSON" [ref=e89] [cursor=pointer]:
+            - /url: /jobs.json
+          - link "Blog RSS" [ref=e90] [cursor=pointer]:
+            - /url: /blog.xml
+        - paragraph [ref=e91]: © 2025 ArtSource Brazil. All rights reserved.
+  - generic [ref=e94]:
+    - button "Menu" [ref=e95]:
+      - img [ref=e97]
+      - generic: Menu
+    - button "Inspect" [ref=e101]:
+      - img [ref=e103]
+      - generic: Inspect
+    - button "Audit" [ref=e105]:
+      - generic [ref=e106]:
+        - img [ref=e107]
+        - img [ref=e110]
+      - generic: Audit
+    - button "Settings" [ref=e113]:
+      - img [ref=e115]
+      - generic: Settings
+```

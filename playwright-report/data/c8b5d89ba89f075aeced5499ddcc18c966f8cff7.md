@@ -1,0 +1,79 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e5]
+        - generic [ref=e6]: ArtSource Brazil
+      - generic [ref=e7]:
+        - link "Companies" [ref=e8] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Post a Job" [ref=e11] [cursor=pointer]:
+          - /url: /post-a-job
+  - main [ref=e12]:
+    - generic [ref=e13]:
+      - heading "Blog" [level=1] [ref=e14]
+      - paragraph [ref=e15]: Here you'll find articles, guides, and insights for the creative industries in Brazil.
+    - link "How to Post a Successful Job Listing on ArtSource Brazil A step-by-step guide for companies to attract the best creative talent in Brazil by crafting the perfect job description. November 5, 2025" [ref=e17] [cursor=pointer]:
+      - /url: /blog/how-to-post-a-successful-job
+      - generic [ref=e18]:
+        - heading "How to Post a Successful Job Listing on ArtSource Brazil" [level=2] [ref=e19]
+        - paragraph [ref=e20]: A step-by-step guide for companies to attract the best creative talent in Brazil by crafting the perfect job description.
+        - time [ref=e22]: November 5, 2025
+  - contentinfo [ref=e23]:
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - heading "Stay Updated" [level=3] [ref=e26]
+        - paragraph [ref=e27]: Subscribe to our newsletter to get the latest job postings delivered straight to your inbox.
+        - generic [ref=e28]:
+          - textbox "your-email@example.com" [ref=e29]
+          - button "Subscribe" [ref=e30] [cursor=pointer]
+        - paragraph [ref=e31]:
+          - text: We respect your privacy. No spam. Powered by
+          - link "Buttondown" [ref=e32] [cursor=pointer]:
+            - /url: https://buttondown.email
+          - text: .
+      - generic [ref=e33]:
+        - generic [ref=e34]:
+          - link "About" [ref=e35] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e36] [cursor=pointer]:
+            - /url: /contact
+          - link "Privacy Policy" [ref=e37] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e38] [cursor=pointer]:
+            - /url: /terms
+          - link "Blog" [ref=e39] [cursor=pointer]:
+            - /url: /blog
+        - link "artsourcebrazil@gmail.com" [ref=e41] [cursor=pointer]:
+          - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e42]:
+          - generic [ref=e43]: "Feeds:"
+          - link "Jobs RSS" [ref=e44] [cursor=pointer]:
+            - /url: /jobs.xml
+          - link "Jobs JSON" [ref=e45] [cursor=pointer]:
+            - /url: /jobs.json
+          - link "Blog RSS" [ref=e46] [cursor=pointer]:
+            - /url: /blog.xml
+        - paragraph [ref=e47]: © 2025 ArtSource Brazil. All rights reserved.
+  - generic [ref=e50]:
+    - button "Menu" [ref=e51]:
+      - img [ref=e53]
+      - generic: Menu
+    - button "Inspect" [ref=e57]:
+      - img [ref=e59]
+      - generic: Inspect
+    - button "Audit" [ref=e61]:
+      - img [ref=e63]
+      - generic: Audit
+    - button "Settings" [ref=e66]:
+      - img [ref=e68]
+      - generic: Settings
+```
