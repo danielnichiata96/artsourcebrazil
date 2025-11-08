@@ -150,7 +150,7 @@ const breadcrumbs = {
 
           <!-- Job Info -->
           <div class="flex-grow">
-            <h1 class="mb-2 text-3xl font-bold text-neutral-900">{job.jobTitle}</h1>
+            <h1 class="mb-2 text-4xl font-bold text-neutral-900">{job.jobTitle}</h1>
             <p class="mb-3 text-xl text-neutral-700">
               <Link href={`/company/${slugify(job.companyName)}`} variant="secondary" underline={true}>
                 {job.companyName}
@@ -174,23 +174,7 @@ const breadcrumbs = {
             </div>
           </div>
         </div>
-
-        <!-- Apply Button -->
-        <div class="mt-6">
-          <Button
-            href={job.applyLink}
-            target="_blank"
-            rel="noopener noreferrer"
-            size="lg"
-            class="w-full sm:w-auto"
-          >
-            Apply for this position →
-          </Button>
-        </div>
       </Card>
-
-      <!-- Share Buttons -->
-      <ShareButtons url={canonicalUrl} title={job.jobTitle} className="my-6 justify-center" />
 
       <!-- Job Description Section -->
       <Card padding="lg" class="mb-8">
@@ -230,7 +214,23 @@ const breadcrumbs = {
             >
           </p>
         </div>
+
+        <!-- Apply Button -->
+        <div class="mt-6">
+          <Button
+            href={job.applyLink}
+            target="_blank"
+            rel="noopener noreferrer"
+            size="lg"
+            class="w-full"
+          >
+            Apply for this position →
+          </Button>
+        </div>
       </Card>
+
+      <!-- Share Buttons -->
+      <ShareButtons url={canonicalUrl} title={job.jobTitle} className="my-6 justify-center" />
 
       <!-- Company Info -->
       <Card padding="lg" class="mb-8 bg-neutral-50">

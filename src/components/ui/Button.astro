@@ -7,6 +7,9 @@ export interface Props {
   class?: string;
   target?: string;
   rel?: string;
+  id?: string;
+  disabled?: boolean;
+  [key: string]: any; // Allow any other HTML attributes
 }
 
 const {
@@ -17,10 +20,12 @@ const {
   class: className = '',
   target,
   rel,
+  id,
+  disabled,
   ...rest
 } = Astro.props;
 
-const baseClasses = 'inline-block font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:scale-95';
+const baseClasses = 'inline-block font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1 active:scale-95';
 
 const variantClasses = {
   primary: 'bg-primary text-white hover:bg-primary-hover hover:scale-105 shadow-sm hover:shadow-lg',
@@ -30,9 +35,9 @@ const variantClasses = {
 };
 
 const sizeClasses = {
-  sm: 'px-4 py-2 text-sm rounded-md',
-  md: 'px-6 py-3 text-base rounded-lg',
-  lg: 'px-8 py-4 text-lg rounded-lg',
+  sm: 'px-3 py-1.5 text-sm rounded-md',
+  md: 'px-4 py-2.5 text-sm rounded-lg',
+  lg: 'px-6 py-3 text-base rounded-lg',
 };
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
@@ -45,6 +50,8 @@ const Element = href ? 'a' : 'button';
   type={!href ? type : undefined}
   target={target}
   rel={rel}
+  id={id}
+  disabled={disabled}
   class={classes}
   {...rest}
 >

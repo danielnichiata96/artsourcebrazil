@@ -13,6 +13,7 @@ export interface FiltersSidebarElements {
   closeBtn: HTMLButtonElement;
   searchInput: HTMLInputElement;
   categoryButtons: HTMLButtonElement[];
+  applyBtn: HTMLButtonElement;
   clearBtn: HTMLButtonElement;
   checkboxGroups: {
     level: HTMLInputElement[];
@@ -48,6 +49,7 @@ export class FiltersSidebarController {
   private elements: FiltersSidebarElements;
   private selectedCategory: string = 'all';
   private searchDebounceTimer: number | null = null;
+  private pendingFilters: boolean = false;
 
   constructor(elements: FiltersSidebarElements) {
     this.elements = elements;
@@ -56,8 +58,8 @@ export class FiltersSidebarController {
   }
 
   private validateElements(): void {
-    const { sidebar, overlay, toggleBtn, closeBtn, searchInput, clearBtn } = this.elements;
-    if (!sidebar || !overlay || !toggleBtn || !closeBtn || !searchInput || !clearBtn) {
+    const { sidebar, overlay, toggleBtn, closeBtn, searchInput, applyBtn, clearBtn } = this.elements;
+    if (!sidebar || !overlay || !toggleBtn || !closeBtn || !searchInput || !applyBtn || !clearBtn) {
       console.error('[FiltersSidebar] Required elements not found');
     }
   }
@@ -127,6 +129,7 @@ export class FiltersSidebarController {
     this.setupSearchListener();
     this.setupCategoryListeners();
     this.setupCheckboxListeners();
+    this.setupApplyListener();
     this.setupClearListener();
   }
 
@@ -170,6 +173,7 @@ export class FiltersSidebarController {
         const cat = validateCategory(btn.dataset.category);
         this.selectedCategory = cat;
         this.updateCategoryUI();
+        // Category changes apply immediately
         this.dispatchChange({ category: this.selectedCategory });
       });
     });
@@ -178,20 +182,32 @@ export class FiltersSidebarController {
   private setupCheckboxListeners(): void {
     const { level, tools, contract, location } = this.elements.checkboxGroups;
 
+    // Mark filters as pending when checkboxes change
     level.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.applyFilters());
+      checkbox?.addEventListener('change', () => this.markFiltersPending());
     });
 
     tools.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.applyFilters());
+      checkbox?.addEventListener('change', () => this.markFiltersPending());
     });
 
     contract.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.applyFilters());
+      checkbox?.addEventListener('change', () => this.markFiltersPending());
     });
 
     location.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.applyFilters());
+      checkbox?.addEventListener('change', () => this.markFiltersPending());
+    });
+  }
+
+  private setupApplyListener(): void {
+    const { applyBtn } = this.elements;
+    if (!applyBtn) return;
+
+    applyBtn.addEventListener('click', () => {
+      this.applyFilters();
+      this.pendingFilters = false;
+      this.updateApplyButtonState();
     });
   }
 
@@ -202,6 +218,24 @@ export class FiltersSidebarController {
     clearBtn.addEventListener('click', () => {
       this.clearAllFilters();
     });
+  }
+
+  private markFiltersPending(): void {
+    this.pendingFilters = true;
+    this.updateApplyButtonState();
+  }
+
+  private updateApplyButtonState(): void {
+    const { applyBtn } = this.elements;
+    if (!applyBtn) return;
+
+    if (this.pendingFilters) {
+      applyBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+      applyBtn.disabled = false;
+    } else {
+      applyBtn.classList.add('opacity-50', 'cursor-not-allowed');
+      applyBtn.disabled = true;
+    }
   }
 
   private listenToGlobalFilters(): void {
@@ -220,11 +254,23 @@ export class FiltersSidebarController {
       const isActive = cat === this.selectedCategory;
 
       if (isActive) {
+        // Add active state classes
         btn.classList.add('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
-        btn.classList.remove('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
+        // Remove inactive state classes
+        btn.classList.remove('bg-white', 'bg-background-paper', 'text-neutral-700', 'border-neutral-200');
+        // Add hover for active state (darker green)
+        btn.classList.add('hover:bg-primary-hover');
+        // Remove hover for inactive state
+        btn.classList.remove('hover:border-neutral-300', 'hover:bg-neutral-50');
       } else {
+        // Remove active state classes
         btn.classList.remove('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
-        btn.classList.add('bg-background-paper', 'text-neutral-700', 'border-neutral-200');
+        // Add inactive state classes
+        btn.classList.add('bg-white', 'text-neutral-700', 'border-neutral-200');
+        // Remove hover for active state
+        btn.classList.remove('hover:bg-primary-hover');
+        // Add hover for inactive state (subtle gray)
+        btn.classList.add('hover:border-neutral-300', 'hover:bg-neutral-50');
       }
       btn.setAttribute('aria-pressed', String(isActive));
     });
@@ -289,6 +335,10 @@ export class FiltersSidebarController {
     // Reset category
     this.selectedCategory = 'all';
     this.updateCategoryUI();
+
+    // Reset pending state and update button
+    this.pendingFilters = false;
+    this.updateApplyButtonState();
 
     // Dispatch reset
     this.dispatchChange({

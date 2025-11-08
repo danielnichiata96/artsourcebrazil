@@ -68,27 +68,21 @@ const formattedDate = (() => {
     <div class="mt-4 flex flex-wrap gap-2">
       {
         job.tags.map((tag) => (
-          <button
-            type="button"
-            data-tag={tag}
-            class="cursor-pointer rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700 transition-all duration-200 ease-out hover:scale-105 hover:bg-accent-light hover:text-neutral-900 hover:shadow-sm active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-white"
-            title={`Filter by ${tag}`}
-            aria-label={`Filter by ${tag}`}
+          <span
+            class="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700"
           >
             {tag}
-          </button>
+          </span>
         ))
       }
     </div>
   </div>
   <div class="flex-shrink-0">
     <Button
-      href={job.applyLink}
-      target="_blank"
-      rel="noopener noreferrer"
+      href={`/jobs/${job.id}-${slugify(job.jobTitle)}`}
       size="md"
     >
-      Apply Now
+      View Details
     </Button>
   </div>
 </Card>
