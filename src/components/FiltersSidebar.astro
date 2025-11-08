@@ -231,310 +231,47 @@ const categoryIcons: Record<string, string> = {
 </aside>
 
 <script>
-  import { FILTER_CONFIG, FALLBACK_NAVBAR_HEIGHT } from '../lib/constants';
-  import { validateFilterUpdate, sanitizeStringArray, type PartialFilterState } from '../lib/validation/filter-schema';
+  import { FiltersSidebarController } from '../lib/filters/sidebar-controller';
 
-  // Type-safe implementation with proper error handling
-  const sidebar = document.getElementById('filters-sidebar') as HTMLElement | null;
-  const overlay = document.getElementById('filters-overlay') as HTMLElement | null;
-  const toggleBtn = document.getElementById('filters-toggle') as HTMLButtonElement | null;
-  const closeBtn = document.getElementById('filters-close') as HTMLButtonElement | null;
-  const searchInput = document.getElementById('job-search-sidebar') as HTMLInputElement | null;
+  // Gather all required DOM elements
+  const sidebar = document.getElementById('filters-sidebar') as HTMLElement;
+  const overlay = document.getElementById('filters-overlay') as HTMLElement;
+  const toggleBtn = document.getElementById('filters-toggle') as HTMLButtonElement;
+  const closeBtn = document.getElementById('filters-close') as HTMLButtonElement;
+  const searchInput = document.getElementById('job-search-sidebar') as HTMLInputElement;
   const categoryButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('.category-btn-sidebar')
   );
-  const clearBtn = document.getElementById('clear-filters-sidebar') as HTMLButtonElement | null;
+  const clearBtn = document.getElementById('clear-filters-sidebar') as HTMLButtonElement;
 
-  // Validate critical elements
-  if (!sidebar || !overlay || !toggleBtn || !closeBtn || !searchInput || !clearBtn) {
-    console.error('[FiltersSidebar] Required elements not found');
-  }
+  // Checkbox groups
+  const levelCheckboxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="level"]')
+  );
+  const toolsCheckboxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="tools"]')
+  );
+  const contractCheckboxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="contract"]')
+  );
+  const locationCheckboxes = Array.from(
+    document.querySelectorAll<HTMLInputElement>('input[name="location"]')
+  );
 
-  let selectedCategory: string = 'all';
-
-  function dispatchChange(partial: PartialFilterState): void {
-    try {
-      // Validate before dispatching
-      const validatedData = validateFilterUpdate(partial);
-      if (!validatedData) {
-        console.warn('[FiltersSidebar] Invalid filter data, skipping dispatch');
-        return;
-      }
-      
-      window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: validatedData }));
-    } catch (error) {
-      console.error('[FiltersSidebar] Error dispatching filter change:', error);
-    }
-  }
-
-  // Calculate navbar height and set sidebar padding-top (desktop only)
-  function setSidebarPosition(): void {
-    try {
-      const navbar = document.querySelector('header');
-      if (!navbar) {
-        console.warn('[FiltersSidebar] Navbar not found, using default height');
-        return;
-      }
-
-      if (!sidebar) {
-        console.error('[FiltersSidebar] Sidebar not found');
-        return;
-      }
-
-      const navbarHeight = navbar.offsetHeight;
-      if (isNaN(navbarHeight) || navbarHeight <= 0) {
-        console.warn('[FiltersSidebar] Invalid navbar height, using default');
-        return;
-      }
-
-      const isDesktop = window.innerWidth >= FILTER_CONFIG.BREAKPOINTS.DESKTOP;
-      
-      if (isDesktop) {
-        sidebar.style.paddingTop = `${navbarHeight}px`;
-        sidebar.style.height = `calc(100vh - ${navbarHeight}px)`;
-      } else {
-        sidebar.style.paddingTop = '0';
-        sidebar.style.height = '100vh';
-      }
-      
-      document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
-    } catch (error) {
-      console.error('[FiltersSidebar] Error setting sidebar position:', error);
-      // Fallback: use default values
-      if (sidebar) {
-        sidebar.style.paddingTop = `${FALLBACK_NAVBAR_HEIGHT}px`;
-        sidebar.style.height = `calc(100vh - ${FALLBACK_NAVBAR_HEIGHT}px)`;
-      }
-    }
-  }
-
-  // Set position on load and resize
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setSidebarPosition);
-  } else {
-    setSidebarPosition();
-  }
-  window.addEventListener('resize', setSidebarPosition);
-
-  function openSidebar(): void {
-    if (!sidebar || !overlay || !toggleBtn) return;
-    
-    sidebar.classList.remove('-translate-x-full');
-    overlay.classList.remove('hidden');
-    toggleBtn.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-  }
-
-  function closeSidebar(): void {
-    if (!sidebar || !overlay || !toggleBtn) return;
-    
-    sidebar.classList.add('-translate-x-full');
-    overlay.classList.add('hidden');
-    toggleBtn.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-  }
-
-  // Toggle sidebar on mobile
-  toggleBtn?.addEventListener('click', () => {
-    if (!sidebar) return;
-    const isOpen = !sidebar.classList.contains('-translate-x-full');
-    if (isOpen) {
-      closeSidebar();
-    } else {
-      openSidebar();
-    }
-  });
-
-  // Close sidebar
-  closeBtn?.addEventListener('click', closeSidebar);
-  overlay?.addEventListener('click', closeSidebar);
-
-  // Close on ESC key
-  document.addEventListener('keydown', (e: KeyboardEvent) => {
-    if (!sidebar) return;
-    if (e.key === 'Escape' && !sidebar.classList.contains('-translate-x-full')) {
-      closeSidebar();
-    }
-  });
-
-  // Search input handler
-  if (searchInput) {
-    let timeout: ReturnType<typeof setTimeout> | undefined;
-    searchInput.addEventListener('input', () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(() => {
-        dispatchChange({ search: searchInput.value || '' });
-      }, FILTER_CONFIG.DEBOUNCE_MS);
-    });
-
-    // Sync from global state to input
-    window.addEventListener('jobfilters:applied', (e: Event) => {
-      const customEvent = e as CustomEvent<PartialFilterState>;
-      const detail = customEvent.detail || {};
-      if (typeof detail.search === 'string') {
-        searchInput.value = detail.search;
-      }
-    });
-  }
-
-  // Category buttons handler
-  function updateCategoryUI(): void {
-    categoryButtons.forEach((btn) => {
-      if (!btn) return;
-      const cat = btn.dataset.category || '';
-      const isActive = cat === selectedCategory;
-
-      if (isActive) {
-        btn.classList.add('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
-        btn.classList.remove('bg-white', 'text-neutral-700', 'border-neutral-200');
-        btn.setAttribute('aria-pressed', 'true');
-      } else {
-        btn.classList.remove('category-btn-active', 'bg-primary', 'text-white', 'border-primary');
-        btn.classList.add('bg-white', 'text-neutral-700', 'border-neutral-200');
-        btn.setAttribute('aria-pressed', 'false');
-      }
-    });
-  }
-
-  categoryButtons.forEach((btn) => {
-    if (!btn) return;
-    btn.addEventListener('click', () => {
-      const cat = btn.dataset.category || 'all';
-      selectedCategory = cat;
-      updateCategoryUI();
-      if (searchInput) searchInput.value = '';
-      dispatchChange({ category: selectedCategory, search: '' });
-    });
-  });
-
-  // Auto-apply filters when checkboxes change
-  function applyFilters(): void {
-    try {
-      if (!sidebar) {
-        console.error('[FiltersSidebar] Sidebar not found in applyFilters');
-        return;
-      }
-
-      const checkboxes = sidebar.querySelectorAll<HTMLInputElement>(
-        'input[type="checkbox"]:checked'
-      );
-      const level: string[] = [];
-      const tools: string[] = [];
-      const contract: string[] = [];
-      const location: string[] = [];
-
-      checkboxes.forEach((el) => {
-        if (!el) return;
-        const inp = el as HTMLInputElement;
-        switch (inp.name) {
-          case 'level':
-            level.push(inp.value);
-            break;
-          case 'tools':
-            tools.push(inp.value);
-            break;
-          case 'contract':
-            contract.push(inp.value);
-            break;
-          case 'location':
-            location.push(inp.value);
-            break;
-        }
-      });
-
-      // Sanitize arrays before dispatching
-      dispatchChange({ 
-        level: sanitizeStringArray(level), 
-        tools: sanitizeStringArray(tools), 
-        contract: sanitizeStringArray(contract), 
-        location: sanitizeStringArray(location) 
-      });
-    } catch (error) {
-      console.error('[FiltersSidebar] Error applying filters:', error);
-    }
-  }
-
-  // Auto-apply on checkbox change
-  if (sidebar) {
-    const allCheckboxes = sidebar.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-    allCheckboxes.forEach((checkbox) => {
-      if (!checkbox) return;
-      checkbox.addEventListener('change', () => {
-        applyFilters();
-      });
-    });
-  }
-
-  // Clear filters handler
-  clearBtn?.addEventListener('click', () => {
-    try {
-      if (!sidebar) return;
-      
-      const checkboxes = sidebar.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
-      checkboxes.forEach((checkbox) => {
-        if (checkbox) checkbox.checked = false;
-      });
-      
-      if (searchInput) searchInput.value = '';
-      selectedCategory = 'all';
-      updateCategoryUI();
-      dispatchChange({ 
-        search: '', 
-        category: 'all', 
-        level: [], 
-        tools: [], 
-        contract: [], 
-        location: [] 
-      });
-    } catch (error) {
-      console.error('[FiltersSidebar] Error clearing filters:', error);
-    }
-  });
-
-  // Sync from global state (except search, handled above)
-  window.addEventListener('jobfilters:applied', (e: Event) => {
-    try {
-      if (!sidebar) return;
-      
-      const customEvent = e as CustomEvent<PartialFilterState>;
-      const detail = customEvent.detail || {};
-      
-      if (detail.category) {
-        selectedCategory = detail.category;
-        updateCategoryUI();
-      }
-
-      // Sync checkboxes
-      const levelCheckboxes = sidebar.querySelectorAll<HTMLInputElement>('input[name="level"]');
-      const toolsCheckboxes = sidebar.querySelectorAll<HTMLInputElement>('input[name="tools"]');
-      const contractCheckboxes = sidebar.querySelectorAll<HTMLInputElement>('input[name="contract"]');
-      const locationCheckboxes = sidebar.querySelectorAll<HTMLInputElement>('input[name="location"]');
-
-      levelCheckboxes.forEach((cb) => {
-        if (cb) cb.checked = detail.level?.includes(cb.value) || false;
-      });
-      toolsCheckboxes.forEach((cb) => {
-        if (cb) cb.checked = detail.tools?.includes(cb.value) || false;
-      });
-      contractCheckboxes.forEach((cb) => {
-        if (cb) cb.checked = detail.contract?.includes(cb.value) || false;
-      });
-      locationCheckboxes.forEach((cb) => {
-        if (cb) cb.checked = detail.location?.includes(cb.value) || false;
-      });
-    } catch (error) {
-      console.error('[FiltersSidebar] Error syncing global state:', error);
-    }
-  });
-
-  // Initial UI sync
-  updateCategoryUI();
-
-  // Handle window resize - close mobile sidebar if switching to desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth >= FILTER_CONFIG.BREAKPOINTS.DESKTOP) {
-      document.body.style.overflow = '';
-    }
+  // Initialize controller with all elements
+  new FiltersSidebarController({
+    sidebar,
+    overlay,
+    toggleBtn,
+    closeBtn,
+    searchInput,
+    categoryButtons,
+    clearBtn,
+    checkboxGroups: {
+      level: levelCheckboxes,
+      tools: toolsCheckboxes,
+      contract: contractCheckboxes,
+      location: locationCheckboxes,
+    },
   });
 </script>
-

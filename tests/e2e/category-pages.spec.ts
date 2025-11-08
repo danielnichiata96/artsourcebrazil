@@ -28,9 +28,9 @@ test.describe('Category Pages', () => {
     if (await categoryButton.isVisible()) {
       await categoryButton.click();
 
-      // Should navigate to category page
-      await expect(page).toHaveURL(/\/category\/game-dev/);
-      await expect(page.locator('h1')).toContainText('Game Dev');
+      // Should update URL with category filter parameter
+      await page.waitForURL(/\?category=Game\+Dev/, { timeout: 5000 });
+      await expect(page).toHaveURL(/\?category=Game\+Dev/);
     } else {
       test.skip();
     }
