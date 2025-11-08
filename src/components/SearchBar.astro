@@ -35,54 +35,72 @@ import AdvancedFilters from './AdvancedFilters.astro';
     </div>
 
     <!-- Advanced Filters Button (ensure higher stacking than category buttons) -->
-    <div class="relative z-40 flex-shrink-0">
+    <div class="relative z-0 flex-shrink-0">
       <AdvancedFilters />
     </div>
   </div>
 </div>
 
 <script>
-  // @ts-nocheck
-  const searchInput = document.getElementById('job-search');
+  import { FILTER_CONFIG } from '../lib/constants';
+  import { validateFilterUpdate, type PartialFilterState } from '../lib/validation/filter-schema';
 
-  function dispatchChange(partial) {
-    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
+  const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
+
+  function dispatchChange(partial: PartialFilterState): void {
+    try {
+      // Validate before dispatching
+      const validatedData = validateFilterUpdate(partial);
+      if (!validatedData) {
+        console.warn('[SearchBar] Invalid filter data, skipping dispatch');
+        return;
+      }
+      
+      window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: validatedData }));
+    } catch (error) {
+      console.error('[SearchBar] Error dispatching change:', error);
+    }
   }
 
-  function init() {
-    // Debounced input -> update global filters
-    if (searchInput) {
-      let to;
-      searchInput.addEventListener('input', () => {
-        clearTimeout(to);
-        to = setTimeout(() => {
-          dispatchChange({ search: searchInput.value || '' });
-        }, 150);
-      });
-    }
-
-    // Sync from global state to input
-    window.addEventListener('jobfilters:applied', (e) => {
-      const detail = /** @type {CustomEvent} */ (e).detail || {};
-      if (searchInput && typeof detail.search === 'string') {
-        searchInput.value = detail.search;
+  function init(): void {
+    try {
+      // Debounced input -> update global filters
+      if (searchInput) {
+        let timeout: ReturnType<typeof setTimeout> | undefined;
+        searchInput.addEventListener('input', () => {
+          clearTimeout(timeout);
+          timeout = setTimeout(() => {
+            dispatchChange({ search: searchInput.value || '' });
+          }, FILTER_CONFIG.DEBOUNCE_MS);
+        });
       }
-    });
 
-    // Delegate clicks on tags inside job cards -> quick search
-    const container = document.querySelector('[data-jobs]');
-    if (container) {
-      container.addEventListener('click', (ev) => {
-        const target = ev.target;
-        if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
-          const tagText = target.getAttribute('data-tag') || '';
-          if (tagText && searchInput) {
-            searchInput.value = tagText;
-            dispatchChange({ search: tagText });
-            searchInput.focus();
-          }
+      // Sync from global state to input
+      window.addEventListener('jobfilters:applied', (e: Event) => {
+        const customEvent = e as CustomEvent<PartialFilterState>;
+        const detail = customEvent.detail || {};
+        if (searchInput && typeof detail.search === 'string') {
+          searchInput.value = detail.search;
         }
       });
+
+      // Delegate clicks on tags inside job cards -> quick search
+      const container = document.querySelector('[data-jobs]');
+      if (container) {
+        container.addEventListener('click', (ev: Event) => {
+          const target = ev.target as HTMLElement;
+          if (target && target.hasAttribute && target.hasAttribute('data-tag')) {
+            const tagText = target.getAttribute('data-tag') || '';
+            if (tagText && searchInput) {
+              searchInput.value = tagText;
+              dispatchChange({ search: tagText });
+              searchInput.focus();
+            }
+          }
+        });
+      }
+    } catch (error) {
+      console.error('[SearchBar] Error initializing:', error);
     }
   }
 

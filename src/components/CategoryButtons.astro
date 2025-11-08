@@ -14,7 +14,7 @@ const categoryIcons: Record<string, string> = {
 };
 ---
 
-<nav class="relative z-10 mb-8 flex flex-wrap justify-center gap-3" aria-label="Filter by category">
+<nav class="relative z-0 mb-8 flex flex-wrap justify-center gap-3" aria-label="Filter by category">
   <!-- All Jobs button -->
   <button
     data-category="all"
@@ -44,15 +44,18 @@ const categoryIcons: Record<string, string> = {
 </nav>
 
 <script>
-  // @ts-nocheck
-  let selectedCategory = 'all';
+  import { validateFilterUpdate, validateCategory, type PartialFilterState } from '../lib/validation/filter-schema';
+
+  let selectedCategory: string = 'all';
 
   const categoryButtons = Array.from(
-    document.querySelectorAll('.category-btn')
+    document.querySelectorAll<HTMLButtonElement>('.category-btn')
   );
 
-  function updateCategoryUI() {
+  function updateCategoryUI(): void {
     categoryButtons.forEach((btn) => {
+      if (!btn) return;
+      
       const cat = btn.dataset.category || '';
       const isActive = cat === selectedCategory;
 
@@ -67,28 +70,46 @@ const categoryIcons: Record<string, string> = {
     });
   }
 
-  function dispatchChange(partial) {
-    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
+  function dispatchChange(partial: PartialFilterState): void {
+    try {
+      // Validate before dispatching
+      const validatedData = validateFilterUpdate(partial);
+      if (!validatedData) {
+        console.warn('[CategoryButtons] Invalid filter data, skipping dispatch');
+        return;
+      }
+      
+      window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: validatedData }));
+    } catch (error) {
+      console.error('[CategoryButtons] Error dispatching change:', error);
+    }
   }
 
   // Category button click handlers -> update global state
   categoryButtons.forEach((btn) => {
+    if (!btn) return;
+    
     btn.addEventListener('click', () => {
-      const cat = btn.dataset.category || 'all';
+      const cat = validateCategory(btn.dataset.category);
       selectedCategory = cat;
       // Reset search value in UI; global orchestrator will handle filtering
-      const searchInput = document.getElementById('job-search');
+      const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
       if (searchInput) searchInput.value = '';
       dispatchChange({ category: selectedCategory, search: '' });
     });
   });
 
   // Listen for applied state to keep UI in sync (e.g., on reload via URL params)
-  window.addEventListener('jobfilters:applied', (e) => {
-    const detail = /** @type {CustomEvent} */ (e).detail || {};
-    if (detail.category) {
-      selectedCategory = detail.category;
-      updateCategoryUI();
+  window.addEventListener('jobfilters:applied', (e: Event) => {
+    try {
+      const customEvent = e as CustomEvent<PartialFilterState>;
+      const detail = customEvent.detail || {};
+      if (detail.category) {
+        selectedCategory = validateCategory(detail.category);
+        updateCategoryUI();
+      }
+    } catch (error) {
+      console.error('[CategoryButtons] Error syncing state:', error);
     }
   });
 

@@ -1,0 +1,190 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e5]
+        - generic [ref=e6]: ArtSource Brazil
+      - generic [ref=e7]:
+        - link "Companies" [ref=e8] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e9] [cursor=pointer]:
+          - /url: /blog
+        - link "About" [ref=e10] [cursor=pointer]:
+          - /url: /about
+        - link "Post a Job" [ref=e11] [cursor=pointer]:
+          - /url: /post-a-job
+  - generic [ref=e12]:
+    - complementary "Job filters" [ref=e13]:
+      - generic [ref=e14]:
+        - generic [ref=e15]:
+          - generic [ref=e16]: Search
+          - generic [ref=e17]:
+            - img [ref=e18]
+            - searchbox "Search jobs" [ref=e20]
+        - generic [ref=e21]:
+          - heading "Category" [level=3] [ref=e22]
+          - generic [ref=e23]:
+            - button "All Jobs" [ref=e24] [cursor=pointer]
+            - button "3D & Animation" [ref=e25] [cursor=pointer]: 🎨 3D & Animation
+            - button "Design (UI/UX)" [ref=e26] [cursor=pointer]: 🎯 Design (UI/UX)
+            - button "Game Dev" [active] [pressed] [ref=e27] [cursor=pointer]: 🎮 Game Dev
+        - separator [ref=e28]
+        - generic [ref=e29]:
+          - heading "👔 Level" [level=3] [ref=e30]
+          - generic [ref=e31]:
+            - generic [ref=e32] [cursor=pointer]:
+              - checkbox "Junior" [ref=e33]
+              - generic [ref=e34]: Junior
+            - generic [ref=e35] [cursor=pointer]:
+              - checkbox "Pleno" [ref=e36]
+              - generic [ref=e37]: Pleno
+            - generic [ref=e38] [cursor=pointer]:
+              - checkbox "Senior" [ref=e39]
+              - generic [ref=e40]: Senior
+            - generic [ref=e41] [cursor=pointer]:
+              - checkbox "Lead" [ref=e42]
+              - generic [ref=e43]: Lead
+        - separator [ref=e44]
+        - generic [ref=e45]:
+          - heading "🔧 Tools" [level=3] [ref=e46]
+          - generic [ref=e47]:
+            - generic [ref=e48] [cursor=pointer]:
+              - checkbox "Figma" [ref=e49]
+              - generic [ref=e50]: Figma
+            - generic [ref=e51] [cursor=pointer]:
+              - checkbox "ZBrush" [ref=e52]
+              - generic [ref=e53]: ZBrush
+            - generic [ref=e54] [cursor=pointer]:
+              - checkbox "Unity" [ref=e55]
+              - generic [ref=e56]: Unity
+            - generic [ref=e57] [cursor=pointer]:
+              - checkbox "Maya" [ref=e58]
+              - generic [ref=e59]: Maya
+            - generic [ref=e60] [cursor=pointer]:
+              - checkbox "Adobe XD" [ref=e61]
+              - generic [ref=e62]: Adobe XD
+            - generic [ref=e63] [cursor=pointer]:
+              - checkbox "Blender" [ref=e64]
+              - generic [ref=e65]: Blender
+            - generic [ref=e66] [cursor=pointer]:
+              - checkbox "Photoshop" [ref=e67]
+              - generic [ref=e68]: Photoshop
+            - generic [ref=e69] [cursor=pointer]:
+              - checkbox "Unreal Engine" [ref=e70]
+              - generic [ref=e71]: Unreal Engine
+        - separator [ref=e72]
+        - generic [ref=e73]:
+          - heading "📄 Contract" [level=3] [ref=e74]
+          - generic [ref=e75]:
+            - generic [ref=e76] [cursor=pointer]:
+              - checkbox "CLT" [ref=e77]
+              - generic [ref=e78]: CLT
+            - generic [ref=e79] [cursor=pointer]:
+              - checkbox "PJ" [ref=e80]
+              - generic [ref=e81]: PJ
+            - generic [ref=e82] [cursor=pointer]:
+              - checkbox "Freelance" [ref=e83]
+              - generic [ref=e84]: Freelance
+        - separator [ref=e85]
+        - generic [ref=e86]:
+          - heading "🌍 Location" [level=3] [ref=e87]
+          - generic [ref=e88]:
+            - generic [ref=e89] [cursor=pointer]:
+              - checkbox "Brazil-Only" [ref=e90]
+              - generic [ref=e91]: Brazil-Only
+            - generic [ref=e92] [cursor=pointer]:
+              - checkbox "Global" [ref=e93]
+              - generic [ref=e94]: Global
+        - button "Clear All Filters" [ref=e96] [cursor=pointer]
+    - main [ref=e97]:
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - heading "Find Your Next Creative Role" [level=1] [ref=e100]
+          - paragraph [ref=e101]: Remote opportunities for Brazilian artists, designers, and game developers
+        - navigation "Browse by category" [ref=e102]:
+          - link "3D & Animation jobs" [ref=e103] [cursor=pointer]:
+            - /url: /category/3d-and-animation
+          - link "Design (UI/UX) jobs" [ref=e104] [cursor=pointer]:
+            - /url: /category/design-ui-ux
+          - link "Game Dev jobs" [ref=e105] [cursor=pointer]:
+            - /url: /category/game-dev
+        - generic [ref=e106]:
+          - generic [ref=e107]:
+            - img "PixelStorm logo" [ref=e108]
+            - generic [ref=e109]:
+              - paragraph [ref=e110]: PixelStorm
+              - heading "Senior Game Developer" [level=2] [ref=e111]:
+                - link "Senior Game Developer" [ref=e112] [cursor=pointer]:
+                  - /url: /jobs/a1b2c3d4-e5f6-7890-1234-567890abcdef-senior-game-developer
+              - generic [ref=e113]:
+                - link "Game Dev" [ref=e114] [cursor=pointer]:
+                  - /url: /category/game-dev
+                - generic [ref=e115]: "|"
+                - generic [ref=e116]: "Posted on: November 4, 2025"
+              - generic [ref=e117]:
+                - button "Filter by Unity" [ref=e118] [cursor=pointer]: Unity
+                - button "Filter by C#" [ref=e119] [cursor=pointer]: C#
+                - button "Filter by Mobile" [ref=e120] [cursor=pointer]: Mobile
+                - button "Filter by Senior" [ref=e121] [cursor=pointer]: Senior
+            - link "Apply Now" [ref=e123] [cursor=pointer]:
+              - /url: https://example.com/jobs/senior-game-developer
+          - generic [ref=e124]:
+            - img "Quantum Leap Games logo" [ref=e125]
+            - generic [ref=e126]:
+              - paragraph [ref=e127]: Quantum Leap Games
+              - heading "Lead Gameplay Programmer" [level=2] [ref=e128]:
+                - link "Lead Gameplay Programmer" [ref=e129] [cursor=pointer]:
+                  - /url: /jobs/d4e5f6a7-b8c9-0123-4567-890abcdef123-lead-gameplay-programmer
+              - generic [ref=e130]:
+                - link "Game Dev" [ref=e131] [cursor=pointer]:
+                  - /url: /category/game-dev
+                - generic [ref=e132]: "|"
+                - generic [ref=e133]: "Posted on: November 1, 2025"
+              - generic [ref=e134]:
+                - button "Filter by Unreal" [ref=e135] [cursor=pointer]: Unreal
+                - button "Filter by C++" [ref=e136] [cursor=pointer]: C++
+                - button "Filter by Multiplayer" [ref=e137] [cursor=pointer]: Multiplayer
+                - button "Filter by Lead" [ref=e138] [cursor=pointer]: Lead
+            - link "Apply Now" [ref=e140] [cursor=pointer]:
+              - /url: https://example.com/jobs/lead-gameplay-programmer
+  - contentinfo [ref=e141]:
+    - generic [ref=e142]:
+      - generic [ref=e143]:
+        - heading "Stay Updated" [level=3] [ref=e144]
+        - paragraph [ref=e145]: Subscribe to our newsletter to get the latest job postings delivered straight to your inbox.
+        - generic [ref=e146]:
+          - textbox "your-email@example.com" [ref=e147]
+          - button "Subscribe" [ref=e148] [cursor=pointer]
+        - paragraph [ref=e149]:
+          - text: We respect your privacy. No spam. Powered by
+          - link "Buttondown" [ref=e150] [cursor=pointer]:
+            - /url: https://buttondown.email
+          - text: .
+      - generic [ref=e151]:
+        - generic [ref=e152]:
+          - link "About" [ref=e153] [cursor=pointer]:
+            - /url: /about
+          - link "Contact" [ref=e154] [cursor=pointer]:
+            - /url: /contact
+          - link "Privacy Policy" [ref=e155] [cursor=pointer]:
+            - /url: /privacy
+          - link "Terms of Service" [ref=e156] [cursor=pointer]:
+            - /url: /terms
+          - link "Blog" [ref=e157] [cursor=pointer]:
+            - /url: /blog
+        - link "artsourcebrazil@gmail.com" [ref=e159] [cursor=pointer]:
+          - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e160]:
+          - generic [ref=e161]: "Feeds:"
+          - link "Jobs RSS" [ref=e162] [cursor=pointer]:
+            - /url: /jobs.xml
+          - link "Jobs JSON" [ref=e163] [cursor=pointer]:
+            - /url: /jobs.json
+          - link "Blog RSS" [ref=e164] [cursor=pointer]:
+            - /url: /blog.xml
+        - paragraph [ref=e165]: © 2025 ArtSource Brazil. All rights reserved.
+```

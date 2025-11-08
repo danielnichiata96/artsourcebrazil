@@ -1,8 +1,7 @@
 ---
 import jobs from '../data/jobs.json';
 import JobCard from '../components/JobCard.astro';
-import SearchBar from '../components/SearchBar.astro';
-import CategoryButtons from '../components/CategoryButtons.astro';
+import FiltersSidebar from '../components/FiltersSidebar.astro';
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/ui/Badge.astro';
 import '../styles/global.css';
@@ -58,146 +57,161 @@ const jobPostings = sortedJobs.map((j) => ({
     <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
   </Fragment>
 
-  <main class="container mx-auto px-container py-section-sm">
-    <!-- Hero section -->
-    <div class="mb-12 text-center animate-fade-in-up">
-      <h1 class="mb-4 font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
-        Find Your Next Creative Role
-      </h1>
-      <p class="mx-auto max-w-2xl text-lg text-neutral-700">
-        Remote opportunities for Brazilian artists, designers, and game developers
-      </p>
-    </div>
+  <!-- Layout with Sidebar -->
+  <div class="flex min-h-screen">
+    <!-- Filters Sidebar -->
+    <FiltersSidebar categories={categories} />
 
-    <!-- Search Bar (Primary filtering method) -->
-    <div class="relative z-30 animate-fade-in" style="animation-delay: 0.1s; animation-fill-mode: both;">
-      <SearchBar />
-    </div>
+    <!-- Main Content -->
+    <main class="flex-1 min-w-0 lg:ml-80">
+      <div class="container mx-auto px-container py-section-sm">
+        <!-- Hero section -->
+        <div class="mb-12 text-center animate-fade-in-up">
+          <h1 class="mb-4 font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
+            Find Your Next Creative Role
+          </h1>
+          <p class="mx-auto max-w-2xl text-lg text-neutral-700">
+            Remote opportunities for Brazilian artists, designers, and game developers
+          </p>
+        </div>
 
-    <!-- Category Buttons (Active filters) -->
-    <div class="relative z-10 animate-fade-in" style="animation-delay: 0.15s; animation-fill-mode: both;">
-      <CategoryButtons categories={categories} />
-    </div>
+        <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
+        <nav class="sr-only" aria-label="Browse by category">
+          {
+            categories.map((cat) => {
+              const slug = slugify(cat);
+              return (
+                <a href={`/category/${slug}`}>
+                  {cat} jobs
+                </a>
+              );
+            })
+          }
+        </nav>
 
-    <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
-    <nav class="sr-only" aria-label="Browse by category">
-      {
-        categories.map((cat) => {
-          const slug = slugify(cat);
-          return (
-            <a href={`/category/${slug}`}>
-              {cat} jobs
-            </a>
-          );
-        })
-      }
-    </nav>
-
-    <!-- Job Cards Results -->
-    <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;" data-jobs>
-      {
-        sortedJobs.map((job: Job) => (
-          <JobCard
-            job={job}
-            data-testid="job-card"
-            data-category={job.category}
-            data-tags={job.tags.join(' ')}
-            data-text={`${job.jobTitle} ${job.companyName}`}
-          />
-        ))
-      }
-    </div>
-  </main>
+        <!-- Job Cards Results -->
+        <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;" data-jobs>
+          {
+            sortedJobs.map((job: Job) => (
+              <JobCard
+                job={job}
+                data-testid="job-card"
+                data-category={job.category}
+                data-tags={job.tags.join(' ')}
+                data-text={`${job.jobTitle} ${job.companyName}`}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </main>
+  </div>
 </Layout>
 
 <script>
-  // @ts-nocheck
+  import { parseURLParams, validateFilterUpdate, type FilterState } from '../lib/validation/filter-schema';
+
   // Global filter orchestrator: single source of truth for filters
   (function () {
+    // Parse and validate URL params safely
     const params = new URLSearchParams(location.search);
-  /**
-   * @param {string} key
-   * @returns {string[]}
-   */
-  const parseCsv = (key) => (params.get(key) || '').split(',').filter(Boolean);
+    const state: FilterState = parseURLParams(params);
 
-    const state = {
-      search: params.get('q') || '',
-      category: params.get('category') || 'all',
-      level: parseCsv('level'),
-      tools: parseCsv('tools'),
-      contract: parseCsv('contract'),
-      location: parseCsv('location'),
-    };
-
-    /** @returns {HTMLElement[]} */
-    function getItems() {
-      const container = document.querySelector('[data-jobs]');
-      return Array.from(container ? container.children : []);
+    function getItems(): HTMLElement[] {
+      try {
+        const container = document.querySelector('[data-jobs]');
+        if (!container) {
+          console.warn('[FilterOrchestrator] Jobs container not found');
+          return [];
+        }
+        return Array.from(container.children) as HTMLElement[];
+      } catch (error) {
+        console.error('[FilterOrchestrator] Error getting items:', error);
+        return [];
+      }
     }
 
-    /**
-     * @param {string} tagString
-     * @param {string[]} arr
-     */
-    /**
-     * @param {string} tagString
-     * @param {string[]} arr
-     * @returns {boolean}
-     */
-    function includesAll(tagString, arr) {
+    function includesAll(tagString: string, arr: string[]): boolean {
       if (!arr || arr.length === 0) return true;
-      const set = new Set((tagString || '').toLowerCase().split(/\s+/).filter(Boolean));
+      const normalizedTags = (tagString || '').toLowerCase();
+      const set = new Set(normalizedTags.split(/\s+/).filter(Boolean));
       return arr.every((v) => set.has(String(v).toLowerCase()));
     }
 
-    function apply() {
-      const items = getItems();
-      const qLower = (state.search || '').toLowerCase();
-
-      items.forEach((el) => {
-        const tagsStr = (el.getAttribute('data-tags') || '').toLowerCase();
-        const text = (el.getAttribute('data-text') || '').toLowerCase();
-        const jobCategory = el.getAttribute('data-category') || '';
-
-        let show = true;
-        if (state.category && state.category !== 'all') {
-          show = jobCategory === state.category;
-        }
-        if (show && qLower) {
-          show = text.includes(qLower) || tagsStr.includes(qLower);
+    function apply(): void {
+      try {
+        const items = getItems();
+        if (items.length === 0) {
+          console.warn('[FilterOrchestrator] No items to filter');
+          return;
         }
 
-        // Advanced filters: match by tags for now (Level/Tools often appear as tags)
-        if (show && !includesAll(tagsStr, state.level)) show = false;
-        if (show && !includesAll(tagsStr, state.tools)) show = false;
-        // Contract/Location could be supported later when data is available
+        const qLower = (state.search || '').toLowerCase();
 
-        el.classList.toggle('hidden', !show);
-      });
+        items.forEach((el) => {
+          if (!el) return;
 
-      // Sync URL with current state
-      const next = new URLSearchParams();
-      if (state.search) next.set('q', state.search);
-      if (state.category && state.category !== 'all') next.set('category', state.category);
-      if (state.level?.length) next.set('level', state.level.join(','));
-      if (state.tools?.length) next.set('tools', state.tools.join(','));
-      if (state.contract?.length) next.set('contract', state.contract.join(','));
-      if (state.location?.length) next.set('location', state.location.join(','));
-      const url = `${location.pathname}${next.toString() ? `?${next.toString()}` : ''}`;
-      history.replaceState({}, '', url);
+          const tagsStr = (el.getAttribute('data-tags') || '').toLowerCase();
+          const text = (el.getAttribute('data-text') || '').toLowerCase();
+          const jobCategory = el.getAttribute('data-category') || '';
 
-      // Notify listeners
-      window.dispatchEvent(new CustomEvent('jobfilters:applied', { detail: { ...state } }));
+          let show = true;
+          
+          // Category filter
+          if (state.category && state.category !== 'all') {
+            show = jobCategory === state.category;
+          }
+          
+          // Search filter
+          if (show && qLower) {
+            show = text.includes(qLower) || tagsStr.includes(qLower);
+          }
+
+          // Advanced filters: match by tags
+          if (show && !includesAll(tagsStr, state.level)) show = false;
+          if (show && !includesAll(tagsStr, state.tools)) show = false;
+          // Contract/Location could be supported later when data is available
+
+          el.classList.toggle('hidden', !show);
+        });
+
+        // Sync URL with current state
+        const next = new URLSearchParams();
+        if (state.search) next.set('q', state.search);
+        if (state.category && state.category !== 'all') next.set('category', state.category);
+        if (state.level?.length) next.set('level', state.level.join(','));
+        if (state.tools?.length) next.set('tools', state.tools.join(','));
+        if (state.contract?.length) next.set('contract', state.contract.join(','));
+        if (state.location?.length) next.set('location', state.location.join(','));
+        
+        const url = `${location.pathname}${next.toString() ? `?${next.toString()}` : ''}`;
+        history.replaceState({}, '', url);
+
+        // Notify listeners
+        window.dispatchEvent(new CustomEvent('jobfilters:applied', { detail: { ...state } }));
+      } catch (error) {
+        console.error('[FilterOrchestrator] Error applying filters:', error);
+      }
     }
 
     // Listen for filter changes from components
-    window.addEventListener('jobfilters:change', (ev) => {
-      /** @type {CustomEvent} */
-      const ce = ev as CustomEvent;
-      const detail = (ce.detail || {});
-      Object.assign(state, detail as Record<string, any>);
-      apply();
+    window.addEventListener('jobfilters:change', (ev: Event) => {
+      try {
+        const ce = ev as CustomEvent<Partial<FilterState>>;
+        const detail = ce.detail || {};
+        
+        // Validate the incoming data
+        const validatedData = validateFilterUpdate(detail);
+        if (!validatedData) {
+          console.warn('[FilterOrchestrator] Invalid filter data received');
+          return;
+        }
+        
+        Object.assign(state, validatedData);
+        apply();
+      } catch (error) {
+        console.error('[FilterOrchestrator] Error handling filter change:', error);
+      }
     });
 
     // Initial apply after DOM is ready

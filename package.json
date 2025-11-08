@@ -19,7 +19,8 @@
     "test:e2e:ui": "playwright test --ui",
     "test:all": "npm run test:unit && npm run test:e2e",
     "lint": "eslint . --ext .js,.ts,.astro",
-    "lint:fix": "eslint . --ext .js,.ts,.astro --fix"
+    "lint:fix": "eslint . --ext .js,.ts,.astro --fix",
+    "check:improvements": "node scripts/check-improvements.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
@@ -42,6 +43,6 @@
     "prettier-plugin-astro": "^0.14.0",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "vitest": "^2.1.9",
-    "zod": "^3.23.8"
+    "zod": "^3.25.76"
   }
 }

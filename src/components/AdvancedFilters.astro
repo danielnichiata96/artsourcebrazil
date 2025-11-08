@@ -32,7 +32,7 @@
   <!-- Dropdown Panel (hidden by default) -->
   <div
     id="advanced-filters-panel"
-    class="absolute right-0 z-50 mt-2 hidden w-80 origin-top-right rounded-xl border border-neutral-200 bg-white p-6 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
+    class="absolute right-0 z-[60] mt-2 hidden w-80 origin-top-right rounded-xl border border-neutral-200 bg-white p-6 shadow-2xl ring-1 ring-black ring-opacity-5 focus:outline-none"
     role="menu"
     aria-orientation="vertical"
     aria-labelledby="advanced-filters-toggle"
@@ -174,67 +174,108 @@
 </div>
 
 <script>
-  // @ts-nocheck
-  const toggleBtn = document.getElementById('advanced-filters-toggle');
-  const panel = document.getElementById('advanced-filters-panel');
-  const applyBtn = document.getElementById('apply-advanced-filters');
-  const clearBtn = document.getElementById('clear-advanced-filters');
+  import { validateFilterUpdate, sanitizeStringArray, type PartialFilterState } from '../lib/validation/filter-schema';
 
-  function dispatchChange(partial) {
-    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: partial }));
+  const toggleBtn = document.getElementById('advanced-filters-toggle') as HTMLButtonElement | null;
+  const panel = document.getElementById('advanced-filters-panel') as HTMLElement | null;
+  const applyBtn = document.getElementById('apply-advanced-filters') as HTMLButtonElement | null;
+  const clearBtn = document.getElementById('clear-advanced-filters') as HTMLButtonElement | null;
+
+  function dispatchChange(partial: PartialFilterState): void {
+    try {
+      // Validate before dispatching
+      const validatedData = validateFilterUpdate(partial);
+      if (!validatedData) {
+        console.warn('[AdvancedFilters] Invalid filter data, skipping dispatch');
+        return;
+      }
+      
+      window.dispatchEvent(new CustomEvent('jobfilters:change', { detail: validatedData }));
+    } catch (error) {
+      console.error('[AdvancedFilters] Error dispatching change:', error);
+    }
   }
 
   // Toggle panel visibility
   toggleBtn?.addEventListener('click', () => {
+    if (!toggleBtn || !panel) return;
+    
     const isExpanded = toggleBtn.getAttribute('aria-expanded') === 'true';
     toggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-    panel?.classList.toggle('hidden');
+    panel.classList.toggle('hidden');
   });
 
   // Close panel when clicking outside
-  document.addEventListener('click', (e) => {
+  document.addEventListener('click', (e: MouseEvent) => {
     const target = e.target as HTMLElement;
-    if (!toggleBtn?.contains(target) && !panel?.contains(target)) {
-      toggleBtn?.setAttribute('aria-expanded', 'false');
-      panel?.classList.add('hidden');
+    if (!toggleBtn || !panel) return;
+    
+    if (!toggleBtn.contains(target) && !panel.contains(target)) {
+      toggleBtn.setAttribute('aria-expanded', 'false');
+      panel.classList.add('hidden');
     }
   });
 
-  // Apply filters (to be implemented with full filtering logic)
+  // Apply filters
   applyBtn?.addEventListener('click', () => {
-    const checked = panel?.querySelectorAll('input[type="checkbox"]:checked') || [];
-    const level = [];
-    const tools = [];
-    const contract = [];
-    const location = [];
-    checked.forEach((el) => {
-      const inp = el;
-      switch (inp.name) {
-        case 'level':
-          level.push(inp.value);
-          break;
-        case 'tools':
-          tools.push(inp.value);
-          break;
-        case 'contract':
-          contract.push(inp.value);
-          break;
-        case 'location':
-          location.push(inp.value);
-          break;
+    try {
+      if (!panel) return;
+      
+      const checked = panel.querySelectorAll<HTMLInputElement>('input[type="checkbox"]:checked');
+      const level: string[] = [];
+      const tools: string[] = [];
+      const contract: string[] = [];
+      const location: string[] = [];
+      
+      checked.forEach((el) => {
+        if (!el) return;
+        const inp = el as HTMLInputElement;
+        switch (inp.name) {
+          case 'level':
+            level.push(inp.value);
+            break;
+          case 'tools':
+            tools.push(inp.value);
+            break;
+          case 'contract':
+            contract.push(inp.value);
+            break;
+          case 'location':
+            location.push(inp.value);
+            break;
+        }
+      });
+      
+      // Sanitize arrays before dispatching
+      dispatchChange({ 
+        level: sanitizeStringArray(level), 
+        tools: sanitizeStringArray(tools), 
+        contract: sanitizeStringArray(contract), 
+        location: sanitizeStringArray(location) 
+      });
+      
+      if (toggleBtn && panel) {
+        toggleBtn.setAttribute('aria-expanded', 'false');
+        panel.classList.add('hidden');
       }
-    });
-    dispatchChange({ level, tools, contract, location });
-    toggleBtn?.setAttribute('aria-expanded', 'false');
-    panel?.classList.add('hidden');
+    } catch (error) {
+      console.error('[AdvancedFilters] Error applying filters:', error);
+    }
   });
 
   // Clear all filters
   clearBtn?.addEventListener('click', () => {
-    const checkboxes = panel?.querySelectorAll('input[type="checkbox"]') || [];
-    checkboxes.forEach((checkbox) => {
-      checkbox.checked = false;
-    });
-    dispatchChange({ level: [], tools: [], contract: [], location: [] });
+    try {
+      if (!panel) return;
+      
+      const checkboxes = panel.querySelectorAll<HTMLInputElement>('input[type="checkbox"]');
+      checkboxes.forEach((checkbox) => {
+        if (checkbox) checkbox.checked = false;
+      });
+      
+      dispatchChange({ level: [], tools: [], contract: [], location: [] });
+    } catch (error) {
+      console.error('[AdvancedFilters] Error clearing filters:', error);
+    }
   });
 </script>

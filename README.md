@@ -145,5 +145,22 @@ npm run format:check  # checks only
 - Tailwind styles missing: ensure `tailwind.config.mjs` has `content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}']` and restart dev server.
 - Logos 404: place files in `public/images` or update `companyLogo` URLs.
 - Canonical/OG URLs: set the `site` in `astro.config.mjs` to your domain.
+- E2E tests failing: run `npx playwright install` to download browsers.
+
+## 📋 Project Improvement Guide
+
+This project was 100% AI-generated. 
+
+**📖 Start here:** [docs/HOW_TO_USE_IMPROVEMENTS.md](./docs/HOW_TO_USE_IMPROVEMENTS.md) - Step-by-step guide on how to use the improvements document.
+
+**📋 Improvements document:** [IMPROVEMENTS.md](./IMPROVEMENTS.md) contains:
+- Common issues in AI-generated code
+- Code quality improvements with code examples
+- Performance optimizations
+- Security enhancements
+- Testing strategies
+- Priority action plan
+
+**⚡ Quick check:** Run `npm run check:improvements` to see current improvement status.
 
 # artsourcebrazil

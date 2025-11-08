@@ -16,6 +16,25 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
+- [ ] **Code Quality Improvements (AI-Generated Code)** 🔴 CRÍTICO
+  - [ ] Remove `@ts-nocheck` and add proper TypeScript types (see IMPROVEMENTS.md)
+  - [ ] Modularize inline JavaScript (extract to `src/lib/filters/`)
+  - [ ] Add error handling and validation (try-catch, null checks)
+  - [ ] Extract magic numbers to constants file
+  - [ ] Add cleanup for event listeners (prevent memory leaks)
+  - [ ] Add loading/error states for user feedback
+- [ ] **Filters Sidebar Enhancements** 🎯
+  - [ ] Add results count display in sidebar (e.g., "12 jobs found")
+  - [ ] Show active filter badges/chips when filters are applied
+  - [ ] Add "Reset filters" quick action when filters are active
+  - [ ] Improve mobile UX: remember sidebar state (collapsed/expanded)
+  - [ ] Add loading state when filters are being applied
+- [ ] **E2E Tests for Filters Sidebar**
+  - [ ] Test sidebar toggle on mobile
+  - [ ] Test filter application (search, category, level, tools, contract, location)
+  - [ ] Test clear filters functionality
+  - [ ] Test URL sync with filters
+  - [ ] Test sidebar responsiveness (mobile/desktop)
 - [x] Deploy to Vercel or Netlify
 - [x] Configure production env vars
 - [x] Post-a-Job flow polish
@@ -115,20 +134,42 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Fixed infinite loading issue by removing React dependencies
   - [x] Pure HTML/CSS/JS implementation (zero-JS by default)
   - [x] All pages now have proper og:image meta tags
-- [ ] **Skills/Tags Pages**
+- [ ] **Skills/Tags Pages** (High Priority - SEO Value)
   - [ ] `/skills/[slug]` dynamic route (e.g., `/skills/unity`, `/skills/zbrush`)
-  - [ ] `/skills` index page listing all skills
-  - [ ] Filter jobs by skill/tag
+  - [ ] `/skills` index page listing all skills with job counts
+  - [ ] Filter jobs by skill/tag in sidebar
+  - [ ] Add skill badges to job cards (clickable → skill page)
   - [ ] Potential for 10-20+ new indexable pages
+  - [ ] JSON-LD for skill pages
+- [ ] **Filters Sidebar - Advanced Features**
+  - [ ] Add filter presets/saved searches (localStorage)
+  - [ ] Show filter count badge on mobile toggle button
+  - [ ] Add keyboard shortcuts (e.g., `/` to focus search, `Esc` to clear)
+  - [ ] Collapsible filter sections (accordion style)
+  - [ ] Show popular tags/skills based on current filters
+- [ ] **Content Marketing & SEO**
+  - [ ] Write 2–3 more blog posts:
+    - [ ] "Salary Guide for Artists in Brazil"
+    - [ ] "How to Build a Portfolio for Game Studios"
+    - [ ] "Remote Work Tips for Brazilian Creatives"
+  - [ ] Share blog posts on LinkedIn/X to drive organic traffic
+  - [ ] Add "Related Posts" section to blog posts
+  - [ ] Add reading time estimate to blog posts
 - [ ] **Uptime Monitoring**
-  - Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
-  - Alert on downtime or slow response (>3s)
-  - Write 2–3 more posts: "Salary Guide for Artists in Brazil", "How to Build a Portfolio for Game Studios"
-  - Share on LinkedIn/X to drive organic traffic
-- [ ] **Social share for blog posts**
-  - Add Twitter/LinkedIn share buttons on individual blog posts
-- [ ] **OG images per page**
-  - Generate unique OG images for category pages and blog posts (Satori/og-image or manual)
+  - [ ] Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
+  - [ ] Alert on downtime or slow response (>3s)
+  - [ ] Monitor Core Web Vitals (LCP, FID, CLS)
+- [ ] **Blog Enhancements**
+  - [ ] Add Twitter/LinkedIn share buttons on individual blog posts
+  - [ ] Add "Related Posts" section to blog posts
+  - [ ] Add reading time estimate to blog posts
+  - [ ] Add author bio section
+- [ ] **OG Images Enhancement**
+  - [ ] Generate unique OG images for category pages (Satori)
+  - [ ] Generate OG images for blog posts (Satori)
+  - [ ] Generate OG images for company pages
+  - [ ] Generate OG images for skills pages (when implemented)
+  - [ ] Add OG image cache/optimization
 - [ ] **Discord/Slack community**
   - Set up Discord server or Slack workspace for community
   - Update /about page with real invite link
@@ -142,10 +183,19 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [ ] Test with screen reader (NVDA/VoiceOver)
   - [ ] Add skip links for keyboard navigation
   - [ ] Test prefers-reduced-motion support
-- [ ] **Image optimization**
-  - Add width/height to all logos
-  - Compress/optimize static images
-  - Lazy load images below fold
+- [ ] **Performance Optimization**
+  - [ ] Image optimization: Add width/height to all logos
+  - [ ] Compress/optimize static images (use Sharp/ImageOptim)
+  - [ ] Lazy load images below fold
+  - [ ] Add loading="lazy" to job card logos
+  - [ ] Implement virtual scrolling for large job lists (if >50 jobs)
+  - [ ] Add service worker for offline support (PWA)
+- [ ] **Analytics & Insights**
+  - [ ] Track filter usage (which filters are most used)
+  - [ ] Track job click-through rates
+  - [ ] Add conversion tracking for "Post a Job" flow
+  - [ ] Monitor search queries (popular searches)
+  - [ ] Track mobile vs desktop usage patterns
 - [ ] **Validate Rich Results**
   - Test all JSON-LD (Organization, JobPosting, BlogPosting) with Google Rich Results Test
   - Fix any warnings/errors
@@ -186,10 +236,12 @@ This file is the single source of truth for what to do next. Coding agents and h
 - Data validation: PASS (Zod)
 - ESLint: PASS (0 errors, 0 warnings)
 - Unit Tests: PASS (8/8 tests)
-- E2E Tests: PASS (44/46 tests - 2 skipped)
+- E2E Tests: ⚠️ Requires Playwright browsers installation (`npx playwright install`)
 - Total Test Coverage: 52 tests (8 unit + 44 E2E)
 - CI: Build + format + lint + tests running on push/PR
 - **SEO Pages: 22 indexable pages** (1 home + 3 categories + 4 individual jobs + 1 companies index + 4 company pages + 1 blog index + 1 blog post + 7 static)
+- **Recent Updates**: Filters sidebar consolidated into single component with responsive design (desktop sidebar + mobile drawer)
+- **📋 Ver IMPROVEMENTS.md** para melhorias específicas de código gerado por IA
 
 ---
 
@@ -213,6 +265,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 - 2025-11-06: **SEO/Community milestone COMPLETED**: Category pages, JSON-LD (Organization, JobPosting, BlogPosting), feeds (jobs RSS/JSON, blog RSS), newsletter footer, About page, Blog setup. Homepage refactored to use global Layout.
 - 2025-11-06: Adicionados smoke tests E2E (Playwright): success page e homepage filters; CI atualizado para rodar testes automaticamente.
 - 2025-11-06: Corrigido sucesso do Stripe para URL de produção, botão da página de sucesso simplificado e link Tally confirmado; `astro.config.mjs` atualizado com `site` de produção.
+- 2025-11-07: **Filters Sidebar Consolidation COMPLETED**: Consolidated all filters (search, category, level, tools, contract, location) into a single sidebar component. Removed duplicate filter systems (SearchBar, CategoryButtons, AdvancedFilters dropdown). Implemented responsive sidebar: fixed left sidebar on desktop, drawer with overlay on mobile. Added dynamic navbar height calculation to prevent content clipping. Filters apply automatically on change (no "Apply" button needed). All filters sync with URL and global state. Build passing, all tests passing (8 unit + 44 E2E).
 - 2025-11-05: Added Zod validator (prebuild), improved a11y (focus, buttons), fixed Astro frontmatter issues, cleaned sitemap warning.
 <!-- AI-ANCHOR:CHANGELOG-END -->
 
