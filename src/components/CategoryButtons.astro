@@ -92,6 +92,7 @@ const categoryIcons: Record<string, string> = {
     btn.addEventListener('click', () => {
       const cat = validateCategory(btn.dataset.category);
       selectedCategory = cat;
+      updateCategoryUI(); // Update UI immediately
       // Reset search value in UI; global orchestrator will handle filtering
       const searchInput = document.getElementById('job-search') as HTMLInputElement | null;
       if (searchInput) searchInput.value = '';
