@@ -3,6 +3,9 @@ import { FILTER_CONFIG } from '../constants';
 
 const FALLBACK_NAVBAR_HEIGHT = 64;
 
+/**
+ * DOM elements required for FiltersSidebar functionality
+ */
 export interface FiltersSidebarElements {
   sidebar: HTMLElement;
   overlay: HTMLElement;
@@ -19,6 +22,28 @@ export interface FiltersSidebarElements {
   };
 }
 
+/**
+ * FiltersSidebarController
+ * 
+ * Manages the mobile filter sidebar UI and interactions.
+ * 
+ * Features:
+ * - Mobile/desktop responsive positioning
+ * - Category filter buttons
+ * - Search input with debouncing
+ * - Checkbox filters (level, tools, contract, location)
+ * - Clear all filters functionality
+ * - Syncs with global filter state
+ * 
+ * @example
+ * ```ts
+ * const controller = new FiltersSidebarController({
+ *   sidebar: document.getElementById('filters-sidebar'),
+ *   overlay: document.getElementById('filters-overlay'),
+ *   // ... other elements
+ * });
+ * ```
+ */
 export class FiltersSidebarController {
   private elements: FiltersSidebarElements;
   private selectedCategory: string = 'all';

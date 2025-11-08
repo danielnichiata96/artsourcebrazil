@@ -3,8 +3,36 @@ import { parseURLParams, validateFilterUpdate, type FilterState } from '../valid
 /**
  * FilterOrchestratorController
  * 
- * Global filter orchestrator - single source of truth for all filters
- * Coordinates filter state across all filter UI components
+ * Global filter orchestrator - single source of truth for all filter state.
+ * Coordinates filter changes across all UI components and applies them to job listings.
+ * 
+ * Responsibilities:
+ * - Parse and validate URL parameters
+ * - Listen for filter change events from components
+ * - Apply filters to job listings (show/hide based on criteria)
+ * - Sync filter state with URL
+ * - Notify components of filter state changes
+ * 
+ * Filter Logic:
+ * - Category: Exact match on data-category attribute
+ * - Search: Text includes search term (job title or company name)
+ * - Level/Tools: All selected tags must be present in job's tags
+ * 
+ * @example
+ * ```ts
+ * // Initialize in page script
+ * const orchestrator = new FilterOrchestratorController();
+ * 
+ * // Components dispatch changes
+ * window.dispatchEvent(new CustomEvent('jobfilters:change', {
+ *   detail: { search: 'developer', category: 'Game Dev' }
+ * }));
+ * 
+ * // Orchestrator applies and syncs
+ * // - Filters jobs on page
+ * // - Updates URL: ?q=developer&category=Game+Dev
+ * // - Notifies components via 'jobfilters:applied' event
+ * ```
  */
 export class FilterOrchestratorController {
   private state: FilterState;
