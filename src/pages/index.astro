@@ -93,19 +93,19 @@ const jobPostings = sortedJobs.map((j) => ({
               alt="ArtSource Brazil"
               class="h-20 w-auto"
             />
-            <h1 class="max-w-3xl font-serif text-4xl font-extrabold leading-tight tracking-tight text-neutral-950 sm:text-5xl">
-              {heroMessages.title}
-            </h1>
-            <p class="max-w-xl text-base leading-relaxed text-neutral-700">
-              {heroMessages.description}
-            </p>
+              <h1 class="max-w-3xl font-serif text-3xl font-extrabold leading-tight tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
+                {heroMessages.title}
+              </h1>
+              <p class="max-w-xl text-sm leading-relaxed text-neutral-700 sm:text-base">
+                {heroMessages.description}
+              </p>
 
             <!-- Search Bar Grande estilo Remotive -->
             <div class="relative w-full">
               <!-- Searchbar Container centralizada -->
               <div class="relative mx-auto max-w-4xl">
                 <svg
-                  class="absolute left-5 top-1/2 h-6 w-6 -translate-y-1/2 text-primary z-10"
+                  class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-primary z-10 sm:left-5 sm:h-6 sm:w-6"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -122,7 +122,7 @@ const jobPostings = sortedJobs.map((j) => ({
                   id="hero-search"
                   type="search"
                   placeholder="Buscar vagas remotas criativas..."
-                  class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-5 pl-16 pr-6 text-lg font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20"
+                  class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-4 pl-14 pr-4 text-base font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
                 />
               </div>
               
@@ -142,7 +142,7 @@ const jobPostings = sortedJobs.map((j) => ({
               {categories.map((cat) => (
                 <button
                   data-category-pill={cat}
-                  class="inline-flex items-center gap-2 rounded-full border-2 border-neutral-900 bg-white px-4 py-2 text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  class="inline-flex items-center gap-1.5 rounded-full border-2 border-neutral-900 bg-white px-3 py-1.5 text-xs sm:text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-4 sm:py-2"
                 >
                   {cat}
                 </button>
