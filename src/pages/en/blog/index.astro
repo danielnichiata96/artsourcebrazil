@@ -1,12 +1,12 @@
 ---
 import { getCollection } from 'astro:content';
-import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/ui/Card.astro';
-import Link from '../../components/ui/Link.astro';
+import Layout from '../../../layouts/Layout.astro';
+import Card from '../../../components/ui/Card.astro';
+import Link from '../../../components/ui/Link.astro';
 
 const seo = {
   title: 'Blog | ArtSource Brazil',
-  description: 'Artigos, guias e insights para as indústrias criativas no Brasil.',
+  description: 'Articles, guides, and insights for the creative industries in Brazil.',
 };
 
 const posts = (await getCollection('blog'))
@@ -19,20 +19,20 @@ const posts = (await getCollection('blog'))
     <div class="prose prose-lg mx-auto max-w-none">
       <h1 class="font-serif">Blog</h1>
       <p class="text-xl leading-relaxed text-neutral-600">
-        Aqui você encontrará artigos, guias e insights para as indústrias criativas no Brasil.
+        Here you'll find articles, guides, and insights for the creative industries in Brazil.
       </p>
     </div>
 
     <div class="mt-12 grid gap-8">
       {
         posts.map((post) => (
-          <Link href={`/blog/${post.slug}`} class="block">
+          <Link href={`/en/blog/${post.slug}`} class="block">
             <Card variant="default" padding="md" class="transition-all hover:shadow-md">
               <h2 class="font-serif text-3xl font-bold text-neutral-900">{post.data.title}</h2>
               <p class="mt-2 text-lg text-neutral-600">{post.data.description}</p>
               <div class="mt-4 text-sm text-neutral-500">
                 <time datetime={post.data.publishDate.toISOString()}>
-                  {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' }).format(
+                  {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(
                     post.data.publishDate,
                   )}
                 </time>
@@ -44,3 +44,4 @@ const posts = (await getCollection('blog'))
     </div>
   </main>
 </Layout>
+
