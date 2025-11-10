@@ -2,6 +2,8 @@
 import Navbar from '../components/ui/Navbar.astro';
 import Button from '../components/ui/Button.astro';
 import Link from '../components/ui/Link.astro';
+import type { Locale, Messages } from '../lib/i18n';
+import { defaultLocale, resolveLocale, getMessages } from '../lib/i18n';
 
 interface SEO {
   title: string;
@@ -13,17 +15,35 @@ interface SEO {
 export interface Props {
   seo: SEO;
   noindex?: boolean;
+  locale?: Locale;
 }
 
-const { seo, noindex = false } = Astro.props as { seo: SEO; noindex?: boolean };
+const { seo, noindex = false, locale: propsLocale } = Astro.props as { seo: SEO; noindex?: boolean; locale?: Locale };
 
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(seo.image ?? '/images/artsource-brazil-logo.svg', site).href;
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined;
+
+// Use passed locale or detect from URL path
+const locale = propsLocale ?? resolveLocale(Astro.url);
+const messages = getMessages(locale);
+
+// Generate hreflang alternate URLs
+const currentPath = Astro.url.pathname;
+const hreflangs = {
+  'pt-BR': new URL(currentPath.replace(/^\/en/, '') || '/', site).href,
+  'en': new URL(currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`, site).href,
+};
+
+const withLocale = (href: string) => {
+  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  const baseHref = href.startsWith('/') ? href : `/${href}`;
+  return locale === 'en' ? `/en${baseHref}` : baseHref;
+};
 ---
 
-<html lang="en">
+<html lang={locale}>
   <head>
     <meta charset="utf-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -58,6 +78,11 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
     <meta name="description" content={seo.description} />
     <link rel="canonical" href={canonicalUrl} />
     {noindex && <meta name="robots" content="noindex, nofollow" />}
+    
+    <!-- hreflang tags for international SEO -->
+    <link rel="alternate" hreflang="pt-BR" href={hreflangs['pt-BR']} />
+    <link rel="alternate" hreflang="en" href={hreflangs['en']} />
+    <link rel="alternate" hreflang="x-default" href={hreflangs['pt-BR']} />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -96,19 +121,18 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
       })}
     />
   </head>
-  <body class="bg-neutral-50 font-sans text-neutral-900">
-    <Navbar />
+  <body class="flex min-h-screen flex-col bg-neutral-50 font-sans text-neutral-900">
+    <Navbar locale={locale} />
 
-    <slot />
+    <main class="flex-grow">
+      <slot />
 
-    <footer class="mt-12 border-t border-neutral-200 bg-background-cream py-8 text-center">
-      <div class="container mx-auto px-container">
-        <!-- Newsletter Section -->
-        <div class="mx-auto max-w-md rounded-xl bg-background-paper p-6 shadow-sm">
-          <h3 class="text-xl font-semibold text-neutral-900">Stay Updated</h3>
+      <!-- Newsletter Section -->
+      <div class="container mx-auto mt-12 px-container">
+        <div class="mx-auto max-w-md rounded-xl bg-background-cream p-6 shadow-sm">
+          <h3 class="text-xl font-semibold text-neutral-900">{messages.newsletter.heading}</h3>
           <p class="mt-2 text-neutral-600">
-            Subscribe to our newsletter to get the latest job postings delivered straight to your
-            inbox.
+            {messages.newsletter.description}
           </p>
           <form
             action={import.meta.env.PUBLIC_NEWSLETTER_SUBSCRIBE_URL}
@@ -120,32 +144,41 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
               type="email"
               name="email"
               required
-              placeholder="your-email@example.com"
+              placeholder={messages.newsletter.placeholder}
               class="w-full rounded-md border-neutral-300 px-4 py-2 shadow-sm transition-colors focus:border-primary focus:ring-primary sm:max-w-xs"
             />
             <input type="hidden" name="tag" value="artsource-brazil-website" />
             <Button type="submit" class="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto">
-              Subscribe
+              {messages.newsletter.button}
             </Button>
           </form>
           <p class="mt-3 text-xs text-neutral-500">
-            We respect your privacy. No spam. Powered by <Link
+            {messages.newsletter.disclaimer}{' '}
+            {messages.newsletter.poweredBy}{' '}
+            <Link
               href="https://buttondown.email"
               target="_blank"
               rel="noopener noreferrer"
-              variant="muted">Buttondown</Link
+              variant="muted"
+            >
+              {messages.newsletter.provider}
+            </Link
             >.
           </p>
         </div>
+      </div>
+    </main>
 
-        <div class="mt-8 border-t border-neutral-200 pt-6 text-neutral-500">
+    <footer class="mt-12 border-t border-neutral-200 bg-white py-8 text-center">
+      <div class="container mx-auto px-container">
+        <div class="text-neutral-500">
           <!-- Footer Links -->
           <div class="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-            <Link href="/about" variant="muted">About</Link>
-            <Link href="/contact" variant="muted">Contact</Link>
-            <Link href="/privacy" variant="muted">Privacy Policy</Link>
-            <Link href="/terms" variant="muted">Terms of Service</Link>
-            <Link href="/blog" variant="muted">Blog</Link>
+            <Link href={withLocale('/about')} variant="muted">{messages.footer.about}</Link>
+            <Link href={withLocale('/contact')} variant="muted">{messages.footer.contact}</Link>
+            <Link href={withLocale('/privacy')} variant="muted">{messages.footer.privacy}</Link>
+            <Link href={withLocale('/terms')} variant="muted">{messages.footer.terms}</Link>
+            <Link href={withLocale('/blog')} variant="muted">{messages.footer.blog}</Link>
           </div>
 
           <!-- Email -->
@@ -157,15 +190,15 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | unde
 
           <!-- Feeds -->
           <div class="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
-            <span class="text-neutral-400">Feeds:</span>
-            <Link href="/jobs.xml" variant="muted">Jobs RSS</Link>
-            <Link href="/jobs.json" variant="muted">Jobs JSON</Link>
-            <Link href="/blog.xml" variant="muted">Blog RSS</Link>
+            <span class="text-neutral-400">{messages.footer.feedsLabel}</span>
+            <Link href={withLocale('/jobs.xml')} variant="muted">{messages.footer.jobsRss}</Link>
+            <Link href={withLocale('/jobs.json')} variant="muted">{messages.footer.jobsJson}</Link>
+            <Link href={withLocale('/blog.xml')} variant="muted">{messages.footer.blogRss}</Link>
           </div>
 
           <!-- Copyright -->
           <p class="text-center text-sm">
-            &copy; {new Date().getFullYear()} ArtSource Brazil. All rights reserved.
+            &copy; {new Date().getFullYear()} ArtSource Brazil. {messages.footer.copyright}
           </p>
         </div>
       </div>

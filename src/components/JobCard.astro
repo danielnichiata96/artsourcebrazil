@@ -5,6 +5,8 @@ import Button from './ui/Button.astro';
 import Badge from './ui/Badge.astro';
 import Card from './ui/Card.astro';
 import Link from './ui/Link.astro';
+import type { Locale, Messages } from '../lib/i18n';
+import { defaultLocale, getMessages } from '../lib/i18n';
 
 export interface Job {
   id: string;
@@ -18,11 +20,21 @@ export interface Job {
 }
 
 // Accept arbitrary attributes to allow data-* forwarding from parent (for filters)
-const { job, ...attrs } = Astro.props as { job: Job } & Record<string, any>;
+const { job, locale: propsLocale, ...attrs } = Astro.props as { job: Job; locale?: Locale } & Record<string, any>;
+const locale = propsLocale ?? defaultLocale;
+const messages = getMessages(locale);
+const jobMessages = messages.job;
+const dateLocale = locale === 'en' ? 'en-US' : 'pt-BR';
+
+const withLocale = (href: string) => {
+  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  const baseHref = href.startsWith('/') ? href : `/${href}`;
+  return locale === 'en' ? `/en${baseHref}` : baseHref;
+};
 
 const formattedDate = (() => {
   try {
-    return new Date(job.postedDate).toLocaleDateString('en-US', {
+    return new Date(job.postedDate).toLocaleDateString(dateLocale, {
       year: 'numeric',
       month: 'long',
       day: 'numeric',
@@ -31,58 +43,102 @@ const formattedDate = (() => {
     return job.postedDate;
   }
 })();
+
+const isNew = (() => {
+  try {
+    const posted = new Date(job.postedDate);
+    if (Number.isNaN(posted.getTime())) return false;
+    const diffDays = (Date.now() - posted.getTime()) / (1000 * 60 * 60 * 24);
+    return diffDays <= 7;
+  } catch {
+    return false;
+  }
+})();
 ---
 
-<Card
-  {...attrs}
-  class="flex items-start space-x-6 hover:border-primary group"
->
-  <Image
-    src={job.companyLogo}
-    alt={`${job.companyName} logo`}
-    width={64}
-    height={64}
-    loading="lazy"
-    class="h-16 w-16 flex-shrink-0 rounded-lg object-cover transition-transform duration-300 group-hover:scale-105"
-  />
-  <div class="flex-grow">
-    <p class="text-sm font-medium text-neutral-600">{job.companyName}</p>
-    <h2 class="mt-1 text-2xl font-bold text-neutral-900">
-      <Link href={`/jobs/${job.id}-${slugify(job.jobTitle)}`} variant="secondary">
-        {job.jobTitle}
-      </Link>
-    </h2>
+<Card {...attrs} class="relative overflow-hidden bg-white">
+  <div class="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-10">
+    <div class="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
+      <!-- Logo com destaque editorial -->
+      <div class="flex-shrink-0">
+        <div class="rounded-2xl bg-white p-3 border-thick border-neutral-900 shadow-illustration">
+          <Image
+            src={job.companyLogo}
+            alt={`${job.companyName} logo`}
+            width={64}
+            height={64}
+            loading="lazy"
+            class="h-14 w-14 object-contain"
+          />
+        </div>
+      </div>
 
-    <div class="mt-3 flex items-center text-sm text-neutral-600">
-      <Link
-        href={`/category/${slugify(job.category)}`}
-        variant="secondary"
-        underline={true}
-      >
-        {job.category}
-      </Link>
-      <span class="mx-2 text-neutral-400">|</span>
-      <span>Posted on: {formattedDate}</span>
-    </div>
-
-    <div class="mt-4 flex flex-wrap gap-2">
-      {
-        job.tags.map((tag) => (
-          <span
-            class="rounded-full bg-neutral-100 px-3 py-1 text-xs font-semibold text-neutral-700"
+      <div class="space-y-4">
+        <!-- Nome da empresa em destaque -->
+        <div class="flex flex-wrap items-center gap-2">
+          <Badge variant="primary" size="sm" class="bg-primary-light text-primary">
+            {job.companyName}
+          </Badge>
+          <span class="text-xs text-neutral-700 font-bold">•</span>
+          <Link
+            href={withLocale(`/category/${slugify(job.category)}`)}
+            variant="secondary"
+            class="text-sm font-semibold text-neutral-800 hover:text-primary"
           >
-            {tag}
+            {job.category}
+          </Link>
+          {isNew && (
+            <Badge variant="accent" size="sm" class="bg-accent text-neutral-900 font-extrabold">
+              {jobMessages.new}
+            </Badge>
+          )}
+        </div>
+
+        <!-- Título estilo manchete -->
+        <h2 class="font-serif text-2xl font-bold leading-tight text-neutral-950">
+          <Link href={`/jobs/${job.id}-${slugify(job.jobTitle)}`} variant="secondary" class="hover:text-primary">
+            {job.jobTitle}
+          </Link>
+        </h2>
+
+        <!-- Metadados com estilo editorial -->
+        <div class="flex flex-wrap items-center gap-3 text-sm">
+          <span class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-900">
+            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18" />
+            </svg>
+            {jobMessages.remote}
           </span>
-        ))
-      }
+          <span class="flex items-center gap-1 font-bold text-neutral-800">
+            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            {formattedDate}
+          </span>
+        </div>
+
+        <!-- Tags com estilo editorial -->
+        <div class="flex flex-wrap gap-2">
+          {
+            job.tags.map((tag) => (
+              <Badge variant="default" size="sm" class="bg-neutral-100 border-2 border-neutral-900 text-neutral-900 font-bold">
+                {tag}
+              </Badge>
+            ))
+          }
+        </div>
+      </div>
     </div>
-  </div>
-  <div class="flex-shrink-0">
-    <Button
-      href={`/jobs/${job.id}-${slugify(job.jobTitle)}`}
-      size="md"
-    >
-      View Details
-    </Button>
+
+    <!-- Botão de ação com cor pastel -->
+    <div class="flex shrink-0 items-start md:justify-end">
+      <Button
+        href={withLocale(`/jobs/${job.id}-${slugify(job.jobTitle)}`)}
+        size="md"
+        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg"
+      >
+        {jobMessages.button}
+      </Button>
+    </div>
   </div>
 </Card>

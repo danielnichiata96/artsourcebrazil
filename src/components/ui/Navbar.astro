@@ -2,56 +2,88 @@
 import { Image } from 'astro:assets';
 import Button from './Button.astro';
 import Link from './Link.astro';
-
-export interface NavItem {
-  label: string;
-  href: string;
-}
+import type { Locale, Messages } from '../../lib/i18n';
+import { getAlternateLocale, defaultLocale, getMessages } from '../../lib/i18n';
 
 export interface Props {
-  items?: NavItem[];
-  ctaText?: string;
-  ctaHref?: string;
+  locale: Locale;
 }
 
-const {
-  items = [
-    { label: 'Companies', href: '/companies' },
-    { label: 'Blog', href: '/blog' },
-    { label: 'About', href: '/about' },
-  ],
-  ctaText = 'Post a Job',
-  ctaHref = '/post-a-job',
-} = Astro.props;
+const { locale } = Astro.props as Props;
+const messages = getMessages(locale);
+
+const navItems = messages.nav.items;
+const ctaText = messages.nav.cta;
+const toggleLocale = getAlternateLocale(locale);
+
+// Generate toggle URL based on current path
+const currentPath = Astro.url.pathname;
+const toggleHref = locale === 'pt-BR' 
+  ? (currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`)
+  : currentPath.replace(/^\/en/, '') || '/';
+
+const toggleLabel = messages.nav.languageToggle.shortLabel;
+const toggleAria = messages.nav.languageToggle.ariaLabel;
+
+const withLocale = (href: string) => {
+  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  const baseHref = href.startsWith('/') ? href : `/${href}`;
+  return locale === 'en' ? `/en${baseHref}` : baseHref;
+};
+
+const ctaHref = withLocale('/post-a-job');
 ---
 
-<header class="sticky top-0 z-50 border-b border-neutral-200 bg-background-paper/95 shadow-sm backdrop-blur-sm">
+<header class="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow-sm">
   <nav class="container mx-auto flex items-center justify-between px-container py-4">
-    <!-- Logo -->
+    <!-- Logo com estilo editorial -->
     <a href="/" class="flex items-center gap-3 group">
-      <Image
-        src="/images/artsource-brazil-logo.svg"
-        alt="Mascote ArtSource Brazil com camisa do brasil sentado usando laptop"
-        width={64}
-        height={64}
-        loading="eager"
-        class="h-10 w-10 transition-transform duration-300 group-hover:scale-105 md:h-12 md:w-12 lg:h-16 lg:w-16"
-      />
-      <span class="text-2xl font-bold text-neutral-900 transition-colors group-hover:text-primary">
-        ArtSource Brazil
-      </span>
+      <div class="relative">
+        <!-- Círculo decorativo atrás do logo -->
+        <div class="absolute -inset-2 rounded-full bg-accent-light opacity-0 transition-all duration-300 group-hover:opacity-70"></div>
+        <Image
+          src="/images/logo-navbar.svg"
+          alt="Mascote ArtSource Brazil com camisa do brasil sentado usando laptop"
+          width={64}
+          height={64}
+          loading="eager"
+          class="relative z-10 h-8 w-8 transition-transform duration-300 group-hover:scale-110 md:h-10 md:w-10 lg:h-12 lg:w-12"
+        />
+      </div>
+      <div class="flex flex-col">
+        <span class="font-serif text-2xl font-extrabold leading-none tracking-tight text-neutral-950 transition-colors group-hover:text-primary">
+          ArtSource Brazil
+        </span>
+        <span class="text-xs font-bold uppercase tracking-widest text-neutral-600">
+          {messages.nav.tagline}
+        </span>
+      </div>
     </a>
 
-    <!-- Navigation Items -->
-    <div class="flex items-center gap-4">
-      {items.map((item) => (
-        <Link href={item.href} variant="secondary">
+    <!-- Navigation Items com estilo editorial -->
+    <div class="flex items-center gap-6">
+      {navItems.map((item) => (
+        <Link 
+          href={withLocale(item.href)} 
+          variant="secondary"
+          class="relative font-semibold uppercase tracking-wide text-sm text-neutral-700 transition-colors hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:after:w-full"
+        >
           {item.label}
         </Link>
       ))}
-      <Button href={ctaHref}>
+      <Button 
+        href={ctaHref}
+        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg"
+      >
         {ctaText}
       </Button>
+      <a
+        href={toggleHref}
+        aria-label={toggleAria}
+        class="inline-flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-600 transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+      >
+        {toggleLabel}
+      </a>
     </div>
   </nav>
 </header>

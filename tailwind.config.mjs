@@ -36,53 +36,72 @@ export default {
         widest: '0.1em',
       },
       colors: {
-        // Brand colors from logo (Brazil-inspired)
+        // Cores pastéis inspiradas no Brasil (jornal moderno)
         brand: {
-          green: '#3aaf54',      // Bandeira BR verde
-          'green-dark': '#2d8a42',
-          yellow: '#f7d55c',     // Ouro brasileiro
-          'yellow-light': '#f8d466',
-          coral: '#f2af72',      // Tom quente
-          'coral-light': '#f3b075',
-          brown: '#bd7855',      // Terra
-          'brown-dark': '#b5805a',
+          // Verde brasileiro (meio-termo)
+          green: '#4FA87F',      // Verde meio-termo
+          'green-dark': '#3d8a68',
+          'green-light': '#C8E6D7',
+          // Amarelo pastel brasileiro
+          yellow: '#FFF4CC',     // Amarelo pastel suave
+          'yellow-dark': '#FFE999',
+          'yellow-light': '#FFFEF5',
+          // Azul pastel brasileiro
+          blue: '#B8D4F1',       // Azul pastel suave
+          'blue-dark': '#8FB8E0',
+          'blue-light': '#E3F0FA',
+          // Tons complementares
+          coral: '#FFD4BA',      // Coral pastel
+          'coral-light': '#FFE8D9',
+          beige: '#F5E6D3',      // Bege quente
+          'beige-dark': '#E8D4BA',
         },
-        // Warm neutral palette (replacing cold grays)
+        // Palette neutra para jornal (tipografia clara) - Marrom escuro
         neutral: {
-          950: '#1a1612',        // Preto caloroso (brown-black)
-          900: '#2d2821',        // Texto principal (warm dark)
-          800: '#3d362e',        // Texto escuro suave
-          700: '#57504a',        // Texto secundário
-          600: '#74696a',        // Texto terciário
-          500: '#9a8f8a',        // Texto desabilitado
-          400: '#b5aca7',        // Bordas escuras
-          300: '#d4cdc7',        // Bordas médias
-          200: '#e8e2dc',        // Bordas suaves (warm)
-          100: '#f5f1ed',        // Background alternativo (cream)
-          50: '#faf8f5',         // Background principal (warm white)
+          950: '#3d2817',        // Marrom escuro editorial (era #1a1614)
+          900: '#4a3422',        // Marrom principal (era #2d2621)
+          800: '#5c4530',        // Marrom editorial (era #403932)
+          700: '#6e5a47',        // Texto secundário
+          600: '#8a7768',        // Texto terciário
+          500: '#a59689',        // Texto desabilitado
+          400: '#bcb6b0',        // Bordas escuras
+          300: '#d4cfc9',        // Bordas médias
+          200: '#e8e4de',        // Bordas suaves
+          100: '#f5f2ed',        // Background alternativo
+          50: '#fdfcfa',         // Background papel jornal
         },
-        // Background variants for depth
+        // Backgrounds estilo jornal
         background: {
-          DEFAULT: '#faf8f5',    // Warm white principal
-          cream: '#f5f1ed',      // Cream suave
-          sand: '#f0ebe5',       // Sand mais escuro
-          paper: '#fefdfb',      // Paper white (quase branco)
+          DEFAULT: '#fdfcfa',    // Papel jornal branco
+          cream: '#f5f2ed',      // Cream suave
+          sand: '#f0ebe5',       // Sand editorial
+          paper: '#fffefb',      // Paper white puro
+          pastel: '#FFF9E6',     // Amarelo pastel bem claro (destaque)
         },
-        // Semantic colors (mantém os mesmos)
+        // Primary: Verde brasileiro (meio-termo)
         primary: {
-          DEFAULT: '#3aaf54',    // Verde do logo
-          hover: '#2d8a42',
-          light: '#e8f5eb',
+          DEFAULT: '#4FA87F',    // Verde meio-termo (entre pastel e bandeira)
+          hover: '#3d8a68',      // Verde mais escuro
+          light: '#C8E6D7',      // Verde claro pastel
+          lightest: '#E8F5EE',   // Verde quase imperceptível
         },
         link: {
-          DEFAULT: '#2d8a42',    // Verde escuro para links (WCAG AA)
-          hover: '#236a34',      // Hover ainda mais escuro
+          DEFAULT: '#4FA87F',    // Verde meio-termo para links
+          hover: '#3d8a68',      // Hover mais escuro
         },
+        // Accent: Amarelo pastel brasileiro
         accent: {
-          DEFAULT: '#f7d55c',    // Amarelo do logo
-          hover: '#f5d03b',
-          light: '#fffbea',      // Amarelo bem claro
-          lightest: '#fffef5',   // Amarelo quase imperceptível
+          DEFAULT: '#FFE999',    // Amarelo pastel médio
+          hover: '#FFD666',      // Amarelo mais intenso
+          light: '#FFF4CC',      // Amarelo bem claro
+          lightest: '#FFFEF5',   // Amarelo quase branco
+        },
+        // Cores de destaque editorial
+        editorial: {
+          highlight: '#FFF4CC',  // Amarelo destaque
+          divider: '#e8e4de',    // Linhas divisórias
+          accent: '#4FA87F',     // Verde meio-termo
+          tag: '#FFD4BA',        // Tags coral
         },
       },
       spacing: {
@@ -95,14 +114,20 @@ export default {
         'card-lg': '2rem',       // 32px - padding maior
       },
       borderRadius: {
-        'card': '0.75rem',       // 12px - border radius dos cards
-        'button': '0.5rem',      // 8px - border radius dos botões
+        'card': '1.5rem',        // 24px - border radius dos cards (bem arredondado)
+        'button': '1rem',        // 16px - border radius dos botões (suave)
         'badge': '9999px',       // pill shape
+      },
+      borderWidth: {
+        'thick': '3px',          // Bordas grossas estilo ilustração
+        'extra-thick': '4px',    // Bordas extra grossas para destaque
       },
       boxShadow: {
         'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
         'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
         'button': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
+        'illustration': '4px 4px 0px 0px rgba(0, 0, 0, 0.15)', // Shadow estilo flat illustration
+        'illustration-hover': '6px 6px 0px 0px rgba(0, 0, 0, 0.2)', // Shadow hover mais pronunciado
       },
       animation: {
         'fade-in': 'fade-in 0.6s ease-out',

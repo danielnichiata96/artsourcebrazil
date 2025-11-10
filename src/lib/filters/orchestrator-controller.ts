@@ -37,6 +37,11 @@ import { parseURLParams, validateFilterUpdate, type FilterState } from '../valid
 export class FilterOrchestratorController {
   private state: FilterState;
   private jobsContainer: Element | null;
+  private cleanup: Array<() => void> = [];
+  private loadingIndicator: HTMLElement | null;
+  private emptyState: HTMLElement | null;
+  private errorBanner: HTMLElement | null;
+  private isDestroyed = false;
 
   constructor() {
     // Parse and validate URL params safely
@@ -48,23 +53,32 @@ export class FilterOrchestratorController {
       console.warn('[FilterOrchestrator] Jobs container not found');
     }
 
+    this.loadingIndicator = document.querySelector('[data-filter-loading]');
+    this.emptyState = document.querySelector('[data-filter-empty]');
+    this.errorBanner = document.querySelector('[data-filter-error]');
+
     this.init();
   }
 
   private init(): void {
     this.setupEventListeners();
     this.applyFilters();
+    this.registerGlobalCleanup();
   }
 
   private setupEventListeners(): void {
     // Listen for filter changes from components
-    window.addEventListener('jobfilters:change', ((ev: CustomEvent<Partial<FilterState>>) => {
+    const filterChangeHandler = ((ev: CustomEvent<Partial<FilterState>>) => {
       this.handleFilterChange(ev);
-    }) as EventListener);
+    }) as EventListener;
+    window.addEventListener('jobfilters:change', filterChangeHandler);
+    this.cleanup.push(() => window.removeEventListener('jobfilters:change', filterChangeHandler));
 
     // Initial apply after DOM is ready
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.applyFilters());
+      const domReadyHandler = () => this.applyFilters();
+      document.addEventListener('DOMContentLoaded', domReadyHandler);
+      this.cleanup.push(() => document.removeEventListener('DOMContentLoaded', domReadyHandler));
     }
   }
 
@@ -108,9 +122,14 @@ export class FilterOrchestratorController {
 
   private applyFilters(): void {
     try {
+      this.setError(false);
+      this.setLoading(true);
+
       const items = this.getJobItems();
       if (items.length === 0) {
         console.warn('[FilterOrchestrator] No items to filter');
+        this.updateEmptyState(items);
+        this.setLoading(false);
         return;
       }
 
@@ -144,9 +163,13 @@ export class FilterOrchestratorController {
       });
 
       this.syncURL();
-      this.notifyListeners();
+      this.updateEmptyState(items);
     } catch (error) {
       console.error('[FilterOrchestrator] Error applying filters:', error);
+      this.setError(true);
+    } finally {
+      this.setLoading(false);
+      this.notifyListeners();
     }
   }
 
@@ -165,11 +188,57 @@ export class FilterOrchestratorController {
   }
 
   private notifyListeners(): void {
+    if (this.isDestroyed) return;
     window.dispatchEvent(new CustomEvent('jobfilters:applied', { detail: { ...this.state } }));
   }
 
   // Public method to get current state (useful for testing)
   public getState(): FilterState {
     return { ...this.state };
+  }
+
+  private setLoading(isLoading: boolean): void {
+    if (!this.loadingIndicator) return;
+    this.loadingIndicator.classList.toggle('hidden', !isLoading);
+  }
+
+  private setError(hasError: boolean): void {
+    if (!this.errorBanner) return;
+    this.errorBanner.classList.toggle('hidden', !hasError);
+  }
+
+  private updateEmptyState(items: HTMLElement[]): void {
+    if (!this.emptyState) return;
+    const hasVisibleItems = items.some((item) => !item.classList.contains('hidden'));
+    this.emptyState.classList.toggle('hidden', hasVisibleItems);
+  }
+
+  private registerGlobalCleanup(): void {
+    const destroyHandler = () => this.destroy();
+    window.addEventListener('beforeunload', destroyHandler);
+    this.cleanup.push(() => window.removeEventListener('beforeunload', destroyHandler));
+
+    const astroSwapHandler = () => this.destroy();
+    window.addEventListener('astro:before-swap', astroSwapHandler as EventListener);
+    this.cleanup.push(() => window.removeEventListener('astro:before-swap', astroSwapHandler as EventListener));
+  }
+
+  public destroy(): void {
+    if (this.isDestroyed) return;
+    this.isDestroyed = true;
+
+    this.cleanup.forEach((dispose) => {
+      try {
+        dispose();
+      } catch (error) {
+        console.error('[FilterOrchestrator] Error during cleanup:', error);
+      }
+    });
+    this.cleanup = [];
+
+    this.jobsContainer = null;
+    this.loadingIndicator = null;
+    this.emptyState = null;
+    this.errorBanner = null;
   }
 }

@@ -1,0 +1,412 @@
+---
+import jobs from '../../data/jobs.json';
+import JobCard from '../../components/JobCard.astro';
+import FiltersSidebar from '../../components/FiltersSidebar.astro';
+import Layout from '../../layouts/Layout.astro';
+import Badge from '../../components/ui/Badge.astro';
+import Button from '../../components/ui/Button.astro';
+import '../../styles/global.css';
+import { sortJobsByDateDesc, collectFacets, slugify } from '../../lib/jobs';
+import type { Locale, Messages } from '../../lib/i18n';
+import { getMessages, defaultLocale } from '../../lib/i18n';
+
+import type { Job } from '../../lib/jobs';
+
+// Use shared helpers so behavior is covered by unit tests
+const sortedJobs = sortJobsByDateDesc(jobs as Job[]);
+const { categories, tags } = collectFacets(jobs as Job[]);
+const totalJobs = sortedJobs.length;
+const totalCompanies = new Set(sortedJobs.map((job) => job.companyName)).size;
+const totalCategories = categories.length;
+const totalSkills = tags.length;
+
+// Entrypoint: EN (English)
+const locale: Locale = 'en';
+const messages = getMessages(locale);
+const heroMessages = messages.hero;
+const heroStats = heroMessages.stats;
+const resultsMessages = messages.results;
+const filtersMessages = messages.filters;
+const seoMessages = messages.seo.home;
+
+const withLocale = (href: string) => {
+  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  const url = new URL(href, Astro.url);
+  url.searchParams.set('lang', locale);
+  return `${url.pathname}${url.search}${url.hash}`;
+};
+
+// SEO helpers
+const site = Astro.site ?? new URL('http://localhost:4321');
+const seo = {
+  title: seoMessages.title,
+  description: seoMessages.description,
+  image: '/images/artsource-brazil-logo.svg',
+};
+
+// JSON-LD: one JobPosting per job
+const jobPostings = sortedJobs.map((j) => ({
+  '@context': 'https://schema.org',
+  '@type': 'JobPosting',
+  title: j.jobTitle,
+  datePosted: j.postedDate,
+  employmentType: 'CONTRACT',
+  jobLocationType: 'TELECOMMUTE',
+  hiringOrganization: {
+    '@type': 'Organization',
+    name: j.companyName,
+    logo: new URL(j.companyLogo, site).href,
+  },
+  description: `${j.category} — ${j.tags.join(', ')}`,
+  directApply: true,
+  applicantLocationRequirements: {
+    '@type': 'Country',
+    name: 'Brazil',
+  },
+  identifier: {
+    '@type': 'PropertyValue',
+    name: j.companyName,
+    value: j.id,
+  },
+  url: j.applyLink,
+}));
+---
+
+<Layout seo={seo} locale={locale}>
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
+  </Fragment>
+
+  <div class="container mx-auto flex flex-col gap-8 px-container py-8 lg:flex-row lg:gap-12">
+    <FiltersSidebar categories={categories} locale={locale} />
+
+    <main class="flex-1 lg:ml-80">
+      <!-- Hero Section - Editorial Style -->
+      <section class="mb-12 space-y-8">
+        <!-- Header -->
+        <div class="space-y-6 text-center">
+          <Badge variant="accent" size="md" class="mx-auto">
+            {heroMessages.badge}
+          </Badge>
+          <h1 class="font-serif text-display-lg font-extrabold leading-none tracking-tight text-neutral-950">
+            {heroMessages.title}
+          </h1>
+          <p class="mx-auto max-w-2xl text-xl leading-relaxed text-neutral-700">
+            {heroMessages.description}
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="#vagas" size="lg">
+              {heroMessages.primaryCta}
+            </Button>
+            <Button href="/post-a-job" variant="outline" size="lg">
+              {heroMessages.secondaryCta}
+            </Button>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+              {heroStats.jobs.label}
+            </p>
+            <div class="mt-2 flex items-baseline justify-center gap-2">
+              <span class="font-serif text-4xl font-bold text-primary">{totalJobs}</span>
+              <span class="text-sm text-neutral-600">
+                {totalJobs === 1 ? heroStats.jobs.unitSingular : heroStats.jobs.unitPlural}
+              </span>
+            </div>
+          </div>
+          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+              {heroStats.companies.label}
+            </p>
+            <div class="mt-2 flex items-baseline justify-center gap-2">
+              <span class="font-serif text-4xl font-bold text-primary">{totalCompanies}</span>
+              <span class="text-sm text-neutral-600">
+                {totalCompanies === 1 ? heroStats.companies.unitSingular : heroStats.companies.unitPlural}
+              </span>
+            </div>
+          </div>
+          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+              {heroStats.categories.label}
+            </p>
+            <div class="mt-2 flex items-baseline justify-center gap-2">
+              <span class="font-serif text-4xl font-bold text-primary">{totalCategories}</span>
+              <span class="text-sm text-neutral-600">
+                {totalCategories === 1 ? heroStats.categories.unitSingular : heroStats.categories.unitPlural}
+              </span>
+            </div>
+          </div>
+          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
+            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
+              {heroStats.skills.label}
+            </p>
+            <div class="mt-2 flex items-baseline justify-center gap-2">
+              <span class="font-serif text-4xl font-bold text-primary">{totalSkills}</span>
+              <span class="text-sm text-neutral-600">
+                {totalSkills === 1 ? heroStats.skills.unitSingular : heroStats.skills.unitPlural}
+              </span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Filter Results Summary + Active Filters -->
+      <section class="mb-6 space-y-4" aria-live="polite">
+        <div
+          data-filter-loading
+          class="hidden rounded-md border border-primary-light bg-primary-lightest px-4 py-3 text-sm font-semibold text-primary"
+          role="status"
+        >
+          {filtersMessages.loading}
+        </div>
+        <div
+          data-filter-error
+          class="hidden rounded-md border border-red-200 bg-red-100 px-4 py-3 text-sm font-semibold text-red-700"
+          role="alert"
+        >
+          {filtersMessages.error}
+        </div>
+        <p
+          data-filter-empty
+          class="hidden rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm text-neutral-700"
+          role="status"
+        >
+          {filtersMessages.empty}
+        </p>
+
+        <div
+          class="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-neutral-200 bg-white px-6 py-4 shadow-sm"
+          data-results-summary
+          data-total-jobs={totalJobs}
+        >
+          <div class="flex items-baseline gap-2">
+            <span class="font-serif text-3xl font-bold text-neutral-900" data-results-count-value>{totalJobs}</span>
+            <span class="text-base text-neutral-600" data-results-count-context>
+              {resultsMessages.contextAll}
+            </span>
+          </div>
+          <button
+            type="button"
+            data-clear-all-filters
+            disabled
+            class="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-primary hover:bg-primary-light hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            {filtersMessages.clearFilters}
+            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+              <path
+                fill-rule="evenodd"
+                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <div class="flex flex-wrap gap-2" data-active-filters aria-live="polite">
+          <span class="text-sm text-neutral-500">{resultsMessages.none}</span>
+        </div>
+      </section>
+
+      <!-- Job Listings Section -->
+      <section id="vagas">
+        <div class="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+          <h2 class="font-serif text-5xl font-extrabold text-neutral-950">
+            {heroMessages.sectionTitle}
+          </h2>
+          <nav class="flex flex-wrap gap-2" aria-label="Browse by category">
+            {
+              categories.map((category) => (
+                <Badge href={`/category/${slugify(category)}`} variant="secondary" size="md">
+                  {category} jobs
+                </Badge>
+              ))
+            }
+          </nav>
+        </div>
+
+        <div
+          class="grid gap-6 animate-fade-in sm:grid-cols-2"
+          style="animation-delay: 0.2s; animation-fill-mode: both;"
+          data-jobs
+        >
+          {
+            sortedJobs.map((job) => (
+              <JobCard
+                job={job}
+                locale={locale}
+                data-testid="job-card"
+                data-category={job.category}
+                data-tags={job.tags.join(' ')}
+                data-text={`${job.jobTitle} ${job.companyName}`}
+              />
+            ))
+          }
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script>
+  import { FilterOrchestratorController } from '../../lib/filters/orchestrator-controller';
+
+  const resultsContainer = document.querySelector('[data-jobs]');
+  const resultsSummary = document.querySelector('[data-results-summary]');
+  const totalJobs = Number(resultsSummary?.dataset.totalJobs ?? '0');
+  const resultsCountValue = resultsSummary?.querySelector('[data-results-count-value]');
+  const resultsCountContext = resultsSummary?.querySelector('[data-results-count-context]');
+  const resultsChipsContainer = document.querySelector('[data-active-filters]');
+  const sidebarCountValue = document.querySelector('[data-sidebar-results-count]');
+  const sidebarChipsContainer = document.querySelector('[data-sidebar-active-filters]');
+  const clearAllButton = document.querySelector('[data-clear-all-filters]');
+  const sidebarClearButton = document.querySelector('[data-sidebar-clear]');
+  const clearFiltersButton = document.getElementById('clear-filters-sidebar');
+
+  const fieldLabels = {
+    level: 'Level',
+    tools: 'Tool',
+    contract: 'Contract',
+    location: 'Location',
+  };
+
+  const arrayFields = ['level', 'tools', 'contract', 'location'];
+
+  function formatCount(count) {
+    return count === 1 ? 'job' : 'jobs';
+  }
+
+  function getVisibleJobCount() {
+    if (!resultsContainer) return 0;
+    return Array.from(resultsContainer.children).filter((child) => {
+      const el = child as HTMLElement;
+      return !el.classList.contains('hidden');
+    }).length;
+  }
+
+  function dispatchFilterChange(detail) {
+    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail }));
+  }
+
+  function createChipElement(label, onRemove) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className =
+      'inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-light px-3 py-1.5 text-sm font-medium text-primary transition hover:border-primary hover:bg-primary-lightest focus:outline-none focus:ring-2 focus:ring-primary/30';
+    button.setAttribute('aria-label', `Remove filter ${label}`);
+
+    const span = document.createElement('span');
+    span.textContent = label;
+    button.appendChild(span);
+
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('class', 'h-3.5 w-3.5');
+    icon.setAttribute('viewBox', '0 0 20 20');
+    icon.setAttribute('fill', 'currentColor');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute(
+      'd',
+      'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
+    );
+    icon.appendChild(path);
+    button.appendChild(icon);
+
+    button.addEventListener('click', onRemove);
+    return button;
+  }
+
+  function renderChipSet(container, descriptors, emptyMessage) {
+    if (!container) return;
+    container.replaceChildren();
+    if (!descriptors.length) {
+      const empty = document.createElement('span');
+      empty.className = 'text-sm text-neutral-500';
+      empty.textContent = emptyMessage;
+      container.appendChild(empty);
+      return;
+    }
+    descriptors.forEach(({ label, onRemove }) => {
+      container.appendChild(createChipElement(label, onRemove));
+    });
+  }
+
+  function updateCounts(count) {
+    if (resultsCountValue) {
+      resultsCountValue.textContent = String(count);
+    }
+    if (resultsCountContext) {
+      resultsCountContext.textContent =
+        count === totalJobs ? `${formatCount(count)} open` : `of ${totalJobs} ${formatCount(totalJobs)}`;
+    }
+    if (resultsSummary) {
+      resultsSummary.setAttribute('aria-live', 'polite');
+      resultsSummary.setAttribute('aria-label', `Showing ${count} ${formatCount(count)} of ${totalJobs} available`);
+    }
+    if (sidebarCountValue) {
+      sidebarCountValue.textContent = String(count);
+    }
+  }
+
+  function buildDescriptors(state) {
+    const descriptors = [];
+    const searchValue = typeof state?.search === 'string' ? state.search.trim() : '';
+    if (searchValue) {
+      descriptors.push({
+        label: `Search: ${searchValue}`,
+        onRemove: () => dispatchFilterChange({ search: '' }),
+      });
+    }
+
+    if (state?.category && state.category !== 'all') {
+      descriptors.push({
+        label: `Category: ${state.category}`,
+        onRemove: () => dispatchFilterChange({ category: 'all' }),
+      });
+    }
+
+    arrayFields.forEach((key) => {
+      const values = Array.isArray(state?.[key]) ? state[key] : [];
+      values.forEach((value) => {
+        descriptors.push({
+          label: `${fieldLabels[key]}: ${value}`,
+          onRemove: () => {
+            const next = values.filter((item) => item !== value);
+            dispatchFilterChange({ [key]: next });
+          },
+        });
+      });
+    });
+
+    return descriptors;
+  }
+
+  function updateUI(state = {}) {
+    const descriptors = buildDescriptors(state);
+    const visibleCount = getVisibleJobCount();
+    updateCounts(visibleCount);
+
+    renderChipSet(resultsChipsContainer, descriptors, 'No active filters at the moment.');
+    renderChipSet(sidebarChipsContainer, descriptors, 'No active filters.');
+
+    const hasActive = descriptors.length > 0;
+    if (clearAllButton instanceof HTMLButtonElement) {
+      clearAllButton.disabled = !hasActive;
+    }
+    if (sidebarClearButton instanceof HTMLButtonElement) {
+      sidebarClearButton.disabled = !hasActive;
+    }
+  }
+
+  window.addEventListener('jobfilters:applied', (event) => {
+    updateUI(event.detail ?? {});
+  });
+
+  clearAllButton?.addEventListener('click', () => clearFiltersButton?.click());
+  sidebarClearButton?.addEventListener('click', () => clearFiltersButton?.click());
+
+  const orchestrator = new FilterOrchestratorController();
+  updateUI(orchestrator.getState());
+</script>
+

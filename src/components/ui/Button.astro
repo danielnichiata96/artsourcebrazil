@@ -25,19 +25,19 @@ const {
   ...rest
 } = Astro.props;
 
-const baseClasses = 'inline-block font-semibold transition-all duration-200 ease-out focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1 active:scale-95';
+const baseClasses = 'inline-block font-bold rounded-button transition-all duration-150 ease-out focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 active:translate-y-0.5 active:shadow-illustration transform whitespace-nowrap';
 
 const variantClasses = {
-  primary: 'bg-primary text-white hover:bg-primary-hover hover:scale-105 shadow-sm hover:shadow-lg',
-  secondary: 'bg-accent text-neutral-900 hover:bg-accent-hover hover:scale-105 shadow-sm hover:shadow-lg',
-  outline: 'border-2 border-neutral-300 text-neutral-700 hover:border-primary hover:text-primary hover:scale-105 hover:shadow-sm',
-  ghost: 'text-neutral-600 hover:text-primary hover:bg-primary-light hover:scale-105',
+  primary: 'bg-primary text-white border-thick border-neutral-900 shadow-illustration hover:bg-primary-hover',
+  secondary: 'bg-accent text-neutral-900 border-thick border-neutral-900 shadow-illustration hover:bg-accent-hover',
+  outline: 'border-thick border-neutral-900 bg-white text-neutral-700 hover:bg-primary-light hover:border-primary hover:text-primary shadow-illustration',
+  ghost: 'text-neutral-600 hover:text-primary hover:bg-primary-light border-2 border-transparent hover:border-primary',
 };
 
 const sizeClasses = {
-  sm: 'px-3 py-1.5 text-sm rounded-md',
-  md: 'px-4 py-2.5 text-sm rounded-lg',
-  lg: 'px-6 py-3 text-base rounded-lg',
+  sm: 'px-3 py-1.5 text-sm',
+  md: 'px-4 py-2.5 text-sm',
+  lg: 'px-6 py-3 text-base',
 };
 
 const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;

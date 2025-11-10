@@ -4,21 +4,43 @@ import JobCard from '../components/JobCard.astro';
 import FiltersSidebar from '../components/FiltersSidebar.astro';
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/ui/Badge.astro';
+import Button from '../components/ui/Button.astro';
 import '../styles/global.css';
 import { sortJobsByDateDesc, collectFacets, slugify } from '../lib/jobs';
+import type { Locale, Messages } from '../lib/i18n';
+import { resolveLocale, getMessages, defaultLocale } from '../lib/i18n';
 
 import type { Job } from '../lib/jobs';
 
 // Use shared helpers so behavior is covered by unit tests
 const sortedJobs = sortJobsByDateDesc(jobs as Job[]);
 const { categories, tags } = collectFacets(jobs as Job[]);
+const totalJobs = sortedJobs.length;
+const totalCompanies = new Set(sortedJobs.map((job) => job.companyName)).size;
+const totalCategories = categories.length;
+const totalSkills = tags.length;
+
+// Entrypoint: PT-BR (default)
+const locale: Locale = 'pt-BR';
+const messages = getMessages(locale);
+const heroMessages = messages.hero;
+const heroStats = heroMessages.stats;
+const resultsMessages = messages.results;
+const filtersMessages = messages.filters;
+const seoMessages = messages.seo.home;
+
+const withLocale = (href: string) => {
+  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  const url = new URL(href, Astro.url);
+  url.searchParams.set('lang', locale);
+  return `${url.pathname}${url.search}${url.hash}`;
+};
 
 // SEO helpers
 const site = Astro.site ?? new URL('http://localhost:4321');
 const seo = {
-  title: 'ArtSource Brazil — Remote Creative Jobs',
-  description:
-    'Niche job board for Brazil-based creative talent: Game Dev, 3D & Animation, and UI/UX Design. Find curated remote roles from international studios.',
+  title: seoMessages.title,
+  description: seoMessages.description,
   image: '/images/artsource-brazil-logo.svg',
 };
 
@@ -51,50 +73,175 @@ const jobPostings = sortedJobs.map((j) => ({
 }));
 ---
 
-<Layout seo={seo}>
+<Layout seo={seo} locale={locale}>
   <Fragment slot="head">
     <!-- JSON-LD: JobPostings -->
     <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
   </Fragment>
 
-  <!-- Layout with Sidebar -->
-  <div class="flex min-h-screen">
-    <!-- Filters Sidebar -->
-    <FiltersSidebar categories={categories} />
+  <!-- Layout sem Sidebar - Filtros Inline -->
+  <div class="min-h-screen bg-background-cream">
+    <!-- Main Content - Estilo Jornal -->
+    <main class="w-full">
+      <!-- Hero Compacto - Estilo Remotive -->
+      <div class="relative overflow-hidden border-b border-neutral-300 bg-background-pastel">
+        <!-- Logo como background em baixa opacidade - Posicionado à direita -->
+        <div class="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none">
+          <img 
+            src="/images/artsource-brazil-logo.svg" 
+            alt=""
+            class="w-96 h-auto"
+            aria-hidden="true"
+          />
+        </div>
+        
+        <div class="relative container mx-auto px-container py-8">
+          <div class="flex flex-col items-center gap-5 text-center">
+            <!-- Logo Menor -->
+            <img 
+              src="/images/artsource-brazil-logo.svg" 
+              alt="ArtSource Brazil"
+              class="h-20 w-auto"
+            />
+            <h1 class="max-w-3xl font-serif text-4xl font-extrabold leading-tight tracking-tight text-neutral-950 sm:text-5xl">
+              {heroMessages.title}
+            </h1>
+            <p class="max-w-xl text-base leading-relaxed text-neutral-700">
+              {heroMessages.description}
+            </p>
 
-    <!-- Main Content -->
-    <main class="flex-1 min-w-0 lg:ml-80">
+            <!-- Search Bar Grande estilo Remotive -->
+            <div class="w-full max-w-4xl">
+              <div class="relative">
+                <svg
+                  class="absolute left-5 top-1/2 h-6 w-6 -translate-y-1/2 text-primary"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  id="hero-search"
+                  type="search"
+                  placeholder="Buscar vagas remotas criativas..."
+                  class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-5 pl-16 pr-6 text-lg font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20"
+                />
+              </div>
+
+              <!-- Category Pills estilo Remotive -->
+              <div class="mt-4 flex flex-wrap justify-center gap-2">
+                {categories.map((cat) => (
+                  <button
+                    data-category-pill={cat}
+                    class="inline-flex items-center gap-2 rounded-full border-2 border-neutral-900 bg-white px-4 py-2 text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Layout com Filtros ao Lado (Sidebar + Conteúdo) -->
       <div class="container mx-auto px-container py-section-sm">
-        <!-- Hero section -->
-        <div class="mb-12 text-center animate-fade-in-up">
-          <h1 class="mb-4 font-serif text-5xl font-bold tracking-tight text-neutral-900 sm:text-6xl">
-            Find Your Next Creative Role
-          </h1>
-          <p class="mx-auto max-w-2xl text-lg text-neutral-700">
-            Remote opportunities for Brazilian artists, designers, and game developers
-          </p>
+        <!-- Grid: Filtros à esquerda, Conteúdo à direita -->
+        <div class="grid gap-8 lg:grid-cols-[minmax(280px,320px)_1fr]">
+          
+          <!-- Coluna 1: Filtros (Sidebar) -->
+          <aside class="lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+            <FiltersSidebar categories={categories} locale={locale} />
+          </aside>
+
+          <!-- Coluna 2: Conteúdo Principal (Cards) -->
+          <div id="vagas">
+        <!-- Barra de resumo removida para layout mais limpo -->
+        <!-- Mantendo os data attributes necessários no container oculto para JS -->
+        <div
+          class="hidden"
+          data-results-summary
+          data-total-jobs={totalJobs}
+          data-count-singular={resultsMessages.countSingular}
+          data-count-plural={resultsMessages.countPlural}
+          data-context-all={resultsMessages.contextAll}
+          data-context-filtered={resultsMessages.contextFiltered}
+          data-aria-template={resultsMessages.ariaTemplate}
+          data-remove-template={resultsMessages.removeTemplate}
+          data-chip-labels={JSON.stringify(resultsMessages.chips)}
+        >
+          <div data-results-count-value>{totalJobs}</div>
+          <div data-results-count-context>{resultsMessages.contextAll}</div>
+          <button data-clear-all-filters type="button"></button>
+          <div data-active-filters></div>
         </div>
 
-        <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
-        <nav class="sr-only" aria-label="Browse by category">
-          {
-            categories.map((cat) => {
-              const slug = slugify(cat);
-              return (
-                <a href={`/category/${slug}`}>
-                  {cat} jobs
-                </a>
-              );
-            })
-          }
-        </nav>
+        <!-- Seção de destaque (Above the fold) -->
+        <div class="mb-12">
+          <div class="mb-6 flex items-center gap-4">
+            <h2 class="font-serif text-4xl font-bold text-neutral-950">
+              {heroMessages.sectionTitle}
+            </h2>
+            <div class="h-1 flex-grow max-w-[100px] bg-accent-DEFAULT"></div>
+          </div>
+          
+          <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
+          <nav class="sr-only" aria-label="Browse by category">
+            {
+              categories.map((cat) => {
+                const slug = slugify(cat);
+                return (
+                  <a href={`/category/${slug}`}>
+                    {cat} jobs
+                  </a>
+                );
+              })
+            }
+          </nav>
+        </div>
 
-        <!-- Job Cards Results -->
-        <div class="space-y-6 animate-fade-in" style="animation-delay: 0.2s; animation-fill-mode: both;" data-jobs>
+        <!-- Job Cards Results - Grid estilo jornal -->
+        <section class="mb-6 space-y-4" aria-live="polite">
+          <div
+            data-filter-loading
+            class="hidden rounded-md border border-primary-light bg-primary-lightest px-4 py-3 text-sm font-semibold text-primary"
+            role="status"
+          >
+            {filtersMessages.loadingMessage}
+          </div>
+          <div
+            data-filter-error
+            class="hidden rounded-md border border-red-200 bg-red-100 px-4 py-3 text-sm font-semibold text-red-700"
+            role="alert"
+          >
+            {filtersMessages.errorMessage}
+          </div>
+          <p
+            data-filter-empty
+            class="hidden rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm text-neutral-700"
+            role="status"
+          >
+            {resultsMessages.emptyList}
+          </p>
+        </section>
+
+        <div
+          class="grid gap-6 animate-fade-in sm:grid-cols-2"
+          style="animation-delay: 0.2s; animation-fill-mode: both;"
+          data-jobs
+        >
           {
             sortedJobs.map((job: Job) => (
               <JobCard
                 job={job}
+                locale={locale}
                 data-testid="job-card"
                 data-category={job.category}
                 data-tags={job.tags.join(' ')}
@@ -103,7 +250,9 @@ const jobPostings = sortedJobs.map((j) => ({
             ))
           }
         </div>
-      </div>
+          </div> <!-- Fecha Coluna 2: Conteúdo Principal -->
+        </div> <!-- Fecha Grid: Filtros + Conteúdo -->
+      </div> <!-- Fecha Container -->
     </main>
   </div>
 </Layout>
@@ -111,6 +260,221 @@ const jobPostings = sortedJobs.map((j) => ({
 <script>
   import { FilterOrchestratorController } from '../lib/filters/orchestrator-controller';
 
-  // Initialize global filter orchestrator
-  new FilterOrchestratorController();
+  const resultsContainer = document.querySelector('[data-jobs]');
+  const resultsSummary = document.querySelector('[data-results-summary]');
+  const totalJobs = Number(resultsSummary?.dataset.totalJobs ?? '0');
+  const resultsCountValue = resultsSummary?.querySelector('[data-results-count-value]');
+  const resultsCountContext = resultsSummary?.querySelector('[data-results-count-context]');
+  const resultsChipsContainer = document.querySelector('[data-active-filters]');
+  const sidebarCountValue = document.querySelector('[data-sidebar-results-count]');
+  const sidebarChipsContainer = document.querySelector('[data-sidebar-active-filters]');
+  const clearAllButton = document.querySelector('[data-clear-all-filters]');
+  const sidebarClearButton = document.querySelector('[data-sidebar-clear]');
+  const clearFiltersButton = document.getElementById('clear-filters-sidebar');
+  const sidebarCountLabel = document.querySelector('[data-sidebar-count-label]');
+
+  const dataset = resultsSummary?.dataset ?? {};
+  const countSingular = dataset.countSingular ?? 'vaga';
+  const countPlural = dataset.countPlural ?? 'vagas';
+  const contextAll = dataset.contextAll ?? '';
+  const contextFilteredTemplate = dataset.contextFiltered ?? '';
+  const ariaTemplate = dataset.ariaTemplate ?? '';
+  const removeTemplate = dataset.removeTemplate ?? 'Remover filtro {label}';
+  const chipLabels = (() => {
+    try {
+      return JSON.parse(dataset.chipLabels ?? '{}');
+    } catch {
+      return {};
+    }
+  })();
+  const arrayFields = ['level', 'tools', 'contract', 'location'];
+
+  function formatCount(count) {
+    return count === 1 ? countSingular : countPlural;
+  }
+
+  function getVisibleJobCount() {
+    if (!resultsContainer) return 0;
+    return Array.from(resultsContainer.children).filter((child) => {
+      const el = child as HTMLElement;
+      return !el.classList.contains('hidden');
+    }).length;
+  }
+
+  function dispatchFilterChange(detail) {
+    window.dispatchEvent(new CustomEvent('jobfilters:change', { detail }));
+  }
+
+  function createChipElement(label, onRemove) {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className =
+      'inline-flex items-center gap-2 rounded-full border-2 border-primary bg-primary-light px-3 py-1.5 text-sm font-bold text-primary transition hover:bg-primary-lightest hover:shadow-illustration focus:outline-none focus:ring-2 focus:ring-primary/30';
+    button.setAttribute('aria-label', removeTemplate.replace('{label}', label));
+
+    const span = document.createElement('span');
+    span.textContent = label;
+    button.appendChild(span);
+
+    const icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    icon.setAttribute('class', 'h-3.5 w-3.5');
+    icon.setAttribute('viewBox', '0 0 20 20');
+    icon.setAttribute('fill', 'currentColor');
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute(
+      'd',
+      'M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z'
+    );
+    icon.appendChild(path);
+    button.appendChild(icon);
+
+    button.addEventListener('click', onRemove);
+    return button;
+  }
+
+  function renderChipSet(container, descriptors) {
+    if (!container) return;
+    const emptyMessage = container.dataset.emptyMessage ?? '';
+    container.replaceChildren();
+    if (!descriptors.length) {
+      const empty = document.createElement('span');
+      empty.className = 'text-sm text-neutral-500';
+      empty.textContent = emptyMessage;
+      container.appendChild(empty);
+      return;
+    }
+    descriptors.forEach(({ label, onRemove }) => {
+      container.appendChild(createChipElement(label, onRemove));
+    });
+  }
+
+  function updateCounts(count) {
+    if (resultsCountValue) {
+      resultsCountValue.textContent = String(count);
+    }
+    if (resultsCountContext) {
+      if (count === totalJobs) {
+        resultsCountContext.textContent = contextAll;
+      } else {
+        const filtered = contextFilteredTemplate
+          .replace('{count}', String(count))
+          .replace('{total}', String(totalJobs));
+        resultsCountContext.textContent = filtered;
+      }
+    }
+    if (resultsSummary) {
+      const countWord = formatCount(count);
+      const totalWord = formatCount(totalJobs);
+      const ariaText = ariaTemplate
+        .replace('{count}', String(count))
+        .replace('{countWord}', countWord)
+        .replace('{total}', String(totalJobs))
+        .replace('{totalWord}', totalWord);
+      resultsSummary.setAttribute('aria-live', 'polite');
+      resultsSummary.setAttribute('aria-label', ariaText);
+    }
+    if (sidebarCountValue) {
+      sidebarCountValue.textContent = String(count);
+    }
+    if (sidebarCountLabel) {
+      sidebarCountLabel.textContent = formatCount(count);
+    }
+  }
+
+  function buildDescriptors(state) {
+    const descriptors = [];
+    const searchValue = typeof state?.search === 'string' ? state.search.trim() : '';
+    if (searchValue) {
+      const label = chipLabels.search ?? 'Busca';
+      descriptors.push({
+        label: `${label}: ${searchValue}`,
+        onRemove: () => dispatchFilterChange({ search: '' }),
+      });
+    }
+
+    if (state?.category && state.category !== 'all') {
+      const label = chipLabels.category ?? 'Categoria';
+      descriptors.push({
+        label: `${label}: ${state.category}`,
+        onRemove: () => dispatchFilterChange({ category: 'all' }),
+      });
+    }
+
+    arrayFields.forEach((key) => {
+      const values = Array.isArray(state?.[key]) ? state[key] : [];
+      values.forEach((value) => {
+        const label = chipLabels[key] ?? key;
+        descriptors.push({
+          label: `${label}: ${value}`,
+          onRemove: () => {
+            const next = values.filter((item) => item !== value);
+            dispatchFilterChange({ [key]: next });
+          },
+        });
+      });
+    });
+
+    return descriptors;
+  }
+
+  function updateUI(state = {}) {
+    const descriptors = buildDescriptors(state);
+    const visibleCount = getVisibleJobCount();
+    updateCounts(visibleCount);
+
+    renderChipSet(resultsChipsContainer, descriptors);
+    renderChipSet(sidebarChipsContainer, descriptors);
+
+    const hasActive = descriptors.length > 0;
+    if (clearAllButton instanceof HTMLButtonElement) {
+      clearAllButton.disabled = !hasActive;
+    }
+    if (sidebarClearButton instanceof HTMLButtonElement) {
+      sidebarClearButton.disabled = !hasActive;
+    }
+  }
+
+  window.addEventListener('jobfilters:applied', (event) => {
+    updateUI(event.detail ?? {});
+  });
+
+  clearAllButton?.addEventListener('click', () => clearFiltersButton?.click());
+  sidebarClearButton?.addEventListener('click', () => clearFiltersButton?.click());
+
+  const orchestrator = new FilterOrchestratorController();
+  updateUI(orchestrator.getState());
+
+  // Hero Search Integration
+  const heroSearch = document.getElementById('hero-search') as HTMLInputElement;
+  const sidebarSearch = document.getElementById('job-search-sidebar') as HTMLInputElement;
+  
+  if (heroSearch && sidebarSearch) {
+    heroSearch.addEventListener('input', (e) => {
+      const target = e.target as HTMLInputElement;
+      sidebarSearch.value = target.value;
+      sidebarSearch.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
+
+  // Category Pills Integration
+  const categoryPills = document.querySelectorAll('[data-category-pill]');
+  const categoryButtons = document.querySelectorAll('.category-btn-sidebar');
+  
+  categoryPills.forEach((pill) => {
+    pill.addEventListener('click', () => {
+      const category = pill.getAttribute('data-category-pill');
+      if (!category) return;
+      
+      // Find and click the corresponding sidebar category button
+      const targetButton = Array.from(categoryButtons).find((btn) => 
+        btn.getAttribute('data-category') === category
+      ) as HTMLButtonElement;
+      
+      if (targetButton) {
+        targetButton.click();
+        // Scroll to results
+        document.getElementById('vagas')?.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
 </script>
