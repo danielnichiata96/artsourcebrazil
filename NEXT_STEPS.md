@@ -28,21 +28,25 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
   - [ ] Redesenhar JobCard com destaque de logo e informações principais
   - [ ] Mostrar filtros ativos como chips e destacar contagem de resultados
-- [ ] **Localization & Language Consistency**
-  - [ ] Decide default locale (PT-BR ou EN) e expor toggle de idioma visível
-  - [ ] Centralizar textos em `src/lib/i18n.ts` com chaves reutilizáveis
-  - [ ] Garantir que cada página use apenas um idioma por vez
+- [x] **Localization & Language Consistency** ✅ PARCIALMENTE COMPLETO
+  - [x] Default locale definido: PT-BR (about, companies, blog agora em português)
+  - [x] Estrutura /en/ criada para versões em inglês (/en/about, /en/companies, /en/blog)
+  - [x] Textos centralizados em `src/lib/i18n.ts` com chaves reutilizáveis
+  - [x] Cada página usa apenas um idioma por vez
+  - [ ] Expor toggle de idioma visível no navbar
   - [ ] Revisar microcopy para tom consistente e com voz da marca
-- [ ] **Localization & Content Consistency**
-  - [ ] Decide default locale (PT-BR or EN) and expose language toggle
-  - [ ] Centralize copy strings in `src/lib/i18n.ts`
-  - [ ] Audit UI copy to ensure single language per locale
-  - [ ] Update microcopy to match brand tone
+- [x] **Responsive Design - Mobile/Tablet/Desktop** ✅ COMPLETO
+  - [x] Sidebar de filtros escondida no mobile (< 1024px)
+  - [x] Hero section responsivo: tamanhos de texto ajustados (text-3xl → text-5xl)
+  - [x] Searchbar responsivo: padding e ícone ajustados para mobile
+  - [x] Category pills responsivos: text-xs px-3 py-1.5 (mobile) → text-sm px-4 py-2 (tablet+)
+  - [x] Todos os 3 pills cabem em 1 linha no mobile 360px
+  - [x] Breakpoints testados: 360px, 768px, 1024px+
 - [ ] **Filters Sidebar Enhancements** 🎯
+  - [x] Mobile UX: Sidebar escondida em telas pequenas (< lg)
   - [ ] Add results count display in sidebar (e.g., "12 jobs found")
   - [ ] Show active filter badges/chips when filters are applied
   - [ ] Add "Reset filters" quick action when filters are active
-  - [ ] Improve mobile UX: remember sidebar state (collapsed/expanded)
   - [ ] Add loading state when filters are being applied
 - [ ] **E2E Tests for Filters Sidebar**
   - [ ] Test sidebar toggle on mobile
@@ -254,7 +258,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 ## Current Status Snapshot
 
-- Build: PASS (22 pages generated)
+- Build: PASS (25+ pages generated: PT-BR default + /en/ versions)
 - Formatting (Prettier): PASS
 - Data validation: PASS (Zod)
 - ESLint: PASS (0 errors, 0 warnings)
@@ -262,8 +266,16 @@ This file is the single source of truth for what to do next. Coding agents and h
 - E2E Tests: ⚠️ Requires Playwright browsers installation (`npx playwright install`)
 - Total Test Coverage: 52 tests (8 unit + 44 E2E)
 - CI: Build + format + lint + tests running on push/PR
-- **SEO Pages: 22 indexable pages** (1 home + 3 categories + 4 individual jobs + 1 companies index + 4 company pages + 1 blog index + 1 blog post + 7 static)
-- **Recent Updates**: Filters sidebar consolidated into single component with responsive design (desktop sidebar + mobile drawer)
+- **SEO Pages: 22+ indexable pages** (PT-BR + EN versions)
+  - PT-BR (default): home, 3 categories, 4 jobs, companies index, 4 company pages, blog index, blog post, 7 static, about, companies, blog
+  - EN: /en/about, /en/companies, /en/blog
+- **i18n Structure**: PT-BR default, /en/ for English versions
+- **Responsive Design**: ✅ Mobile (360px), Tablet (768px), Desktop (1024px+) all optimized
+- **Recent Updates**: 
+  - Responsive design complete across all breakpoints
+  - i18n structure implemented (PT-BR default, /en/ versions)
+  - Filters sidebar hidden on mobile (< 1024px)
+  - Design refinements: dark brown text, pastel yellow hero background
 - **📋 Ver IMPROVEMENTS.md** para melhorias específicas de código gerado por IA
 
 ---
@@ -272,6 +284,10 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-10: **Responsive Design Complete - Mobile/Tablet/Desktop**: Implemented comprehensive responsive design across all breakpoints. Hero section: text sizes scale from text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop). Searchbar: adjusted padding (py-4 → py-5) and icon size (h-5 → h-6) for mobile. Category pills: compact on mobile (text-xs px-3 py-1.5) expanding to full size on tablet (text-sm px-4 py-2). All 3 pills now fit on one line on 360px mobile. Filters sidebar hidden on mobile/tablet (< 1024px), visible on desktop. Tested and optimized for 360px, 768px, and 1024px+ breakpoints. Build passing.
+- 2025-11-10: **i18n Structure Implemented**: Established PT-BR as default locale with English versions under `/en/`. Translated main pages (about, companies, blog) to Portuguese. Created `/en/about`, `/en/companies`, `/en/blog/index` with English content. All text strings centralized in `src/lib/i18n.ts` with reusable keys. Created `I18N_STATUS.md` documentation. Each page now serves single language per locale. Language toggle in navbar pending. Build passing.
+- 2025-11-10: **Design Refinements**: Updated neutral color palette from black tones to warm brown tones (neutral-950: #3d2817, neutral-900: #4a3422). Changed all black text to dark brown for softer, more editorial appearance. Fixed button text wrapping with `whitespace-nowrap` class. Fixed logo positioning in hero section (moved to right side of searchbar). Changed hero background from gradient to pastel yellow (`bg-background-pastel`). All visual elements now align with editorial newspaper aesthetic.
+- 2025-11-10: **Bug Fixes**: Fixed missing logo on Vercel deployment by adding `logo-navbar.svg` to git repository. Fixed sidebar layout issues with excessive white space by removing dynamic JS padding. Fixed searchbar centralization issues. All assets now properly deployed to production.
 - 2025-11-07: **Design System Phase 2 COMPLETE - Typography Overhaul**: Added Crimson Pro serif font from Google Fonts for editorial headings. Enhanced Tailwind typography scale with improved line heights (26px base for readability), letter spacing (-0.02em for headings), and display sizes for hero sections. Updated global.css with semantic heading hierarchy (h1-h6) using serif font. Applied refined typography to homepage (5xl/6xl hero), about page, blog pages, and companies listing. Improved paragraph spacing and text density. All pages now have better visual hierarchy and readability. Build passing, all tests passing (8 unit + 44 E2E).
 - 2025-11-07: **Testing Suite Expansion COMPLETED**: Added 30 new E2E tests covering all remaining pages. Created comprehensive test suites for company pages (10 tests), blog pages (8 tests), about page (5 tests), and category pages (7 tests). All tests validate page structure, navigation, content rendering, and JSON-LD structured data. Total test coverage now: 52 tests (8 unit + 44 E2E). All tests passing. Test files: company-pages.spec.ts, blog-pages.spec.ts, about-page.spec.ts, category-pages.spec.ts.
 - 2025-11-07: **Design System Phase 3 COMPLETE**: Refactored all remaining pages to use UI component library. Completed: company/[slug], post-a-job flow (post-a-job.astro + success.astro), legal pages (privacy, terms), blog pages (index + [slug]), companies listing. All pages now use Card, Badge, Link, Button, Breadcrumb components with consistent px-container spacing and design tokens. Fixed remaining hardcoded elements (privacy.astro <a> tag, companies.astro card classes). Build passing, all tests passing (8 unit + 15 E2E).
