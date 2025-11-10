@@ -6,7 +6,7 @@ test.describe('Post-a-Job Success Page', () => {
     await page.goto('/post-a-job/success');
 
     // Verify the page loaded correctly
-    await expect(page.locator('h1')).toContainText('Thank You');
+    await expect(page.getByRole('heading', { level: 1, name: /Thank You/i })).toBeVisible();
     await expect(page.locator('text=Your payment was successful')).toBeVisible();
 
     // Find the button

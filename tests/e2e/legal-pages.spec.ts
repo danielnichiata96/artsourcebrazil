@@ -8,8 +8,8 @@ test.describe('Legal Pages', () => {
     await expect(page).toHaveTitle(/Privacy Policy/);
 
     // Check main heading
-    const heading = page.locator('h1');
-    await expect(heading).toContainText('Privacy Policy');
+    const heading = page.getByRole('heading', { level: 1, name: /Privacy Policy/i });
+    await expect(heading).toBeVisible();
 
     // Check key sections exist
     await expect(page.locator('h2:has-text("Information We Collect")')).toBeVisible();
@@ -27,8 +27,8 @@ test.describe('Legal Pages', () => {
     await expect(page).toHaveTitle(/Terms of Service/);
 
     // Check main heading
-    const heading = page.locator('h1');
-    await expect(heading).toContainText('Terms of Service');
+    const heading = page.getByRole('heading', { level: 1, name: /Terms of Service/i });
+    await expect(heading).toBeVisible();
 
     // Check key sections exist
     await expect(page.locator('h2:has-text("Job Postings")')).toBeVisible();
@@ -47,8 +47,8 @@ test.describe('Legal Pages', () => {
     await expect(page).toHaveTitle(/Contact/);
 
     // Check main heading
-    const heading = page.locator('h1');
-    await expect(heading).toContainText('Contact Us');
+    const heading = page.getByRole('heading', { level: 1, name: /Contact Us/i });
+    await expect(heading).toBeVisible();
 
     // Check email link is present (single email for all inquiries)
     await expect(page.locator('main a[href*="mailto:artsourcebrazil@gmail.com"]')).toBeVisible();
@@ -72,7 +72,7 @@ test.describe('Legal Pages', () => {
     // Test navigation to privacy policy
     await privacyLink.click();
     await expect(page).toHaveURL(/.*\/privacy/);
-    await expect(page.locator('h1')).toContainText('Privacy Policy');
+    await expect(page.getByRole('heading', { level: 1, name: /Privacy Policy/i })).toBeVisible();
 
     // Go back home
     await page.goto('/');
@@ -80,7 +80,7 @@ test.describe('Legal Pages', () => {
     // Test navigation to terms
     await termsLink.click();
     await expect(page).toHaveURL(/.*\/terms/);
-    await expect(page.locator('h1')).toContainText('Terms of Service');
+    await expect(page.getByRole('heading', { level: 1, name: /Terms of Service/i })).toBeVisible();
 
     // Go back home
     await page.goto('/');
@@ -88,7 +88,7 @@ test.describe('Legal Pages', () => {
     // Test navigation to contact
     await contactLink.click();
     await expect(page).toHaveURL(/.*\/contact/);
-    await expect(page.locator('h1')).toContainText('Contact Us');
+    await expect(page.getByRole('heading', { level: 1, name: /Contact Us/i })).toBeVisible();
   });
 
   test('Legal pages are linked from each other', async ({ page }) => {

@@ -8,7 +8,7 @@ test.describe('Blog Pages', () => {
     await expect(page).toHaveTitle(/Blog/);
 
     // Check main heading
-    await expect(page.locator('h1')).toContainText('Blog');
+    await expect(page.getByRole('heading', { level: 1, name: 'Blog' })).toBeVisible();
 
     // Check that blog post cards are visible
     const postCards = page.locator('a[href^="/blog/"]');
@@ -39,7 +39,13 @@ test.describe('Blog Pages', () => {
     await expect(page).toHaveURL(/\/blog\/.+/);
     
     // Post title should be in the page
-    await expect(page.locator('h1')).toContainText(postTitle || '');
+    const normalizedTitle = (postTitle ?? '').trim();
+    if (normalizedTitle) {
+      const escapedTitle = normalizedTitle.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      await expect(
+        page.getByRole('heading', { level: 1, name: new RegExp(escapedTitle, 'i') }),
+      ).toBeVisible();
+    }
   });
 
   test('Individual blog post page renders correctly', async ({ page }) => {
@@ -49,7 +55,9 @@ test.describe('Blog Pages', () => {
     await expect(page).toHaveTitle(/How to Post a Successful Job/);
 
     // Check main heading
-    await expect(page.locator('h1')).toContainText('How to Post a Successful Job');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /How to Post a Successful Job/i }),
+    ).toBeVisible();
 
     // Check published date is visible
     await expect(page.getByText(/Published on/i)).toBeVisible();
@@ -97,18 +105,18 @@ test.describe('Blog Pages', () => {
     await page.goto('/blog');
 
     // Check main container exists
-    const main = page.locator('main');
+    const main = page.locator('main').last();
     await expect(main).toBeVisible();
 
     // Verify heading is within container
-    await expect(page.locator('h1')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: 'Blog' })).toBeVisible();
   });
 
   test('Blog post page has proper max-width for readability', async ({ page }) => {
     await page.goto('/blog/how-to-post-a-successful-job');
 
     // Check that content has max-width constraint (max-w-4xl)
-    const main = page.locator('main');
+    const main = page.locator('main').last();
     await expect(main).toBeVisible();
     
     // Article should be constrained for readability

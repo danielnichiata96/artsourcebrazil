@@ -8,7 +8,8 @@ test.describe('About Page', () => {
     await expect(page).toHaveTitle(/About/);
 
     // Check main heading
-    await expect(page.locator('h1')).toContainText('About ArtSource Brazil');
+    const heading = page.getByRole('heading', { level: 1, name: 'About ArtSource Brazil' });
+    await expect(heading).toBeVisible();
 
     // Check that key sections exist
     await expect(page.locator('h2:has-text("Our Focus")')).toBeVisible();
@@ -53,15 +54,16 @@ test.describe('About Page', () => {
     // Click and navigate
     await aboutLink.click();
     await expect(page).toHaveURL('/about');
-    await expect(page.locator('h1')).toContainText('About');
+    const heading = page.getByRole('heading', { level: 1, name: /About/i });
+    await expect(heading).toBeVisible();
   });
 
   test('About page has proper container and spacing', async ({ page }) => {
     await page.goto('/about');
 
     // Check main container exists
-    const main = page.locator('main');
-    await expect(main).toBeVisible();
+    const contentMain = page.locator('main').last();
+    await expect(contentMain).toBeVisible();
 
     // Check prose container exists
     const prose = page.locator('.prose');

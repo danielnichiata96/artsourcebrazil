@@ -157,8 +157,8 @@ const jobPostings = sortedJobs.map((j) => ({
         <!-- Grid: Filtros à esquerda, Conteúdo à direita -->
         <div class="grid gap-8 lg:grid-cols-[minmax(280px,320px)_1fr]">
           
-          <!-- Coluna 1: Filtros (Sidebar) -->
-          <aside class="lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+          <!-- Coluna 1: Filtros (Sidebar) - Hidden on mobile -->
+          <aside class="hidden lg:block lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
             <FiltersSidebar categories={categories} locale={locale} />
           </aside>
 

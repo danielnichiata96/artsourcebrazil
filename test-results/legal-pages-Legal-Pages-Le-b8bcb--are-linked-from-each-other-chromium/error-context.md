@@ -1,0 +1,183 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]: ArtSource Brazil
+          - generic [ref=e10]: Remote Creative Jobs
+      - generic [ref=e11]:
+        - link "Empresas" [ref=e12] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: /blog
+        - link "Sobre" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/privacy/
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - heading "Privacy Policy" [level=1] [ref=e20]
+        - paragraph [ref=e21]:
+          - strong [ref=e22]: "Effective Date:"
+          - text: November 6, 2025
+          - strong [ref=e23]: "Last Updated:"
+          - text: November 6, 2025
+        - paragraph [ref=e24]:
+          - text: ArtSource Brazil ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website
+          - link "https://artsourcebrazil.vercel.app/" [ref=e25] [cursor=pointer]:
+            - /url: https://artsourcebrazil.vercel.app/
+          - text: (the "Site").
+        - paragraph [ref=e26]: Please read this Privacy Policy carefully. By using the Site, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, do not use the Site.
+        - heading "1. Information We Collect" [level=2] [ref=e27]
+        - heading "1.1 Information You Provide to Us" [level=3] [ref=e28]
+        - paragraph [ref=e29]: "We may collect the following information when you use our services:"
+        - list [ref=e30]:
+          - listitem [ref=e31]:
+            - strong [ref=e32]: "Job Posting Information:"
+            - text: When you post a job, you provide us with company name, job title, job description, contact information, and other details related to the job posting.
+          - listitem [ref=e33]:
+            - strong [ref=e34]: "Newsletter Subscription:"
+            - text: If you subscribe to our newsletter, we collect your email address.
+          - listitem [ref=e35]:
+            - strong [ref=e36]: "Payment Information:"
+            - text: Payment processing is handled by third-party payment processors (Stripe). We do not store your credit card information. Please refer to Stripe's Privacy Policy for information on how they handle your data.
+          - listitem [ref=e37]:
+            - strong [ref=e38]: "Contact Information:"
+            - text: If you contact us via email or forms, we collect your name, email address, and the content of your message.
+        - heading "1.2 Information Collected Automatically" [level=3] [ref=e39]
+        - paragraph [ref=e40]: "When you visit our Site, we may automatically collect certain information about your device and usage patterns, including:"
+        - list [ref=e41]:
+          - listitem [ref=e42]:
+            - strong [ref=e43]: "Usage Data:"
+            - text: Information about how you interact with our Site, such as pages visited, time spent on pages, and navigation patterns.
+          - listitem [ref=e44]:
+            - strong [ref=e45]: "Device Information:"
+            - text: Browser type, operating system, IP address, and device identifiers.
+          - listitem [ref=e46]:
+            - strong [ref=e47]: "Analytics:"
+            - text: We use analytics tools (Vercel Analytics and/or Plausible Analytics) to understand how visitors use our Site. These tools may collect anonymized data about your visit.
+        - heading "2. How We Use Your Information" [level=2] [ref=e48]
+        - paragraph [ref=e49]: "We use the information we collect for the following purposes:"
+        - list [ref=e50]:
+          - listitem [ref=e51]: To provide, operate, and maintain our Site and services
+          - listitem [ref=e52]: To process and display job postings
+          - listitem [ref=e53]: To send you newsletters and marketing communications (if you opt in)
+          - listitem [ref=e54]: To respond to your inquiries and provide customer support
+          - listitem [ref=e55]: To improve our Site, services, and user experience
+          - listitem [ref=e56]: To detect, prevent, and address technical issues or fraudulent activity
+          - listitem [ref=e57]: To comply with legal obligations
+        - heading "3. How We Share Your Information" [level=2] [ref=e58]
+        - paragraph [ref=e59]: "We do not sell, trade, or rent your personal information to third parties. We may share your information in the following circumstances:"
+        - list [ref=e60]:
+          - listitem [ref=e61]:
+            - strong [ref=e62]: "With Service Providers:"
+            - text: We work with third-party service providers who help us operate our Site and services, such as payment processors (Stripe), email marketing platforms (Buttondown, ConvertKit, or similar), and analytics providers (Vercel Analytics, Plausible). These providers are contractually obligated to protect your information.
+          - listitem [ref=e63]:
+            - strong [ref=e64]: "Public Job Listings:"
+            - text: Job postings you submit will be publicly displayed on our Site and may be accessible via RSS feeds and JSON APIs. Do not include sensitive personal information in job postings.
+          - listitem [ref=e65]:
+            - strong [ref=e66]: "Legal Requirements:"
+            - text: We may disclose your information if required to do so by law or in response to valid requests by public authorities (e.g., a court or government agency).
+          - listitem [ref=e67]:
+            - strong [ref=e68]: "Business Transfers:"
+            - text: If we are involved in a merger, acquisition, or sale of assets, your information may be transferred as part of that transaction.
+        - heading "4. Cookies and Tracking Technologies" [level=2] [ref=e69]
+        - paragraph [ref=e70]: Our Site may use cookies and similar tracking technologies to enhance your experience. Cookies are small data files stored on your device.
+        - list [ref=e71]:
+          - listitem [ref=e72]:
+            - strong [ref=e73]: "Essential Cookies:"
+            - text: Necessary for the Site to function properly.
+          - listitem [ref=e74]:
+            - strong [ref=e75]: "Analytics Cookies:"
+            - text: Help us understand how visitors use our Site (e.g., Vercel Analytics, Plausible).
+        - paragraph [ref=e76]: You can control cookies through your browser settings. However, disabling cookies may affect your ability to use certain features of the Site.
+        - heading "5. Data Retention" [level=2] [ref=e77]
+        - paragraph [ref=e78]: We retain your personal information only for as long as necessary to fulfill the purposes outlined in this Privacy Policy, unless a longer retention period is required or permitted by law. Job postings are typically displayed for 30 days and may be archived thereafter.
+        - heading "6. Your Rights and Choices" [level=2] [ref=e79]
+        - paragraph [ref=e80]: "Depending on your location, you may have the following rights regarding your personal information:"
+        - list [ref=e81]:
+          - listitem [ref=e82]:
+            - strong [ref=e83]: "Access and Correction:"
+            - text: You can request access to or correction of your personal information.
+          - listitem [ref=e84]:
+            - strong [ref=e85]: "Deletion:"
+            - text: You can request that we delete your personal information, subject to certain exceptions.
+          - listitem [ref=e86]:
+            - strong [ref=e87]: "Opt-Out:"
+            - text: You can unsubscribe from our newsletters at any time by clicking the "unsubscribe" link in our emails.
+          - listitem [ref=e88]:
+            - strong [ref=e89]: "Do Not Track:"
+            - text: Our Site does not respond to "Do Not Track" signals, but we use privacy-friendly analytics that do not track individual users across websites.
+        - paragraph [ref=e90]:
+          - text: To exercise these rights, please contact us at
+          - link "artsourcebrazil@gmail.com" [ref=e91] [cursor=pointer]:
+            - /url: mailto:artsourcebrazil@gmail.com
+          - text: .
+        - heading "7. International Data Transfers" [level=2] [ref=e92]
+        - paragraph [ref=e93]: Your information may be transferred to and processed in countries other than Brazil, including the United States, where our service providers are located. By using our Site, you consent to the transfer of your information to these countries, which may have different data protection laws than Brazil.
+        - heading "8. Children's Privacy" [level=2] [ref=e94]
+        - paragraph [ref=e95]: Our Site is not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us, and we will take steps to delete such information.
+        - heading "9. Security" [level=2] [ref=e96]
+        - paragraph [ref=e97]: We implement reasonable security measures to protect your personal information from unauthorized access, use, or disclosure. However, no method of transmission over the internet or electronic storage is 100% secure. We cannot guarantee absolute security.
+        - heading "10. Third-Party Links" [level=2] [ref=e98]
+        - paragraph [ref=e99]: Our Site may contain links to third-party websites (e.g., job application links, social media). We are not responsible for the privacy practices of these third parties. We encourage you to review their privacy policies before providing any personal information.
+        - heading "11. Changes to This Privacy Policy" [level=2] [ref=e100]
+        - paragraph [ref=e101]: We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated "Last Updated" date. We encourage you to review this Privacy Policy periodically. Your continued use of the Site after changes are posted constitutes your acceptance of the updated policy.
+        - heading "12. Contact Us" [level=2] [ref=e102]
+        - paragraph [ref=e103]: "If you have any questions or concerns about this Privacy Policy or our data practices, please contact us:"
+        - paragraph [ref=e104]:
+          - strong [ref=e105]: "Email:"
+          - link "artsourcebrazil@gmail.com" [ref=e106] [cursor=pointer]:
+            - /url: mailto:artsourcebrazil@gmail.com
+          - strong [ref=e107]: "Website:"
+          - link "ArtSource Brazil" [ref=e108] [cursor=pointer]:
+            - /url: /
+        - separator [ref=e109]
+        - paragraph [ref=e110]:
+          - strong [ref=e111]: "Note:"
+          - text: This Privacy Policy is provided in English. If you require a Portuguese translation, please contact us.
+    - generic [ref=e113]:
+      - heading "Fique por dentro" [level=3] [ref=e114]
+      - paragraph [ref=e115]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e116]:
+        - textbox "seu-email@exemplo.com" [ref=e117]
+        - button "Assinar" [ref=e118] [cursor=pointer]
+      - paragraph [ref=e119]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e120] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e121]:
+    - generic [ref=e123]:
+      - generic [ref=e124]:
+        - link "Sobre" [ref=e125] [cursor=pointer]:
+          - /url: /about
+        - link "Contato" [ref=e126] [cursor=pointer]:
+          - /url: /contact
+        - link "Política de Privacidade" [ref=e127] [cursor=pointer]:
+          - /url: /privacy
+        - link "Termos de Uso" [ref=e128] [cursor=pointer]:
+          - /url: /terms
+        - link "Blog" [ref=e129] [cursor=pointer]:
+          - /url: /blog
+      - link "artsourcebrazil@gmail.com" [ref=e131] [cursor=pointer]:
+        - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e132]:
+        - generic [ref=e133]: "Feeds:"
+        - link "Jobs RSS" [ref=e134] [cursor=pointer]:
+          - /url: /jobs.xml
+        - link "Jobs JSON" [ref=e135] [cursor=pointer]:
+          - /url: /jobs.json
+        - link "Blog RSS" [ref=e136] [cursor=pointer]:
+          - /url: /blog.xml
+      - paragraph [ref=e137]: © 2025 ArtSource Brazil. Todos os direitos reservados.
+```

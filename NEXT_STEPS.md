@@ -23,6 +23,21 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [ ] Extract magic numbers to constants file
   - [ ] Add cleanup for event listeners (prevent memory leaks)
   - [ ] Add loading/error states for user feedback
+- [ ] **Hero, Cards & Sidebar UI Pass**
+  - [ ] Atualizar hero com elementos gráficos sutis (ilustração/padrão)
+  - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
+  - [ ] Redesenhar JobCard com destaque de logo e informações principais
+  - [ ] Mostrar filtros ativos como chips e destacar contagem de resultados
+- [ ] **Localization & Language Consistency**
+  - [ ] Decide default locale (PT-BR ou EN) e expor toggle de idioma visível
+  - [ ] Centralizar textos em `src/lib/i18n.ts` com chaves reutilizáveis
+  - [ ] Garantir que cada página use apenas um idioma por vez
+  - [ ] Revisar microcopy para tom consistente e com voz da marca
+- [ ] **Localization & Content Consistency**
+  - [ ] Decide default locale (PT-BR or EN) and expose language toggle
+  - [ ] Centralize copy strings in `src/lib/i18n.ts`
+  - [ ] Audit UI copy to ensure single language per locale
+  - [ ] Update microcopy to match brand tone
 - [ ] **Filters Sidebar Enhancements** 🎯
   - [ ] Add results count display in sidebar (e.g., "12 jobs found")
   - [ ] Show active filter badges/chips when filters are applied
@@ -97,6 +112,14 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Company pages, post-a-job flow, legal pages, blog pages all using components
   - [x] Build passing with zero hardcoded styling
   - [x] All E2E tests passing (15/16)
+- [ ] **Brand Assets & Imagery**
+  - [ ] Definir biblioteca de ilustrações/padrões alinhada ao mascote
+  - [ ] Selecionar set de ícones coerente (ex. Phosphor arredondado)
+  - [ ] Curar imagens para cards de blog e páginas de empresa
+- [ ] **Content & Messaging Audit**
+  - [ ] Documentar tom de voz (friendly, editorial, brasileiro)
+  - [ ] Revisar títulos e CTAs para manter idioma consistente
+  - [ ] Adicionar métricas/estatísticas relevantes no hero
 - [x] **Testing Suite Expansion** ✅
   - [x] Add E2E tests for company pages (/companies, /company/[slug]) - 10 tests
   - [x] Add E2E tests for blog pages (/blog, /blog/[slug]) with JSON-LD validation - 8 tests

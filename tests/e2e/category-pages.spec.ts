@@ -8,7 +8,9 @@ test.describe('Category Pages', () => {
     await expect(page).toHaveTitle(/Game Dev/);
 
     // Check heading
-    await expect(page.locator('h1')).toContainText('Game Dev');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Game Dev/i }),
+    ).toBeVisible();
 
     // Check that jobs are visible
     const jobCards = page.locator('[data-testid="job-card"]');
@@ -39,12 +41,9 @@ test.describe('Category Pages', () => {
   test('Jobs on category page link to individual job pages', async ({ page }) => {
     await page.goto('/category/game-dev');
 
-    // Find first job card
-    const firstJobCard = page.locator('[data-testid="job-card"]').first();
-    await expect(firstJobCard).toBeVisible();
-
-    // Get job link
-    const jobLink = firstJobCard.locator('a').first();
+    // Get first visible job link to individual posting
+    const jobLink = page.locator('[data-testid="job-card"] a[href^="/jobs/"]').first();
+    await expect(jobLink).toBeVisible();
     const href = await jobLink.getAttribute('href');
 
     // Should link to /jobs/[id]-[slug]

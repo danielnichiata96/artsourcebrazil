@@ -1,5 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
+// Disable Astro dev toolbar during automated tests to avoid extra DOM nodes
+process.env.ASTRO_DEV_TOOLBAR_ENABLED = 'false';
+
 /**
  * Playwright config for smoke tests.
  * Runs against the Astro preview server (npm run preview).

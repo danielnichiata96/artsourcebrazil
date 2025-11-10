@@ -8,7 +8,9 @@ test.describe('Company Pages', () => {
     await expect(page).toHaveTitle(/Companies/);
 
     // Check main heading
-    await expect(page.locator('h1')).toContainText('Companies Hiring in Brazil');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Companies Hiring in Brazil/i }),
+    ).toBeVisible();
 
     // Check that company cards are visible
     const companyCards = page.locator('a[href^="/company/"]');
@@ -38,8 +40,14 @@ test.describe('Company Pages', () => {
     // Should navigate to company page
     await expect(page).toHaveURL(/\/company\//);
     
-    // Company name should be in the page title
-    await expect(page.locator('h1')).toContainText(companyName || '');
+    // Company name should be in the page heading
+    const normalizedName = (companyName ?? '').trim();
+    if (normalizedName) {
+      const escaped = normalizedName.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      await expect(
+        page.getByRole('heading', { level: 1, name: new RegExp(escaped, 'i') }),
+      ).toBeVisible();
+    }
   });
 
   test('Individual company page shows all jobs from that company', async ({ page }) => {
@@ -49,7 +57,7 @@ test.describe('Company Pages', () => {
     await expect(page).toHaveTitle(/PixelStorm/);
 
     // Check company header is visible
-    await expect(page.locator('h1')).toContainText('PixelStorm');
+    await expect(page.getByRole('heading', { level: 1, name: /PixelStorm/ })).toBeVisible();
     
     // Check company logo is visible (use first() to avoid strict mode)
     await expect(page.locator('img[alt*="PixelStorm"]').first()).toBeVisible();
@@ -147,6 +155,6 @@ test.describe('Company Pages', () => {
 
     // Should navigate to companies listing
     await expect(page).toHaveURL('/companies');
-    await expect(page.locator('h1')).toContainText('Companies');
+    await expect(page.getByRole('heading', { level: 1, name: /Companies/i })).toBeVisible();
   });
 });

@@ -8,6 +8,7 @@ Built with Astro + Tailwind, static-first, zero-JS by default (small islands onl
 - Astro
 - Tailwind CSS
 - Local data at `src/data/jobs.json`
+- DOMPurify (client-side sanitization)
 - Deployed to Vercel/Netlify (static build)
 
 ## Project structure
@@ -154,13 +155,14 @@ This project was 100% AI-generated and has been **professionally improved** to p
 ### ✅ Quality Status: **60-79% (Good)** - Production Ready!
 
 **Key Improvements Implemented:**
-- ✅ **100% Type Safety**: No @ts-nocheck, no any types
+- ✅ **Type Safety**: No `@ts-nocheck`, no `any` types
 - ✅ **Zod Runtime Validation**: All inputs validated and sanitized
 - ✅ **Error Handling**: Try-catch blocks in all critical paths
 - ✅ **Modular Architecture**: Controllers extracted from inline scripts
 - ✅ **Reusable Helpers**: 15+ DOM utility functions
 - ✅ **Performance**: Lazy loading, debouncing, optimizations
-- ✅ **Tests**: 8/8 unit tests ✅, 46/46 E2E tests ✅
+- ✅ **Test Coverage**: Unit tests for filter logic and full E2E suite
+- ✅ **Security**: DOMPurify sanitization + strict Content Security Policy
 - ✅ **Documentation**: Complete JSDoc with examples
 
 **� See full details:** [IMPROVEMENTS_COMPLETED.md](./IMPROVEMENTS_COMPLETED.md)

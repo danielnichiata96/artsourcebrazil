@@ -8,7 +8,9 @@ test.describe('Individual Job Pages', () => {
     await expect(page).toHaveTitle(/Senior Game Developer/);
 
     // Check job title is visible
-    await expect(page.locator('h1')).toContainText('Senior Game Developer');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Senior Game Developer/i }),
+    ).toBeVisible();
 
     // Check company name (use first() to avoid strict mode violation)
     await expect(page.getByText('PixelStorm').first()).toBeVisible();
@@ -66,7 +68,9 @@ test.describe('Individual Job Pages', () => {
     await expect(page).toHaveURL(
       /\/jobs\/a1b2c3d4-e5f6-7890-1234-567890abcdef-senior-game-developer/,
     );
-    await expect(page.locator('h1')).toContainText('Senior Game Developer');
+    await expect(
+      page.getByRole('heading', { level: 1, name: /Senior Game Developer/i }),
+    ).toBeVisible();
   });
 
   test('should have JobPosting JSON-LD structured data', async ({ page }) => {

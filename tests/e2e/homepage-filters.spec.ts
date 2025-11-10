@@ -5,11 +5,13 @@ test.describe('Homepage Job Filters', () => {
     // Navigate to homepage
     await page.goto('/');
 
+    const visibleJobContainers = page.locator('[data-jobs] > div:not(.hidden)');
+
     // Wait for jobs to be visible
-    await expect(page.locator('[data-testid="job-card"]').first()).toBeVisible({ timeout: 5000 });
+    await expect(visibleJobContainers.first()).toBeVisible({ timeout: 5000 });
 
     // Count initial jobs
-    const initialJobCount = await page.locator('[data-testid="job-card"]').count();
+    const initialJobCount = await visibleJobContainers.count();
     expect(initialJobCount).toBeGreaterThan(0);
 
     // Find and click a category button (if exists)
@@ -23,11 +25,17 @@ test.describe('Homepage Job Filters', () => {
       await expect(page).toHaveURL(/category=Game/);
 
       // Verify jobs are still visible (filtered list)
-      await expect(page.locator('[data-testid="job-card"]').first()).toBeVisible();
-
       // The filtered count should be <= initial (or possibly same if all are Game Dev)
-      const filteredJobCount = await page.locator('[data-testid="job-card"]').count();
+      const filteredJobCount = await visibleJobContainers.count();
+      const emptyState = page.locator('[data-filter-empty]');
+      const isEmptyVisible = await emptyState.isVisible();
+
       expect(filteredJobCount).toBeLessThanOrEqual(initialJobCount);
+      if (filteredJobCount === 0) {
+        expect(isEmptyVisible).toBe(true);
+      } else {
+        expect(filteredJobCount).toBeGreaterThan(0);
+      }
     } else {
       // If no category buttons exist, just verify jobs render
       test.skip();
@@ -37,8 +45,10 @@ test.describe('Homepage Job Filters', () => {
   test('Search input filters jobs by title or company', async ({ page }) => {
     await page.goto('/');
 
+    const visibleJobContainers = page.locator('[data-jobs] > div:not(.hidden)');
+
     // Wait for jobs
-    await expect(page.locator('[data-testid="job-card"]').first()).toBeVisible({ timeout: 5000 });
+    await expect(visibleJobContainers.first()).toBeVisible({ timeout: 5000 });
 
     // Find search input
     const searchInput = page.locator('input[type="search"]');
@@ -51,10 +61,14 @@ test.describe('Homepage Job Filters', () => {
       await expect(page).toHaveURL(/q=Senior/);
 
       // Verify at least one job is visible (assuming the test data has "Senior")
-      const jobCount = await page.locator('[data-testid="job-card"]').count();
+      const jobCount = await visibleJobContainers.count();
+      const emptyState = page.locator('[data-filter-empty]');
 
-      // If no results, that's okay (data dependent), but the filter should work
-      expect(jobCount).toBeGreaterThanOrEqual(0);
+      if (jobCount === 0) {
+        await expect(emptyState).toBeVisible();
+      } else {
+        expect(jobCount).toBeGreaterThan(0);
+      }
     } else {
       test.skip();
     }
