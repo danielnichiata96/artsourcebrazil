@@ -1,3 +1,4 @@
+import DOMPurify from 'dompurify';
 import { validateFilterUpdate, validateCategory, sanitizeStringArray, type PartialFilterState } from '../validation/filter-schema';
 import { FILTER_CONFIG } from '../constants';
 
@@ -50,6 +51,8 @@ export class FiltersSidebarController {
   private selectedCategory: string = 'all';
   private searchDebounceTimer: number | null = null;
   private pendingFilters: boolean = false;
+  private cleanup: Array<() => void> = [];
+  private isDestroyed = false;
 
   constructor(elements: FiltersSidebarElements) {
     this.elements = elements;
@@ -68,15 +71,22 @@ export class FiltersSidebarController {
     this.setupSidebarPosition();
     this.setupEventListeners();
     this.listenToGlobalFilters();
+    this.updateApplyButtonState();
+    this.registerGlobalCleanup();
   }
 
   private setupSidebarPosition(): void {
     this.setSidebarPosition();
     
     if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', () => this.setSidebarPosition());
+      const domReadyHandler = () => this.setSidebarPosition();
+      document.addEventListener('DOMContentLoaded', domReadyHandler);
+      this.cleanup.push(() => document.removeEventListener('DOMContentLoaded', domReadyHandler));
     }
-    window.addEventListener('resize', () => this.setSidebarPosition());
+
+    const resizeHandler = () => this.setSidebarPosition();
+    window.addEventListener('resize', resizeHandler);
+    this.cleanup.push(() => window.removeEventListener('resize', resizeHandler));
   }
 
   private setSidebarPosition(): void {
@@ -99,16 +109,8 @@ export class FiltersSidebarController {
         return;
       }
 
-      const isDesktop = window.innerWidth >= FILTER_CONFIG.BREAKPOINTS.DESKTOP;
-      
-      if (isDesktop) {
-        sidebar.style.paddingTop = `${navbarHeight}px`;
-        sidebar.style.height = `calc(100vh - ${navbarHeight}px)`;
-      } else {
-        sidebar.style.paddingTop = '0';
-        sidebar.style.height = '100vh';
-      }
-      
+      // Don't apply padding-top or height to sidebar - it's handled by CSS
+      // The sidebar is positioned statically in the layout and doesn't need dynamic positioning
       document.documentElement.style.setProperty('--navbar-height', `${navbarHeight}px`);
     } catch (error) {
       console.error('[FiltersSidebar] Error setting sidebar position:', error);
@@ -117,11 +119,9 @@ export class FiltersSidebarController {
   }
 
   private fallbackSidebarPosition(): void {
-    const { sidebar } = this.elements;
-    if (sidebar) {
-      sidebar.style.paddingTop = `${FALLBACK_NAVBAR_HEIGHT}px`;
-      sidebar.style.height = `calc(100vh - ${FALLBACK_NAVBAR_HEIGHT}px)`;
-    }
+    // Fallback is no longer needed since we don't manipulate sidebar positioning via JS
+    // The sidebar uses CSS-only positioning
+    document.documentElement.style.setProperty('--navbar-height', `${FALLBACK_NAVBAR_HEIGHT}px`);
   }
 
   private setupEventListeners(): void {
@@ -136,31 +136,49 @@ export class FiltersSidebarController {
   private setupToggleListeners(): void {
     const { toggleBtn, closeBtn, overlay } = this.elements;
 
-    toggleBtn?.addEventListener('click', () => {
-      const { sidebar } = this.elements;
-      if (!sidebar) return;
-      const isOpen = !sidebar.classList.contains('-translate-x-full');
-      isOpen ? this.closeSidebar() : this.openSidebar();
-    });
+    if (toggleBtn) {
+      const toggleHandler = () => {
+        const { sidebar } = this.elements;
+        if (!sidebar) return;
+        const isOpen = !sidebar.classList.contains('-translate-x-full');
+        isOpen ? this.closeSidebar() : this.openSidebar();
+      };
+      toggleBtn.addEventListener('click', toggleHandler);
+      this.cleanup.push(() => toggleBtn.removeEventListener('click', toggleHandler));
+    }
 
-    closeBtn?.addEventListener('click', () => this.closeSidebar());
-    overlay?.addEventListener('click', () => this.closeSidebar());
+    if (closeBtn) {
+      const closeHandler = () => this.closeSidebar();
+      closeBtn.addEventListener('click', closeHandler);
+      this.cleanup.push(() => closeBtn.removeEventListener('click', closeHandler));
+    }
+
+    if (overlay) {
+      const overlayHandler = () => this.closeSidebar();
+      overlay.addEventListener('click', overlayHandler);
+      this.cleanup.push(() => overlay.removeEventListener('click', overlayHandler));
+    }
   }
 
   private setupSearchListener(): void {
     const { searchInput } = this.elements;
     if (!searchInput) return;
 
-    searchInput.addEventListener('input', () => {
+    const inputHandler = () => {
       if (this.searchDebounceTimer !== null) {
         clearTimeout(this.searchDebounceTimer);
       }
 
       this.searchDebounceTimer = window.setTimeout(() => {
-        const searchValue = searchInput.value.trim();
+        const rawValue = searchInput.value;
+        const sanitizedValue = DOMPurify.sanitize(rawValue, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
+        const searchValue = sanitizedValue.trim();
         this.dispatchChange({ search: searchValue });
       }, FILTER_CONFIG.DEBOUNCE_MS);
-    });
+    };
+
+    searchInput.addEventListener('input', inputHandler);
+    this.cleanup.push(() => searchInput.removeEventListener('input', inputHandler));
   }
 
   private setupCategoryListeners(): void {
@@ -168,56 +186,61 @@ export class FiltersSidebarController {
     
     categoryButtons.forEach((btn) => {
       if (!btn) return;
-      
-      btn.addEventListener('click', () => {
+
+      const clickHandler = () => {
         const cat = validateCategory(btn.dataset.category);
         this.selectedCategory = cat;
         this.updateCategoryUI();
         // Category changes apply immediately
         this.dispatchChange({ category: this.selectedCategory });
-      });
+      };
+
+      btn.addEventListener('click', clickHandler);
+      this.cleanup.push(() => btn.removeEventListener('click', clickHandler));
     });
   }
 
   private setupCheckboxListeners(): void {
     const { level, tools, contract, location } = this.elements.checkboxGroups;
 
+    const registerCheckboxListener = (checkbox: HTMLInputElement | null | undefined) => {
+      if (!checkbox) return;
+      const changeHandler = () => this.markFiltersPending();
+      checkbox.addEventListener('change', changeHandler);
+      this.cleanup.push(() => checkbox.removeEventListener('change', changeHandler));
+    };
+
     // Mark filters as pending when checkboxes change
-    level.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.markFiltersPending());
-    });
-
-    tools.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.markFiltersPending());
-    });
-
-    contract.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.markFiltersPending());
-    });
-
-    location.forEach((checkbox: HTMLInputElement) => {
-      checkbox?.addEventListener('change', () => this.markFiltersPending());
-    });
+    level.forEach(registerCheckboxListener);
+    tools.forEach(registerCheckboxListener);
+    contract.forEach(registerCheckboxListener);
+    location.forEach(registerCheckboxListener);
   }
 
   private setupApplyListener(): void {
     const { applyBtn } = this.elements;
     if (!applyBtn) return;
 
-    applyBtn.addEventListener('click', () => {
+    const applyHandler = () => {
       this.applyFilters();
       this.pendingFilters = false;
       this.updateApplyButtonState();
-    });
+    };
+
+    applyBtn.addEventListener('click', applyHandler);
+    this.cleanup.push(() => applyBtn.removeEventListener('click', applyHandler));
   }
 
   private setupClearListener(): void {
     const { clearBtn } = this.elements;
     if (!clearBtn) return;
 
-    clearBtn.addEventListener('click', () => {
+    const clearHandler = () => {
       this.clearAllFilters();
-    });
+    };
+
+    clearBtn.addEventListener('click', clearHandler);
+    this.cleanup.push(() => clearBtn.removeEventListener('click', clearHandler));
   }
 
   private markFiltersPending(): void {
@@ -239,9 +262,12 @@ export class FiltersSidebarController {
   }
 
   private listenToGlobalFilters(): void {
-    window.addEventListener('jobfilters:change', ((e: CustomEvent<PartialFilterState>) => {
+    const handler = ((e: CustomEvent<PartialFilterState>) => {
       this.syncWithGlobalState(e.detail);
-    }) as EventListener);
+    }) as EventListener;
+
+    window.addEventListener('jobfilters:change', handler);
+    this.cleanup.push(() => window.removeEventListener('jobfilters:change', handler));
   }
 
   private updateCategoryUI(): void {
@@ -437,10 +463,32 @@ export class FiltersSidebarController {
     document.body.style.overflow = '';
   }
 
+  private registerGlobalCleanup(): void {
+    const destroyHandler = () => this.destroy();
+    window.addEventListener('beforeunload', destroyHandler);
+    this.cleanup.push(() => window.removeEventListener('beforeunload', destroyHandler));
+
+    const astroSwapHandler = () => this.destroy();
+    window.addEventListener('astro:before-swap', astroSwapHandler as EventListener);
+    this.cleanup.push(() => window.removeEventListener('astro:before-swap', astroSwapHandler as EventListener));
+  }
+
   // Public method for cleanup if needed
   public destroy(): void {
+    if (this.isDestroyed) return;
+    this.isDestroyed = true;
+
     if (this.searchDebounceTimer !== null) {
       clearTimeout(this.searchDebounceTimer);
     }
+
+    this.cleanup.forEach((dispose) => {
+      try {
+        dispose();
+      } catch (error) {
+        console.error('[FiltersSidebar] Error during cleanup:', error);
+      }
+    });
+    this.cleanup = [];
   }
 }

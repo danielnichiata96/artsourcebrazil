@@ -1,88 +1,36 @@
 ---
 // FiltersSidebar component - Consolidated filtering sidebar
 import Button from './ui/Button.astro';
+import type { Locale, Messages } from '../lib/i18n';
+import { getMessages } from '../lib/i18n';
 
 export interface Props {
   categories: string[];
+  locale: Locale;
 }
 
-const { categories = [] } = Astro.props as Props;
-
-// Map categories to emoji icons
-const categoryIcons: Record<string, string> = {
-  'Game Dev': '🎮',
-  '3D & Animation': '🎨',
-  'Design (UI/UX)': '🎯',
-};
+const { categories = [], locale } = Astro.props as Props;
+const messages = getMessages(locale);
+const filtersMessages = messages.filters;
+const resultsMessages = messages.results;
 ---
 
-<!-- Mobile Toggle Button -->
-<button
-  id="filters-toggle"
-  type="button"
-  class="fixed bottom-6 right-6 z-40 flex items-center gap-2 rounded-full bg-primary px-5 py-3 text-white shadow-lg transition-all hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 lg:hidden"
-  aria-label="Toggle filters"
-  aria-expanded="false"
->
-  <svg
-    class="h-5 w-5"
-    fill="none"
-    stroke="currentColor"
-    viewBox="0 0 24 24"
-    aria-hidden="true"
-  >
-    <path
-      stroke-linecap="round"
-      stroke-linejoin="round"
-      stroke-width="2"
-      d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
-    />
-  </svg>
-  <span class="font-semibold">Filters</span>
-</button>
-
-<!-- Mobile Overlay -->
-<div
-  id="filters-overlay"
-  class="fixed inset-0 z-30 hidden bg-black/50 backdrop-blur-sm transition-opacity lg:hidden"
-  aria-hidden="true"
-></div>
-
-<!-- Sidebar -->
+<!-- Filtros Sidebar - Estilo Card Editorial -->
 <aside
   id="filters-sidebar"
-  class="fixed left-0 top-0 z-40 h-screen w-80 -translate-x-full transform overflow-y-auto border-r border-neutral-200 bg-background-paper shadow-xl transition-transform duration-300 ease-in-out lg:fixed lg:left-0 lg:top-0 lg:z-0 lg:translate-x-0 lg:shadow-none scrollbar-hide"
-  aria-label="Job filters"
-  style="scrollbar-width: none; -ms-overflow-style: none;"
+  class="rounded-2xl border-thick border-neutral-900 bg-white shadow-illustration overflow-hidden flex flex-col max-h-[calc(100vh-8rem)]"
+  aria-label={filtersMessages.toggle}
 >
-  <div class="sticky top-0 z-10 flex items-center justify-between border-b border-neutral-200 bg-background-paper p-4 lg:hidden">
-    <h2 class="text-lg font-semibold text-neutral-900">Filters</h2>
-    <button
-      id="filters-close"
-      type="button"
-      class="rounded-lg p-2 text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 focus:outline-none focus:ring-2 focus:ring-primary"
-      aria-label="Close filters"
-    >
-      <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          stroke-width="2"
-          d="M6 18L18 6M6 6l12 12"
-        />
-      </svg>
-    </button>
-  </div>
-
-  <div class="p-6 pb-24 space-y-6">
-    <!-- Search Bar -->
+  <!-- Conteúdo Scrollável dos Filtros -->
+  <div class="space-y-4 pt-4 px-5 pb-5 overflow-y-auto flex-1">
+    <!-- Search Bar - Estilo Editorial -->
     <div>
-      <label for="job-search-sidebar" class="mb-2 block text-sm font-semibold text-neutral-900">
-        Search
+      <label for="job-search-sidebar" class="mb-2 block font-serif text-base font-bold text-neutral-950">
+        {filtersMessages.searchLabel}
       </label>
       <div class="relative">
         <svg
-          class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400"
+          class="absolute left-3 top-1/2 h-5 w-5 -translate-y-1/2 text-primary"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
@@ -99,148 +47,174 @@ const categoryIcons: Record<string, string> = {
           id="job-search-sidebar"
           type="search"
           inputmode="search"
-          placeholder="Job title, company, or skill..."
-          aria-label="Search jobs"
-          class="w-full rounded-lg border-2 border-neutral-200 bg-white py-3 pl-10 pr-4 text-sm transition-all placeholder:text-neutral-400 hover:border-neutral-300 focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+          placeholder={filtersMessages.searchPlaceholder}
+          aria-label={filtersMessages.searchLabel}
+          class="w-full border-thick border-neutral-900 bg-white py-3 pl-10 pr-4 text-sm font-bold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
         />
       </div>
     </div>
 
-    <!-- Category Filters -->
-    <div>
-      <h3 class="mb-3 text-sm font-semibold text-neutral-900">Category</h3>
-      <div class="space-y-2">
+    <!-- Resumo de filtros -->
+    <div class="rounded-xl border-thick border-neutral-900 bg-white p-3 shadow-illustration">
+      <div class="flex items-center justify-between gap-2">
+        <div class="min-w-0 flex-1">
+          <p class="text-xs font-semibold uppercase tracking-widest text-neutral-500">
+            {filtersMessages.sidebarTitle}
+          </p>
+          <div class="mt-1 flex items-baseline gap-2">
+            <span class="font-serif text-2xl font-bold text-primary" data-sidebar-results-count>0</span>
+            <span class="text-sm text-neutral-600" data-sidebar-count-label>{resultsMessages.countPlural}</span>
+          </div>
+        </div>
         <button
-          data-category="all"
-          class="category-btn-sidebar category-btn-active w-full rounded-lg border-2 border-primary bg-primary px-4 py-2.5 text-left text-sm font-semibold text-white transition-all hover:bg-primary-hover focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1"
-          aria-pressed="true"
+          type="button"
+          data-sidebar-clear
+          class="inline-flex shrink-0 items-center gap-1 rounded-full border-2 border-neutral-900 bg-white px-2 py-1 text-xs font-bold uppercase tracking-wide text-neutral-900 transition hover:bg-primary-light hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20 disabled:cursor-not-allowed disabled:opacity-40"
+          disabled
         >
-          All Jobs
+          <span class="hidden sm:inline">{filtersMessages.sidebarClear}</span>
+          <svg class="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor">
+            <path
+              fill-rule="evenodd"
+              d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
         </button>
-        {categories.map((cat) => {
-          const icon = categoryIcons[cat] || '📋';
-          return (
-            <button
-              data-category={cat}
-              class="category-btn-sidebar w-full rounded-lg border-2 border-neutral-200 bg-white px-4 py-2.5 text-left text-sm font-semibold text-neutral-700 transition-all focus:outline-none focus:ring-1 focus:ring-primary focus:ring-offset-1"
-              aria-pressed="false"
-            >
-              <span class="mr-2" aria-hidden="true">{icon}</span>
-              {cat}
-            </button>
-          );
-        })}
+      </div>
+      <div
+        class="mt-3 flex flex-wrap gap-2"
+        data-sidebar-active-filters
+        data-empty-message={filtersMessages.sidebarEmpty}
+        aria-live="polite"
+      >
+        <span class="text-xs text-neutral-500">{filtersMessages.sidebarEmpty}</span>
       </div>
     </div>
 
-    <hr class="border-neutral-200" />
-
-    <!-- Level Filter -->
+    <!-- Category Filters - Estilo Editorial -->
     <div>
-      <h3 class="mb-3 text-sm font-semibold text-neutral-900">👔 Level</h3>
-      <div class="space-y-2">
+      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.category}</h3>
+      <div class="space-y-1.5">
+        <button
+          data-category="all"
+          class="category-btn-sidebar category-btn-active w-full border-thick border-primary bg-primary px-3 py-2 text-left text-sm font-bold text-white shadow-illustration transition-all hover:bg-primary-hover focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          aria-pressed="true"
+        >
+          {filtersMessages.allCategories}
+        </button>
+        {categories.map((cat) => (
+            <button
+              data-category={cat}
+              class="category-btn-sidebar w-full border-thick border-neutral-900 bg-white px-3 py-2 text-left text-sm font-bold text-neutral-900 shadow-illustration transition-all hover:border-primary hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+              aria-pressed="false"
+            >
+              {cat}
+            </button>
+        ))}
+      </div>
+    </div>
+
+    <!-- Level Filter - Estilo Editorial -->
+    <div>
+      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.level}</h3>
+      <div class="space-y-1.5">
         {['Junior', 'Pleno', 'Senior', 'Lead'].map((level) => (
-          <label class="flex items-center gap-2 cursor-pointer">
+          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
             <input
               type="checkbox"
               name="level"
               value={level}
-              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
             />
-            <span class="text-sm text-neutral-700">{level}</span>
+            <span class="text-sm font-semibold text-neutral-950">{level}</span>
           </label>
         ))}
       </div>
     </div>
 
-    <hr class="border-neutral-200" />
-
-    <!-- Tools Filter -->
+    <!-- Tools Filter - Estilo Editorial -->
     <div>
-      <h3 class="mb-3 text-sm font-semibold text-neutral-900">🔧 Tools</h3>
-      <div class="space-y-2">
+      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.tools}</h3>
+      <div class="space-y-1.5">
         {['Figma', 'ZBrush', 'Unity', 'Maya', 'Adobe XD', 'Blender', 'Photoshop', 'Unreal Engine'].map((tool) => (
-          <label class="flex items-center gap-2 cursor-pointer">
+          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
             <input
               type="checkbox"
               name="tools"
               value={tool}
-              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
             />
-            <span class="text-sm text-neutral-700">{tool}</span>
+            <span class="text-sm font-semibold text-neutral-950">{tool}</span>
           </label>
         ))}
       </div>
     </div>
 
-    <hr class="border-neutral-200" />
-
-    <!-- Contract Type Filter -->
+    <!-- Contract Type Filter - Estilo Editorial -->
     <div>
-      <h3 class="mb-3 text-sm font-semibold text-neutral-900">📄 Contract</h3>
-      <div class="space-y-2">
+      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.contract}</h3>
+      <div class="space-y-1.5">
         {['CLT', 'PJ', 'Freelance'].map((contract) => (
-          <label class="flex items-center gap-2 cursor-pointer">
+          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
             <input
               type="checkbox"
               name="contract"
               value={contract}
-              class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
             />
-            <span class="text-sm text-neutral-700">{contract}</span>
+            <span class="text-sm font-semibold text-neutral-950">{contract}</span>
           </label>
         ))}
       </div>
     </div>
 
-    <hr class="border-neutral-200" />
-
-    <!-- Location Filter -->
+    <!-- Location Filter - Estilo Editorial -->
     <div>
-      <h3 class="mb-3 text-sm font-semibold text-neutral-900">🌍 Location</h3>
-      <div class="space-y-2">
-        <label class="flex items-center gap-2 cursor-pointer">
+      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.location}</h3>
+      <div class="space-y-1.5">
+        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
           <input
             type="checkbox"
             name="location"
             value="Brazil-Only"
-            class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
           />
-          <span class="text-sm text-neutral-700">Brazil-Only</span>
+          <span class="text-sm font-semibold text-neutral-950">Brazil-Only</span>
         </label>
-        <label class="flex items-center gap-2 cursor-pointer">
+        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lighest">
           <input
             type="checkbox"
             name="location"
             value="Global"
-            class="h-4 w-4 rounded border-neutral-300 text-primary focus:ring-primary"
+            class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
           />
-          <span class="text-sm text-neutral-700">Global</span>
+          <span class="text-sm font-semibold text-neutral-950">Global</span>
         </label>
       </div>
     </div>
+  </div>
 
-    <!-- Action Buttons - Sticky at bottom -->
-    <div class="sticky bottom-0 left-0 right-0 bg-background-paper border-t border-neutral-200 p-4 space-y-2 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
-      <Button
-        id="apply-filters-sidebar"
-        type="button"
-        variant="primary"
-        size="md"
-        class="w-full disabled:opacity-50 disabled:cursor-not-allowed"
-      >
-        Apply Filters
-      </Button>
-      <Button
-        id="clear-filters-sidebar"
-        type="button"
-        variant="outline"
-        size="md"
-        class="w-full"
-      >
-        Clear All Filters
-      </Button>
-    </div>
+  <!-- Action Buttons - Footer Fixo (fora do scroll) -->
+  <div class="shrink-0 border-t-4 border-neutral-900 bg-white p-4 space-y-2">
+    <Button
+      id="apply-filters-sidebar"
+      type="button"
+      variant="primary"
+      size="md"
+      class="w-full disabled:opacity-50 disabled:cursor-not-allowed"
+    >
+      {filtersMessages.apply}
+    </Button>
+    <Button
+      id="clear-filters-sidebar"
+      type="button"
+      variant="outline"
+      size="md"
+      class="w-full"
+    >
+      {filtersMessages.clear}
+    </Button>
   </div>
 </aside>
 
@@ -249,15 +223,13 @@ const categoryIcons: Record<string, string> = {
 
   // Gather all required DOM elements
   const sidebar = document.getElementById('filters-sidebar') as HTMLElement;
-  const overlay = document.getElementById('filters-overlay') as HTMLElement;
-  const toggleBtn = document.getElementById('filters-toggle') as HTMLButtonElement;
-  const closeBtn = document.getElementById('filters-close') as HTMLButtonElement;
   const searchInput = document.getElementById('job-search-sidebar') as HTMLInputElement;
   const categoryButtons = Array.from(
     document.querySelectorAll<HTMLButtonElement>('.category-btn-sidebar')
   );
   const applyBtn = document.getElementById('apply-filters-sidebar') as HTMLButtonElement;
   const clearBtn = document.getElementById('clear-filters-sidebar') as HTMLButtonElement;
+  const summaryClearBtn = document.querySelector('[data-sidebar-clear]') as HTMLButtonElement | null;
 
   // Checkbox groups
   const levelCheckboxes = Array.from(
@@ -276,9 +248,9 @@ const categoryIcons: Record<string, string> = {
   // Initialize controller with all elements
   new FiltersSidebarController({
     sidebar,
-    overlay,
-    toggleBtn,
-    closeBtn,
+    overlay: null,
+    toggleBtn: null,
+    closeBtn: null,
     searchInput,
     categoryButtons,
     applyBtn,
@@ -290,4 +262,6 @@ const categoryIcons: Record<string, string> = {
       location: locationCheckboxes,
     },
   });
+
+  summaryClearBtn?.addEventListener('click', () => clearBtn?.click());
 </script>
