@@ -16,13 +16,15 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
-- [ ] **Code Quality Improvements (AI-Generated Code)** 🔴 CRÍTICO
-  - [ ] Remove `@ts-nocheck` and add proper TypeScript types (see IMPROVEMENTS.md)
-  - [ ] Modularize inline JavaScript (extract to `src/lib/filters/`)
-  - [ ] Add error handling and validation (try-catch, null checks)
-  - [ ] Extract magic numbers to constants file
-  - [ ] Add cleanup for event listeners (prevent memory leaks)
-  - [ ] Add loading/error states for user feedback
+- [ ] **Code Quality Improvements (AI-Generated Code)** 🟡 PARCIALMENTE COMPLETO
+  - [x] Remove `@ts-nocheck` ✅ (0 files with @ts-nocheck)
+  - [x] Add proper TypeScript types ✅ (FiltersSidebarElements, FilterState interfaces)
+  - [x] Modularize inline JavaScript ✅ (sidebar-controller.ts, orchestrator-controller.ts)
+  - [x] Add error handling and validation ✅ (16 try-catch blocks, validateFilterUpdate)
+  - [x] Extract magic numbers to constants ✅ (src/lib/constants.ts com FILTER_CONFIG)
+  - [x] Add cleanup for event listeners ✅ (destroy() methods, beforeunload handlers)
+  - [ ] Add loading/error states for user feedback 🟡 (indicators exist but need UI polish)
+  - [ ] Extract remaining inline JS from index.astro (hero search + category pills)
 - [ ] **Hero, Cards & Sidebar UI Pass**
   - [ ] Atualizar hero com elementos gráficos sutis (ilustração/padrão)
   - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
