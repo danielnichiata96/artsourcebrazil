@@ -49,6 +49,7 @@ export class FiltersSidebarController {
   private elements: FiltersSidebarElements;
   private selectedCategory: string = 'all';
   private searchDebounceTimer: number | null = null;
+  private autoApplyTimer: number | null = null;
   private pendingFilters: boolean = false;
   private cleanup: Array<() => void> = [];
   private isDestroyed = false;
@@ -221,6 +222,11 @@ export class FiltersSidebarController {
     if (!applyBtn) return;
 
     const applyHandler = async () => {
+      if (this.autoApplyTimer !== null) {
+        clearTimeout(this.autoApplyTimer);
+        this.autoApplyTimer = null;
+      }
+
       // Show loading state
       const originalText = applyBtn.textContent || '';
       applyBtn.disabled = true;
@@ -273,6 +279,20 @@ export class FiltersSidebarController {
   private markFiltersPending(): void {
     this.pendingFilters = true;
     this.updateApplyButtonState();
+    this.scheduleAutoApply();
+  }
+
+  private scheduleAutoApply(): void {
+    if (this.autoApplyTimer !== null) {
+      clearTimeout(this.autoApplyTimer);
+    }
+
+    this.autoApplyTimer = window.setTimeout(() => {
+      this.autoApplyTimer = null;
+      this.applyFilters();
+      this.pendingFilters = false;
+      this.updateApplyButtonState();
+    }, FILTER_CONFIG.AUTO_APPLY_DELAY_MS);
   }
 
   private updateApplyButtonState(): void {
@@ -507,6 +527,10 @@ export class FiltersSidebarController {
 
     if (this.searchDebounceTimer !== null) {
       clearTimeout(this.searchDebounceTimer);
+    }
+
+    if (this.autoApplyTimer !== null) {
+      clearTimeout(this.autoApplyTimer);
     }
 
     this.cleanup.forEach((dispose) => {

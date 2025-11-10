@@ -6,6 +6,9 @@
 export const FILTER_CONFIG = {
   /** Debounce time for search input in milliseconds */
   DEBOUNCE_MS: 150,
+
+  /** Delay before auto-applying checkbox filters in milliseconds */
+  AUTO_APPLY_DELAY_MS: 200,
   
   /** Breakpoint for desktop view in pixels */
   BREAKPOINTS: {

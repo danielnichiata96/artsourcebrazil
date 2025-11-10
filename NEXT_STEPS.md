@@ -26,10 +26,9 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Add loading/error states for user feedback ✅ ('Aplicando...' / 'Limpando...' button states with disabled + opacity)
   - [x] Extract remaining inline JS from index.astro ✅ (HeroIntegrationController created, 95 lines)
 - [ ] **Hero, Cards & Sidebar UI Pass**
-  - [ ] Atualizar hero com elementos gráficos sutis (ilustração/padrão)
   - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
-  - [ ] Redesenhar JobCard com destaque de logo e informações principais
-  - [ ] Mostrar filtros ativos como chips e destacar contagem de resultados
+  - [ ] Ajustar microcopys do hero para destacar diferenciais da curadoria
+  - [x] Mostrar filtros ativos como chips e destacar contagem de resultados ✅ (Sidebar e header já exibem chips dinâmicos)
 - [x] **Localization & Language Consistency** ✅ PARCIALMENTE COMPLETO
   - [x] Default locale definido: PT-BR (about, companies, blog agora em português)
   - [x] Estrutura /en/ criada para versões em inglês (/en/about, /en/companies, /en/blog)
@@ -46,10 +45,10 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Breakpoints testados: 360px, 768px, 1024px+
 - [ ] **Filters Sidebar Enhancements** 🎯
   - [x] Mobile UX: Sidebar escondida em telas pequenas (< lg)
-  - [ ] Add results count display in sidebar (e.g., "12 jobs found")
-  - [ ] Show active filter badges/chips when filters are applied
-  - [ ] Add "Reset filters" quick action when filters are active
-  - [ ] Add loading state when filters are being applied
+  - [x] Add results count display in sidebar (mostrando valor + pluralização)
+  - [x] Show active filter badges/chips when filters are applied (chips dinâmicos com remoção)
+  - [x] Add "Reset filters" quick action when filters are active (botão "Limpar" habilita automaticamente)
+  - [x] Add loading state when filters are being applied (texto "Aplicando..." / "Limpando...")
 - [ ] **E2E Tests for Filters Sidebar**
   - [ ] Test sidebar toggle on mobile
   - [ ] Test filter application (search, category, level, tools, contract, location)
@@ -286,6 +285,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-10: **Sidebar UX Polish - Auto Apply & Chips**: Implemented auto-apply timer for checkbox filters (200ms) so users get instant results without manual click. Added guard to cancel timer when Apply button aciona manualmente. Sidebar now shows chips for todas as combinações (categoria + níveis + ferramentas etc.) e mantém contagem pluralizada. Updated NEXT_STEPS to refletir tarefas concluídas. Commits: pending push.
 - 2025-11-10: **Code Quality 100% Complete - All 8 Tasks Done**: Achieved 100% code quality (8/8 tasks). Created HeroIntegrationController (95 lines) extracting all inline JS from index.astro for hero search sync and category pill interactions. Added polished loading states: Apply button shows 'Aplicando...' and Clear button shows 'Limpando...' with disabled + opacity-70 + cursor-wait during operations. All code now modularized in 3 controllers (sidebar, orchestrator, hero). 0 @ts-nocheck, full TypeScript types, 16 try-catch blocks, FILTER_CONFIG constants, complete lifecycle cleanup. Build passing, unit tests 12/12, browser tested. Commit: 90ee4ef.
 - 2025-11-10: **Bug Fix - Logo Missing on Vercel**: Fixed missing navbar logo on production deployment. Issue: `logo-navbar.svg` file was present locally but not committed to git repository. Solution: Added `public/images/logo-navbar.svg` to git and deployed. Logo now displays correctly on all pages in production. Commit: d759215.
 - 2025-11-10: **Responsive Design Complete - Mobile/Tablet/Desktop**: Implemented comprehensive responsive design across all breakpoints. Hero section: text sizes scale from text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop). Searchbar: adjusted padding (py-4 → py-5) and icon size (h-5 → h-6) for mobile. Category pills: compact on mobile (text-xs px-3 py-1.5) expanding to full size on tablet (text-sm px-4 py-2). All 3 pills now fit on one line on 360px mobile. Filters sidebar hidden on mobile/tablet (< 1024px), visible on desktop. Tested and optimized for 360px, 768px, and 1024px+ breakpoints. Build passing. Commits: 43506f3, 43cd5bf.
