@@ -85,16 +85,6 @@ const jobPostings = sortedJobs.map((j) => ({
     <main class="w-full">
       <!-- Hero Compacto - Estilo Remotive -->
       <div class="relative overflow-hidden border-b border-neutral-300 bg-background-pastel">
-        <!-- Logo como background em baixa opacidade - Posicionado à direita -->
-        <div class="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.04] pointer-events-none">
-          <img 
-            src="/images/artsource-brazil-logo.svg" 
-            alt=""
-            class="w-96 h-auto"
-            aria-hidden="true"
-          />
-        </div>
-        
         <div class="relative container mx-auto px-container py-8">
           <div class="flex flex-col items-center gap-5 text-center">
             <!-- Logo Menor -->
@@ -111,10 +101,11 @@ const jobPostings = sortedJobs.map((j) => ({
             </p>
 
             <!-- Search Bar Grande estilo Remotive -->
-            <div class="w-full max-w-4xl">
-              <div class="relative">
+            <div class="relative w-full">
+              <!-- Searchbar Container centralizada -->
+              <div class="relative mx-auto max-w-4xl">
                 <svg
-                  class="absolute left-5 top-1/2 h-6 w-6 -translate-y-1/2 text-primary"
+                  class="absolute left-5 top-1/2 h-6 w-6 -translate-y-1/2 text-primary z-10"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -134,18 +125,28 @@ const jobPostings = sortedJobs.map((j) => ({
                   class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-5 pl-16 pr-6 text-lg font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20"
                 />
               </div>
-
-              <!-- Category Pills estilo Remotive -->
-              <div class="mt-4 flex flex-wrap justify-center gap-2">
-                {categories.map((cat) => (
-                  <button
-                    data-category-pill={cat}
-                    class="inline-flex items-center gap-2 rounded-full border-2 border-neutral-900 bg-white px-4 py-2 text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20"
-                  >
-                    {cat}
-                  </button>
-                ))}
+              
+              <!-- Logo à direita da searchbar - posicionado absolute -->
+              <div class="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block opacity-[0.15] pointer-events-none">
+                <img 
+                  src="/images/artsource-brazil-logo.svg" 
+                  alt=""
+                  class="w-64 h-auto"
+                  aria-hidden="true"
+                />
               </div>
+            </div>
+
+            <!-- Category Pills estilo Remotive -->
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+              {categories.map((cat) => (
+                <button
+                  data-category-pill={cat}
+                  class="inline-flex items-center gap-2 rounded-full border-2 border-neutral-900 bg-white px-4 py-2 text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20"
+                >
+                  {cat}
+                </button>
+              ))}
             </div>
           </div>
         </div>
