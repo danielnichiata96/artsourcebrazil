@@ -1,4 +1,3 @@
-import DOMPurify from 'dompurify';
 import { validateFilterUpdate, validateCategory, sanitizeStringArray, type PartialFilterState } from '../validation/filter-schema';
 import { FILTER_CONFIG } from '../constants';
 
@@ -171,9 +170,9 @@ export class FiltersSidebarController {
 
       this.searchDebounceTimer = window.setTimeout(() => {
         const rawValue = searchInput.value;
-        const sanitizedValue = DOMPurify.sanitize(rawValue, { ALLOWED_TAGS: [], ALLOWED_ATTR: [] });
-        const searchValue = sanitizedValue.trim();
-        this.dispatchChange({ search: searchValue });
+        // Simple sanitization: remove HTML tags and trim
+        const sanitizedValue = rawValue.replace(/<[^>]*>/g, '').trim();
+        this.dispatchChange({ search: sanitizedValue });
       }, FILTER_CONFIG.DEBOUNCE_MS);
     };
 
