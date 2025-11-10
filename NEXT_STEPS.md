@@ -16,15 +16,15 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
-- [ ] **Code Quality Improvements (AI-Generated Code)** 🟡 PARCIALMENTE COMPLETO
+- [x] **Code Quality Improvements (AI-Generated Code)** ✅ 100% COMPLETO
   - [x] Remove `@ts-nocheck` ✅ (0 files with @ts-nocheck)
   - [x] Add proper TypeScript types ✅ (FiltersSidebarElements, FilterState interfaces)
-  - [x] Modularize inline JavaScript ✅ (sidebar-controller.ts, orchestrator-controller.ts)
+  - [x] Modularize inline JavaScript ✅ (sidebar-controller.ts, orchestrator-controller.ts, hero-integration-controller.ts)
   - [x] Add error handling and validation ✅ (16 try-catch blocks, validateFilterUpdate)
   - [x] Extract magic numbers to constants ✅ (src/lib/constants.ts com FILTER_CONFIG)
   - [x] Add cleanup for event listeners ✅ (destroy() methods, beforeunload handlers)
-  - [ ] Add loading/error states for user feedback 🟡 (indicators exist but need UI polish)
-  - [ ] Extract remaining inline JS from index.astro (hero search + category pills)
+  - [x] Add loading/error states for user feedback ✅ ('Aplicando...' / 'Limpando...' button states with disabled + opacity)
+  - [x] Extract remaining inline JS from index.astro ✅ (HeroIntegrationController created, 95 lines)
 - [ ] **Hero, Cards & Sidebar UI Pass**
   - [ ] Atualizar hero com elementos gráficos sutis (ilustração/padrão)
   - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
@@ -286,6 +286,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-10: **Code Quality 100% Complete - All 8 Tasks Done**: Achieved 100% code quality (8/8 tasks). Created HeroIntegrationController (95 lines) extracting all inline JS from index.astro for hero search sync and category pill interactions. Added polished loading states: Apply button shows 'Aplicando...' and Clear button shows 'Limpando...' with disabled + opacity-70 + cursor-wait during operations. All code now modularized in 3 controllers (sidebar, orchestrator, hero). 0 @ts-nocheck, full TypeScript types, 16 try-catch blocks, FILTER_CONFIG constants, complete lifecycle cleanup. Build passing, unit tests 12/12, browser tested. Commit: 90ee4ef.
 - 2025-11-10: **Bug Fix - Logo Missing on Vercel**: Fixed missing navbar logo on production deployment. Issue: `logo-navbar.svg` file was present locally but not committed to git repository. Solution: Added `public/images/logo-navbar.svg` to git and deployed. Logo now displays correctly on all pages in production. Commit: d759215.
 - 2025-11-10: **Responsive Design Complete - Mobile/Tablet/Desktop**: Implemented comprehensive responsive design across all breakpoints. Hero section: text sizes scale from text-3xl (mobile) → text-4xl (tablet) → text-5xl (desktop). Searchbar: adjusted padding (py-4 → py-5) and icon size (h-5 → h-6) for mobile. Category pills: compact on mobile (text-xs px-3 py-1.5) expanding to full size on tablet (text-sm px-4 py-2). All 3 pills now fit on one line on 360px mobile. Filters sidebar hidden on mobile/tablet (< 1024px), visible on desktop. Tested and optimized for 360px, 768px, and 1024px+ breakpoints. Build passing. Commits: 43506f3, 43cd5bf.
 - 2025-11-10: **i18n Structure Implemented**: Established PT-BR as default locale with English versions under `/en/`. Translated main pages (about, companies, blog) to Portuguese. Created `/en/about`, `/en/companies`, `/en/blog/index` with English content. All text strings centralized in `src/lib/i18n.ts` with reusable keys. Created `I18N_STATUS.md` documentation. Each page now serves single language per locale. Language toggle in navbar pending. Build passing. Commit: 4d3ebb7.
