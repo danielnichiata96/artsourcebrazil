@@ -220,10 +220,24 @@ export class FiltersSidebarController {
     const { applyBtn } = this.elements;
     if (!applyBtn) return;
 
-    const applyHandler = () => {
+    const applyHandler = async () => {
+      // Show loading state
+      const originalText = applyBtn.textContent || '';
+      applyBtn.disabled = true;
+      applyBtn.textContent = 'Aplicando...';
+      applyBtn.classList.add('opacity-70', 'cursor-wait');
+
+      // Small delay to show feedback
+      await new Promise((resolve) => setTimeout(resolve, 200));
+
       this.applyFilters();
       this.pendingFilters = false;
       this.updateApplyButtonState();
+
+      // Restore button state
+      applyBtn.disabled = false;
+      applyBtn.textContent = originalText;
+      applyBtn.classList.remove('opacity-70', 'cursor-wait');
     };
 
     applyBtn.addEventListener('click', applyHandler);
@@ -234,8 +248,22 @@ export class FiltersSidebarController {
     const { clearBtn } = this.elements;
     if (!clearBtn) return;
 
-    const clearHandler = () => {
+    const clearHandler = async () => {
+      // Show loading state
+      const originalText = clearBtn.textContent || '';
+      clearBtn.disabled = true;
+      clearBtn.textContent = 'Limpando...';
+      clearBtn.classList.add('opacity-70', 'cursor-wait');
+
+      // Small delay to show feedback
+      await new Promise((resolve) => setTimeout(resolve, 150));
+
       this.clearAllFilters();
+
+      // Restore button state
+      clearBtn.disabled = false;
+      clearBtn.textContent = originalText;
+      clearBtn.classList.remove('opacity-70', 'cursor-wait');
     };
 
     clearBtn.addEventListener('click', clearHandler);

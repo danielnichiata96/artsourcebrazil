@@ -260,6 +260,7 @@ const jobPostings = sortedJobs.map((j) => ({
 
 <script>
   import { FilterOrchestratorController } from '../lib/filters/orchestrator-controller';
+  import { HeroIntegrationController } from '../lib/filters/hero-integration-controller';
 
   const resultsContainer = document.querySelector('[data-jobs]');
   const resultsSummary = document.querySelector('[data-results-summary]');
@@ -445,37 +446,6 @@ const jobPostings = sortedJobs.map((j) => ({
   const orchestrator = new FilterOrchestratorController();
   updateUI(orchestrator.getState());
 
-  // Hero Search Integration
-  const heroSearch = document.getElementById('hero-search') as HTMLInputElement;
-  const sidebarSearch = document.getElementById('job-search-sidebar') as HTMLInputElement;
-  
-  if (heroSearch && sidebarSearch) {
-    heroSearch.addEventListener('input', (e) => {
-      const target = e.target as HTMLInputElement;
-      sidebarSearch.value = target.value;
-      sidebarSearch.dispatchEvent(new Event('input', { bubbles: true }));
-    });
-  }
-
-  // Category Pills Integration
-  const categoryPills = document.querySelectorAll('[data-category-pill]');
-  const categoryButtons = document.querySelectorAll('.category-btn-sidebar');
-  
-  categoryPills.forEach((pill) => {
-    pill.addEventListener('click', () => {
-      const category = pill.getAttribute('data-category-pill');
-      if (!category) return;
-      
-      // Find and click the corresponding sidebar category button
-      const targetButton = Array.from(categoryButtons).find((btn) => 
-        btn.getAttribute('data-category') === category
-      ) as HTMLButtonElement;
-      
-      if (targetButton) {
-        targetButton.click();
-        // Scroll to results
-        document.getElementById('vagas')?.scrollIntoView({ behavior: 'smooth' });
-      }
-    });
-  });
+  // Initialize hero integration (search bar + category pills)
+  const heroIntegration = new HeroIntegrationController();
 </script>
