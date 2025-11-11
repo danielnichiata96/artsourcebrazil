@@ -30,8 +30,8 @@ const translations = {
       badge: 'Curadoria humana para talentos criativos do Brasil',
       title: 'ArtSource Brazil',
       description:
-        'Nossa equipe seleciona manualmente vagas remotas reais em Game Dev, 3D & Animation e UI/UX, conectando profissionais brasileiros a estúdios que valorizam criatividade e cultura.',
-      primaryCta: 'Ver vagas curadas',
+        'Selecionamos manualmente vagas remotas reais em Game Dev, 3D & Animation e UI/UX. Conectamos talentos brasileiros a estúdios que valorizam criatividade e cultura.',
+      primaryCta: 'Ver vagas selecionadas',
       secondaryCta: 'Postar uma vaga',
       sectionTitle: 'Últimas oportunidades',
       stats: {
@@ -135,8 +135,8 @@ const translations = {
       badge: 'Human-curated for Brazilian creative talent',
       title: 'ArtSource Brazil',
       description:
-        'Our editorial team handpicks remote roles in Game Dev, 3D & Animation, and UI/UX, matching Brazilian creatives with studios that celebrate their craft and culture.',
-      primaryCta: 'Explore curated jobs',
+        'We handpick remote roles in Game Dev, 3D & Animation, and UI/UX. We connect Brazilian creatives with studios that celebrate their craft and culture.',
+      primaryCta: 'Explore handpicked jobs',
       secondaryCta: 'Post a job',
       sectionTitle: 'Latest opportunities',
       stats: {
