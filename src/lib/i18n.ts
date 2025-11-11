@@ -135,7 +135,7 @@ const translations = {
       badge: 'Human-curated for Brazilian creative talent',
       title: 'ArtSource Brazil',
       description:
-        'We handpick remote roles in Game Dev, 3D & Animation, and UI/UX. We connect Brazilian creatives with studios that celebrate their craft and culture.',
+        'We handpick remote roles in Game Dev, 3D & Animation, and UI/UX for Brazilian creatives, connecting them with studios that celebrate their craft and culture.',
       primaryCta: 'Explore handpicked jobs',
       secondaryCta: 'Post a job',
       sectionTitle: 'Latest opportunities',
