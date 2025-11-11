@@ -74,158 +74,171 @@ const jobPostings = sortedJobs.map((j) => ({
 
 <Layout seo={seo} locale={locale}>
   <Fragment slot="head">
+    <!-- JSON-LD: JobPostings -->
     <script type="application/ld+json" set:html={JSON.stringify(jobPostings)} />
   </Fragment>
 
-  <div class="container mx-auto flex flex-col gap-8 px-container py-8 lg:flex-row lg:gap-12">
-    <FiltersSidebar categories={categories} locale={locale} />
+  <!-- Layout sem Sidebar - Filtros Inline -->
+  <div class="min-h-screen bg-background-cream">
+    <!-- Main Content - Estilo Jornal -->
+    <main class="w-full">
+      <!-- Hero Compacto - Estilo Remotive -->
+      <div class="relative overflow-hidden border-b border-neutral-300 bg-background-pastel">
+        <div class="relative container mx-auto px-container py-8">
+          <div class="flex flex-col items-center gap-5 text-center">
+            <!-- Badge acima do logo -->
+            <div class="inline-flex items-center gap-2 rounded-full border-2 border-neutral-900 bg-accent-light px-4 py-2 text-sm font-bold text-neutral-900 shadow-sm">
+              {heroMessages.badge}
+            </div>
+            
+            <!-- Logo Menor -->
+            <img 
+              src="/images/artsource-brazil-logo.svg" 
+              alt="ArtSource Brazil"
+              class="h-20 w-auto"
+            />
+              <h1 class="max-w-3xl font-serif text-3xl font-extrabold leading-tight tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
+                {heroMessages.title}
+              </h1>
+              <p class="max-w-xl text-base leading-relaxed text-neutral-700">
+                {heroMessages.description}
+              </p>
 
-    <main class="flex-1 lg:ml-80">
-      <!-- Hero Section - Editorial Style -->
-      <section class="mb-12 space-y-8">
-        <!-- Header -->
-        <div class="space-y-6 text-center">
-          <Badge variant="accent" size="md" class="mx-auto">
-            {heroMessages.badge}
-          </Badge>
-          <h1 class="font-serif text-display-lg font-extrabold leading-none tracking-tight text-neutral-950">
-            {heroMessages.title}
-          </h1>
-          <p class="mx-auto max-w-2xl text-xl leading-relaxed text-neutral-700">
-            {heroMessages.description}
-          </p>
-          <div class="flex flex-wrap justify-center gap-4">
-            <Button href="#vagas" size="lg">
-              {heroMessages.primaryCta}
-            </Button>
-            <Button href="/post-a-job" variant="outline" size="lg">
-              {heroMessages.secondaryCta}
-            </Button>
+            <!-- Search Bar Grande estilo Remotive -->
+            <div class="relative w-full">
+              <!-- Searchbar Container centralizada -->
+              <div class="relative mx-auto max-w-4xl">
+                <svg
+                  class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-primary z-10 sm:left-5 sm:h-6 sm:w-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                <input
+                  id="hero-search"
+                  type="search"
+                  placeholder="Search remote creative jobs..."
+                  class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-4 pl-14 pr-4 text-base font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
+                />
+              </div>
+              
+              <!-- Logo à direita da searchbar - posicionado absolute -->
+              <div class="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block opacity-[0.15] pointer-events-none">
+                <img 
+                  src="/images/artsource-brazil-logo.svg" 
+                  alt=""
+                  class="w-64 h-auto"
+                  aria-hidden="true"
+                />
+              </div>
+            </div>
+
+            <!-- Category Pills estilo Remotive -->
+            <div class="mt-4 flex flex-wrap justify-center gap-2">
+              {categories.map((cat) => (
+                <button
+                  data-category-pill={cat}
+                  class="inline-flex items-center gap-1.5 rounded-full border-2 border-neutral-900 bg-white px-3 py-1.5 text-xs sm:text-sm font-bold text-neutral-900 shadow-sm transition-all hover:border-primary hover:bg-primary hover:text-white hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary/20 sm:px-4 sm:py-2"
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
+      </div>
 
-        <!-- Stats Grid -->
-        <div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
-            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              {heroStats.jobs.label}
-            </p>
-            <div class="mt-2 flex items-baseline justify-center gap-2">
-              <span class="font-serif text-4xl font-bold text-primary">{totalJobs}</span>
-              <span class="text-sm text-neutral-600">
-                {totalJobs === 1 ? heroStats.jobs.unitSingular : heroStats.jobs.unitPlural}
-              </span>
-            </div>
-          </div>
-          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
-            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              {heroStats.companies.label}
-            </p>
-            <div class="mt-2 flex items-baseline justify-center gap-2">
-              <span class="font-serif text-4xl font-bold text-primary">{totalCompanies}</span>
-              <span class="text-sm text-neutral-600">
-                {totalCompanies === 1 ? heroStats.companies.unitSingular : heroStats.companies.unitPlural}
-              </span>
-            </div>
-          </div>
-          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
-            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              {heroStats.categories.label}
-            </p>
-            <div class="mt-2 flex items-baseline justify-center gap-2">
-              <span class="font-serif text-4xl font-bold text-primary">{totalCategories}</span>
-              <span class="text-sm text-neutral-600">
-                {totalCategories === 1 ? heroStats.categories.unitSingular : heroStats.categories.unitPlural}
-              </span>
-            </div>
-          </div>
-          <div class="rounded-xl border border-neutral-200 bg-white p-6 text-center shadow-sm">
-            <p class="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-              {heroStats.skills.label}
-            </p>
-            <div class="mt-2 flex items-baseline justify-center gap-2">
-              <span class="font-serif text-4xl font-bold text-primary">{totalSkills}</span>
-              <span class="text-sm text-neutral-600">
-                {totalSkills === 1 ? heroStats.skills.unitSingular : heroStats.skills.unitPlural}
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- Layout com Filtros ao Lado (Sidebar + Conteúdo) -->
+      <div class="container mx-auto px-container py-section-sm">
+        <!-- Grid: Filtros à esquerda, Conteúdo à direita -->
+        <div class="grid gap-8 lg:grid-cols-[minmax(280px,320px)_1fr]">
+          
+          <!-- Coluna 1: Filtros (Sidebar) - Hidden on mobile -->
+          <aside class="hidden lg:block lg:sticky lg:top-4 lg:self-start lg:max-h-[calc(100vh-2rem)] lg:overflow-y-auto">
+            <FiltersSidebar categories={categories} locale={locale} />
+          </aside>
 
-      <!-- Filter Results Summary + Active Filters -->
-      <section class="mb-6 space-y-4" aria-live="polite">
+          <!-- Coluna 2: Conteúdo Principal (Cards) -->
+          <div id="vagas">
+        <!-- Barra de resumo removida para layout mais limpo -->
+        <!-- Mantendo os data attributes necessários no container oculto para JS -->
         <div
-          data-filter-loading
-          class="hidden rounded-md border border-primary-light bg-primary-lightest px-4 py-3 text-sm font-semibold text-primary"
-          role="status"
-        >
-          {filtersMessages.loading}
-        </div>
-        <div
-          data-filter-error
-          class="hidden rounded-md border border-red-200 bg-red-100 px-4 py-3 text-sm font-semibold text-red-700"
-          role="alert"
-        >
-          {filtersMessages.error}
-        </div>
-        <p
-          data-filter-empty
-          class="hidden rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm text-neutral-700"
-          role="status"
-        >
-          {filtersMessages.empty}
-        </p>
-
-        <div
-          class="flex flex-wrap items-center justify-between gap-4 rounded-lg border border-neutral-200 bg-white px-6 py-4 shadow-sm"
+          class="hidden"
           data-results-summary
           data-total-jobs={totalJobs}
+          data-count-singular={resultsMessages.countSingular}
+          data-count-plural={resultsMessages.countPlural}
+          data-context-all={resultsMessages.contextAll}
+          data-context-filtered={resultsMessages.contextFiltered}
+          data-aria-template={resultsMessages.ariaTemplate}
+          data-remove-template={resultsMessages.removeTemplate}
+          data-chip-labels={JSON.stringify(resultsMessages.chips)}
         >
-          <div class="flex items-baseline gap-2">
-            <span class="font-serif text-3xl font-bold text-neutral-900" data-results-count-value>{totalJobs}</span>
-            <span class="text-base text-neutral-600" data-results-count-context>
-              {resultsMessages.contextAll}
-            </span>
+          <div data-results-count-value>{totalJobs}</div>
+          <div data-results-count-context>{resultsMessages.contextAll}</div>
+          <button data-clear-all-filters type="button"></button>
+          <div data-active-filters></div>
+        </div>
+
+        <!-- Seção de destaque (Above the fold) -->
+        <div class="mb-12">
+          <div class="mb-6 flex items-center justify-between gap-4">
+            <h2 class="font-serif text-4xl font-bold text-neutral-950">
+              {heroMessages.sectionTitle}
+            </h2>
+            <div class="hidden sm:flex items-baseline gap-2 text-sm">
+              <span class="font-bold text-primary" data-visible-count>{totalJobs}</span>
+              <span class="text-neutral-600" data-filter-status>{resultsMessages.contextAll}</span>
+            </div>
           </div>
-          <button
-            type="button"
-            data-clear-all-filters
-            disabled
-            class="inline-flex items-center gap-2 rounded-full border border-neutral-300 px-4 py-2 text-sm font-semibold text-neutral-700 transition hover:border-primary hover:bg-primary-light hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/30 disabled:cursor-not-allowed disabled:opacity-40"
-          >
-            {filtersMessages.clearFilters}
-            <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-              <path
-                fill-rule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clip-rule="evenodd"
-              />
-            </svg>
-          </button>
-        </div>
-
-        <div class="flex flex-wrap gap-2" data-active-filters aria-live="polite">
-          <span class="text-sm text-neutral-500">{resultsMessages.none}</span>
-        </div>
-      </section>
-
-      <!-- Job Listings Section -->
-      <section id="vagas">
-        <div class="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
-          <h2 class="font-serif text-5xl font-extrabold text-neutral-950">
-            {heroMessages.sectionTitle}
-          </h2>
-          <nav class="flex flex-wrap gap-2" aria-label="Browse by category">
+          
+          <!-- SEO-friendly links to category pages (hidden, for crawlers) -->
+          <nav class="sr-only" aria-label="Browse by category">
             {
-              categories.map((category) => (
-                <Badge href={`/category/${slugify(category)}`} variant="secondary" size="md">
-                  {category} jobs
-                </Badge>
-              ))
+              categories.map((cat) => {
+                const slug = slugify(cat);
+                return (
+                  <a href={`/category/${slug}`}>
+                    {cat} jobs
+                  </a>
+                );
+              })
             }
           </nav>
         </div>
+
+        <!-- Job Cards Results - Grid estilo jornal -->
+        <section class="mb-6 space-y-4" aria-live="polite">
+          <div
+            data-filter-loading
+            class="hidden rounded-md border border-primary-light bg-primary-lightest px-4 py-3 text-sm font-semibold text-primary"
+            role="status"
+          >
+            {filtersMessages.loadingMessage}
+          </div>
+          <div
+            data-filter-error
+            class="hidden rounded-md border border-red-200 bg-red-100 px-4 py-3 text-sm font-semibold text-red-700"
+            role="alert"
+          >
+            {filtersMessages.errorMessage}
+          </div>
+          <p
+            data-filter-empty
+            class="hidden rounded-md border border-neutral-200 bg-neutral-50 px-4 py-4 text-sm text-neutral-700"
+            role="status"
+          >
+            {resultsMessages.emptyList}
+          </p>
+        </section>
 
         <div
           class="grid gap-6 animate-fade-in sm:grid-cols-2"
@@ -233,7 +246,7 @@ const jobPostings = sortedJobs.map((j) => ({
           data-jobs
         >
           {
-            sortedJobs.map((job) => (
+            sortedJobs.map((job: Job) => (
               <JobCard
                 job={job}
                 locale={locale}
@@ -245,13 +258,16 @@ const jobPostings = sortedJobs.map((j) => ({
             ))
           }
         </div>
-      </div>
+          </div> <!-- Fecha Coluna 2: Conteúdo Principal -->
+        </div> <!-- Fecha Grid: Filtros + Conteúdo -->
+      </div> <!-- Fecha Container -->
     </main>
   </div>
 </Layout>
 
 <script>
   import { FilterOrchestratorController } from '../../lib/filters/orchestrator-controller';
+  import { HeroIntegrationController } from '../../lib/filters/hero-integration-controller';
 
   const resultsContainer = document.querySelector('[data-jobs]');
   const resultsSummary = document.querySelector('[data-results-summary]');
@@ -264,18 +280,26 @@ const jobPostings = sortedJobs.map((j) => ({
   const clearAllButton = document.querySelector('[data-clear-all-filters]');
   const sidebarClearButton = document.querySelector('[data-sidebar-clear]');
   const clearFiltersButton = document.getElementById('clear-filters-sidebar');
+  const sidebarCountLabel = document.querySelector('[data-sidebar-count-label]');
 
-  const fieldLabels = {
-    level: 'Level',
-    tools: 'Tool',
-    contract: 'Contract',
-    location: 'Location',
-  };
-
+  const dataset = resultsSummary?.dataset ?? {};
+  const countSingular = dataset.countSingular ?? 'job';
+  const countPlural = dataset.countPlural ?? 'jobs';
+  const contextAll = dataset.contextAll ?? '';
+  const contextFilteredTemplate = dataset.contextFiltered ?? '';
+  const ariaTemplate = dataset.ariaTemplate ?? '';
+  const removeTemplate = dataset.removeTemplate ?? 'Remove filter {label}';
+  const chipLabels = (() => {
+    try {
+      return JSON.parse(dataset.chipLabels ?? '{}');
+    } catch {
+      return {};
+    }
+  })();
   const arrayFields = ['level', 'tools', 'contract', 'location'];
 
   function formatCount(count) {
-    return count === 1 ? 'job' : 'jobs';
+    return count === 1 ? countSingular : countPlural;
   }
 
   function getVisibleJobCount() {
@@ -294,8 +318,8 @@ const jobPostings = sortedJobs.map((j) => ({
     const button = document.createElement('button');
     button.type = 'button';
     button.className =
-      'inline-flex items-center gap-2 rounded-full border border-primary/50 bg-primary-light px-3 py-1.5 text-sm font-medium text-primary transition hover:border-primary hover:bg-primary-lightest focus:outline-none focus:ring-2 focus:ring-primary/30';
-    button.setAttribute('aria-label', `Remove filter ${label}`);
+      'inline-flex items-center gap-2 rounded-full border-2 border-primary bg-primary-light px-3 py-1.5 text-sm font-bold text-primary transition hover:bg-primary-lightest hover:shadow-illustration focus:outline-none focus:ring-2 focus:ring-primary/30';
+    button.setAttribute('aria-label', removeTemplate.replace('{label}', label));
 
     const span = document.createElement('span');
     span.textContent = label;
@@ -317,8 +341,9 @@ const jobPostings = sortedJobs.map((j) => ({
     return button;
   }
 
-  function renderChipSet(container, descriptors, emptyMessage) {
+  function renderChipSet(container, descriptors) {
     if (!container) return;
+    const emptyMessage = container.dataset.emptyMessage ?? '';
     container.replaceChildren();
     if (!descriptors.length) {
       const empty = document.createElement('span');
@@ -333,19 +358,55 @@ const jobPostings = sortedJobs.map((j) => ({
   }
 
   function updateCounts(count) {
+    // Update visible count in the discrete counter
+    const visibleCountEl = document.querySelector('[data-visible-count]');
+    if (visibleCountEl) {
+      visibleCountEl.textContent = String(count);
+    }
+    
+    // Update filter status text
+    const filterStatusEl = document.querySelector('[data-filter-status]');
+    if (filterStatusEl) {
+      if (count === totalJobs) {
+        filterStatusEl.textContent = contextAll;
+      } else {
+        const filtered = contextFilteredTemplate
+          .replace('{count}', String(count))
+          .replace('{total}', String(totalJobs));
+        filterStatusEl.textContent = filtered;
+      }
+    }
+    
+    // Legacy results summary section
     if (resultsCountValue) {
       resultsCountValue.textContent = String(count);
     }
     if (resultsCountContext) {
-      resultsCountContext.textContent =
-        count === totalJobs ? `${formatCount(count)} open` : `of ${totalJobs} ${formatCount(totalJobs)}`;
+      if (count === totalJobs) {
+        resultsCountContext.textContent = contextAll;
+      } else {
+        const filtered = contextFilteredTemplate
+          .replace('{count}', String(count))
+          .replace('{total}', String(totalJobs));
+        resultsCountContext.textContent = filtered;
+      }
     }
     if (resultsSummary) {
+      const countWord = formatCount(count);
+      const totalWord = formatCount(totalJobs);
+      const ariaText = ariaTemplate
+        .replace('{count}', String(count))
+        .replace('{countWord}', countWord)
+        .replace('{total}', String(totalJobs))
+        .replace('{totalWord}', totalWord);
       resultsSummary.setAttribute('aria-live', 'polite');
-      resultsSummary.setAttribute('aria-label', `Showing ${count} ${formatCount(count)} of ${totalJobs} available`);
+      resultsSummary.setAttribute('aria-label', ariaText);
     }
     if (sidebarCountValue) {
       sidebarCountValue.textContent = String(count);
+    }
+    if (sidebarCountLabel) {
+      sidebarCountLabel.textContent = formatCount(count);
     }
   }
 
@@ -353,15 +414,17 @@ const jobPostings = sortedJobs.map((j) => ({
     const descriptors = [];
     const searchValue = typeof state?.search === 'string' ? state.search.trim() : '';
     if (searchValue) {
+      const label = chipLabels.search ?? 'Search';
       descriptors.push({
-        label: `Search: ${searchValue}`,
+        label: `${label}: ${searchValue}`,
         onRemove: () => dispatchFilterChange({ search: '' }),
       });
     }
 
     if (state?.category && state.category !== 'all') {
+      const label = chipLabels.category ?? 'Category';
       descriptors.push({
-        label: `Category: ${state.category}`,
+        label: `${label}: ${state.category}`,
         onRemove: () => dispatchFilterChange({ category: 'all' }),
       });
     }
@@ -369,8 +432,9 @@ const jobPostings = sortedJobs.map((j) => ({
     arrayFields.forEach((key) => {
       const values = Array.isArray(state?.[key]) ? state[key] : [];
       values.forEach((value) => {
+        const label = chipLabels[key] ?? key;
         descriptors.push({
-          label: `${fieldLabels[key]}: ${value}`,
+          label: `${label}: ${value}`,
           onRemove: () => {
             const next = values.filter((item) => item !== value);
             dispatchFilterChange({ [key]: next });
@@ -387,8 +451,8 @@ const jobPostings = sortedJobs.map((j) => ({
     const visibleCount = getVisibleJobCount();
     updateCounts(visibleCount);
 
-    renderChipSet(resultsChipsContainer, descriptors, 'No active filters at the moment.');
-    renderChipSet(sidebarChipsContainer, descriptors, 'No active filters.');
+    renderChipSet(resultsChipsContainer, descriptors);
+    renderChipSet(sidebarChipsContainer, descriptors);
 
     const hasActive = descriptors.length > 0;
     if (clearAllButton instanceof HTMLButtonElement) {
@@ -408,5 +472,8 @@ const jobPostings = sortedJobs.map((j) => ({
 
   const orchestrator = new FilterOrchestratorController();
   updateUI(orchestrator.getState());
+
+  // Initialize hero integration (search bar + category pills)
+  const heroIntegration = new HeroIntegrationController();
 </script>
 

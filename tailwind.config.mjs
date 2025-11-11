@@ -123,11 +123,11 @@ export default {
         'extra-thick': '4px',    // Bordas extra grossas para destaque
       },
       boxShadow: {
-        'card': '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-        'card-hover': '0 4px 6px -1px rgba(0, 0, 0, 0.1)',
-        'button': '0 1px 2px 0 rgba(0, 0, 0, 0.05)',
-        'illustration': '4px 4px 0px 0px rgba(0, 0, 0, 0.15)', // Shadow estilo flat illustration
-        'illustration-hover': '6px 6px 0px 0px rgba(0, 0, 0, 0.2)', // Shadow hover mais pronunciado
+        'card': '0 1px 3px 0 rgba(74, 52, 34, 0.1)',
+        'card-hover': '0 4px 6px -1px rgba(74, 52, 34, 0.1)',
+        'button': '0 1px 2px 0 rgba(74, 52, 34, 0.05)',
+        'illustration': '4px 4px 0px 0px rgba(74, 52, 34, 0.15)', // Shadow estilo flat illustration com marrom escuro
+        'illustration-hover': '6px 6px 0px 0px rgba(74, 52, 34, 0.2)', // Shadow hover mais pronunciado
       },
       animation: {
         'fade-in': 'fade-in 0.6s ease-out',
@@ -200,7 +200,7 @@ export default {
     function ({ addBase }) {
       addBase({
         '*:focus-visible': {
-          outline: '2px solid #3aaf54',
+          outline: '2px solid #4a3422',
           outlineOffset: '2px',
           borderRadius: '0.25rem',
         },
