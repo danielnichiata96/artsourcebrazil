@@ -27,7 +27,7 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Extract remaining inline JS from index.astro ✅ (HeroIntegrationController created, 95 lines)
 - [ ] **Hero, Cards & Sidebar UI Pass**
   - [ ] Introduzir metadados (ex. contagem de vagas) logo abaixo do hero
-  - [ ] Ajustar microcopys do hero para destacar diferenciais da curadoria
+  - [x] Ajustar microcopys do hero para destacar diferenciais da curadoria ✅ (badge, descrição e CTA agora reforçam curadoria humana)
   - [x] Mostrar filtros ativos como chips e destacar contagem de resultados ✅ (Sidebar e header já exibem chips dinâmicos)
 - [x] **Localization & Language Consistency** ✅ PARCIALMENTE COMPLETO
   - [x] Default locale definido: PT-BR (about, companies, blog agora em português)
