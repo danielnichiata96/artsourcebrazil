@@ -1,6 +1,7 @@
 ---
 // FiltersSidebar component - Consolidated filtering sidebar
 import Button from './ui/Button.astro';
+import MultiSelectDropdown from './ui/MultiSelectDropdown.astro';
 import type { Locale, Messages } from '../lib/i18n';
 import { getMessages } from '../lib/i18n';
 
@@ -13,6 +14,14 @@ const { categories = [], locale } = Astro.props as Props;
 const messages = getMessages(locale);
 const filtersMessages = messages.filters;
 const resultsMessages = messages.results;
+
+// Filter options
+const toolOptions = ['Unity', 'Unreal Engine', 'Figma', 'C#', 'Blender', 'Maya', '3ds Max', 'Houdini', 'Substance Painter/Designer', 'Python', 'Javascript'];
+const levelOptions = ['Senior', 'Lead'];
+const locationOptions = [
+  { value: 'remote-brazil', label: 'Remoto • Brasil' },
+  { value: 'remote-worldwide', label: 'Remoto • Global' },
+];
 ---
 
 <!-- Filtros Sidebar - Estilo Card Editorial -->
@@ -115,64 +124,63 @@ const resultsMessages = messages.results;
       </div>
     </div>
 
-    <!-- Level Filter - Estilo Editorial -->
-    <div>
-      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.level}</h3>
-      <div class="space-y-1.5">
-        {['Senior', 'Lead'].map((level) => (
-          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
-            <input
-              type="checkbox"
-              name="level"
-              value={level}
-              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
-            />
-            <span class="text-sm font-semibold text-neutral-950">{level}</span>
-          </label>
-        ))}
-      </div>
-    </div>
+    <!-- Dropdown Filters -->
+    <div class="space-y-3">
+      <MultiSelectDropdown
+        label={filtersMessages.tools}
+        name="tools"
+        options={toolOptions}
+        id="tools-dropdown"
+      />
 
-    <!-- Tools Filter - Estilo Editorial -->
-    <div>
-      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.tools}</h3>
-      <div class="space-y-1.5">
-        {['Unity', 'Unreal Engine', 'Figma', 'C#', 'Blender', 'Maya', '3ds Max', 'Houdini', 'Substance Painter/Designer', 'Python', 'Javascript'].map((tool) => (
-          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
-            <input
-              type="checkbox"
-              name="tools"
-              value={tool}
-              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
-            />
-            <span class="text-sm font-semibold text-neutral-950">{tool}</span>
-          </label>
-        ))}
-      </div>
-    </div>
+      <MultiSelectDropdown
+        label={filtersMessages.level}
+        name="level"
+        options={levelOptions}
+        id="level-dropdown"
+      />
 
-    <!-- Location Filter - Estilo Editorial -->
-    <div>
-      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.location}</h3>
-      <div class="space-y-1.5">
-        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
-          <input
-            type="checkbox"
-            name="location"
-            value="remote-brazil"
-            class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
-          />
-          <span class="text-sm font-semibold text-neutral-950">Remoto • Brasil</span>
-        </label>
-        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
-          <input
-            type="checkbox"
-            name="location"
-            value="remote-worldwide"
-            class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
-          />
-          <span class="text-sm font-semibold text-neutral-950">Remoto • Global</span>
-        </label>
+      <!-- Location Dropdown (inline for custom labels) -->
+      <div class="relative" data-dropdown="dropdown-location">
+        <button
+          type="button"
+          data-dropdown-trigger
+          class="w-full flex items-center justify-between border-thick border-neutral-900 bg-white px-4 py-3 text-left text-sm font-bold text-neutral-950 shadow-illustration transition-all hover:border-primary hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          aria-expanded="false"
+        >
+          <span class="flex-1">{filtersMessages.location}</span>
+          <div class="flex items-center gap-2">
+            <span data-count class="text-xs font-semibold text-primary"></span>
+            <svg
+              data-chevron
+              class="h-4 w-4 transition-transform text-neutral-600"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </div>
+        </button>
+        <div
+          data-dropdown-content
+          class="absolute left-0 right-0 top-full z-50 mt-1 hidden max-h-64 overflow-y-auto border-thick border-neutral-900 bg-white shadow-xl"
+        >
+          <div class="p-2 space-y-1">
+            {locationOptions.map((option) => (
+              <label class="flex items-center gap-2 cursor-pointer p-2 transition-colors hover:bg-primary-lightest">
+                <input
+                  type="checkbox"
+                  name="location"
+                  value={option.value}
+                  class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
+                  data-dropdown-checkbox
+                />
+                <span class="text-sm font-semibold text-neutral-950">{option.label}</span>
+              </label>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </div>

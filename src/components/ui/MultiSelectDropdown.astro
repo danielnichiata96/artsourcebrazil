@@ -1,0 +1,192 @@
+---
+/**
+ * Multi-select dropdown component for filters
+ * Displays selected count and expands to show checkboxes
+ */
+export interface Props {
+  label: string;
+  name: string;
+  options: string[];
+  id?: string;
+}
+
+const { label, name, options, id } = Astro.props;
+const dropdownId = id || `dropdown-${name}`;
+---
+
+<div class="relative" data-dropdown={dropdownId}>
+  <!-- Dropdown Header/Trigger -->
+  <button
+    type="button"
+    data-dropdown-trigger
+    class="w-full flex items-center justify-between border-thick border-neutral-900 bg-white px-4 py-3 text-left text-sm font-bold text-neutral-950 shadow-illustration transition-all hover:border-primary hover:bg-primary-light focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    aria-expanded="false"
+    aria-controls={`${dropdownId}-content`}
+  >
+    <span class="flex-1">{label}</span>
+    <div class="flex items-center gap-2">
+      <span data-count class="text-xs font-semibold text-primary"></span>
+      <svg
+        data-chevron
+        class="h-4 w-4 transition-transform text-neutral-600"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </button>
+
+  <!-- Dropdown Content -->
+  <div
+    id={`${dropdownId}-content`}
+    data-dropdown-content
+    class="absolute left-0 right-0 top-full z-50 mt-1 hidden max-h-64 overflow-y-auto border-thick border-neutral-900 bg-white shadow-xl"
+  >
+    <div class="p-2 space-y-1">
+      {options.map((option) => (
+        <label class="flex items-center gap-2 cursor-pointer p-2 transition-colors hover:bg-primary-lightest">
+          <input
+            type="checkbox"
+            name={name}
+            value={option}
+            class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
+            data-dropdown-checkbox
+          />
+          <span class="text-sm font-semibold text-neutral-950">{option}</span>
+        </label>
+      ))}
+    </div>
+  </div>
+</div>
+
+<script>
+  /**
+   * Multi-select dropdown behavior
+   * Handles open/close, selected count, and click outside
+   */
+  class MultiSelectDropdown {
+    private trigger: HTMLButtonElement;
+    private content: HTMLElement;
+    private chevron: SVGElement;
+    private countSpan: HTMLElement;
+    private checkboxes: HTMLInputElement[];
+    private isOpen = false;
+
+    constructor(container: HTMLElement) {
+      this.trigger = container.querySelector('[data-dropdown-trigger]')!;
+      this.content = container.querySelector('[data-dropdown-content]')!;
+      this.chevron = container.querySelector('[data-chevron]')!;
+      this.countSpan = container.querySelector('[data-count]')!;
+      this.checkboxes = Array.from(container.querySelectorAll('[data-dropdown-checkbox]'));
+
+      this.init();
+    }
+
+    private init() {
+      // Toggle dropdown
+      this.trigger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.toggle();
+      });
+
+      // Update count when checkboxes change
+      this.checkboxes.forEach((checkbox) => {
+        checkbox.addEventListener('change', () => this.updateCount());
+      });
+
+      // Close on click outside
+      document.addEventListener('click', (e) => {
+        if (!this.content.contains(e.target as Node)) {
+          this.close();
+        }
+      });
+
+      // Prevent closing when clicking inside content
+      this.content.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Initial count
+      this.updateCount();
+    }
+
+    private toggle() {
+      if (this.isOpen) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+
+    private open() {
+      this.isOpen = true;
+      this.content.classList.remove('hidden');
+      this.chevron.style.transform = 'rotate(180deg)';
+      this.trigger.setAttribute('aria-expanded', 'true');
+    }
+
+    private close() {
+      this.isOpen = false;
+      this.content.classList.add('hidden');
+      this.chevron.style.transform = 'rotate(0deg)';
+      this.trigger.setAttribute('aria-expanded', 'false');
+    }
+
+    private updateCount() {
+      const selected = this.checkboxes.filter((cb) => cb.checked).length;
+      if (selected > 0) {
+        this.countSpan.textContent = `${selected} selecionada${selected > 1 ? 's' : ''}`;
+        this.countSpan.classList.remove('hidden');
+      } else {
+        this.countSpan.textContent = '';
+        this.countSpan.classList.add('hidden');
+      }
+    }
+
+    public getSelectedValues(): string[] {
+      return this.checkboxes.filter((cb) => cb.checked).map((cb) => cb.value);
+    }
+
+    public clearSelection() {
+      this.checkboxes.forEach((cb) => {
+        cb.checked = false;
+      });
+      this.updateCount();
+    }
+  }
+
+  // Initialize all dropdowns on the page
+  document.addEventListener('DOMContentLoaded', () => {
+    const dropdowns = document.querySelectorAll('[data-dropdown]');
+    dropdowns.forEach((dropdown) => {
+      new MultiSelectDropdown(dropdown as HTMLElement);
+    });
+  });
+</script>
+
+<style>
+  [data-dropdown-content] {
+    scrollbar-width: thin;
+    scrollbar-color: #a3a3a3 #f5f5f5;
+  }
+
+  [data-dropdown-content]::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  [data-dropdown-content]::-webkit-scrollbar-track {
+    background: #f5f5f5;
+  }
+
+  [data-dropdown-content]::-webkit-scrollbar-thumb {
+    background: #a3a3a3;
+    border-radius: 4px;
+  }
+
+  [data-dropdown-content]::-webkit-scrollbar-thumb:hover {
+    background: #737373;
+  }
+</style>
+
