@@ -1,42 +1,180 @@
 [
   {
-    "id": "a1b2c3d4-e5f6-7890-1234-567890abcdef",
-    "companyName": "PixelStorm",
-    "companyLogo": "/images/pixelstorm-logo.svg",
-    "jobTitle": "Senior Game Developer",
-    "applyLink": "https://example.com/jobs/senior-game-developer",
-    "postedDate": "2025-11-04T09:00:00Z",
-    "category": "Game Dev",
-    "tags": ["Unity", "C#", "Mobile", "Senior"]
+    "id": "FG-002",
+    "companyName": "Fortis Games",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/AZOlB9vnp9ZMTvX00W_fCA/uz2C8ClCefI2fz9SnhTf4hFl41bBkgRV1i6GgEx58z9WdXODZDujHRp4dJ3eVtLaX_cTl5FuleZ67NFT2vRXMeJUO-m2M3-R1GYnSPydSmnCKK9o2rQ3fSxKfORjeaLhRv57V9TMkn45wrzjo_3Y3n12FT6zAJtfGLkRCl7LFDs/QBiHn3nUV3qPILGliWbdHISMNoV6fFcypFjwaLBaQoE",
+    "jobTitle": "QA Engineer II (Unity/SDKs)",
+    "description": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScript, C#, Python), experiência prática com bibliotecas de automação (como Playwright, Cypress ou WebdriverIO) e familiaridade com AWS, CI/CD e SQL.",
+    "shortDescription": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScrip...",
+    "applyLink": "https://www.fortisgames.com/en-us/careers?gh_jid=4573387005",
+    "postedDate": "2025-11-12T00:00:00.000Z",
+    "category": "QA",
+    "tags": [
+      "Javascript",
+      "Typescript",
+      "C#",
+      "Python",
+      "Playwright",
+      "Cypress",
+      "AWS",
+      "Linux",
+      "CI/CD",
+      "DevOps tooling"
+    ],
+    "location": {
+      "scope": "remote-brazil"
+    }
   },
   {
-    "id": "b2c3d4e5-f6a7-8901-2345-67890abcdef1",
-    "companyName": "Mythic Realms",
-    "companyLogo": "/images/mythic-realms-logo.svg",
-    "jobTitle": "3D Character Artist",
-    "applyLink": "https://example.com/jobs/3d-character-artist",
-    "postedDate": "2025-11-03T14:30:00Z",
+    "id": "WL-001",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/WpNsQYsYDqZWO6GDqNcoOQ/TuHEWcIK1r-gzfLQK5TNRCNSuw_nC-56zi57D43taT1bgmK3eTJ4c_J_mWhC1_Q7MQeRjN5wYINRfrrryEZpY0dTLghI8Wazscg9WWKOSIc1_toIJWsN6j0-lZNo3bJN4q7zdG7BkvaG-VrSToKwm9nfPY-v6_iSSsV8WRqZ-tw/Nx8HFNQEMZBhWyfjKL7-46JLBy60K-sFhXT8dg_R-6U",
+    "jobTitle": "Senior 3D Game Artist",
+    "description": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os workflows de IA Generativa (Gen-AI) para acelerar a iteração. É uma vaga altamente colaborativa e de ritmo rápido, que exige experiência profunda em Unity e paixão por criar jogos.",
+    "shortDescription": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os w...",
+    "applyLink": "https://careers.wildlifestudios.com/jobs/senior-3d-game-artist-8282998002/",
+    "postedDate": "2025-11-12T00:00:00.000Z",
     "category": "3D & Animation",
-    "tags": ["ZBrush", "Maya", "Substance Painter"]
+    "tags": [
+      "Unity",
+      "3D",
+      "Senior",
+      "AI"
+    ],
+    "location": {
+      "scope": "remote-brazil"
+    }
   },
   {
-    "id": "c3d4e5f6-a7b8-9012-3456-7890abcdef12",
-    "companyName": "Creative Solutions",
-    "companyLogo": "/images/creative-solutions-logo.svg",
-    "jobTitle": "UI/UX Designer",
-    "applyLink": "https://example.com/jobs/ui-ux-designer",
-    "postedDate": "2025-11-02T11:00:00Z",
+    "id": "BFF-001",
+    "companyName": "Beffio",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/e1j3naSfkdyOlXjt-cIjCw/JyZiAfN3p_ZNM4QgxZbAVTqB4caUE8AH8kZZdscwMUOPs2CfGe-mGqmh_wIkvaiitRFCugrUgftwsvA9hbuJ8O2xx-0vh3ZAIyNkM7mnmyz9Y-4u2NEIentmq9tsLBm6TLsFBwq63BSNw8ETfKkANqrO3-ykRPvGVlJugJC-BtQ/ch__gFvy6F41ET7Q2ehqI0MdCMcGRPC1Xbdcsc91JIc",
+    "jobTitle": "Lead Real-Time VFX Artist – Unity3D",
+    "description": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (explosões, magia, FX ambiental) otimizados e de alta qualidade para títulos AA/AAA. Requer 6+ anos de experiência e um portfólio robusto.",
+    "shortDescription": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (expl...",
+    "applyLink": "https://careers.beffio.com/jobs/6653408-lead-real-time-vfx-artist-unity3d-remote-permanent",
+    "postedDate": "2025-11-11T00:00:00.000Z",
+    "category": "VFX",
+    "tags": [
+      "3D",
+      "Unity3D",
+      "HLSL",
+      "C# scripting",
+      "Houdini",
+      "After Effects",
+      "Lead"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    }
+  },
+  {
+    "id": "AU-001",
+    "companyName": "Automattic",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/j3cQHeXZlx9WYM8EOJuKfg/u-MCfX90rTCWdc0eLkEwuou6l03w9YDeIf8WLp1Ox9-hVmzwPabw0_ayeaokl2KTIza7l38JFKSmLNJrH-FMXqAVxae5AmwF-sIu7J61KExvsBDJgC7Zt3aEsGzowkpMachJ2NGEFBJ9IVw6FJGG34SVvawHLboy393ui1n4tH058_moP0KO0Gs4GP1jb4Gm/uZcCFUAuM2CBkSjX6NFGnpJxp_0aT4DfDexgRuQOx74",
+    "jobTitle": "Brand/Creative Designer",
+    "description": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de férias ilimitadas e faixa salarial global de $95.000-$200.000 USD (pago na moeda local). Exige portfólio robusto e ampla experiência em branding e web design.",
+    "shortDescription": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de fé...",
+    "applyLink": "https://automattic.com/work-with-us/job/brand-creative-designer/",
+    "postedDate": "2025-11-12T00:00:00.000Z",
     "category": "Design (UI/UX)",
-    "tags": ["Figma", "Adobe XD", "User Research"]
+    "tags": [
+      "Brand Design",
+      "Marketing Design",
+      "Web Design",
+      "Senior"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    }
   },
   {
-    "id": "d4e5f6a7-b8c9-0123-4567-890abcdef123",
-    "companyName": "Quantum Leap Games",
-    "companyLogo": "/images/quantum-leap-logo.svg",
-    "jobTitle": "Lead Gameplay Programmer",
-    "applyLink": "https://example.com/jobs/lead-gameplay-programmer",
-    "postedDate": "2025-11-01T18:00:00Z",
+    "id": "AU-002",
+    "companyName": "Automattic",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/j3cQHeXZlx9WYM8EOJuKfg/u-MCfX90rTCWdc0eLkEwuou6l03w9YDeIf8WLp1Ox9-hVmzwPabw0_ayeaokl2KTIza7l38JFKSmLNJrH-FMXqAVxae5AmwF-sIu7J61KExvsBDJgC7Zt3aEsGzowkpMachJ2NGEFBJ9IVw6FJGG34SVvawHLboy393ui1n4tH058_moP0KO0Gs4GP1jb4Gm/uZcCFUAuM2CBkSjX6NFGnpJxp_0aT4DfDexgRuQOx74",
+    "jobTitle": "Senior Product Designer",
+    "description": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pesquisa e definição até a prototipagem (em Figma) e colaboração com engenheiros. É uma vaga 100% remota, assíncrona, com férias ilimitadas e salário global de $95.000-$200.000 USD (pagos na moeda local).",
+    "shortDescription": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pes...",
+    "applyLink": "https://automattic.com/work-with-us/job/senior-product-designer/",
+    "postedDate": "2025-11-12T00:00:00.000Z",
+    "category": "Design (UI/UX)",
+    "tags": [
+      "Product Design",
+      "UX Design",
+      "UI Design",
+      "Figma",
+      "Senior"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    }
+  },
+  {
+    "id": "FG-001",
+    "companyName": "Fortis Games",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/AZOlB9vnp9ZMTvX00W_fCA/uz2C8ClCefI2fz9SnhTf4hFl41bBkgRV1i6GgEx58z9WdXODZDujHRp4dJ3eVtLaX_cTl5FuleZ67NFT2vRXMeJUO-m2M3-R1GYnSPydSmnCKK9o2rQ3fSxKfORjeaLhRv57V9TMkn45wrzjo_3Y3n12FT6zAJtfGLkRCl7LFDs/QBiHn3nUV3qPILGliWbdHISMNoV6fFcypFjwaLBaQoE",
+    "jobTitle": "Staff Game Engineer",
+    "description": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C#, POO (princípios SOLID) e otimização de performance. Você será responsável por decisões de arquitetura, escrita de código testável (testes unitários/integrados) e mentoria, exigindo experiência comprovada no lançamento de jogos mobile.",
+    "shortDescription": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C...",
+    "applyLink": "https://www.fortisgames.com/en-us/careers?gh_jid=4596958005",
+    "postedDate": "2025-11-12T00:00:00.000Z",
     "category": "Game Dev",
-    "tags": ["Unreal", "C++", "Multiplayer", "Lead"]
+    "tags": [
+      "C#",
+      "Animation",
+      "Unity3D",
+      "UI",
+      "Networking",
+      "Senior"
+    ],
+    "location": {
+      "scope": "remote-brazil"
+    }
+  },
+  {
+    "id": "CSO-001",
+    "companyName": "Circle.so",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/BdcUMPYx4ljFwTGXbt9U6w/5deTeZMxYwnBiQO2r9z9T7kJKKkIfyRwxZAjwuPfuwbr6RMpV_DEOOIlpVrA1cHeL6tWOU5JnKqwI1eBTVZJiR-d6biEscuow4boNNmow21Hv7C4D0HtSwNY8Yqm73C2a-kcamMBzBgJTQNWgKJIe0tIuidvGGAt7AgRt2oa3p8/zb1Z4Y4J4mJ17-OnCnvvb5qvDl0HCVRYicaQmbFou8w",
+    "jobTitle": "Senior Growth Designer",
+    "description": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web design focado em conversão e ser especialista em Figma. A vaga é 100% remota, assíncrona, com salário de $100k-$120k USD, 35 dias de folga (PTO) e retreats globais da empresa duas vezes ao ano.",
+    "shortDescription": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web desig...",
+    "applyLink": "https://circle.so/careers/greenhouse--4905487008",
+    "postedDate": "2025-11-12T00:00:00.000Z",
+    "category": "Design (UI/UX)",
+    "tags": [
+      "Growth Design",
+      "Marketing Design",
+      "Web Design",
+      "UI Design",
+      "Figma",
+      "Brand Design",
+      "Senior"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    }
+  },
+  {
+    "id": "BFF-002",
+    "companyName": "Beffio",
+    "companyLogo": "https://v5.airtableusercontent.com/v3/u/47/47/1762963200000/e1j3naSfkdyOlXjt-cIjCw/JyZiAfN3p_ZNM4QgxZbAVTqB4caUE8AH8kZZdscwMUOPs2CfGe-mGqmh_wIkvaiitRFCugrUgftwsvA9hbuJ8O2xx-0vh3ZAIyNkM7mnmyz9Y-4u2NEIentmq9tsLBm6TLsFBwq63BSNw8ETfKkANqrO3-ykRPvGVlJugJC-BtQ/ch__gFvy6F41ET7Q2ehqI0MdCMcGRPC1Xbdcsc91JIc",
+    "jobTitle": "Lead 3D Artist",
+    "description": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil, capaz de criar assets (cenários, props, iluminação) de alta qualidade tanto no estilo realista quanto estilizado.",
+    "shortDescription": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil,...",
+    "applyLink": "https://careers.beffio.com/jobs/6653367-lead-3d-artist-environment-world-building-unity3d-remote-permanent",
+    "postedDate": "2025-11-11T00:00:00.000Z",
+    "category": "3D & Animation",
+    "tags": [
+      "3D",
+      "Unreal Engine",
+      "Lead",
+      "Substance Painter/Designer",
+      "Blender",
+      "3ds Max",
+      "Maya"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    }
   }
 ]

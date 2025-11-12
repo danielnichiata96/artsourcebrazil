@@ -71,10 +71,23 @@ Each job object uses this schema:
   "companyName": "string",
   "companyLogo": "string",
   "jobTitle": "string",
+  "description": "markdown string",
+  "shortDescription": "optional string (max 300 chars)",
   "applyLink": "string",
   "postedDate": "string",
   "category": "string",
-  "tags": ["string"]
+  "tags": ["string"],
+  "location": {
+    "scope": "remote-brazil | remote-latam | remote-worldwide | hybrid | onsite",
+    "note": "optional string",
+    "countryCode": "optional ISO code"
+  },
+  "contractType": "optional CLT | PJ | B2B | Freelance | Estágio",
+  "salary": {
+    "min": "optional number",
+    "max": "optional number",
+    "currency": "ISO 4217 (BRL, USD, EUR)"
+  }
 }
 ```
 
@@ -82,6 +95,26 @@ Notes:
 
 - `postedDate` should be ISO 8601 (e.g., `2025-11-04T09:00:00Z`).
 - `companyLogo` points to a file inside `public/images/` or a full URL.
+- `description` accepts Markdown. Headings/lists/links são sanitizados antes de renderizar.
+- `shortDescription` (opcional) exibida em cards/previews. Limite de 300 caracteres.
+- `location.scope` controla como exibimos o alcance geográfico (enum acima). Use `hybrid`/`onsite` apenas quando houver presença física parcial/total.
+- `location.note` (opcional) ajuda a informar faixa de horário, presença periódica etc.
+- `location.countryCode` (opcional) aceita **ISO 3166-1 alpha-2** (ex.: `BR`, `PT`). Recomendado para vagas híbridas/presenciais.
+- `contractType` (opcional) tipo de contrato. Suporta: CLT, PJ, B2B, Freelance, Estágio.
+- `salary` (opcional) faixa salarial. Requer `currency` (ISO 4217: BRL, USD, EUR). `min` e `max` são opcionais mas pelo menos um deve existir se salary estiver presente.
+
+### Airtable
+
+Para detalhes completos sobre campos, mapeamentos e script de sincronização, consulte **[docs/AIRTABLE_MAPPING.md](docs/AIRTABLE_MAPPING.md)**.
+
+**Campos principais:**
+- **Obrigatórios:** ID, Job_Title, Company_Name, Apply_Link, Date_Posted_Original, Category, Tags, Location_Scope, Description_Short_PT
+- **Opcionais:** Company_Logo_URL, Description_Short_EN, Location_Detail, Location_Country_Code, Contrato, Salario_Min, Salario_Max, Moeda
+- **Gestão:** Status (filtrar "Ativa" no sync), Created At, Last Modified
+
+**Categorias suportadas:** Game Dev, 3D & Animation, Design (UI/UX), VFX, Arte 3D, UX/UI
+
+O script de sincronização deve mapear esses campos para o JSON, normalizar categorias/location scopes e validar antes de exportar.
 
 ## UI features
 

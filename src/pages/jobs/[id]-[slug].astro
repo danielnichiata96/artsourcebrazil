@@ -8,8 +8,15 @@ import Badge from '../../components/ui/Badge.astro';
 import Card from '../../components/ui/Card.astro';
 import Link from '../../components/ui/Link.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
-import { slugify, sortJobsByDateDesc } from '../../lib/jobs';
+import { slugify } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
+import { renderMarkdownToHtml, markdownToPlainText } from '../../lib/helpers/markdown';
+import {
+  getApplicantLocationRequirement,
+  getJobLocationCountryCode,
+  getJobLocationType,
+  getLocationLabel,
+} from '../../lib/location';
 
 export async function getStaticPaths() {
   const allJobs = jobs as Job[];
@@ -29,6 +36,10 @@ interface Props {
 const { job } = Astro.props;
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const locationLabel = getLocationLabel(job.location.scope);
+const locationNote = (job.location.note || '').trim();
+const locationCountryCode = getJobLocationCountryCode(job.location);
+const structuredLocality = locationLabel.replace(/\s*•\s*/g, ' - ');
 
 // Related jobs: same category, excluding current
 const relatedJobs = (jobs as Job[])
@@ -37,16 +48,20 @@ const relatedJobs = (jobs as Job[])
 
 // Format date for display
 const postedDate = new Date(job.postedDate);
-const formattedDate = postedDate.toLocaleDateString('en-US', {
+const formattedDate = postedDate.toLocaleDateString('pt-BR', {
   year: 'numeric',
   month: 'long',
   day: 'numeric',
 });
 
 // SEO
+const plainDescription = markdownToPlainText(job.description);
+const metaDescription =
+  plainDescription.length > 160 ? `${plainDescription.slice(0, 157)}…` : plainDescription;
+
 const seo = {
-  title: `${job.jobTitle} at ${job.companyName} | ArtSource Brazil`,
-  description: `Apply for ${job.jobTitle} at ${job.companyName}. ${job.category} remote position for Brazil-based creative talent. Tags: ${job.tags.join(', ')}.`,
+  title: `${job.jobTitle} na ${job.companyName} | ArtSource Brazil`,
+  description: metaDescription || `Candidatar-se para ${job.jobTitle} na ${job.companyName}.`,
   image: `/og/${job.id}-${slugify(job.jobTitle)}.png`,
 };
 
@@ -55,17 +70,14 @@ const jobPosting = {
   '@context': 'https://schema.org',
   '@type': 'JobPosting',
   title: job.jobTitle,
-  description: `${job.category} position at ${job.companyName}. Skills: ${job.tags.join(', ')}. Remote work opportunity for creative professionals based in Brazil.`,
+  description: plainDescription,
   datePosted: job.postedDate,
   validThrough: new Date(
     new Date(job.postedDate).getTime() + 30 * 24 * 60 * 60 * 1000,
   ).toISOString(), // 30 days validity
   employmentType: 'CONTRACTOR',
-  jobLocationType: 'TELECOMMUTE',
-  applicantLocationRequirements: {
-    '@type': 'Country',
-    name: 'Brazil',
-  },
+  jobLocationType: getJobLocationType(job.location.scope),
+  applicantLocationRequirements: getApplicantLocationRequirement(job.location),
   hiringOrganization: {
     '@type': 'Organization',
     name: job.companyName,
@@ -76,8 +88,8 @@ const jobPosting = {
     '@type': 'Place',
     address: {
       '@type': 'PostalAddress',
-      addressCountry: 'BR',
-      addressLocality: 'Remote',
+      addressCountry: locationCountryCode ?? undefined,
+      addressLocality: structuredLocality,
     },
   },
   directApply: true,
@@ -159,14 +171,17 @@ const breadcrumbs = {
 
             <!-- Meta Info -->
             <div class="flex flex-wrap gap-4 text-sm text-neutral-600">
-              <span class="flex items-center gap-1"> 📍 Remote (Brazil) </span>
+              <span class="flex items-center gap-1"> 📍 {locationLabel} </span>
               <span class="flex items-center gap-1">
-                📅 Posted {formattedDate}
+                📅 Publicada em {formattedDate}
               </span>
               <span class="flex items-center gap-1">
                 📂 {job.category}
               </span>
             </div>
+            {locationNote && (
+              <p class="mt-2 text-sm font-medium text-neutral-600">🕒 {locationNote}</p>
+            )}
 
             <!-- Tags -->
             <div class="mt-4 flex flex-wrap gap-2">
@@ -178,42 +193,11 @@ const breadcrumbs = {
 
       <!-- Job Description Section -->
       <Card padding="lg" class="mb-8">
-        <h2 class="mb-4 text-2xl font-bold text-neutral-900">About this role</h2>
-        <div class="prose prose-lg max-w-none">
-          <p class="text-neutral-700">
-            We're looking for a talented <strong>{job.jobTitle}</strong> to join{' '}
-            <strong>{job.companyName}</strong> remotely. This is a {job.category} position perfect for
-            creative professionals based in Brazil.
-          </p>
-
-          <h3>Key Skills</h3>
-          <ul>
-            {job.tags.map((tag) => <li>{tag}</li>)}
-          </ul>
-
-          <h3>Requirements</h3>
-          <ul>
-            <li>Based in Brazil</li>
-            <li>Strong portfolio showcasing relevant work</li>
-            <li>Excellent communication skills in English</li>
-            <li>Ability to work remotely and manage time effectively</li>
-          </ul>
-
-          <h3>What We Offer</h3>
-          <ul>
-            <li>100% remote work</li>
-            <li>Flexible schedule</li>
-            <li>Work with international clients and teams</li>
-            <li>Competitive compensation</li>
-          </ul>
-
-          <p class="mt-6">
-            <em
-              >Note: This job listing is curated by ArtSource Brazil. Please click "Apply" to visit
-              the company's application page.</em
-            >
-          </p>
-        </div>
+        <h2 class="mb-4 text-2xl font-bold text-neutral-900">Sobre a vaga</h2>
+        <div
+          class="prose prose-lg max-w-none text-neutral-700"
+          set:html={renderMarkdownToHtml(job.description)}
+        />
 
         <!-- Apply Button -->
         <div class="mt-6">
@@ -224,7 +208,7 @@ const breadcrumbs = {
             size="lg"
             class="w-full"
           >
-            Apply for this position →
+            Candidatar-se a esta vaga →
           </Button>
         </div>
       </Card>
@@ -234,7 +218,7 @@ const breadcrumbs = {
 
       <!-- Company Info -->
       <Card padding="lg" class="mb-8 bg-neutral-50">
-        <h2 class="mb-4 text-2xl font-bold text-neutral-900">About {job.companyName}</h2>
+        <h2 class="mb-4 text-2xl font-bold text-neutral-900">Sobre {job.companyName}</h2>
         <div class="flex items-start gap-4">
           <img
             src={job.companyLogo}
@@ -243,8 +227,8 @@ const breadcrumbs = {
           />
           <div>
             <p class="text-neutral-700">
-              {job.companyName} is hiring for {job.category} positions. Check out their other opportunities
-              and learn more about their company culture.
+              {job.companyName} está contratando para posições de {job.category}. Confira outras oportunidades
+              e entenda mais sobre a cultura da empresa.
             </p>
             <Link
               href={job.applyLink}
@@ -252,7 +236,7 @@ const breadcrumbs = {
               rel="noopener noreferrer"
               class="mt-3 inline-block"
             >
-              Visit company website →
+              Visitar site da empresa →
             </Link>
           </div>
         </div>
@@ -266,7 +250,7 @@ const breadcrumbs = {
           rel="noopener noreferrer"
           size="lg"
         >
-          Apply for {job.jobTitle} →
+          Candidatar-se a {job.jobTitle} →
         </Button>
       </div>
     </article>
@@ -275,7 +259,7 @@ const breadcrumbs = {
     {
       relatedJobs.length > 0 && (
         <section class="mx-auto max-w-4xl">
-          <h2 class="mb-6 text-2xl font-bold text-neutral-900">More {job.category} opportunities</h2>
+          <h2 class="mb-6 text-2xl font-bold text-neutral-900">Mais oportunidades de {job.category}</h2>
           <div class="space-y-6">
             {relatedJobs.map((relatedJob) => (
               <JobCard
@@ -286,12 +270,8 @@ const breadcrumbs = {
             ))}
           </div>
           <div class="mt-8 text-center">
-            <Button
-              href={`/category/${slugify(job.category)}`}
-              variant="outline"
-              size="md"
-            >
-              View all {job.category} jobs →
+            <Button href={`/category/${slugify(job.category)}`} variant="outline" size="md">
+              Ver todas as vagas de {job.category} →
             </Button>
           </div>
         </section>

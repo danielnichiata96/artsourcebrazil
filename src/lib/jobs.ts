@@ -1,12 +1,27 @@
+import type { JobLocation } from './location';
+
+export type ContractType = 'CLT' | 'PJ' | 'B2B' | 'Freelance' | 'Estágio';
+
+export type SalaryRange = {
+  min?: number | null;
+  max?: number | null;
+  currency: string; // ISO 4217 (BRL, USD, EUR)
+};
+
 export type Job = {
   id: string;
   companyName: string;
   companyLogo: string;
   jobTitle: string;
+  description: string;
+  shortDescription?: string | null; // For cards/previews
   applyLink: string;
   postedDate: string; // ISO 8601 or invalid
   category: string;
   tags: string[];
+  location: JobLocation;
+  contractType?: ContractType | null;
+  salary?: SalaryRange | null;
 };
 
 /**

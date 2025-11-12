@@ -7,16 +7,24 @@ import Card from './ui/Card.astro';
 import Link from './ui/Link.astro';
 import type { Locale, Messages } from '../lib/i18n';
 import { defaultLocale, getMessages } from '../lib/i18n';
+import { getLocationLabel, type JobLocation } from '../lib/location';
+import { formatSalaryRange, getContractTypeLabel } from '../lib/salary';
+import type { ContractType, SalaryRange } from '../lib/jobs';
 
 export interface Job {
   id: string;
   companyName: string;
   companyLogo: string;
   jobTitle: string;
+  description: string;
+  shortDescription?: string | null;
   applyLink: string;
   postedDate: string;
   category: string;
   tags: string[];
+  location: JobLocation;
+  contractType?: ContractType | null;
+  salary?: SalaryRange | null;
 }
 
 // Accept arbitrary attributes to allow data-* forwarding from parent (for filters)
@@ -25,6 +33,10 @@ const locale = propsLocale ?? defaultLocale;
 const messages = getMessages(locale);
 const jobMessages = messages.job;
 const dateLocale = locale === 'en' ? 'en-US' : 'pt-BR';
+const locationLabel = getLocationLabel(job.location.scope, locale);
+const locationNote = (job.location.note || '').trim();
+const salaryLabel = formatSalaryRange(job.salary, locale);
+const contractLabel = getContractTypeLabel(job.contractType, locale);
 
 const withLocale = (href: string) => {
   if (!href || href.startsWith('#') || locale === defaultLocale) return href;
@@ -103,12 +115,20 @@ const isNew = (() => {
 
         <!-- Metadados com estilo editorial -->
         <div class="flex flex-wrap items-center gap-3 text-sm">
-          <span class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-900">
+          <span
+            class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-900"
+            title={locationNote || undefined}
+          >
             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18" />
             </svg>
-            {jobMessages.remote}
+            {locationLabel}
           </span>
+          {locationNote && (
+            <span class="flex items-center gap-1 text-xs font-semibold text-neutral-600">
+              {locationNote}
+            </span>
+          )}
           <span class="flex items-center gap-1 font-bold text-neutral-800">
             <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
@@ -116,6 +136,22 @@ const isNew = (() => {
             {formattedDate}
           </span>
         </div>
+
+        <!-- Contract & Salary -->
+        {(contractLabel || salaryLabel) && (
+          <div class="flex flex-wrap items-center gap-3 text-sm">
+            {contractLabel && (
+              <span class="inline-flex items-center gap-1 rounded-md bg-primary-light px-2 py-1 font-semibold text-primary">
+                {contractLabel}
+              </span>
+            )}
+            {salaryLabel && (
+              <span class="flex items-center gap-1 font-bold text-neutral-800">
+                💰 {salaryLabel}
+              </span>
+            )}
+          </div>
+        )}
 
         <!-- Tags com estilo editorial -->
         <div class="flex flex-wrap gap-2">

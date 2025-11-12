@@ -4,6 +4,7 @@ import { Resvg } from '@resvg/resvg-js';
 import { readFileSync } from 'node:fs';
 import path from 'node:path';
 import type { Job } from './jobs';
+import { getLocationLabel } from './location';
 
 const site = 'https://artsourcebrazil.com'; // Use production URL
 
@@ -17,6 +18,7 @@ const interBold = readFileSync(
 
 // Main function to generate OG image
 export async function generateOgImageForJob(job: Job): Promise<Buffer> {
+  const locationLabel = getLocationLabel(job.location.scope);
   const markup = html`
     <div
       style="display: flex; flex-direction: column; width: 1200px; height: 630px; background-color: #f3f4f6; padding: 80px; font-family: 'Inter', sans-serif;"
@@ -59,7 +61,7 @@ export async function generateOgImageForJob(job: Job): Promise<Buffer> {
             )
             .join('')}
         </div>
-        <p style="font-size: 28px; color: #4b5563;">Remote (Brazil)</p>
+        <p style="font-size: 28px; color: #4b5563;">${locationLabel}</p>
       </div>
     </div>
   `;

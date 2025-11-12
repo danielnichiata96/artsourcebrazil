@@ -9,13 +9,41 @@ const __dirname = dirname(__filename);
 const root = resolve(__dirname, '..');
 const jobsPath = resolve(root, 'src', 'data', 'jobs.json');
 
-const Categories = z.enum(['Game Dev', '3D & Animation', 'Design (UI/UX)']);
+const Categories = z.enum([
+  'Game Dev',
+  '3D & Animation',
+  'Design (UI/UX)',
+  'VFX',
+  'Arte 3D',
+  'UX/UI',
+  'QA',
+]);
+
+const LocationScope = z.enum([
+  'remote-brazil',
+  'remote-latam',
+  'remote-worldwide',
+  'hybrid',
+  'onsite',
+]);
+
+const ContractType = z.enum(['CLT', 'PJ', 'B2B', 'Freelance', 'Estágio']);
 
 const jobSchema = z.object({
   id: z.string().min(1, 'id is required'),
   companyName: z.string().min(1, 'companyName is required'),
   companyLogo: z.string().min(1, 'companyLogo is required'),
   jobTitle: z.string().min(1, 'jobTitle is required'),
+  description: z
+    .string()
+    .trim()
+    .min(20, 'description must be at least 20 characters long'),
+  shortDescription: z
+    .string()
+    .trim()
+    .max(300, 'shortDescription must have at most 300 characters')
+    .optional()
+    .or(z.literal('')),
   applyLink: z
     .string()
     .url('applyLink must be a valid URL (http/https)')
@@ -26,6 +54,48 @@ const jobSchema = z.object({
   }),
   category: Categories,
   tags: z.array(z.string().min(1)).min(1, 'tags must have at least one tag'),
+  location: z
+    .object({
+      scope: LocationScope,
+      note: z
+        .string()
+        .trim()
+        .max(160, 'location.note must have at most 160 characters')
+        .optional()
+        .or(z.literal('')),
+      countryCode: z
+        .string()
+        .trim()
+        .length(2, 'location.countryCode must be a 2-letter ISO code')
+        .optional()
+        .or(z.literal('')),
+    })
+    .transform((value) => ({
+      ...value,
+      note: value.note ? value.note.trim() : undefined,
+      countryCode: value.countryCode ? value.countryCode.trim().toUpperCase() : undefined,
+    })),
+  contractType: ContractType.optional().or(z.literal('')),
+  salary: z
+    .object({
+      min: z.number().positive().optional().or(z.literal('')),
+      max: z.number().positive().optional().or(z.literal('')),
+      currency: z
+        .string()
+        .trim()
+        .length(3, 'salary.currency must be a 3-letter ISO code (e.g., BRL, USD)')
+        .toUpperCase(),
+    })
+    .optional()
+    .or(z.literal(''))
+    .transform((value) => {
+      if (!value || value === '') return undefined;
+      return {
+        min: value.min || undefined,
+        max: value.max || undefined,
+        currency: value.currency,
+      };
+    }),
 });
 
 const jobsSchema = z.array(jobSchema).nonempty('jobs.json must contain at least one job');

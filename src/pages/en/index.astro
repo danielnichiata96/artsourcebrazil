@@ -7,6 +7,7 @@ import Badge from '../../components/ui/Badge.astro';
 import Button from '../../components/ui/Button.astro';
 import '../../styles/global.css';
 import { sortJobsByDateDesc, collectFacets, slugify } from '../../lib/jobs';
+import { getApplicantLocationRequirement, getJobLocationCountryCode, getJobLocationType, getLocationLabel } from '../../lib/location';
 import type { Locale, Messages } from '../../lib/i18n';
 import { getMessages, defaultLocale } from '../../lib/i18n';
 
@@ -45,31 +46,43 @@ const seo = {
 };
 
 // JSON-LD: one JobPosting per job
-const jobPostings = sortedJobs.map((j) => ({
-  '@context': 'https://schema.org',
-  '@type': 'JobPosting',
-  title: j.jobTitle,
-  datePosted: j.postedDate,
-  employmentType: 'CONTRACT',
-  jobLocationType: 'TELECOMMUTE',
-  hiringOrganization: {
-    '@type': 'Organization',
-    name: j.companyName,
-    logo: new URL(j.companyLogo, site).href,
-  },
-  description: `${j.category} — ${j.tags.join(', ')}`,
-  directApply: true,
-  applicantLocationRequirements: {
-    '@type': 'Country',
-    name: 'Brazil',
-  },
-  identifier: {
-    '@type': 'PropertyValue',
-    name: j.companyName,
-    value: j.id,
-  },
-  url: j.applyLink,
-}));
+const jobPostings = sortedJobs.map((j) => {
+  const locationRequirement = getApplicantLocationRequirement(j.location);
+  const locationType = getJobLocationType(j.location.scope);
+  const locationCountryCode = getJobLocationCountryCode(j.location);
+  const locality = getLocationLabel(j.location.scope, locale).replace(/\s*•\s*/g, ' - ');
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'JobPosting',
+    title: j.jobTitle,
+    datePosted: j.postedDate,
+    employmentType: 'CONTRACT',
+    jobLocationType: locationType,
+    hiringOrganization: {
+      '@type': 'Organization',
+      name: j.companyName,
+      logo: new URL(j.companyLogo, site).href,
+    },
+    description: `${j.category} — ${j.tags.join(', ')}`,
+    jobLocation: {
+      '@type': 'Place',
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: locationCountryCode ?? undefined,
+        addressLocality: locality,
+      },
+    },
+    directApply: true,
+    applicantLocationRequirements: locationRequirement,
+    identifier: {
+      '@type': 'PropertyValue',
+      name: j.companyName,
+      value: j.id,
+    },
+    url: j.applyLink,
+  };
+});
 ---
 
 <Layout seo={seo} locale={locale}>
