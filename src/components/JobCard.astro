@@ -153,15 +153,20 @@ const isNew = (() => {
           </div>
         )}
 
-        <!-- Tags com estilo editorial -->
+        <!-- Tags com estilo editorial (limitadas para evitar height excessivo) -->
         <div class="flex flex-wrap gap-2">
           {
-            job.tags.map((tag) => (
+            job.tags.slice(0, 6).map((tag) => (
               <Badge variant="default" size="sm" class="bg-neutral-100 border-2 border-neutral-900 text-neutral-900 font-bold">
                 {tag}
               </Badge>
             ))
           }
+          {job.tags.length > 6 && (
+            <Badge variant="default" size="sm" class="bg-neutral-200 border-2 border-neutral-400 text-neutral-600 font-bold">
+              +{job.tags.length - 6}
+            </Badge>
+          )}
         </div>
       </div>
     </div>
