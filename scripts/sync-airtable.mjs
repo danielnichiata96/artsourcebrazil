@@ -38,20 +38,41 @@ const locationScopeMap = {
   'Remoto (LATAM)': 'remote-latam',
 };
 
-function getCompanyLogo(record) {
-  // IMPORTANT: Airtable attachment URLs are temporary (expire after ~2 hours)
-  // Use a permanent URL field instead, or fallback to placeholder
+/**
+ * Get company logo with smart fallback strategy:
+ * 1. Try local files in /public/images/companies/
+ * 2. Try Clearbit Logo API (free, auto-fetches from company domain)
+ * 3. Use placeholder as final fallback
+ */
+function getCompanyLogo(record, companyName) {
+  // Map company names to local logo filenames
+  const localLogos = {
+    'Automattic': 'automattic.png',
+    'Beffio': 'beffio.png',
+    'Circle.so': 'circleso.png',
+    'Fortis Games': 'fortisgames.png',
+    'Wildlife Studios': 'wildlifestudios.svg',
+  };
   
-  // Try to get a permanent logo URL from a text field (if exists)
-  const permanentUrl = record.get('Logo_URL');
-  if (permanentUrl && typeof permanentUrl === 'string') {
-    if (permanentUrl.startsWith('http')) return permanentUrl;
-    if (permanentUrl.startsWith('/')) return permanentUrl;
-    return `/images/${permanentUrl}`;
+  // Check if we have a local logo
+  if (localLogos[companyName]) {
+    return `/images/companies/${localLogos[companyName]}`;
   }
   
-  // Fallback: Use placeholder for now
-  // TODO: Add "Logo_URL" text field in Companies table with permanent URLs
+  // Try to extract domain for Clearbit fallback
+  // Common patterns: "Company Name" → "companyname.com"
+  const domain = companyName
+    .toLowerCase()
+    .replace(/\s+/g, '')
+    .replace(/[^a-z0-9]/g, '');
+  
+  // Use Clearbit Logo API as fallback (free, 100k requests/month)
+  // Returns transparent PNG, auto-sized
+  if (domain) {
+    return `https://logo.clearbit.com/${domain}.com`;
+  }
+  
+  // Final fallback
   return '/images/company-placeholder.svg';
 }
 
@@ -144,10 +165,12 @@ async function syncJobs() {
           ? description.slice(0, 297) + '...' 
           : description;
         
+        const companyName = getCompanyName(record);
+        
         const job = {
           id: id,
-          companyName: getCompanyName(record),
-          companyLogo: getCompanyLogo(record),
+          companyName: companyName,
+          companyLogo: getCompanyLogo(record, companyName),
           jobTitle: record.get('Job Title'),
           description: description,
           shortDescription: shortDesc,

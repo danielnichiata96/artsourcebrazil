@@ -2,7 +2,7 @@
   {
     "id": "FG-002",
     "companyName": "Fortis Games",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/fortisgames.png",
     "jobTitle": "QA Engineer II (Unity/SDKs)",
     "description": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScript, C#, Python), experiência prática com bibliotecas de automação (como Playwright, Cypress ou WebdriverIO) e familiaridade com AWS, CI/CD e SQL.",
     "shortDescription": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScrip...",
@@ -28,7 +28,7 @@
   {
     "id": "WL-001",
     "companyName": "Wildlife Studios",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
     "jobTitle": "Senior 3D Game Artist",
     "description": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os workflows de IA Generativa (Gen-AI) para acelerar a iteração. É uma vaga altamente colaborativa e de ritmo rápido, que exige experiência profunda em Unity e paixão por criar jogos.",
     "shortDescription": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os w...",
@@ -48,7 +48,7 @@
   {
     "id": "BFF-001",
     "companyName": "Beffio",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/beffio.png",
     "jobTitle": "Lead Real-Time VFX Artist – Unity3D",
     "description": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (explosões, magia, FX ambiental) otimizados e de alta qualidade para títulos AA/AAA. Requer 6+ anos de experiência e um portfólio robusto.",
     "shortDescription": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (expl...",
@@ -71,7 +71,7 @@
   {
     "id": "AU-001",
     "companyName": "Automattic",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/automattic.png",
     "jobTitle": "Brand/Creative Designer",
     "description": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de férias ilimitadas e faixa salarial global de $95.000-$200.000 USD (pago na moeda local). Exige portfólio robusto e ampla experiência em branding e web design.",
     "shortDescription": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de fé...",
@@ -91,7 +91,7 @@
   {
     "id": "AU-002",
     "companyName": "Automattic",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/automattic.png",
     "jobTitle": "Senior Product Designer",
     "description": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pesquisa e definição até a prototipagem (em Figma) e colaboração com engenheiros. É uma vaga 100% remota, assíncrona, com férias ilimitadas e salário global de $95.000-$200.000 USD (pagos na moeda local).",
     "shortDescription": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pes...",
@@ -112,7 +112,7 @@
   {
     "id": "FG-001",
     "companyName": "Fortis Games",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/fortisgames.png",
     "jobTitle": "Staff Game Engineer",
     "description": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C#, POO (princípios SOLID) e otimização de performance. Você será responsável por decisões de arquitetura, escrita de código testável (testes unitários/integrados) e mentoria, exigindo experiência comprovada no lançamento de jogos mobile.",
     "shortDescription": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C...",
@@ -134,7 +134,7 @@
   {
     "id": "CSO-001",
     "companyName": "Circle.so",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/circleso.png",
     "jobTitle": "Senior Growth Designer",
     "description": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web design focado em conversão e ser especialista em Figma. A vaga é 100% remota, assíncrona, com salário de $100k-$120k USD, 35 dias de folga (PTO) e retreats globais da empresa duas vezes ao ano.",
     "shortDescription": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web desig...",
@@ -157,7 +157,7 @@
   {
     "id": "BFF-002",
     "companyName": "Beffio",
-    "companyLogo": "/images/company-placeholder.svg",
+    "companyLogo": "/images/companies/beffio.png",
     "jobTitle": "Lead 3D Artist",
     "description": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil, capaz de criar assets (cenários, props, iluminação) de alta qualidade tanto no estilo realista quanto estilizado.",
     "shortDescription": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil,...",
