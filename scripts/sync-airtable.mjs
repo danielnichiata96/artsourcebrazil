@@ -39,23 +39,20 @@ const locationScopeMap = {
 };
 
 function getCompanyLogo(record) {
-  // Company Logo is a lookup field (array)
-  const logos = record.get('Company Logo (from Companies)');
-  if (!logos || logos.length === 0) return '/images/company-placeholder.svg';
+  // IMPORTANT: Airtable attachment URLs are temporary (expire after ~2 hours)
+  // Use a permanent URL field instead, or fallback to placeholder
   
-  const url = logos[0]; // Get first logo
-  
-  // Handle different types (string, object with url, etc)
-  if (typeof url === 'object' && url.url) {
-    return url.url;
+  // Try to get a permanent logo URL from a text field (if exists)
+  const permanentUrl = record.get('Logo_URL');
+  if (permanentUrl && typeof permanentUrl === 'string') {
+    if (permanentUrl.startsWith('http')) return permanentUrl;
+    if (permanentUrl.startsWith('/')) return permanentUrl;
+    return `/images/${permanentUrl}`;
   }
   
-  if (typeof url !== 'string') {
-    return '/images/company-placeholder.svg';
-  }
-  
-  if (url.startsWith('http')) return url;
-  return url.startsWith('/') ? url : `/images/${url}`;
+  // Fallback: Use placeholder for now
+  // TODO: Add "Logo_URL" text field in Companies table with permanent URLs
+  return '/images/company-placeholder.svg';
 }
 
 function getCompanyName(record) {
