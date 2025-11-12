@@ -1,4 +1,4 @@
-# robots.txt for ArtSource Brazil
+# robots.txt for Art Source Brazil
 User-agent: *
 Allow: /
 

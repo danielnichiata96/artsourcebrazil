@@ -1,12 +1,12 @@
 ---
-title: 'How to Post a Successful Job Listing on ArtSource Brazil'
+title: 'How to Post a Successful Job Listing on Art Source Brazil'
 description: 'A step-by-step guide for companies to attract the best creative talent in Brazil by crafting the perfect job description.'
 publishDate: 2025-11-06
 heroImage: '/images/blog/post-guide.jpg'
 isDraft: false
 ---
 
-Attracting top-tier creative talent requires more than just listing a job title. It's about telling a story and showing candidates why your company is the best place for their skills. At ArtSource Brazil, we've seen what works. Here’s our guide to crafting a job post that stands out.
+Attracting top-tier creative talent requires more than just listing a job title. It's about telling a story and showing candidates why your company is the best place for their skills. At Art Source Brazil, we've seen what works. Here’s our guide to crafting a job post that stands out.
 
 ## 1. Start with a Clear and Concise Job Title
 

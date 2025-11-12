@@ -29,11 +29,11 @@ export async function generateOgImageForJob(job: Job): Promise<Buffer> {
           src="${new URL('/images/logo-og.png', site)}"
           width="80"
           height="80"
-          alt="ArtSource Brazil Logo"
+          alt="Art Source Brazil Logo"
           style="border-radius: 12px;"
         />
         <p style="margin-left: 20px; font-size: 36px; font-weight: 600; color: #111827;">
-          ArtSource Brazil
+          Art Source Brazil
         </p>
       </div>
 

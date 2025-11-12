@@ -8,7 +8,7 @@ const translations = {
   'pt-BR': {
     seo: {
       home: {
-        title: 'ArtSource Brazil — Vagas remotas criativas',
+        title: 'Art Source Brazil — Vagas remotas criativas',
         description:
           'Curadoria semanal de vagas remotas em Game Dev, 3D & Animation e UI/UX para talentos brasileiros. Trabalhe para estúdios internacionais sem sair do país.',
       },
@@ -28,7 +28,7 @@ const translations = {
     },
     hero: {
       badge: 'Curadoria humana para talentos criativos do Brasil',
-      title: 'ArtSource Brazil',
+      title: 'Art Source Brazil',
       description:
         'Selecionamos manualmente vagas remotas reais em Game Dev, 3D & Animation e UI/UX. Conectamos talentos brasileiros a estúdios que valorizam criatividade e cultura.',
       primaryCta: 'Ver vagas selecionadas',
@@ -113,7 +113,7 @@ const translations = {
   en: {
     seo: {
       home: {
-        title: 'ArtSource Brazil — Remote Creative Jobs',
+        title: 'Art Source Brazil — Remote Creative Jobs',
         description:
           'Weekly hand-picked remote roles in Game Dev, 3D & Animation, and UI/UX tailored for Brazilian creative talent. Work with global studios from anywhere in Brazil.',
       },
@@ -133,7 +133,7 @@ const translations = {
     },
     hero: {
       badge: 'Human-curated for Brazilian creative talent',
-      title: 'ArtSource Brazil',
+      title: 'Art Source Brazil',
       description:
         'Remote roles in Game Dev, 3D & Animation, and UI/UX for Brazilian creative talent.',
       primaryCta: 'Explore handpicked jobs',

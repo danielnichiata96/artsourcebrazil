@@ -21,7 +21,7 @@ export const GET: APIRoute = async () => {
   const rss = `<?xml version="1.0" encoding="UTF-8"?>
   <rss version="2.0">
     <channel>
-      <title>ArtSource Brazil — Jobs</title>
+      <title>Art Source Brazil — Jobs</title>
       <link>${site}</link>
       <description>Curated remote creative jobs for Brazil-based talent</description>
       ${items}

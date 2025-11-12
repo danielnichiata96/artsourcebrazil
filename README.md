@@ -1,4 +1,4 @@
-# ArtSource Brazil
+# Art Source Brazil
 
 Niche job board focused on remote roles for Brazil-based creative talent.
 Built with Astro + Tailwind, static-first, zero-JS by default (small islands only where needed).

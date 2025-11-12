@@ -76,7 +76,7 @@ test.describe('Blog Pages', () => {
 
     const schema = JSON.parse(jsonLd!);
     expect(schema['@type']).toBe('BlogPosting');
-    expect(schema.headline).toBe('How to Post a Successful Job Listing on ArtSource Brazil');
+    expect(schema.headline).toBe('How to Post a Successful Job Listing on Art Source Brazil');
     expect(schema.description).toBeTruthy();
     expect(schema.datePublished).toBeTruthy();
     expect(schema.author).toBeTruthy();
@@ -138,6 +138,6 @@ test.describe('Blog Pages', () => {
     const content = await response?.text();
     expect(content).toContain('<?xml');
     expect(content).toContain('<rss');
-    expect(content).toContain('ArtSource Brazil');
+    expect(content).toContain('Art Source Brazil');
   });
 });

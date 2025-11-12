@@ -16,7 +16,7 @@ const post = Astro.props;
 const { Content } = await post.render();
 
 const seo = {
-  title: `${post.data.title} | ArtSource Brazil Blog`,
+  title: `${post.data.title} | Art Source Brazil Blog`,
   description: post.data.description,
   image: post.data.heroImage,
 };
@@ -44,12 +44,12 @@ const logoUrl = new URL('/images/og-default.svg', site).href;
         },
         author: {
           '@type': 'Organization',
-          name: 'ArtSource Brazil',
+          name: 'Art Source Brazil',
           url: new URL('/', site).href,
         },
         publisher: {
           '@type': 'Organization',
-          name: 'ArtSource Brazil',
+          name: 'Art Source Brazil',
           url: new URL('/', site).href,
           logo: {
             '@type': 'ImageObject',

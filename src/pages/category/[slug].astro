@@ -27,7 +27,7 @@ const { category } = Astro.props as { category: string };
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
 const seo = {
-  title: `${category} Jobs — ArtSource Brazil`,
+  title: `${category} Jobs — Art Source Brazil`,
   description: `Browse curated remote ${category} jobs for Brazil-based creative talent.`,
 };
 

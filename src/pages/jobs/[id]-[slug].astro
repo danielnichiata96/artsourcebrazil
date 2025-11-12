@@ -60,7 +60,7 @@ const metaDescription =
   plainDescription.length > 160 ? `${plainDescription.slice(0, 157)}…` : plainDescription;
 
 const seo = {
-  title: `${job.jobTitle} na ${job.companyName} | ArtSource Brazil`,
+  title: `${job.jobTitle} na ${job.companyName} | Art Source Brazil`,
   description: metaDescription || `Candidatar-se para ${job.jobTitle} na ${job.companyName}.`,
   image: `/og/${job.id}-${slugify(job.jobTitle)}.png`,
 };

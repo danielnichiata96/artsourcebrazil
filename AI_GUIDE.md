@@ -1,8 +1,8 @@
-# AI Project Guide: [ArtSource Brazil]
+# AI Project Guide: [Art Source Brazil]
 
 ## 1. 📜 Project Overview
 
-**Project Name:** `[ArtSource Brazil]`
+**Project Name:** `[Art Source Brazil]`
 
 **Concept:** Um job board de nicho, 100% em **Inglês**, focado em vagas remotas de empresas estrangeiras (Outsourcings, Estúdios) que procuram contratar talentos criativos do Brasil.
 

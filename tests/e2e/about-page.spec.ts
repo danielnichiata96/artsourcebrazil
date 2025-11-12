@@ -8,7 +8,7 @@ test.describe('About Page', () => {
     await expect(page).toHaveTitle(/About/);
 
     // Check main heading
-    const heading = page.getByRole('heading', { level: 1, name: 'About ArtSource Brazil' });
+    const heading = page.getByRole('heading', { level: 1, name: 'About Art Source Brazil' });
     await expect(heading).toBeVisible();
 
     // Check that key sections exist

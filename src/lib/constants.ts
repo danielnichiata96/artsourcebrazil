@@ -29,11 +29,11 @@ export const SITE_CONFIG = {
   SITE_URL: 'https://artsourcebrazil.vercel.app',
   
   /** Site name */
-  SITE_NAME: 'ArtSource Brazil',
+  SITE_NAME: 'Art Source Brazil',
   
   /** Default metadata */
   META: {
-    TITLE: 'ArtSource Brazil — Job Board',
+    TITLE: 'Art Source Brazil — Job Board',
     DESCRIPTION: 'Find creative jobs in Brazil',
   },
 } as const;
