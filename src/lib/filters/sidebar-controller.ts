@@ -388,21 +388,43 @@ export class FiltersSidebarController {
     const { searchInput } = this.elements;
     const { level, tools, contract, location } = this.elements.checkboxGroups;
 
+    // Cancel any pending debounce timers
+    if (this.searchDebounceTimer !== null) {
+      clearTimeout(this.searchDebounceTimer);
+      this.searchDebounceTimer = null;
+    }
+    if (this.autoApplyTimer !== null) {
+      clearTimeout(this.autoApplyTimer);
+      this.autoApplyTimer = null;
+    }
+
     // Clear search
     if (searchInput) searchInput.value = '';
 
-    // Clear checkboxes
+    // Clear checkboxes and trigger change events to update dropdown counts
     level.forEach((cb: HTMLInputElement) => {
-      if (cb) cb.checked = false;
+      if (cb) {
+        cb.checked = false;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
     tools.forEach((cb: HTMLInputElement) => {
-      if (cb) cb.checked = false;
+      if (cb) {
+        cb.checked = false;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
     contract.forEach((cb: HTMLInputElement) => {
-      if (cb) cb.checked = false;
+      if (cb) {
+        cb.checked = false;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
     location.forEach((cb: HTMLInputElement) => {
-      if (cb) cb.checked = false;
+      if (cb) {
+        cb.checked = false;
+        cb.dispatchEvent(new Event('change', { bubbles: true }));
+      }
     });
 
     // Reset category

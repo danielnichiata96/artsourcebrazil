@@ -116,8 +116,13 @@ export class FilterOrchestratorController {
   private includesAll(tagString: string, arr: string[]): boolean {
     if (!arr || arr.length === 0) return true;
     const normalizedTags = (tagString || '').toLowerCase();
-    const set = new Set(normalizedTags.split(/\s+/).filter(Boolean));
-    return arr.every((v) => set.has(String(v).toLowerCase()));
+    
+    // Check if all filters match (partial match to support "Unity" matching "Unity3D")
+    return arr.every((filterValue) => {
+      const filterLower = String(filterValue).toLowerCase();
+      // Use includes for partial matching: "unity" will match "unity3d"
+      return normalizedTags.includes(filterLower);
+    });
   }
 
   private applyFilters(): void {

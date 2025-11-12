@@ -211,43 +211,46 @@ const locationOptions = [
 <script>
   import { FiltersSidebarController } from '../lib/filters/sidebar-controller';
 
-  // Gather all required DOM elements
-  const sidebar = document.getElementById('filters-sidebar') as HTMLElement;
-  const searchInput = document.getElementById('job-search-sidebar') as HTMLInputElement;
-  const categoryButtons = Array.from(
-    document.querySelectorAll<HTMLButtonElement>('.category-btn-sidebar')
-  );
-  const applyBtn = document.getElementById('apply-filters-sidebar') as HTMLButtonElement;
-  const clearBtn = document.getElementById('clear-filters-sidebar') as HTMLButtonElement;
-  const summaryClearBtn = document.querySelector('[data-sidebar-clear]') as HTMLButtonElement | null;
+  // Wait for DOM to be ready (including MultiSelectDropdown initialization)
+  document.addEventListener('DOMContentLoaded', () => {
+    // Gather all required DOM elements
+    const sidebar = document.getElementById('filters-sidebar') as HTMLElement;
+    const searchInput = document.getElementById('job-search-sidebar') as HTMLInputElement;
+    const categoryButtons = Array.from(
+      document.querySelectorAll<HTMLButtonElement>('.category-btn-sidebar')
+    );
+    const applyBtn = document.getElementById('apply-filters-sidebar') as HTMLButtonElement;
+    const clearBtn = document.getElementById('clear-filters-sidebar') as HTMLButtonElement;
+    const summaryClearBtn = document.querySelector('[data-sidebar-clear]') as HTMLButtonElement | null;
 
-  // Checkbox groups
-  const levelCheckboxes = Array.from(
-    document.querySelectorAll<HTMLInputElement>('input[name="level"]')
-  );
-  const toolsCheckboxes = Array.from(
-    document.querySelectorAll<HTMLInputElement>('input[name="tools"]')
-  );
-  const locationCheckboxes = Array.from(
-    document.querySelectorAll<HTMLInputElement>('input[name="location"]')
-  );
+    // Checkbox groups
+    const levelCheckboxes = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[name="level"]')
+    );
+    const toolsCheckboxes = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[name="tools"]')
+    );
+    const locationCheckboxes = Array.from(
+      document.querySelectorAll<HTMLInputElement>('input[name="location"]')
+    );
 
-  // Initialize controller with all elements
-  new FiltersSidebarController({
-    sidebar,
-    overlay: null,
-    toggleBtn: null,
-    closeBtn: null,
-    searchInput,
-    categoryButtons,
-    applyBtn,
-    clearBtn,
-    checkboxGroups: {
-      level: levelCheckboxes,
-      tools: toolsCheckboxes,
-      location: locationCheckboxes,
-    },
+    // Initialize controller with all elements
+    new FiltersSidebarController({
+      sidebar,
+      overlay: null,
+      toggleBtn: null,
+      closeBtn: null,
+      searchInput,
+      categoryButtons,
+      applyBtn,
+      clearBtn,
+      checkboxGroups: {
+        level: levelCheckboxes,
+        tools: toolsCheckboxes,
+        location: locationCheckboxes,
+      },
+    });
+
+    summaryClearBtn?.addEventListener('click', () => clearBtn?.click());
   });
-
-  summaryClearBtn?.addEventListener('click', () => clearBtn?.click());
 </script>

@@ -50,8 +50,8 @@ test.describe('Homepage Job Filters', () => {
     // Wait for jobs
     await expect(visibleJobContainers.first()).toBeVisible({ timeout: 5000 });
 
-    // Find search input
-    const searchInput = page.locator('input[type="search"]');
+    // Find search input - use the hero search specifically
+    const searchInput = page.locator('#hero-search');
 
     if (await searchInput.isVisible()) {
       // Type a search term (use a common word like "Senior" or "Designer")

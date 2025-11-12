@@ -4,11 +4,11 @@
 - generic [active] [ref=e1]:
   - banner [ref=e2]:
     - navigation [ref=e3]:
-      - link "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop ArtSource Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
         - /url: /
-        - img "Mascote ArtSource Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
         - generic [ref=e8]:
-          - generic [ref=e9]: ArtSource Brazil
+          - generic [ref=e9]: Art Source Brazil
           - generic [ref=e10]: Remote Creative Jobs
       - generic [ref=e11]:
         - link "Empresas" [ref=e12] [cursor=pointer]:
@@ -20,7 +20,7 @@
         - link "Postar vaga" [ref=e15] [cursor=pointer]:
           - /url: /post-a-job
         - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
-          - /url: /en/privacy/
+          - /url: /en/privacy
           - text: EN
   - main [ref=e17]:
     - main [ref=e18]:
@@ -32,7 +32,7 @@
           - strong [ref=e23]: "Last Updated:"
           - text: November 6, 2025
         - paragraph [ref=e24]:
-          - text: ArtSource Brazil ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website
+          - text: Art Source Brazil ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website
           - link "https://artsourcebrazil.vercel.app/" [ref=e25] [cursor=pointer]:
             - /url: https://artsourcebrazil.vercel.app/
           - text: (the "Site").
@@ -139,7 +139,7 @@
           - link "artsourcebrazil@gmail.com" [ref=e106] [cursor=pointer]:
             - /url: mailto:artsourcebrazil@gmail.com
           - strong [ref=e107]: "Website:"
-          - link "ArtSource Brazil" [ref=e108] [cursor=pointer]:
+          - link "Art Source Brazil" [ref=e108] [cursor=pointer]:
             - /url: /
         - separator [ref=e109]
         - paragraph [ref=e110]:
@@ -179,5 +179,18 @@
           - /url: /jobs.json
         - link "Blog RSS" [ref=e136] [cursor=pointer]:
           - /url: /blog.xml
-      - paragraph [ref=e137]: © 2025 ArtSource Brazil. Todos os direitos reservados.
+      - paragraph [ref=e137]: © 2025 Art Source Brazil. Todos os direitos reservados.
+  - generic [ref=e140]:
+    - button "Menu" [ref=e141]:
+      - img [ref=e143]
+      - generic: Menu
+    - button "Inspect" [ref=e147]:
+      - img [ref=e149]
+      - generic: Inspect
+    - button "Audit" [ref=e151]:
+      - img [ref=e153]
+      - generic: Audit
+    - button "Settings" [ref=e156]:
+      - img [ref=e158]
+      - generic: Settings
 ```

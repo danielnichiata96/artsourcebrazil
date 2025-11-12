@@ -1,0 +1,192 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation [ref=e3]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]: Art Source Brazil
+          - generic [ref=e10]: Remote Creative Jobs
+      - generic [ref=e11]:
+        - link "Empresas" [ref=e12] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: /blog
+        - link "Sobre" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e19]:
+      - generic [ref=e22]:
+        - generic [ref=e23]: Curadoria humana para talentos criativos do Brasil
+        - img "Art Source Brazil" [ref=e24]
+        - heading "Art Source Brazil" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Vagas remotas em Game Dev, 3D & Animation e UI/UX para talentos brasileiros.
+        - generic [ref=e27]:
+          - generic [ref=e28]:
+            - img [ref=e29]
+            - searchbox "Buscar vagas remotas criativas..." [ref=e31]
+          - generic:
+            - img
+        - generic [ref=e32]:
+          - button "3D & Animation" [ref=e33] [cursor=pointer]
+          - button "Design (UI/UX)" [ref=e34] [cursor=pointer]
+          - button "Game Dev" [ref=e35] [cursor=pointer]
+          - button "QA" [ref=e36] [cursor=pointer]
+          - button "VFX" [ref=e37] [cursor=pointer]
+      - generic [ref=e39]:
+        - complementary [ref=e40]:
+          - complementary "Filtros" [ref=e41]:
+            - generic [ref=e42]:
+              - generic [ref=e43]:
+                - generic [ref=e44]: Buscar vagas
+                - generic [ref=e45]:
+                  - img [ref=e46]
+                  - searchbox "Buscar vagas" [ref=e48]: XYZ123NonExistent
+              - generic [ref=e49]:
+                - generic [ref=e50]:
+                  - generic [ref=e51]:
+                    - paragraph [ref=e52]: Resultados
+                    - generic [ref=e53]:
+                      - generic [ref=e54]: "0"
+                      - generic [ref=e55]: vagas
+                  - button "Limpar" [ref=e56] [cursor=pointer]:
+                    - generic [ref=e57]: Limpar
+                    - img [ref=e58]
+                - 'button "Remover filtro Busca: XYZ123NonExistent" [ref=e61] [cursor=pointer]':
+                  - generic [ref=e62]: "Busca: XYZ123NonExistent"
+                  - img [ref=e63]
+              - generic [ref=e65]:
+                - heading "Categoria" [level=3] [ref=e66]
+                - generic [ref=e67]:
+                  - button "Todas as vagas" [pressed] [ref=e68] [cursor=pointer]
+                  - button "3D & Animation" [ref=e69] [cursor=pointer]
+                  - button "Design (UI/UX)" [ref=e70] [cursor=pointer]
+                  - button "Game Dev" [ref=e71] [cursor=pointer]
+                  - button "QA" [ref=e72] [cursor=pointer]
+                  - button "VFX" [ref=e73] [cursor=pointer]
+              - generic [ref=e74]:
+                - generic [ref=e75]:
+                  - button "Ferramentas 1 selecionada" [expanded] [ref=e76] [cursor=pointer]:
+                    - generic [ref=e77]: Ferramentas
+                    - generic [ref=e78]:
+                      - generic [ref=e79]: 1 selecionada
+                      - img [ref=e80]
+                  - generic [ref=e83]:
+                    - generic [ref=e84] [cursor=pointer]:
+                      - checkbox "Unity" [ref=e85]
+                      - generic [ref=e86]: Unity
+                    - generic [ref=e87] [cursor=pointer]:
+                      - checkbox "Unreal Engine" [ref=e88]
+                      - generic [ref=e89]: Unreal Engine
+                    - generic [ref=e90] [cursor=pointer]:
+                      - checkbox "Figma" [ref=e91]
+                      - generic [ref=e92]: Figma
+                    - generic [ref=e93] [cursor=pointer]:
+                      - checkbox "C#" [ref=e94]
+                      - generic [ref=e95]: C#
+                    - generic [ref=e96] [cursor=pointer]:
+                      - checkbox "Blender" [ref=e97]
+                      - generic [ref=e98]: Blender
+                    - generic [ref=e99] [cursor=pointer]:
+                      - checkbox "Maya" [ref=e100]
+                      - generic [ref=e101]: Maya
+                    - generic [ref=e102] [cursor=pointer]:
+                      - checkbox "3ds Max" [ref=e103]
+                      - generic [ref=e104]: 3ds Max
+                    - generic [ref=e105] [cursor=pointer]:
+                      - checkbox "Houdini" [checked] [active] [ref=e106]
+                      - generic [ref=e107]: Houdini
+                    - generic [ref=e108] [cursor=pointer]:
+                      - checkbox "Substance Painter/Designer" [ref=e109]
+                      - generic [ref=e110]: Substance Painter/Designer
+                    - generic [ref=e111] [cursor=pointer]:
+                      - checkbox "Python" [ref=e112]
+                      - generic [ref=e113]: Python
+                    - generic [ref=e114] [cursor=pointer]:
+                      - checkbox "Javascript" [ref=e115]
+                      - generic [ref=e116]: Javascript
+                - button "Nível" [ref=e118] [cursor=pointer]:
+                  - generic [ref=e119]: Nível
+                  - img [ref=e121]
+                - button "Localização" [ref=e124] [cursor=pointer]:
+                  - generic [ref=e125]: Localização
+                  - img [ref=e127]
+            - generic [ref=e129]:
+              - button "Aplicar filtros" [disabled] [ref=e130]
+              - button "Limpar tudo" [ref=e131] [cursor=pointer]
+        - generic [ref=e132]:
+          - generic [ref=e133]:
+            - generic [ref=e134]:
+              - heading "Últimas oportunidades" [level=2] [ref=e136]
+              - generic [ref=e137]:
+                - generic [ref=e138]: "0"
+                - generic [ref=e139]: de 8 vagas
+            - navigation "Browse by category" [ref=e140]:
+              - link "3D & Animation jobs" [ref=e141] [cursor=pointer]:
+                - /url: /category/3d-and-animation
+              - link "Design (UI/UX) jobs" [ref=e142] [cursor=pointer]:
+                - /url: /category/design-ui-ux
+              - link "Game Dev jobs" [ref=e143] [cursor=pointer]:
+                - /url: /category/game-dev
+              - link "QA jobs" [ref=e144] [cursor=pointer]:
+                - /url: /category/qa
+              - link "VFX jobs" [ref=e145] [cursor=pointer]:
+                - /url: /category/vfx
+          - status [ref=e147]: Nenhuma vaga encontrada com os filtros selecionados. Ajuste sua busca ou limpe os filtros para ver todas as vagas disponíveis.
+    - generic [ref=e149]:
+      - heading "Fique por dentro" [level=3] [ref=e150]
+      - paragraph [ref=e151]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e152]:
+        - textbox "seu-email@exemplo.com" [ref=e153]
+        - button "Assinar" [ref=e154] [cursor=pointer]
+      - paragraph [ref=e155]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e156] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e157]:
+    - generic [ref=e159]:
+      - generic [ref=e160]:
+        - link "Sobre" [ref=e161] [cursor=pointer]:
+          - /url: /about
+        - link "Contato" [ref=e162] [cursor=pointer]:
+          - /url: /contact
+        - link "Política de Privacidade" [ref=e163] [cursor=pointer]:
+          - /url: /privacy
+        - link "Termos de Uso" [ref=e164] [cursor=pointer]:
+          - /url: /terms
+        - link "Blog" [ref=e165] [cursor=pointer]:
+          - /url: /blog
+      - link "artsourcebrazil@gmail.com" [ref=e167] [cursor=pointer]:
+        - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e168]:
+        - generic [ref=e169]: "Feeds:"
+        - link "Jobs RSS" [ref=e170] [cursor=pointer]:
+          - /url: /jobs.xml
+        - link "Jobs JSON" [ref=e171] [cursor=pointer]:
+          - /url: /jobs.json
+        - link "Blog RSS" [ref=e172] [cursor=pointer]:
+          - /url: /blog.xml
+      - paragraph [ref=e173]: © 2025 Art Source Brazil. Todos os direitos reservados.
+  - generic [ref=e176]:
+    - button "Menu" [ref=e177]:
+      - img [ref=e179]
+      - generic: Menu
+    - button "Inspect" [ref=e183]:
+      - img [ref=e185]
+      - generic: Inspect
+    - button "Audit" [ref=e187]:
+      - img [ref=e189]
+      - generic: Audit
+    - button "Settings" [ref=e192]:
+      - img [ref=e194]
+      - generic: Settings
+```
