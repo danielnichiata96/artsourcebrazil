@@ -119,7 +119,7 @@ const resultsMessages = messages.results;
     <div>
       <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.level}</h3>
       <div class="space-y-1.5">
-        {['Junior', 'Pleno', 'Senior', 'Lead'].map((level) => (
+        {['Senior', 'Lead'].map((level) => (
           <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
             <input
               type="checkbox"
@@ -137,7 +137,7 @@ const resultsMessages = messages.results;
     <div>
       <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.tools}</h3>
       <div class="space-y-1.5">
-        {['Figma', 'ZBrush', 'Unity', 'Maya', 'Adobe XD', 'Blender', 'Photoshop', 'Unreal Engine'].map((tool) => (
+        {['Unity', 'Unreal Engine', 'Figma', 'C#', 'Blender', 'Maya', '3ds Max', 'Houdini', 'Substance Painter/Designer', 'Python', 'Javascript'].map((tool) => (
           <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
             <input
               type="checkbox"
@@ -151,24 +151,6 @@ const resultsMessages = messages.results;
       </div>
     </div>
 
-    <!-- Contract Type Filter - Estilo Editorial -->
-    <div>
-      <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.contract}</h3>
-      <div class="space-y-1.5">
-        {['CLT', 'PJ', 'Freelance'].map((contract) => (
-          <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
-            <input
-              type="checkbox"
-              name="contract"
-              value={contract}
-              class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
-            />
-            <span class="text-sm font-semibold text-neutral-950">{contract}</span>
-          </label>
-        ))}
-      </div>
-    </div>
-
     <!-- Location Filter - Estilo Editorial -->
     <div>
       <h3 class="mb-2 font-serif text-base font-bold text-neutral-950">{filtersMessages.location}</h3>
@@ -177,19 +159,19 @@ const resultsMessages = messages.results;
           <input
             type="checkbox"
             name="location"
-            value="Brazil-Only"
+            value="remote-brazil"
             class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
           />
-          <span class="text-sm font-semibold text-neutral-950">Brazil-Only</span>
+          <span class="text-sm font-semibold text-neutral-950">Remoto • Brasil</span>
         </label>
-        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lighest">
+        <label class="flex items-center gap-2 cursor-pointer border border-transparent p-1.5 transition-colors hover:border-primary-light hover:bg-primary-lightest">
           <input
             type="checkbox"
             name="location"
-            value="Global"
+            value="remote-worldwide"
             class="h-4 w-4 shrink-0 border-neutral-300 text-primary focus:ring-primary"
           />
-          <span class="text-sm font-semibold text-neutral-950">Global</span>
+          <span class="text-sm font-semibold text-neutral-950">Remoto • Global</span>
         </label>
       </div>
     </div>
@@ -238,9 +220,6 @@ const resultsMessages = messages.results;
   const toolsCheckboxes = Array.from(
     document.querySelectorAll<HTMLInputElement>('input[name="tools"]')
   );
-  const contractCheckboxes = Array.from(
-    document.querySelectorAll<HTMLInputElement>('input[name="contract"]')
-  );
   const locationCheckboxes = Array.from(
     document.querySelectorAll<HTMLInputElement>('input[name="location"]')
   );
@@ -258,7 +237,6 @@ const resultsMessages = messages.results;
     checkboxGroups: {
       level: levelCheckboxes,
       tools: toolsCheckboxes,
-      contract: contractCheckboxes,
       location: locationCheckboxes,
     },
   });
