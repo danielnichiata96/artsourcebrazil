@@ -160,6 +160,7 @@ export class FilterOrchestratorController {
         }
 
         // Advanced filters: match by tags
+        if (show && !this.includesAll(tagsStr, this.state.skills)) show = false;
         if (show && !this.includesAll(tagsStr, this.state.level)) show = false;
         if (show && !this.includesAll(tagsStr, this.state.tools)) show = false;
         // Contract/Location could be supported later when data is available
@@ -183,6 +184,7 @@ export class FilterOrchestratorController {
     
     if (this.state.search) next.set('q', this.state.search);
     if (this.state.category && this.state.category !== 'all') next.set('category', this.state.category);
+    if (this.state.skills?.length) next.set('skills', this.state.skills.join(','));
     if (this.state.level?.length) next.set('level', this.state.level.join(','));
     if (this.state.tools?.length) next.set('tools', this.state.tools.join(','));
     if (this.state.contract?.length) next.set('contract', this.state.contract.join(','));

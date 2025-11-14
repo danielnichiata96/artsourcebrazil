@@ -10,7 +10,7 @@ export interface Props {
 const { items, class: className = '' } = Astro.props;
 ---
 
-<nav class={`text-sm text-neutral-600 ${className}`} aria-label="Breadcrumb">
+<nav class={`text-sm text-neutral-700 ${className}`} aria-label="Breadcrumb">
   <ol class="flex flex-wrap items-center gap-2">
     {
       items.map((item, index) => (

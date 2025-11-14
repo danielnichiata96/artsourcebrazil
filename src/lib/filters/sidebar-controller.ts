@@ -8,17 +8,18 @@ const FALLBACK_NAVBAR_HEIGHT = 64;
  */
 export interface FiltersSidebarElements {
   sidebar: HTMLElement;
-  overlay: HTMLElement;
-  toggleBtn: HTMLButtonElement;
-  closeBtn: HTMLButtonElement;
+  overlay: HTMLElement | null;
+  toggleBtn: HTMLButtonElement | null;
+  closeBtn: HTMLButtonElement | null;
   searchInput: HTMLInputElement;
   categoryButtons: HTMLButtonElement[];
   applyBtn: HTMLButtonElement;
   clearBtn: HTMLButtonElement;
   checkboxGroups: {
+    skills?: HTMLInputElement[];
     level: HTMLInputElement[];
     tools: HTMLInputElement[];
-    contract: HTMLInputElement[];
+    contract?: HTMLInputElement[];
     location: HTMLInputElement[];
   };
 }
@@ -213,7 +214,7 @@ export class FiltersSidebarController {
     // Mark filters as pending when checkboxes change
     level.forEach(registerCheckboxListener);
     tools.forEach(registerCheckboxListener);
-    contract.forEach(registerCheckboxListener);
+    contract?.forEach(registerCheckboxListener);
     location.forEach(registerCheckboxListener);
   }
 
@@ -363,7 +364,7 @@ export class FiltersSidebarController {
         .map((cb: HTMLInputElement) => cb?.value || '')
         .filter((v: string) => v);
 
-      const selectedContract = contract
+      const selectedContract = (contract || [])
         .filter((cb: HTMLInputElement) => cb?.checked)
         .map((cb: HTMLInputElement) => cb?.value || '')
         .filter((v: string) => v);
@@ -414,7 +415,7 @@ export class FiltersSidebarController {
         cb.dispatchEvent(new Event('change', { bubbles: true }));
       }
     });
-    contract.forEach((cb: HTMLInputElement) => {
+    contract?.forEach((cb: HTMLInputElement) => {
       if (cb) {
         cb.checked = false;
         cb.dispatchEvent(new Event('change', { bubbles: true }));
@@ -480,7 +481,7 @@ export class FiltersSidebarController {
     }
 
     // Sync contract types
-    if (filters.contract !== undefined) {
+    if (filters.contract !== undefined && contract) {
       contract.forEach((cb: HTMLInputElement) => {
         if (cb) {
           cb.checked = filters.contract?.includes(cb.value) ?? false;

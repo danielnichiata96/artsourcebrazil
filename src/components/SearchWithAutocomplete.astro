@@ -1,0 +1,423 @@
+---
+/**
+ * SearchWithAutocomplete Component
+ * Enhanced search bar with real-time suggestions for jobs, companies, and skills
+ */
+
+interface Props {
+  placeholder?: string;
+  class?: string;
+}
+
+const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: className } = Astro.props;
+---
+
+<div class="search-with-autocomplete relative w-full" data-search-autocomplete>
+  <div class="relative">
+    <input
+      type="search"
+      id="search-input"
+      class={`w-full rounded-lg border-2 border-neutral-200 px-4 py-3 pl-12 text-base transition-colors focus:border-accent focus:outline-none ${className || ''}`}
+      placeholder={placeholder}
+      autocomplete="off"
+      role="combobox"
+      aria-autocomplete="list"
+      aria-expanded="false"
+      aria-owns="autocomplete-results"
+      aria-controls="autocomplete-results"
+      data-search-input
+    />
+    <svg
+      class="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-neutral-400"
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden="true"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="2"
+        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+    </svg>
+  </div>
+
+  <!-- Autocomplete dropdown -->
+  <div
+    id="autocomplete-results"
+    class="absolute left-0 right-0 top-full z-50 mt-2 hidden max-h-96 overflow-y-auto rounded-2xl border-4 border-neutral-900 bg-white shadow-2xl"
+    role="listbox"
+    data-autocomplete-results
+  >
+    <ul class="py-2" data-results-list>
+      <!-- Results will be inserted here by JavaScript -->
+    </ul>
+  </div>
+
+  <!-- Loading indicator -->
+  <div
+    class="absolute right-4 top-1/2 hidden -translate-y-1/2"
+    data-loading-indicator
+    aria-hidden="true"
+  >
+    <svg
+      class="h-5 w-5 animate-spin text-accent"
+      fill="none"
+      viewBox="0 0 24 24"
+    >
+      <circle
+        class="opacity-25"
+        cx="12"
+        cy="12"
+        r="10"
+        stroke="currentColor"
+        stroke-width="4"></circle>
+      <path
+        class="opacity-75"
+        fill="currentColor"
+        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+      ></path>
+    </svg>
+  </div>
+</div>
+
+<script>
+  import jobs from '../data/jobs.json';
+  import type { Job } from '../lib/jobs';
+  import { getSearchSuggestions, highlightMatch } from '../lib/search/autocomplete';
+  import type { SearchSuggestion } from '../lib/search/autocomplete';
+
+  const allJobs = jobs as Job[];
+
+  class AutocompleteSearch {
+    private container: HTMLElement;
+    private input: HTMLInputElement;
+    private results: HTMLElement;
+    private resultsList: HTMLUListElement;
+    private loadingIndicator: HTMLElement;
+    private debounceTimer: number | null = null;
+    private currentFocus = -1;
+    private suggestions: SearchSuggestion[] = [];
+
+    constructor(container: HTMLElement) {
+      this.container = container;
+      this.input = container.querySelector('[data-search-input]') as HTMLInputElement;
+      this.results = container.querySelector('[data-autocomplete-results]') as HTMLElement;
+      this.resultsList = container.querySelector('[data-results-list]') as HTMLUListElement;
+      this.loadingIndicator = container.querySelector('[data-loading-indicator]') as HTMLElement;
+
+      this.bindEvents();
+    }
+
+    private bindEvents() {
+      // Input events
+      this.input.addEventListener('input', this.handleInput.bind(this));
+      this.input.addEventListener('keydown', this.handleKeydown.bind(this));
+      this.input.addEventListener('focus', this.handleFocus.bind(this));
+      this.input.addEventListener('blur', this.handleBlur.bind(this));
+
+      // Click outside to close
+      document.addEventListener('click', this.handleClickOutside.bind(this));
+    }
+
+    private handleInput() {
+      const query = this.input.value.trim();
+
+      // Clear previous debounce timer
+      if (this.debounceTimer) {
+        clearTimeout(this.debounceTimer);
+      }
+
+      // Show loading indicator
+      if (query.length >= 2) {
+        this.showLoading(true);
+      }
+
+      // Debounce search
+      this.debounceTimer = window.setTimeout(() => {
+        this.performSearch(query);
+        this.showLoading(false);
+      }, 200);
+    }
+
+    private performSearch(query: string) {
+      if (query.length < 2) {
+        this.hideResults();
+        return;
+      }
+
+      this.suggestions = getSearchSuggestions(query, allJobs, 8);
+
+      if (this.suggestions.length === 0) {
+        this.showNoResults();
+        return;
+      }
+
+      this.renderResults(query);
+    }
+
+    private renderResults(query: string) {
+      this.resultsList.innerHTML = '';
+      this.currentFocus = -1;
+
+      this.suggestions.forEach((suggestion, index) => {
+        const li = document.createElement('li');
+        li.setAttribute('role', 'option');
+        li.setAttribute('aria-selected', 'false');
+        li.setAttribute('data-index', index.toString());
+        
+        // Skills are not clickable - different styling
+        const isClickable = suggestion.type !== 'skill';
+        li.className = isClickable 
+          ? 'cursor-pointer px-4 py-3 transition-all hover:bg-accent-light border-b border-neutral-100 last:border-b-0'
+          : 'cursor-default px-4 py-3 border-b border-neutral-100 last:border-b-0 opacity-75';
+
+        const icon = this.getIconForType(suggestion.type);
+        const highlightedLabel = highlightMatch(suggestion.label, query);
+
+        li.innerHTML = `
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 mt-0.5 text-neutral-600">
+              ${icon}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="font-semibold text-neutral-950 truncate">
+                ${highlightedLabel}
+              </div>
+              ${suggestion.subtitle ? `<div class="text-sm text-neutral-700 truncate mt-0.5">${suggestion.subtitle}</div>` : ''}
+            </div>
+            <div class="flex-shrink-0">
+              <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-full border-2 ${this.getBadgeClass(suggestion.type)}">
+                ${this.getTypeLabel(suggestion.type)}
+              </span>
+            </div>
+          </div>
+        `;
+
+        // Only add click handler for clickable items (jobs and companies)
+        if (isClickable) {
+          li.addEventListener('click', () => this.selectSuggestion(suggestion));
+        }
+        
+        this.resultsList.appendChild(li);
+      });
+
+      this.showResults();
+    }
+
+    private showNoResults() {
+      this.resultsList.innerHTML = `
+        <li class="px-4 py-8 text-center text-neutral-500">
+          <svg class="mx-auto h-12 w-12 text-neutral-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M12 12h.01M12 12h.01M12 12h.01M12 12h.01"></path>
+          </svg>
+          <p class="font-medium">Nenhum resultado encontrado</p>
+          <p class="text-sm mt-1">Tente usar termos diferentes</p>
+        </li>
+      `;
+      this.showResults();
+    }
+
+    private showResults() {
+      this.results.classList.remove('hidden');
+      this.input.setAttribute('aria-expanded', 'true');
+    }
+
+    private hideResults() {
+      this.results.classList.add('hidden');
+      this.input.setAttribute('aria-expanded', 'false');
+      this.currentFocus = -1;
+    }
+
+    private showLoading(show: boolean) {
+      if (show) {
+        this.loadingIndicator.classList.remove('hidden');
+      } else {
+        this.loadingIndicator.classList.add('hidden');
+      }
+    }
+
+    private handleKeydown(e: KeyboardEvent) {
+      const items = this.resultsList.querySelectorAll('li[data-index]');
+
+      if (!items.length) return;
+
+      switch (e.key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          this.currentFocus = Math.min(this.currentFocus + 1, items.length - 1);
+          this.updateFocus();
+          break;
+
+        case 'ArrowUp':
+          e.preventDefault();
+          this.currentFocus = Math.max(this.currentFocus - 1, -1);
+          this.updateFocus();
+          break;
+
+        case 'Enter':
+          e.preventDefault();
+          if (this.currentFocus >= 0 && this.currentFocus < this.suggestions.length) {
+            this.selectSuggestion(this.suggestions[this.currentFocus]);
+          }
+          break;
+
+        case 'Escape':
+          this.hideResults();
+          this.input.blur();
+          break;
+      }
+    }
+
+    private updateFocus() {
+      const items = this.resultsList.querySelectorAll('li[data-index]');
+
+      items.forEach((item, index) => {
+        if (index === this.currentFocus) {
+          item.classList.add('bg-accent-light', 'border-accent');
+          item.classList.remove('border-neutral-100');
+          item.setAttribute('aria-selected', 'true');
+          item.scrollIntoView({ block: 'nearest' });
+        } else {
+          item.classList.remove('bg-accent-light', 'border-accent');
+          item.classList.add('border-neutral-100');
+          item.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    private selectSuggestion(suggestion: SearchSuggestion) {
+      if (suggestion.href) {
+        window.location.href = suggestion.href;
+      } else {
+        // Fallback: fill input and trigger search
+        this.input.value = suggestion.value;
+        this.hideResults();
+        
+        // Navigate to search results page with query
+        const searchUrl = new URL('/jobs', window.location.origin);
+        
+        if (suggestion.type === 'company') {
+          searchUrl.searchParams.set('company', suggestion.value);
+        } else if (suggestion.type === 'skill') {
+          searchUrl.searchParams.set('tag', suggestion.value);
+        } else {
+          searchUrl.searchParams.set('q', suggestion.value);
+        }
+        
+        window.location.href = searchUrl.toString();
+      }
+    }
+
+    private handleFocus() {
+      const query = this.input.value.trim();
+      if (query.length >= 2 && this.suggestions.length > 0) {
+        this.showResults();
+      }
+    }
+
+    private handleBlur(_e: FocusEvent) {
+      // Delay hiding to allow clicks on suggestions
+      setTimeout(() => {
+        if (!this.container.contains(document.activeElement)) {
+          this.hideResults();
+        }
+      }, 200);
+    }
+
+    private handleClickOutside(e: Event) {
+      if (!this.container.contains(e.target as Node)) {
+        this.hideResults();
+      }
+    }
+
+    private getIconForType(type: string): string {
+      switch (type) {
+        case 'job':
+          return `<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>`;
+        case 'company':
+          return `<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path></svg>`;
+        case 'skill':
+          return `<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path></svg>`;
+        default:
+          return '';
+      }
+    }
+
+    private getBadgeClass(type: string): string {
+      switch (type) {
+        case 'job':
+          return 'bg-accent border-accent text-neutral-950';
+        case 'company':
+          return 'bg-blue-100 border-blue-600 text-blue-900';
+        case 'skill':
+          return 'bg-purple-100 border-purple-600 text-purple-900';
+        default:
+          return 'bg-neutral-100 border-neutral-400 text-neutral-900';
+      }
+    }
+
+    private getTypeLabel(type: string): string {
+      switch (type) {
+        case 'job':
+          return 'Vaga';
+        case 'company':
+          return 'Empresa';
+        case 'skill':
+          return 'Skill';
+        default:
+          return '';
+      }
+    }
+  }
+
+  // Initialize on page load
+  document.addEventListener('DOMContentLoaded', () => {
+    const containers = document.querySelectorAll('[data-search-autocomplete]');
+    containers.forEach((container) => {
+      new AutocompleteSearch(container as HTMLElement);
+    });
+  });
+</script>
+
+<style>
+  /* Smooth transitions for dropdown */
+  [data-autocomplete-results] {
+    animation: slideDown 0.2s ease-out;
+  }
+
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  /* Highlight matches */
+  :global(.search-with-autocomplete mark) {
+    background-color: theme('colors.accent.DEFAULT');
+    color: white;
+    font-weight: 700;
+    padding: 2px 4px;
+    border-radius: 3px;
+  }
+
+  /* Focus styles */
+  [data-search-input]:focus {
+    box-shadow: 0 0 0 3px theme('colors.accent.light');
+  }
+
+  /* Loading spinner animation */
+  @keyframes spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+</style>

@@ -64,7 +64,7 @@ test.describe('Category Pages', () => {
     const gameDevJobs = await page.locator('[data-testid="job-card"]').count();
 
     // Visit Design category
-    await page.goto('/category/design-ui-ux');
+    await page.goto('/category/design');
     const designJobs = await page.locator('[data-testid="job-card"]').count();
 
     // Both should have jobs

@@ -62,8 +62,8 @@ export default {
           900: '#4a3422',        // Marrom principal (era #2d2621)
           800: '#5c4530',        // Marrom editorial (era #403932)
           700: '#6e5a47',        // Texto secundário
-          600: '#8a7768',        // Texto terciário
-          500: '#a59689',        // Texto desabilitado
+          600: '#705843',        // Texto terciário (melhorado de #8a7768 para 4.5:1 em #fdfcfa)
+          500: '#5c4530',        // Texto desabilitado (melhorado de #a59689 para 7:1 em #ffffff)
           400: '#bcb6b0',        // Bordas escuras
           300: '#d4cfc9',        // Bordas médias
           200: '#e8e4de',        // Bordas suaves
@@ -78,16 +78,16 @@ export default {
           paper: '#fffefb',      // Paper white puro
           pastel: '#FFF9E6',     // Amarelo pastel bem claro (destaque)
         },
-        // Primary: Verde brasileiro (meio-termo)
+        // Primary: Verde brasileiro mais escuro para contraste adequado (4.5:1)
         primary: {
-          DEFAULT: '#4FA87F',    // Verde meio-termo (entre pastel e bandeira)
-          hover: '#3d8a68',      // Verde mais escuro
-          light: '#C8E6D7',      // Verde claro pastel
+          DEFAULT: '#298639',    // Verde mais escuro (4.52:1 em branco) - ajustado para passar 4.5:1
+          hover: '#236d34',      // Verde ainda mais escuro para hover
+          light: '#C8E6D7',      // Verde claro pastel para badges (text will be dark brown)
           lightest: '#E8F5EE',   // Verde quase imperceptível
         },
         link: {
-          DEFAULT: '#4FA87F',    // Verde meio-termo para links
-          hover: '#3d8a68',      // Hover mais escuro
+          DEFAULT: '#278538',    // Verde escurecido para 4.51:1 em #fdfcfa (was #298639 at 4.48:1)
+          hover: '#236d34',      // Hover mais escuro
         },
         // Accent: Amarelo pastel brasileiro
         accent: {
@@ -192,6 +192,14 @@ export default {
             transform: 'translateX(0)',
           },
         },
+      },
+      transitionTimingFunction: {
+        'in-out-soft': 'cubic-bezier(0.4, 0, 0.2, 1)',   // Suave e natural
+        'out-soft': 'cubic-bezier(0.2, 0, 0.2, 1)',      // Saída suave
+        'spring': 'cubic-bezier(0.5, 1.5, 0.5, 1)',      // Leve bounce (opcional)
+      },
+      willChange: {
+        transform: 'transform',
       },
     },
   },

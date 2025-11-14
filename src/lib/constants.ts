@@ -56,7 +56,7 @@ export const FILTER_DEFAULTS = {
 export const CATEGORY_ICONS: Record<string, string> = {
   'Game Dev': '🎮',
   '3D & Animation': '🎨',
-  'Design (UI/UX)': '🎯',
+  'Design': '🎯',
 } as const;
 
 /** Fallback navbar height in pixels when unable to calculate */

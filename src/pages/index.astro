@@ -2,6 +2,7 @@
 import jobs from '../data/jobs.json';
 import JobCard from '../components/JobCard.astro';
 import FiltersSidebar from '../components/FiltersSidebar.astro';
+import SearchWithAutocomplete from '../components/SearchWithAutocomplete.astro';
 import Layout from '../layouts/Layout.astro';
 import Badge from '../components/ui/Badge.astro';
 import Button from '../components/ui/Button.astro';
@@ -96,7 +97,7 @@ const jobPostings = sortedJobs.map((j) => {
     <!-- Main Content - Estilo Jornal -->
     <main class="w-full">
       <!-- Hero Compacto - Estilo Remotive -->
-      <div class="relative overflow-hidden border-b border-neutral-300 bg-background-pastel">
+      <div class="relative overflow-visible border-b border-neutral-300 bg-background-pastel">
         <div class="relative container mx-auto px-container py-8">
           <div class="flex flex-col items-center gap-5 text-center">
             <!-- Badge no topo -->
@@ -117,29 +118,13 @@ const jobPostings = sortedJobs.map((j) => {
                 Vagas remotas em Game Dev, 3D & Animation e UI/UX para talentos brasileiros.
               </p>
 
-            <!-- Search Bar Grande estilo Remotive -->
+            <!-- Search Bar Grande estilo Remotive com Autocomplete -->
             <div class="relative w-full">
               <!-- Searchbar Container centralizada -->
               <div class="relative mx-auto max-w-4xl">
-                <svg
-                  class="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-primary z-10 sm:left-5 sm:h-6 sm:w-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
-                <input
-                  id="hero-search"
-                  type="search"
-                  placeholder="Buscar vagas remotas criativas..."
-                  class="w-full rounded-2xl border-4 border-neutral-900 bg-white py-4 pl-14 pr-4 text-base font-semibold text-neutral-950 shadow-illustration transition-all placeholder:text-neutral-400 hover:border-primary focus:border-primary focus:outline-none focus:ring-4 focus:ring-primary/20 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
+                <SearchWithAutocomplete
+                  placeholder="Buscar vagas, empresas ou habilidades..."
+                  class="rounded-2xl border-4 border-neutral-900 shadow-illustration py-4 pl-14 pr-4 text-base font-semibold hover:border-primary focus:border-primary focus:ring-4 focus:ring-primary/20 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
                 />
               </div>
               
@@ -284,7 +269,6 @@ const jobPostings = sortedJobs.map((j) => {
 
 <script>
   import { FilterOrchestratorController } from '../lib/filters/orchestrator-controller';
-  import { HeroIntegrationController } from '../lib/filters/hero-integration-controller';
 
   const resultsContainer = document.querySelector('[data-jobs]');
   const resultsSummary = document.querySelector('[data-results-summary]');
@@ -335,7 +319,7 @@ const jobPostings = sortedJobs.map((j) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className =
-      'inline-flex items-center gap-2 rounded-full border-2 border-primary bg-primary-light px-3 py-1.5 text-sm font-bold text-primary transition hover:bg-primary-lightest hover:shadow-illustration focus:outline-none focus:ring-2 focus:ring-primary/30';
+      'inline-flex items-center gap-2 rounded-full border-2 border-primary bg-primary-light px-3 py-1.5 text-sm font-bold text-neutral-950 transition hover:bg-primary-lightest hover:shadow-illustration focus:outline-none focus:ring-2 focus:ring-primary/30';
     button.setAttribute('aria-label', removeTemplate.replace('{label}', label));
 
     const span = document.createElement('span');
@@ -486,6 +470,19 @@ const jobPostings = sortedJobs.map((j) => {
   const orchestrator = new FilterOrchestratorController();
   updateUI(orchestrator.getState());
 
-  // Initialize hero integration (search bar + category pills)
-  const heroIntegration = new HeroIntegrationController();
+  // Category pills navigation
+  document.querySelectorAll('[data-category-pill]').forEach((button) => {
+    button.addEventListener('click', () => {
+      const category = button.getAttribute('data-category-pill');
+      if (category) {
+        const slug = category
+          .toLowerCase()
+          .trim()
+          .replace(/&/g, 'and')
+          .replace(/[^a-z0-9]+/g, '-')
+          .replace(/^-+|-+$/g, '');
+        window.location.href = `/category/${slug}`;
+      }
+    });
+  });
 </script>

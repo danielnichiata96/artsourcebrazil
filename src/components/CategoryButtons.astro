@@ -10,7 +10,7 @@ const { categories = [] } = Astro.props as Props;
 const categoryIcons: Record<string, string> = {
   'Game Dev': '🎮',
   '3D & Animation': '🎨',
-  'Design (UI/UX)': '🎯',
+  'Design': '🎯',
 };
 ---
 
@@ -18,7 +18,7 @@ const categoryIcons: Record<string, string> = {
   <!-- All Jobs button -->
   <button
     data-category="all"
-    class="category-btn category-btn-active rounded-full border-2 border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+    class="category-btn category-btn-active rounded-full border-2 border-primary bg-primary px-6 py-3 text-base font-semibold text-white transition-all duration-200 will-change-transform hover:scale-102 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
     aria-pressed="true"
   >
     All Jobs
@@ -30,7 +30,7 @@ const categoryIcons: Record<string, string> = {
       return (
         <button
           data-category={cat}
-          class="category-btn rounded-full border-2 border-neutral-200 bg-background-paper px-6 py-3 text-base font-semibold text-neutral-700 transition-all duration-200 hover:scale-105 hover:border-neutral-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          class="category-btn rounded-full border-2 border-neutral-200 bg-background-paper px-6 py-3 text-base font-semibold text-neutral-700 transition-all duration-200 will-change-transform hover:scale-105 hover:border-neutral-300 hover:shadow-md focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
           aria-pressed="false"
         >
           <span class="mr-2" aria-hidden="true">

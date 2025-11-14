@@ -88,19 +88,19 @@ const isNew = (() => {
       <div class="space-y-4">
         <!-- Nome da empresa em destaque -->
         <div class="flex flex-wrap items-center gap-2">
-          <Badge variant="primary" size="sm" class="bg-primary-light text-primary">
+          <Badge variant="primary" size="sm">
             {job.companyName}
           </Badge>
           <span class="text-xs text-neutral-700 font-bold">•</span>
           <Link
             href={withLocale(`/category/${slugify(job.category)}`)}
             variant="secondary"
-            class="text-sm font-semibold text-neutral-800 hover:text-primary"
+            class="text-sm font-semibold text-neutral-600 hover:text-primary"
           >
             {job.category}
           </Link>
           {isNew && (
-            <Badge variant="accent" size="sm" class="bg-accent text-neutral-900 font-extrabold">
+            <Badge variant="accent" size="sm" class="font-extrabold">
               {jobMessages.new}
             </Badge>
           )}
@@ -116,11 +116,11 @@ const isNew = (() => {
         <!-- Metadados com estilo editorial -->
         <div class="flex flex-wrap items-center gap-3 text-sm">
           <span
-            class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-900"
+            class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-950"
             title={locationNote || undefined}
           >
-            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8m-18 8h18" />
+            <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
             </svg>
             {locationLabel}
           </span>
@@ -129,9 +129,9 @@ const isNew = (() => {
               {locationNote}
             </span>
           )}
-          <span class="flex items-center gap-1 font-bold text-neutral-800">
-            <svg class="h-4 w-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <span class="flex items-center gap-1 font-bold text-neutral-600">
+            <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 256 256">
+              <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-96-88v64a8,8,0,0,1-16,0V132.94l-4.42,2.22a8,8,0,0,1-7.16-14.32l16-8A8,8,0,0,1,112,120Zm59.16,30.45L152,176h16a8,8,0,0,1,0,16H136a8,8,0,0,1-6.4-12.8l28.78-38.37A8,8,0,1,0,145.07,132a8,8,0,1,1-13.85-8A24,24,0,0,1,176,136,23.76,23.76,0,0,1,171.16,150.45Z"/>
             </svg>
             {formattedDate}
           </span>
@@ -141,12 +141,12 @@ const isNew = (() => {
         {(contractLabel || salaryLabel) && (
           <div class="flex flex-wrap items-center gap-3 text-sm">
             {contractLabel && (
-              <span class="inline-flex items-center gap-1 rounded-md bg-primary-light px-2 py-1 font-semibold text-primary">
+              <span class="inline-flex items-center gap-1 rounded-md bg-primary-light px-2 py-1 font-semibold text-neutral-950">
                 {contractLabel}
               </span>
             )}
             {salaryLabel && (
-              <span class="flex items-center gap-1 font-bold text-neutral-800">
+              <span class="flex items-center gap-1 font-bold text-neutral-600">
                 💰 {salaryLabel}
               </span>
             )}
@@ -156,15 +156,15 @@ const isNew = (() => {
         <!-- Tags com estilo editorial (limitadas para evitar height excessivo) -->
         <div class="flex flex-wrap gap-2">
           {
-            job.tags.slice(0, 8).map((tag) => (
-              <Badge variant="default" size="sm" class="bg-neutral-100 border-2 border-neutral-900 text-neutral-900 font-bold">
+            job.tags.slice(0, 5).map((tag) => (
+              <Badge variant="default" size="sm" class="font-bold">
                 {tag}
               </Badge>
             ))
           }
-          {job.tags.length > 8 && (
-            <Badge variant="default" size="sm" class="bg-neutral-200 border-2 border-neutral-400 text-neutral-600 font-bold">
-              +{job.tags.length - 8}
+          {job.tags.length > 5 && (
+            <Badge variant="default" size="sm" class="bg-neutral-200 border-2 border-neutral-400 text-neutral-700 font-bold">
+              +{job.tags.length - 5}
             </Badge>
           )}
         </div>
@@ -176,7 +176,7 @@ const isNew = (() => {
       <Button
         href={withLocale(`/jobs/${job.id}-${slugify(job.jobTitle)}`)}
         size="md"
-        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg"
+        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-md"
       >
         {jobMessages.button}
       </Button>

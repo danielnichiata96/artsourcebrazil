@@ -12,7 +12,7 @@ const jobsPath = resolve(root, 'src', 'data', 'jobs.json');
 const Categories = z.enum([
   'Game Dev',
   '3D & Animation',
-  'Design (UI/UX)',
+  'Design',
   'VFX',
   'Arte 3D',
   'UX/UI',

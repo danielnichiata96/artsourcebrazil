@@ -7,6 +7,7 @@ import { z } from 'zod';
 export const FilterStateSchema = z.object({
   search: z.string().max(200).default(''),
   category: z.string().max(100).default('all'),
+  skills: z.array(z.string().max(50)).default([]),
   level: z.array(z.string().max(50)).default([]),
   tools: z.array(z.string().max(50)).default([]),
   contract: z.array(z.string().max(50)).default([]),
@@ -39,7 +40,7 @@ export const VALID_CATEGORIES = [
 /**
  * Schema for validating category
  */
-export const CategorySchema = z.enum(['all', 'Game Dev', '3D & Animation', 'Design (UI/UX)']);
+export const CategorySchema = z.enum(['all', 'Game Dev', '3D & Animation', 'Design']);
 
 /**
  * Parse and validate URL search params safely
@@ -61,6 +62,7 @@ export function parseURLParams(searchParams: URLSearchParams): FilterState {
     const rawData = {
       search: searchParams.get('q') || '',
       category: searchParams.get('category') || 'all',
+      skills: parseCsv('skills'),
       level: parseCsv('level'),
       tools: parseCsv('tools'),
       contract: parseCsv('contract'),

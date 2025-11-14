@@ -35,26 +35,26 @@ const ctaHref = withLocale('/post-a-job');
 ---
 
 <header class="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow-sm">
-  <nav class="container mx-auto flex items-center justify-between px-container py-4">
+  <nav class="container mx-auto flex items-center justify-between px-container py-4" aria-label="Main navigation">
     <!-- Logo com estilo editorial -->
     <a href="/" class="flex items-center gap-3 group">
       <div class="relative">
         <!-- Círculo decorativo atrás do logo -->
-        <div class="absolute -inset-2 rounded-full bg-accent-light opacity-0 transition-all duration-300 group-hover:opacity-70"></div>
+        <div class="absolute -inset-2 rounded-full bg-accent-light opacity-0 transition-all duration-200 group-hover:opacity-40"></div>
         <Image
           src="/images/logo-navbar.svg"
           alt="Mascote Art Source Brazil com camisa do brasil sentado usando laptop"
           width={64}
           height={64}
           loading="eager"
-          class="relative z-10 h-8 w-8 transition-transform duration-300 group-hover:scale-110 md:h-10 md:w-10 lg:h-12 lg:w-12"
+          class="relative z-10 h-8 w-8 transition-transform duration-200 will-change-transform group-hover:scale-105 md:h-10 md:w-10 lg:h-12 lg:w-12"
         />
       </div>
       <div class="flex flex-col">
         <span class="font-serif text-2xl font-extrabold leading-none tracking-tight text-neutral-950 transition-colors group-hover:text-primary">
           Art Source Brazil
         </span>
-        <span class="text-xs font-bold uppercase tracking-widest text-neutral-600">
+        <span class="text-xs font-bold uppercase tracking-widest text-neutral-700">
           {messages.nav.tagline}
         </span>
       </div>
@@ -73,14 +73,14 @@ const ctaHref = withLocale('/post-a-job');
       ))}
       <Button 
         href={ctaHref}
-        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-lg"
+        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-md"
       >
         {ctaText}
       </Button>
       <a
         href={toggleHref}
         aria-label={toggleAria}
-        class="inline-flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-600 transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        class="inline-flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-700 transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
       >
         {toggleLabel}
       </a>

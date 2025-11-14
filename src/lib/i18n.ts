@@ -215,12 +215,12 @@ const translations = {
       copyright: 'All rights reserved.',
     },
   },
-} as const;
+};
 
 export type Messages = (typeof translations)['pt-BR'];
 
 export function getMessages(locale: Locale): Messages {
-  return translations[locale];
+  return translations[locale] as Messages;
 }
 
 export function resolveLocale(url: URL): Locale {

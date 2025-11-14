@@ -23,7 +23,10 @@ const dropdownId = id || `dropdown-${name}`;
     aria-expanded="false"
     aria-controls={`${dropdownId}-content`}
   >
-    <span class="flex-1">{label}</span>
+    <span class="flex items-center gap-2 flex-1">
+      <slot name="icon" />
+      {label}
+    </span>
     <div class="flex items-center gap-2">
       <span data-count class="text-xs font-semibold text-primary"></span>
       <svg
@@ -73,6 +76,7 @@ const dropdownId = id || `dropdown-${name}`;
     private countSpan: HTMLElement;
     private checkboxes: HTMLInputElement[];
     private isOpen = false;
+    private static allInstances: MultiSelectDropdown[] = [];
 
     constructor(container: HTMLElement) {
       this.trigger = container.querySelector('[data-dropdown-trigger]')!;
@@ -80,6 +84,9 @@ const dropdownId = id || `dropdown-${name}`;
       this.chevron = container.querySelector('[data-chevron]')!;
       this.countSpan = container.querySelector('[data-count]')!;
       this.checkboxes = Array.from(container.querySelectorAll('[data-dropdown-checkbox]'));
+
+      // Register this instance globally
+      MultiSelectDropdown.allInstances.push(this);
 
       this.init();
     }
@@ -116,6 +123,8 @@ const dropdownId = id || `dropdown-${name}`;
       if (this.isOpen) {
         this.close();
       } else {
+        // Close all other dropdowns first
+        MultiSelectDropdown.closeAll(this);
         this.open();
       }
     }
@@ -143,6 +152,17 @@ const dropdownId = id || `dropdown-${name}`;
         this.countSpan.textContent = '';
         this.countSpan.classList.add('hidden');
       }
+    }
+
+    /**
+     * Close all dropdowns except the one passed as parameter
+     */
+    private static closeAll(except?: MultiSelectDropdown) {
+      MultiSelectDropdown.allInstances.forEach((instance) => {
+        if (instance !== except && instance.isOpen) {
+          instance.close();
+        }
+      });
     }
 
     public getSelectedValues(): string[] {

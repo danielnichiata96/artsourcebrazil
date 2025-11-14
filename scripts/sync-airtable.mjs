@@ -19,8 +19,8 @@ const categoryMap = {
   'VFX': 'VFX',
   'Arte 3D': '3D & Animation',
   '3D': '3D & Animation',
-  'UX/UI': 'Design (UI/UX)',
-  'Design': 'Design (UI/UX)',
+  'UX/UI': 'Design',
+  'Design': 'Design',
   'Game Dev': 'Game Dev',
   'Programação': 'Game Dev',
 };

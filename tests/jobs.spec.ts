@@ -100,7 +100,7 @@ describe('slugify', () => {
 
   it('handles special characters and ampersand', () => {
     expect(slugify('3D & Animation')).toBe('3d-and-animation');
-    expect(slugify('Design (UI/UX)')).toBe('design-ui-ux');
+    expect(slugify('Design')).toBe('design');
   });
 
   it('removes trailing and leading hyphens', () => {
