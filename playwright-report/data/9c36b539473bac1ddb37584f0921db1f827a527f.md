@@ -1,10 +1,10 @@
 # Page snapshot
 
 ```yaml
-- generic [active] [ref=e1]:
+- generic [ref=e1]:
   - banner [ref=e2]:
     - navigation "Main navigation" [ref=e3]:
-      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [active] [ref=e4] [cursor=pointer]:
         - /url: /
         - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
         - generic [ref=e8]:

@@ -1,0 +1,237 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]: Art Source Brazil
+          - generic [ref=e10]: Remote Creative Jobs
+      - generic [ref=e11]:
+        - link "Empresas" [ref=e12] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: /blog
+        - link "Sobre" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e19]:
+      - generic [ref=e22]:
+        - generic [ref=e23]: Curadoria humana para talentos criativos do Brasil
+        - img "Art Source Brazil" [ref=e24]
+        - heading "Art Source Brazil" [level=1] [ref=e25]
+        - paragraph [ref=e26]: Vagas remotas em Game Dev, 3D & Animation e UI/UX para talentos brasileiros.
+        - generic [ref=e27]:
+          - generic [ref=e30]:
+            - combobox "Buscar vagas, empresas ou habilidades..." [ref=e31]
+            - img
+          - generic:
+            - img
+        - generic [ref=e32]:
+          - button "3D & Animation" [ref=e33] [cursor=pointer]
+          - button "Design" [ref=e34] [cursor=pointer]
+          - button "Game Dev" [ref=e35] [cursor=pointer]
+          - button "VFX" [ref=e36] [cursor=pointer]
+      - generic [ref=e38]:
+        - complementary [ref=e39]:
+          - complementary "Filtros" [ref=e40]:
+            - generic [ref=e41]:
+              - generic [ref=e42]:
+                - generic [ref=e43]: Buscar vagas
+                - generic [ref=e44]:
+                  - img [ref=e45]
+                  - searchbox "Buscar vagas" [active] [ref=e47]: Game
+              - generic [ref=e48]:
+                - generic [ref=e49]:
+                  - generic [ref=e50]:
+                    - paragraph [ref=e51]: Resultados
+                    - generic [ref=e52]:
+                      - generic [ref=e53]: "3"
+                      - generic [ref=e54]: vagas
+                  - button "Limpar" [ref=e55] [cursor=pointer]:
+                    - generic [ref=e56]: Limpar
+                    - img [ref=e57]
+                - 'button "Remover filtro Busca: Game" [ref=e60] [cursor=pointer]':
+                  - generic [ref=e61]: "Busca: Game"
+                  - img [ref=e62]
+              - generic [ref=e64]:
+                - heading "Categoria" [level=2] [ref=e65]
+                - searchbox "Search title, company or tags" [ref=e68]
+                - generic [ref=e69]:
+                  - button "Ferramentas" [ref=e71] [cursor=pointer]:
+                    - generic [ref=e72]:
+                      - img [ref=e73]
+                      - text: Ferramentas
+                    - img [ref=e76]
+                  - button "Nível" [ref=e79] [cursor=pointer]:
+                    - generic [ref=e80]:
+                      - img [ref=e81]
+                      - text: Nível
+                    - img [ref=e84]
+                  - button "Localização" [ref=e87] [cursor=pointer]:
+                    - generic [ref=e88]:
+                      - img [ref=e89]
+                      - text: Localização
+                    - img [ref=e92]
+            - generic [ref=e94]:
+              - button "Aplicar filtros" [disabled] [ref=e95]
+              - button "Limpar tudo" [ref=e96] [cursor=pointer]
+        - generic [ref=e97]:
+          - generic [ref=e98]:
+            - generic [ref=e99]:
+              - heading "Últimas oportunidades" [level=2] [ref=e101]
+              - generic [ref=e102]:
+                - generic [ref=e103]: "3"
+                - generic [ref=e104]: de 8 vagas
+            - navigation "Browse by category" [ref=e105]:
+              - link "3D & Animation jobs" [ref=e106] [cursor=pointer]:
+                - /url: /category/3d-and-animation
+              - link "Design jobs" [ref=e107] [cursor=pointer]:
+                - /url: /category/design
+              - link "Game Dev jobs" [ref=e108] [cursor=pointer]:
+                - /url: /category/game-dev
+              - link "VFX jobs" [ref=e109] [cursor=pointer]:
+                - /url: /category/vfx
+          - generic [ref=e110]:
+            - generic [ref=e112]:
+              - generic [ref=e113]:
+                - img "Fortis Games logo" [ref=e116]
+                - generic [ref=e117]:
+                  - generic [ref=e118]:
+                    - generic [ref=e119]: Fortis Games
+                    - generic [ref=e120]: •
+                    - link "Game Dev" [ref=e121] [cursor=pointer]:
+                      - /url: /category/game-dev
+                    - generic [ref=e122]: Nova
+                  - heading "QA Engineer II (Unity/SDKs)" [level=2] [ref=e123]:
+                    - link "QA Engineer II (Unity/SDKs)" [ref=e124] [cursor=pointer]:
+                      - /url: /jobs/FG-002-qa-engineer-ii-unity-sdks
+                  - generic [ref=e125]:
+                    - generic [ref=e126]:
+                      - img [ref=e127]
+                      - text: Remoto • Brasil
+                    - generic [ref=e129]:
+                      - img [ref=e130]
+                      - text: 11 de novembro de 2025
+                  - generic [ref=e132]:
+                    - generic [ref=e133]: Javascript
+                    - generic [ref=e134]: Typescript
+                    - generic [ref=e135]: C#
+                    - generic [ref=e136]: Python
+                    - generic [ref=e137]: Playwright
+                    - generic [ref=e138]: "+5"
+              - link "Ver detalhes" [ref=e140] [cursor=pointer]:
+                - /url: /jobs/FG-002-qa-engineer-ii-unity-sdks
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - img "Wildlife Studios logo" [ref=e146]
+                - generic [ref=e147]:
+                  - generic [ref=e148]:
+                    - generic [ref=e149]: Wildlife Studios
+                    - generic [ref=e150]: •
+                    - link "3D & Animation" [ref=e151] [cursor=pointer]:
+                      - /url: /category/3d-and-animation
+                    - generic [ref=e152]: Nova
+                  - heading "Senior 3D Game Artist" [level=2] [ref=e153]:
+                    - link "Senior 3D Game Artist" [ref=e154] [cursor=pointer]:
+                      - /url: /jobs/WL-001-senior-3d-game-artist
+                  - generic [ref=e155]:
+                    - generic [ref=e156]:
+                      - img [ref=e157]
+                      - text: Remoto • Brasil
+                    - generic [ref=e159]:
+                      - img [ref=e160]
+                      - text: 11 de novembro de 2025
+                  - generic [ref=e162]:
+                    - generic [ref=e163]: Unity
+                    - generic [ref=e164]: 3D
+                    - generic [ref=e165]: Senior
+                    - generic [ref=e166]: AI
+              - link "Ver detalhes" [ref=e168] [cursor=pointer]:
+                - /url: /jobs/WL-001-senior-3d-game-artist
+            - generic [ref=e170]:
+              - generic [ref=e171]:
+                - img "Fortis Games logo" [ref=e174]
+                - generic [ref=e175]:
+                  - generic [ref=e176]:
+                    - generic [ref=e177]: Fortis Games
+                    - generic [ref=e178]: •
+                    - link "Game Dev" [ref=e179] [cursor=pointer]:
+                      - /url: /category/game-dev
+                    - generic [ref=e180]: Nova
+                  - heading "Staff Game Engineer" [level=2] [ref=e181]:
+                    - link "Staff Game Engineer" [ref=e182] [cursor=pointer]:
+                      - /url: /jobs/FG-001-staff-game-engineer
+                  - generic [ref=e183]:
+                    - generic [ref=e184]:
+                      - img [ref=e185]
+                      - text: Remoto • Brasil
+                    - generic [ref=e187]:
+                      - img [ref=e188]
+                      - text: 11 de novembro de 2025
+                  - generic [ref=e190]:
+                    - generic [ref=e191]: C#
+                    - generic [ref=e192]: Animation
+                    - generic [ref=e193]: Unity3D
+                    - generic [ref=e194]: UI
+                    - generic [ref=e195]: Networking
+                    - generic [ref=e196]: "+1"
+              - link "Ver detalhes" [ref=e198] [cursor=pointer]:
+                - /url: /jobs/FG-001-staff-game-engineer
+    - generic [ref=e200]:
+      - heading "Fique por dentro" [level=3] [ref=e201]
+      - paragraph [ref=e202]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e203]:
+        - textbox "seu-email@exemplo.com" [ref=e204]
+        - button "Assinar" [ref=e205] [cursor=pointer]
+      - paragraph [ref=e206]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e207] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e208]:
+    - generic [ref=e210]:
+      - generic [ref=e211]:
+        - link "Sobre" [ref=e212] [cursor=pointer]:
+          - /url: /about
+        - link "Contato" [ref=e213] [cursor=pointer]:
+          - /url: /contact
+        - link "Política de Privacidade" [ref=e214] [cursor=pointer]:
+          - /url: /privacy
+        - link "Termos de Uso" [ref=e215] [cursor=pointer]:
+          - /url: /terms
+        - link "Blog" [ref=e216] [cursor=pointer]:
+          - /url: /blog
+      - link "artsourcebrazil@gmail.com" [ref=e218] [cursor=pointer]:
+        - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e219]:
+        - generic [ref=e220]: "Feeds:"
+        - link "Jobs RSS" [ref=e221] [cursor=pointer]:
+          - /url: /jobs.xml
+        - link "Jobs JSON" [ref=e222] [cursor=pointer]:
+          - /url: /jobs.json
+        - link "Blog RSS" [ref=e223] [cursor=pointer]:
+          - /url: /blog.xml
+      - paragraph [ref=e224]: © 2025 Art Source Brazil. Todos os direitos reservados.
+  - generic [ref=e227]:
+    - button "Menu" [ref=e228]:
+      - img [ref=e230]
+      - generic: Menu
+    - button "Inspect" [ref=e234]:
+      - img [ref=e236]
+      - generic: Inspect
+    - button "Audit" [ref=e238]:
+      - img [ref=e240]
+      - generic: Audit
+    - button "Settings" [ref=e243]:
+      - img [ref=e245]
+      - generic: Settings
+```

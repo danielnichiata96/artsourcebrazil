@@ -1,0 +1,188 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]: Art Source Brazil
+          - generic [ref=e10]: Remote Creative Jobs
+      - generic [ref=e11]:
+        - link "Empresas" [ref=e12] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: /blog
+        - link "Sobre" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/jobs/FG-001-staff-game-engineer
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - navigation "Breadcrumb" [ref=e19]:
+        - list [ref=e20]:
+          - listitem [ref=e21]:
+            - link "Home" [ref=e22] [cursor=pointer]:
+              - /url: /
+            - generic [ref=e23]: /
+          - listitem [ref=e24]:
+            - link "Game Dev" [ref=e25] [cursor=pointer]:
+              - /url: /category/game-dev
+            - generic [ref=e26]: /
+          - listitem [ref=e27]:
+            - generic [ref=e28]: Staff Game Engineer
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - generic [ref=e32]:
+            - img "Fortis Games logo" [ref=e34]
+            - generic [ref=e35]:
+              - heading "Staff Game Engineer" [level=1] [ref=e36]
+              - paragraph [ref=e37]:
+                - link "Fortis Games" [ref=e38] [cursor=pointer]:
+                  - /url: /company/fortis-games
+              - generic [ref=e39]:
+                - generic [ref=e40]:
+                  - img [ref=e41]
+                  - text: Remoto • Brasil
+                - generic [ref=e43]:
+                  - img [ref=e44]
+                  - text: Publicada em 11 de novembro de 2025
+                - generic [ref=e46]:
+                  - img [ref=e47]
+                  - text: Game Dev
+              - generic [ref=e49]:
+                - generic [ref=e50]: C#
+                - generic [ref=e51]: Animation
+                - generic [ref=e52]: Unity3D
+                - generic [ref=e53]: UI
+                - generic [ref=e54]: Networking
+                - generic [ref=e55]: Senior
+          - generic [ref=e56]:
+            - heading "Sobre a vaga" [level=2] [ref=e57]
+            - paragraph [ref=e59]: Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C#, POO (princípios SOLID) e otimização de performance. Você será responsável por decisões de arquitetura, escrita de código testável (testes unitários/integrados) e mentoria, exigindo experiência comprovada no lançamento de jogos mobile.
+            - link "Candidatar-se a esta vaga →" [ref=e61] [cursor=pointer]:
+              - /url: https://www.fortisgames.com/en-us/careers?gh_jid=4596958005
+            - generic [ref=e62]:
+              - paragraph [ref=e63]: "Compartilhe esta vaga:"
+              - generic [ref=e64]:
+                - paragraph [ref=e65]: "Share this job:"
+                - generic [ref=e66]:
+                  - link "Share on Twitter" [ref=e67] [cursor=pointer]:
+                    - /url: https://twitter.com/intent/tweet?url=https%3A%2F%2Fartsourcebrazil.vercel.app%2Fjobs%2FFG-001-staff-game-engineer&text=Staff%20Game%20Engineer
+                    - text: 𝕏
+                  - link "Share on LinkedIn" [ref=e68] [cursor=pointer]:
+                    - /url: https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fartsourcebrazil.vercel.app%2Fjobs%2FFG-001-staff-game-engineer&title=Staff%20Game%20Engineer
+                    - text: in
+                  - link "Share on WhatsApp" [ref=e69] [cursor=pointer]:
+                    - /url: https://api.whatsapp.com/send?text=Staff%20Game%20Engineer%20https%3A%2F%2Fartsourcebrazil.vercel.app%2Fjobs%2FFG-001-staff-game-engineer
+                    - text: 📱
+                  - button "Copy link to clipboard" [ref=e70] [cursor=pointer]: 🔗
+        - complementary [ref=e71]:
+          - generic [ref=e72]:
+            - heading "Sobre Fortis Games" [level=2] [ref=e73]
+            - generic [ref=e74]:
+              - img "Fortis Games logo" [ref=e75]
+              - paragraph [ref=e76]: Fortis Games está contratando para posições de Game Dev. Confira outras oportunidades e entenda mais sobre a cultura da empresa.
+              - link "Visitar site da empresa →" [ref=e77] [cursor=pointer]:
+                - /url: https://www.fortisgames.com/en-us/careers?gh_jid=4596958005
+          - generic [ref=e78]:
+            - heading "Fique por dentro" [level=3] [ref=e79]
+            - paragraph [ref=e80]: Receba as vagas mais recentes diretamente no seu e-mail.
+            - generic [ref=e81]:
+              - textbox "seu-email@exemplo.com" [ref=e82]
+              - button "Assinar" [ref=e83] [cursor=pointer]
+            - paragraph [ref=e84]:
+              - text: Respeitamos sua privacidade. Sem spam. Powered by
+              - link "Buttondown" [ref=e85] [cursor=pointer]:
+                - /url: https://buttondown.email
+              - text: .
+      - generic [ref=e86]:
+        - generic [ref=e87]:
+          - heading "Vagas similares em Game Dev" [level=2] [ref=e88]
+          - paragraph [ref=e89]: Outras oportunidades que podem te interessar
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - generic [ref=e93]:
+              - img "Fortis Games logo" [ref=e96]
+              - generic [ref=e97]:
+                - generic [ref=e98]: Fortis Games
+                - link "Game Dev" [ref=e99] [cursor=pointer]:
+                  - /url: /category/game-dev
+              - generic [ref=e100]: Nova
+            - heading "QA Engineer II (Unity/SDKs)" [level=2] [ref=e101]:
+              - link "QA Engineer II (Unity/SDKs)" [ref=e102] [cursor=pointer]:
+                - /url: /jobs/FG-002-qa-engineer-ii-unity-sdks
+            - generic [ref=e103]:
+              - generic [ref=e104]:
+                - img [ref=e105]
+                - text: Remoto • Brasil
+              - generic [ref=e107]:
+                - img [ref=e108]
+                - text: 11 de nov.
+            - generic [ref=e110]:
+              - generic [ref=e111]: Javascript
+              - generic [ref=e112]: Typescript
+              - generic [ref=e113]: C#
+              - generic [ref=e114]: Python
+              - generic [ref=e115]: Playwright
+              - generic [ref=e116]: "+5"
+          - link "Ver detalhes" [ref=e118] [cursor=pointer]:
+            - /url: /jobs/FG-002-qa-engineer-ii-unity-sdks
+        - link "Explorar todas as vagas de Game Dev →" [ref=e120] [cursor=pointer]:
+          - /url: /category/game-dev
+    - generic [ref=e122]:
+      - heading "Fique por dentro" [level=3] [ref=e123]
+      - paragraph [ref=e124]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e125]:
+        - textbox "seu-email@exemplo.com" [ref=e126]
+        - button "Assinar" [ref=e127] [cursor=pointer]
+      - paragraph [ref=e128]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e129] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e130]:
+    - generic [ref=e132]:
+      - generic [ref=e133]:
+        - link "Sobre" [ref=e134] [cursor=pointer]:
+          - /url: /about
+        - link "Contato" [ref=e135] [cursor=pointer]:
+          - /url: /contact
+        - link "Política de Privacidade" [ref=e136] [cursor=pointer]:
+          - /url: /privacy
+        - link "Termos de Uso" [ref=e137] [cursor=pointer]:
+          - /url: /terms
+        - link "Blog" [ref=e138] [cursor=pointer]:
+          - /url: /blog
+      - link "artsourcebrazil@gmail.com" [ref=e140] [cursor=pointer]:
+        - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e141]:
+        - generic [ref=e142]: "Feeds:"
+        - link "Jobs RSS" [ref=e143] [cursor=pointer]:
+          - /url: /jobs.xml
+        - link "Jobs JSON" [ref=e144] [cursor=pointer]:
+          - /url: /jobs.json
+        - link "Blog RSS" [ref=e145] [cursor=pointer]:
+          - /url: /blog.xml
+      - paragraph [ref=e146]: © 2025 Art Source Brazil. Todos os direitos reservados.
+  - generic [ref=e149]:
+    - button "Menu" [ref=e150]:
+      - img [ref=e152]
+      - generic: Menu
+    - button "Inspect" [ref=e156]:
+      - img [ref=e158]
+      - generic: Inspect
+    - button "Audit" [ref=e160]:
+      - generic [ref=e161]:
+        - img [ref=e162]
+        - img [ref=e165]
+      - generic: Audit
+    - button "Settings" [ref=e168]:
+      - img [ref=e170]
+      - generic: Settings
+```
