@@ -118,15 +118,22 @@ This file is the single source of truth for what to do next. Coding agents and h
       - [x] Melhorados comentários explicando por que não precisa de 'unsafe-inline'
       - [x] JSON-LD schemas usam type="application/ld+json" (não executável)
     - [x] **Criado SECURITY.md** ✅ - Documentação completa de auditoria de segurança
-  - [ ] **Fase 2: Validação e Robustez (IMPORTANTE)**
-    - [ ] Unificar validação de categorias: criar `src/lib/categories.ts` com enum único
-      - [ ] Atualizar `scripts/validate-jobs.mjs` para usar constantes centralizadas
-      - [ ] Atualizar `src/lib/validation/filter-schema.ts` para usar mesmas constantes
-      - [ ] Atualizar `src/lib/constants.ts` para usar mesmas constantes
-      - [ ] Resolver inconsistência: `'Design (UI/UX)'` vs `'Design'`, `'VFX'`, `'Arte 3D'`, `'UX/UI'`, `'QA'`
-    - [ ] Adicionar validação de URLs externas no `scripts/sync-airtable.mjs`
-      - [ ] Validar `applyLink` e `companyLogo` com Zod antes de salvar
-    - [ ] Adicionar tratamento de erros para API Clearbit (fallback para placeholder)
+  - [x] **Fase 2: Validação e Robustez (IMPORTANTE)** ✅ COMPLETO
+    - [x] Unificar validação de categorias: criar `src/lib/categories.ts` com enum único ✅
+      - [x] ✅ **JÁ UNIFICADO**: Verificado que src/lib/categories.ts é a fonte única de verdade
+      - [x] Atualizar `scripts/validate-jobs.mjs` para usar constantes centralizadas ✅ (já usa enum Zod com 4 categorias)
+      - [x] Atualizar `src/lib/validation/filter-schema.ts` para usar mesmas constantes ✅ (já importa FILTER_CATEGORIES)
+      - [x] Atualizar `src/lib/constants.ts` para usar mesmas constantes ✅ (já importa CATEGORY_ICONS)
+      - [x] Resolver inconsistência: ✅ **NÃO EXISTE** - Design (UI/UX) já foi renomeado para Design anteriormente
+    - [x] Adicionar validação de URLs externas no `scripts/sync-airtable.mjs` ✅
+      - [x] Validar `applyLink` e `companyLogo` com Zod antes de salvar ✅
+      - [x] Implementado UrlSchema com Zod para validação robusta (http/https only)
+      - [x] validateUrl() com error reporting detalhado e fallback seguro
+      - [x] Apply Link: skip job se URL inválida (crítico para segurança)
+      - [x] Company Logo: fallback para placeholder se URL inválida
+    - [x] Adicionar tratamento de erros para API Clearbit (fallback para placeholder) ✅
+      - [x] ✅ **JÁ IMPLEMENTADO**: getCompanyLogo() tem fallback de 3 níveis (local → Clearbit → placeholder)
+    - [x] **Criado docs/CATEGORIES_GUIDE.md** ✅ - Guia completo de categorias com mapeamento Airtable
   - [ ] **Fase 3: Performance e UX (MÉDIO)**
     - [ ] Adicionar validação de tamanho máximo de `jobs.json` (ex: 5MB) no script de validação
     - [ ] Melhorar tratamento de clipboard API em `ShareButtons.astro` (fallback para método antigo)
@@ -341,6 +348,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-16: **Security Phase 2 Complete - Validation & Robustness**: Completed comprehensive validation and unification. (1) **URL Validation with Zod**: Added Zod UrlSchema to sync-airtable.mjs for robust URL validation (http/https only), validates applyLink (skips job if invalid) and companyLogo (fallback to placeholder), detailed error reporting with field names, prevents XSS via malicious URLs. (2) **Categories Unification Verified**: Confirmed src/lib/categories.ts is single source of truth with CATEGORIES array, FILTER_CATEGORIES, AIRTABLE_CATEGORY_MAP, and CATEGORY_ICONS. All files properly synced: validate-jobs.mjs uses Zod enum, filter-schema.ts imports FILTER_CATEGORIES, constants.ts imports CATEGORY_ICONS, sync-airtable.mjs matches AIRTABLE_CATEGORY_MAP. No inconsistencies found (Design UI/UX already renamed to Design in previous session). (3) **Documentation**: Created docs/CATEGORIES_GUIDE.md with comprehensive guide documenting 4 canonical categories (Game Dev, 3D & Animation, Design, VFX), Airtable mapping table with 9 variants, implementation files cross-reference, debugging guide, adding new category workflow, and current statistics (8 jobs across 4 categories). Result: Zero invalid URLs in sync process, categories fully unified, maintainer documentation complete. Commit: 9867988.
 - 2025-11-16: **Security Phase 1 Complete - Critical Security Improvements**: Completed comprehensive security audit and hardening. (1) **CSP Hardening**: Verified Astro already compiles all inline scripts as external ES modules (no 'unsafe-inline' needed), added script-src-elem for external scripts (Google Fonts, Analytics), improved CSP comments with security rationale. (2) **Environment Variables**: Enhanced .env.example with 🔒 SERVER-SIDE vs 🌐 PUBLIC indicators, documented all 7 variables (AIRTABLE_API_KEY, PUBLIC_STRIPE_PAYMENT_LINK, PUBLIC_JOB_FORM_URL, PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_NEWSLETTER_SUBSCRIBE_URL), added security warnings about exposing sensitive data. (3) **XSS Protection Audit**: Verified DOMPurify 3.3.0 already protecting SearchWithAutocomplete.astro (all user input sanitized before innerHTML), confirmed ShareButtons.astro safe (only hardcoded emoji strings). (4) **Security Documentation**: Created SECURITY.md with comprehensive security audit, documented all implemented protections (XSS, CSP, env vars, input validation, markdown sanitization), added security checklist and future improvements, included security reporting guidelines. Result: Zero XSS vulnerabilities, strict CSP without unsafe-inline for scripts, all environment variables properly documented. Commit: 99b7ff3.
 - 2025-11-16: **Quick Wins Complete - Blog & Mobile UX**: Completed all 3 Quick Wins for improved UX. (1) Created `src/lib/reading-time.ts` utility to calculate reading time at 200 words/min in Portuguese, displayed with clock icon on blog post pages and blog index. (2) Added Related Posts section showing 3 recent posts at bottom of blog articles in 3-column Card grid. (3) Implemented floating mobile filter button (bottom-right) with red badge showing active filter count, opens drawer with overlay, badge updates dynamically via FilterOrchestratorController. Also fixed all TypeScript errors in index.astro with type annotations and assertions. Build passing. Commits: b731f3e (quick wins), 8ed896d (TS fixes).
 - 2025-11-14: **Categoria renomeada: "Design (UI/UX)" → "Design"**: Simplificado o nome da categoria de "Design (UI/UX)" para apenas "Design" em todo o site. Razão: o nome anterior sugeria que todas as vagas de design seriam UI/UX, quando na verdade a categoria inclui Brand Design, Editorial Design, Growth Design, Marketing Design, etc. Mudanças aplicadas em 10 arquivos: jobs.json (3 vagas), CategoryButtons.astro, constants.ts, filter-schema.ts (validação + enum), 404.astro, validate-jobs.mjs, sync-airtable.mjs (mapeamento Airtable), jobs.spec.ts, category-pages.spec.ts. URL da categoria atualizada de `/category/design-ui-ux` para `/category/design`. Build passing, testes atualizados. Commits: pending push.
