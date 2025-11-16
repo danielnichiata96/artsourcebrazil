@@ -211,7 +211,7 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] All pages now have proper og:image meta tags
 - [ ] **Filters Sidebar - Advanced Features**
   - [ ] Add filter presets/saved searches (localStorage)
-  - [ ] Show filter count badge on mobile toggle button
+  - [x] Show filter count badge on mobile toggle button ✅
   - [ ] Add keyboard shortcuts (e.g., `/` to focus search, `Esc` to clear)
   - [ ] Collapsible filter sections (accordion style)
   - [ ] Show popular tags based on current filters
@@ -221,16 +221,16 @@ This file is the single source of truth for what to do next. Coding agents and h
     - [ ] "How to Build a Portfolio for Game Studios"
     - [ ] "Remote Work Tips for Brazilian Creatives"
   - [ ] Share blog posts on LinkedIn/X to drive organic traffic
-  - [ ] Add "Related Posts" section to blog posts
-  - [ ] Add reading time estimate to blog posts
+  - [x] Add "Related Posts" section to blog posts ✅
+  - [x] Add reading time estimate to blog posts ✅
 - [ ] **Uptime Monitoring**
   - [ ] Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
   - [ ] Alert on downtime or slow response (>3s)
   - [ ] Monitor Core Web Vitals (LCP, FID, CLS)
 - [ ] **Blog Enhancements**
   - [ ] Add Twitter/LinkedIn share buttons on individual blog posts
-  - [ ] Add "Related Posts" section to blog posts
-  - [ ] Add reading time estimate to blog posts
+  - [x] Add "Related Posts" section to blog posts ✅
+  - [x] Add reading time estimate to blog posts ✅
   - [ ] Add author bio section
 - [ ] **OG Images Enhancement**
   - [ ] Generate unique OG images for category pages (Satori)
@@ -334,6 +334,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-16: **Quick Wins Complete - Blog & Mobile UX**: Completed all 3 Quick Wins for improved UX. (1) Created `src/lib/reading-time.ts` utility to calculate reading time at 200 words/min in Portuguese, displayed with clock icon on blog post pages and blog index. (2) Added Related Posts section showing 3 recent posts at bottom of blog articles in 3-column Card grid. (3) Implemented floating mobile filter button (bottom-right) with red badge showing active filter count, opens drawer with overlay, badge updates dynamically via FilterOrchestratorController. Also fixed all TypeScript errors in index.astro with type annotations and assertions. Build passing. Commits: b731f3e (quick wins), 8ed896d (TS fixes).
 - 2025-11-14: **Categoria renomeada: "Design (UI/UX)" → "Design"**: Simplificado o nome da categoria de "Design (UI/UX)" para apenas "Design" em todo o site. Razão: o nome anterior sugeria que todas as vagas de design seriam UI/UX, quando na verdade a categoria inclui Brand Design, Editorial Design, Growth Design, Marketing Design, etc. Mudanças aplicadas em 10 arquivos: jobs.json (3 vagas), CategoryButtons.astro, constants.ts, filter-schema.ts (validação + enum), 404.astro, validate-jobs.mjs, sync-airtable.mjs (mapeamento Airtable), jobs.spec.ts, category-pages.spec.ts. URL da categoria atualizada de `/category/design-ui-ux` para `/category/design`. Build passing, testes atualizados. Commits: pending push.
 - 2025-11-14: **Brown Color Contrast Issue FIXED**: Investigado e corrigido problema de contraste onde texto marrom estava renderizando mais claro que o esperado. Causa identificada: códigos hexadecimais hardcoded antigos (#1a1614) em 6 locais (Badge.astro x4, JobCard.astro x2) que não foram atualizados quando a paleta neutral foi mudada para marrons mais escuros. Solução: substituído `text-[#1a1614]` por `text-neutral-950` (que agora aponta para #3d2817 - marrom editorial mais escuro). Resultado: texto de badges, labels de localização e contratos agora renderizam com marrom escuro consistente (#3d2817) em todo o site, mantendo padrão editorial. Build passing. Commits: pending push.
 - 2025-11-14: **Ícones Phosphor Minimalistas Implementados**: Adicionados ícones Phosphor (stroke-width: 2, viewBox: 0 0 256 256) em toda a interface para consistência visual. Sidebar de filtros agora exibe: Wrench (🔧 Ferramentas), TrendUp (📊 Nível), MapPin (📍 Localização). JobCard padronizado com MapPin (localização) e Calendar (data). MultiSelectDropdown.astro atualizado para suportar slot de ícone. Todos os ícones seguem o mesmo estilo minimalista e editorial, combinando com o design do site. Zero dependências externas (SVGs inline). Build passing. Commit: pending push.
