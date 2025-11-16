@@ -134,10 +134,22 @@ This file is the single source of truth for what to do next. Coding agents and h
     - [x] Adicionar tratamento de erros para API Clearbit (fallback para placeholder) ✅
       - [x] ✅ **JÁ IMPLEMENTADO**: getCompanyLogo() tem fallback de 3 níveis (local → Clearbit → placeholder)
     - [x] **Criado docs/CATEGORIES_GUIDE.md** ✅ - Guia completo de categorias com mapeamento Airtable
-  - [ ] **Fase 3: Performance e UX (MÉDIO)**
-    - [ ] Adicionar validação de tamanho máximo de `jobs.json` (ex: 5MB) no script de validação
-    - [ ] Melhorar tratamento de clipboard API em `ShareButtons.astro` (fallback para método antigo)
-    - [ ] Adicionar validação de formato de imagem para logos (PNG, SVG, JPG)
+  - [x] **Fase 3: Performance e UX (MÉDIO)** ✅ COMPLETO
+    - [x] Adicionar validação de tamanho máximo de `jobs.json` (ex: 5MB) no script de validação ✅
+      - [x] ✅ **JÁ IMPLEMENTADO**: validate-jobs.mjs verifica max 5MB e exibe progresso
+    - [x] Melhorar tratamento de clipboard API em `ShareButtons.astro` (fallback para método antigo) ✅
+      - [x] Implementado estratégia de 3 níveis de progressive enhancement
+      - [x] Tier 1: Clipboard API moderna (Chrome 63+, Firefox 53+, Safari 13.1+)
+      - [x] Tier 2: execCommand fallback para navegadores antigos (IE11, Safari antigo)
+      - [x] Tier 3: Input overlay manual com melhor UX que alert
+      - [x] Feedback visual de sucesso (checkmark verde com mudança de cor)
+      - [x] Auto-cleanup após 5 segundos para overlay manual
+    - [x] Adicionar validação de formato de imagem para logos (PNG, SVG, JPG) ✅
+      - [x] Valida formatos locais: .png, .jpg, .jpeg, .svg, .webp, .gif
+      - [x] Verifica URLs externas para extensões válidas
+      - [x] Tratamento especial para Clearbit API (sem extensão)
+      - [x] Mensagens de erro detalhadas com lista de formatos válidos
+      - [x] Warnings para URLs externas sem extensão reconhecida
   <!-- AI-ANCHOR:IMMEDIATE-TASKS-END -->
 
 ---
@@ -348,6 +360,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
+- 2025-11-16: **Security Phase 3 Complete - Performance & UX Improvements**: Completed final security and UX enhancements. (1) **Clipboard API Enhancement**: Implemented 3-tier progressive enhancement strategy in ShareButtons.astro - Tier 1: Modern Clipboard API (Chrome 63+, Firefox 53+, Safari 13.1+), Tier 2: execCommand fallback for older browsers (IE11, older Safari), Tier 3: Manual copy with temporary input field overlay (better UX than alert with auto-cleanup after 5s). Added TypeScript type annotations, visual success feedback (green checkmark with color change), comprehensive error handling and logging. (2) **Image Format Validation**: Added format validation in validate-jobs.mjs for local logos (.png, .jpg, .jpeg, .svg, .webp, .gif), checks external logo URLs for valid extensions, special handling for Clearbit API URLs (no extension check), detailed error messages with valid format list, warnings for external URLs without recognized extensions. (3) **File Size Validation Confirmed**: Verified 5MB max validation working correctly (shows progress: 📊 File size: 0.01MB / 5MB). Result: Universal clipboard support across all browsers, better UX with visual feedback, prevents invalid image formats, validates both local and external logos. Commit: 2493343.
 - 2025-11-16: **Security Phase 2 Complete - Validation & Robustness**: Completed comprehensive validation and unification. (1) **URL Validation with Zod**: Added Zod UrlSchema to sync-airtable.mjs for robust URL validation (http/https only), validates applyLink (skips job if invalid) and companyLogo (fallback to placeholder), detailed error reporting with field names, prevents XSS via malicious URLs. (2) **Categories Unification Verified**: Confirmed src/lib/categories.ts is single source of truth with CATEGORIES array, FILTER_CATEGORIES, AIRTABLE_CATEGORY_MAP, and CATEGORY_ICONS. All files properly synced: validate-jobs.mjs uses Zod enum, filter-schema.ts imports FILTER_CATEGORIES, constants.ts imports CATEGORY_ICONS, sync-airtable.mjs matches AIRTABLE_CATEGORY_MAP. No inconsistencies found (Design UI/UX already renamed to Design in previous session). (3) **Documentation**: Created docs/CATEGORIES_GUIDE.md with comprehensive guide documenting 4 canonical categories (Game Dev, 3D & Animation, Design, VFX), Airtable mapping table with 9 variants, implementation files cross-reference, debugging guide, adding new category workflow, and current statistics (8 jobs across 4 categories). Result: Zero invalid URLs in sync process, categories fully unified, maintainer documentation complete. Commit: 9867988.
 - 2025-11-16: **Security Phase 1 Complete - Critical Security Improvements**: Completed comprehensive security audit and hardening. (1) **CSP Hardening**: Verified Astro already compiles all inline scripts as external ES modules (no 'unsafe-inline' needed), added script-src-elem for external scripts (Google Fonts, Analytics), improved CSP comments with security rationale. (2) **Environment Variables**: Enhanced .env.example with 🔒 SERVER-SIDE vs 🌐 PUBLIC indicators, documented all 7 variables (AIRTABLE_API_KEY, PUBLIC_STRIPE_PAYMENT_LINK, PUBLIC_JOB_FORM_URL, PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_NEWSLETTER_SUBSCRIBE_URL), added security warnings about exposing sensitive data. (3) **XSS Protection Audit**: Verified DOMPurify 3.3.0 already protecting SearchWithAutocomplete.astro (all user input sanitized before innerHTML), confirmed ShareButtons.astro safe (only hardcoded emoji strings). (4) **Security Documentation**: Created SECURITY.md with comprehensive security audit, documented all implemented protections (XSS, CSP, env vars, input validation, markdown sanitization), added security checklist and future improvements, included security reporting guidelines. Result: Zero XSS vulnerabilities, strict CSP without unsafe-inline for scripts, all environment variables properly documented. Commit: 99b7ff3.
 - 2025-11-16: **Quick Wins Complete - Blog & Mobile UX**: Completed all 3 Quick Wins for improved UX. (1) Created `src/lib/reading-time.ts` utility to calculate reading time at 200 words/min in Portuguese, displayed with clock icon on blog post pages and blog index. (2) Added Related Posts section showing 3 recent posts at bottom of blog articles in 3-column Card grid. (3) Implemented floating mobile filter button (bottom-right) with red badge showing active filter count, opens drawer with overlay, badge updates dynamically via FilterOrchestratorController. Also fixed all TypeScript errors in index.astro with type annotations and assertions. Build passing. Commits: b731f3e (quick wins), 8ed896d (TS fixes).
