@@ -149,14 +149,45 @@ try {
     failAndExit('Duplicate job ids are not allowed.');
   }
 
-  // Logo existence check (in /public)
+  // Logo existence and format validation (in /public)
   const publicRoot = resolve(root, 'public');
+  const VALID_IMAGE_FORMATS = ['.png', '.jpg', '.jpeg', '.svg', '.webp', '.gif'];
+  
   for (const j of jobs) {
     if (j.companyLogo.startsWith('/')) {
       const logoPath = resolve(publicRoot, '.' + j.companyLogo);
+      
+      // Check if file exists
       if (!existsSync(logoPath)) {
         console.error(`- companyLogo not found at ${j.companyLogo} (resolved ${logoPath})`);
         failAndExit('One or more company logos are missing from /public');
+      }
+      
+      // Validate image format
+      const hasValidExtension = VALID_IMAGE_FORMATS.some(ext => 
+        j.companyLogo.toLowerCase().endsWith(ext)
+      );
+      
+      if (!hasValidExtension) {
+        console.error(
+          `- companyLogo has invalid format: ${j.companyLogo} (id: ${j.id})\n` +
+          `  Valid formats: ${VALID_IMAGE_FORMATS.join(', ')}`
+        );
+        failAndExit('Invalid image format detected. Use PNG, JPG, SVG, WebP, or GIF only.');
+      }
+    } else if (j.companyLogo.startsWith('http')) {
+      // Validate external URL format
+      const url = j.companyLogo.toLowerCase();
+      const hasValidExtension = VALID_IMAGE_FORMATS.some(ext => url.includes(ext));
+      
+      // Clearbit URLs don't have extensions, so we check for clearbit domain
+      const isClearbit = url.includes('clearbit.com');
+      
+      if (!hasValidExtension && !isClearbit) {
+        console.warn(
+          `⚠️  Warning: External logo URL may not be a valid image: ${j.companyLogo} (id: ${j.id})\n` +
+          `   Expected formats: ${VALID_IMAGE_FORMATS.join(', ')} or Clearbit URL`
+        );
       }
     }
   }

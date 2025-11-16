@@ -60,30 +60,116 @@ const shareLinks = {
 </div>
 
 <script>
+  /**
+   * Progressive enhancement clipboard copy with 3-tier fallback strategy
+   * Tier 1: Modern Clipboard API (Chrome 63+, Firefox 53+, Safari 13.1+)
+   * Tier 2: execCommand fallback (IE11, older Safari)
+   * Tier 3: Manual copy with temporary input field (universal fallback)
+   */
   document.getElementById('copy-link-button')?.addEventListener('click', async () => {
-    const button = document.getElementById('copy-link-button');
+    const button = document.getElementById('copy-link-button') as HTMLButtonElement | null;
     if (!button) return;
 
     const url = window.location.href;
+    let success = false;
     
+    // Tier 1: Try modern Clipboard API
     try {
-      // Check if clipboard API is available
-      if (!navigator.clipboard) {
-        throw new Error('Clipboard API not available');
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(url);
+        success = true;
       }
-      
-      await navigator.clipboard.writeText(url);
+    } catch (err) {
+      console.warn('Clipboard API failed, trying fallback:', err);
+    }
+    
+    // Tier 2: Try execCommand fallback for older browsers
+    if (!success) {
+      try {
+        const textArea = document.createElement('textarea');
+        textArea.value = url;
+        textArea.style.position = 'fixed';
+        textArea.style.left = '-9999px';
+        textArea.style.top = '-9999px';
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        
+        const successful = document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        if (successful) {
+          success = true;
+        }
+      } catch (err) {
+        console.warn('execCommand fallback failed:', err);
+      }
+    }
+    
+    // Tier 3: Manual copy fallback with better UX than alert
+    if (!success) {
+      try {
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.value = url;
+        input.readOnly = true;
+        input.style.position = 'fixed';
+        input.style.left = '50%';
+        input.style.top = '50%';
+        input.style.transform = 'translate(-50%, -50%)';
+        input.style.width = '80%';
+        input.style.maxWidth = '500px';
+        input.style.padding = '12px';
+        input.style.fontSize = '14px';
+        input.style.border = '2px solid #298639';
+        input.style.borderRadius = '8px';
+        input.style.zIndex = '9999';
+        input.style.backgroundColor = 'white';
+        
+        const overlay = document.createElement('div');
+        overlay.style.position = 'fixed';
+        overlay.style.top = '0';
+        overlay.style.left = '0';
+        overlay.style.width = '100%';
+        overlay.style.height = '100%';
+        overlay.style.backgroundColor = 'rgba(0, 0, 0, 0.5)';
+        overlay.style.zIndex = '9998';
+        
+        document.body.appendChild(overlay);
+        document.body.appendChild(input);
+        input.focus();
+        input.select();
+        
+        // Close on click outside or after 5 seconds
+        const cleanup = () => {
+          document.body.removeChild(input);
+          document.body.removeChild(overlay);
+        };
+        
+        overlay.addEventListener('click', cleanup);
+        setTimeout(cleanup, 5000);
+        
+        console.info('Manual copy fallback activated - please copy the URL manually');
+        return; // Skip success feedback
+      } catch (err) {
+        console.error('All copy methods failed:', err);
+        alert(`Unable to copy automatically. Please copy this link manually:\n\n${url}`);
+        return;
+      }
+    }
+    
+    // Show success feedback
+    if (success) {
       const originalText = button.innerHTML;
-      // Use textContent instead of innerHTML for simple text
       button.textContent = '✓';
+      button.style.backgroundColor = '#298639';
+      button.style.color = 'white';
+      
       setTimeout(() => {
         button.innerHTML = originalText;
+        button.style.backgroundColor = '';
+        button.style.color = '';
       }, 2000);
-    } catch (err) {
-      console.error('Failed to copy:', err);
-      
-      // Fallback: Show alert with URL for manual copy
-      alert(`Copy this link: ${url}`);
     }
   });
 </script>
