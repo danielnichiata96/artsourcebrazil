@@ -3,6 +3,7 @@ import Airtable from 'airtable';
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { config } from 'dotenv';
+import { z } from 'zod';
 
 // Load environment variables
 config();
@@ -15,7 +16,8 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
 }
 
 // Category mapping - maps Airtable categories to canonical categories
-// Must match src/lib/categories.ts
+// ⚠️ IMPORTANT: Must be kept in sync with src/lib/categories.ts AIRTABLE_CATEGORY_MAP
+// Any changes here should be reflected in the central source of truth
 const categoryMap = {
   'VFX': 'VFX',
   'Arte 3D': '3D & Animation',
@@ -42,30 +44,54 @@ const locationScopeMap = {
 };
 
 /**
- * Validate URL string
+ * Zod schema for URL validation
+ * Ensures URLs are properly formatted and use safe protocols
+ */
+const UrlSchema = z
+  .string()
+  .url('Must be a valid URL')
+  .refine(
+    (url) => {
+      try {
+        const parsed = new URL(url);
+        return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+      } catch {
+        return false;
+      }
+    },
+    { message: 'URL must use http:// or https:// protocol' }
+  );
+
+/**
+ * Validate URL string with Zod
  * @param {string} url - URL to validate
  * @returns {boolean} - True if valid, false otherwise
  */
 function isValidUrl(url) {
   if (!url || typeof url !== 'string') return false;
   
-  try {
-    const parsed = new URL(url);
-    // Only allow http and https protocols
-    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
-  } catch {
-    return false;
-  }
+  const result = UrlSchema.safeParse(url);
+  return result.success;
 }
 
 /**
- * Validate and sanitize URL
+ * Validate and sanitize URL with detailed error reporting
  * @param {string} url - URL to validate
+ * @param {string} fieldName - Field name for error reporting
  * @param {string} fallback - Fallback URL if invalid
- * @returns {string} - Valid URL or fallback
+ * @returns {{ url: string, isValid: boolean, error?: string }} - Validation result
  */
-function validateUrl(url, fallback = '#') {
-  return isValidUrl(url) ? url : fallback;
+function validateUrl(url, fieldName = 'URL', fallback = '#') {
+  const result = UrlSchema.safeParse(url);
+  
+  if (result.success) {
+    return { url: result.data, isValid: true };
+  }
+  
+  const error = result.error.errors[0]?.message || 'Invalid URL';
+  console.warn(`⚠️  ${fieldName} validation failed: ${error} (value: ${url})`);
+  
+  return { url: fallback, isValid: false, error };
 }
 
 /**
@@ -203,16 +229,23 @@ async function syncJobs() {
         const companyLogo = getCompanyLogo(record, companyName);
         const applyLink = record.get('Apply Link');
         
-        // Validate URLs before using them
-        if (!isValidUrl(applyLink)) {
-          console.warn(`⚠️  Skipping ${id}: invalid Apply Link URL: ${applyLink}`);
+        // Validate Apply Link URL (critical - must be valid)
+        const applyLinkValidation = validateUrl(applyLink, 'Apply Link');
+        if (!applyLinkValidation.isValid) {
+          console.warn(`⚠️  Skipping ${id}: invalid Apply Link URL: ${applyLink} (${applyLinkValidation.error})`);
           continue;
         }
         
         // Validate logo URL if it's an external URL
-        const validatedLogo = companyLogo.startsWith('http') 
-          ? validateUrl(companyLogo, '/images/company-placeholder.svg')
-          : companyLogo;
+        let validatedLogo = companyLogo;
+        if (companyLogo.startsWith('http')) {
+          const logoValidation = validateUrl(companyLogo, 'Company Logo', '/images/company-placeholder.svg');
+          validatedLogo = logoValidation.url;
+          
+          if (!logoValidation.isValid) {
+            console.warn(`⚠️  ${id}: Using placeholder logo due to invalid URL: ${companyLogo}`);
+          }
+        }
         
         const job = {
           id: id,
@@ -221,7 +254,7 @@ async function syncJobs() {
           jobTitle: record.get('Job Title'),
           description: description,
           shortDescription: shortDesc,
-          applyLink: applyLink,
+          applyLink: applyLinkValidation.url, // Use validated URL
           postedDate: parsePostedDate(record.get('Date Posted')),
           category: categoryMap[rawCategory] || rawCategory,
           tags: tagNames,
