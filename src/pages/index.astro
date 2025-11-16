@@ -328,7 +328,7 @@ const jobPostings = sortedJobs.map((j) => {
 
   const resultsContainer = document.querySelector('[data-jobs]');
   const resultsSummary = document.querySelector('[data-results-summary]');
-  const totalJobs = Number(resultsSummary?.dataset.totalJobs ?? '0');
+  const totalJobs = Number((resultsSummary as HTMLElement)?.dataset.totalJobs ?? '0');
   const resultsCountValue = resultsSummary?.querySelector('[data-results-count-value]');
   const resultsCountContext = resultsSummary?.querySelector('[data-results-count-context]');
   const resultsChipsContainer = document.querySelector('[data-active-filters]');
@@ -339,7 +339,7 @@ const jobPostings = sortedJobs.map((j) => {
   const clearFiltersButton = document.getElementById('clear-filters-sidebar');
   const sidebarCountLabel = document.querySelector('[data-sidebar-count-label]');
 
-  const dataset = resultsSummary?.dataset ?? {};
+  const dataset = (resultsSummary as HTMLElement)?.dataset ?? {};
   const countSingular = dataset.countSingular ?? 'vaga';
   const countPlural = dataset.countPlural ?? 'vagas';
   const contextAll = dataset.contextAll ?? '';
@@ -355,7 +355,7 @@ const jobPostings = sortedJobs.map((j) => {
   })();
   const arrayFields = ['level', 'tools', 'contract', 'location'];
 
-  function formatCount(count) {
+  function formatCount(count: number): string {
     return count === 1 ? countSingular : countPlural;
   }
 
@@ -367,11 +367,11 @@ const jobPostings = sortedJobs.map((j) => {
     }).length;
   }
 
-  function dispatchFilterChange(detail) {
+  function dispatchFilterChange(detail: any): void {
     window.dispatchEvent(new CustomEvent('jobfilters:change', { detail }));
   }
 
-  function createChipElement(label, onRemove) {
+  function createChipElement(label: string, onRemove: () => void): HTMLButtonElement {
     const button = document.createElement('button');
     button.type = 'button';
     button.className =
@@ -398,9 +398,9 @@ const jobPostings = sortedJobs.map((j) => {
     return button;
   }
 
-  function renderChipSet(container, descriptors) {
+  function renderChipSet(container: Element | null, descriptors: Array<{label: string, onRemove: () => void}>): void {
     if (!container) return;
-    const emptyMessage = container.dataset.emptyMessage ?? '';
+    const emptyMessage = (container as HTMLElement).dataset.emptyMessage ?? '';
     container.replaceChildren();
     if (!descriptors.length) {
       const empty = document.createElement('span');
@@ -409,12 +409,12 @@ const jobPostings = sortedJobs.map((j) => {
       container.appendChild(empty);
       return;
     }
-    descriptors.forEach(({ label, onRemove }) => {
+    descriptors.forEach(({ label, onRemove }: {label: string, onRemove: () => void}) => {
       container.appendChild(createChipElement(label, onRemove));
     });
   }
 
-  function updateCounts(count) {
+  function updateCounts(count: number): void {
     if (resultsCountValue) {
       resultsCountValue.textContent = String(count);
     }
@@ -463,8 +463,8 @@ const jobPostings = sortedJobs.map((j) => {
     }
   }
 
-  function buildDescriptors(state) {
-    const descriptors = [];
+  function buildDescriptors(state: any): Array<{label: string, onRemove: () => void}> {
+    const descriptors: Array<{label: string, onRemove: () => void}> = [];
     const searchValue = typeof state?.search === 'string' ? state.search.trim() : '';
     if (searchValue) {
       const label = chipLabels.search ?? 'Busca';
@@ -499,7 +499,7 @@ const jobPostings = sortedJobs.map((j) => {
     return descriptors;
   }
 
-  function updateUI(state = {}) {
+  function updateUI(state: any = {}): void {
     const descriptors = buildDescriptors(state);
     const visibleCount = getVisibleJobCount();
     updateCounts(visibleCount);
@@ -516,7 +516,7 @@ const jobPostings = sortedJobs.map((j) => {
     }
   }
 
-  window.addEventListener('jobfilters:applied', (event) => {
+  window.addEventListener('jobfilters:applied', (event: any) => {
     updateUI(event.detail ?? {});
   });
 
@@ -553,7 +553,7 @@ const jobPostings = sortedJobs.map((j) => {
     }
   }
 
-  function updateFilterBadge(state = {}) {
+  function updateFilterBadge(state: any = {}) {
     if (!filterBadge) return;
     
     let count = 0;
@@ -583,7 +583,7 @@ const jobPostings = sortedJobs.map((j) => {
   mobileOverlay?.addEventListener('click', closeMobileFilters);
 
   // Update badge when filters change
-  window.addEventListener('jobfilters:applied', (event) => {
+  window.addEventListener('jobfilters:applied', (event: any) => {
     updateFilterBadge(event.detail ?? {});
   });
   
