@@ -11,14 +11,17 @@ export default defineConfig({
     contentSecurityPolicy: {
       directives: {
         'default-src': ["'self'"],
-        // Removed 'unsafe-inline' - Astro bundles scripts as external files
-        // If inline scripts are needed, they should use hashes or nonces
+        // ✅ SECURE: No 'unsafe-inline' - Astro compiles <script> tags as external ES modules
+        // All inline scripts are bundled and served from /_astro/*.js
+        // JSON-LD schema scripts use type="application/ld+json" (not executable JS)
         'script-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com'],
-        // Keep unsafe-inline for styles as Tailwind uses inline styles
-        // Consider using style-src-attr if CSS-in-JS becomes an issue
-        'style-src': ["'self'", "'unsafe-inline'"],
+        // Script elements (for external scripts loaded via src attribute)
+        'script-src-elem': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com', 'https://fonts.googleapis.com'],
+        // Style: Keep 'unsafe-inline' for Tailwind inline styles and Astro scoped styles
+        // TODO: Consider migrating to style-src-attr + style-src-elem for stricter policy
+        'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         'img-src': ["'self'", 'data:', 'https:'],
-        'font-src': ["'self'", 'data:'],
+        'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
         'connect-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com'],
         'frame-ancestors': ["'self'"],
         'object-src': ["'none'"],
