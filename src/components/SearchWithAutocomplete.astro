@@ -86,6 +86,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
   import type { Job } from '../lib/jobs';
   import { getSearchSuggestions, highlightMatch } from '../lib/search/autocomplete';
   import type { SearchSuggestion } from '../lib/search/autocomplete';
+  import DOMPurify from 'dompurify';
 
   const allJobs = jobs as Job[];
 
@@ -175,7 +176,8 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
         const icon = this.getIconForType(suggestion.type);
         const highlightedLabel = highlightMatch(suggestion.label, query);
 
-        li.innerHTML = `
+        // Sanitize HTML to prevent XSS attacks
+        const sanitizedHTML = DOMPurify.sanitize(`
           <div class="flex items-start gap-3">
             <div class="flex-shrink-0 mt-0.5 text-neutral-600">
               ${icon}
@@ -184,7 +186,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
               <div class="font-semibold text-neutral-950 truncate">
                 ${highlightedLabel}
               </div>
-              ${suggestion.subtitle ? `<div class="text-sm text-neutral-700 truncate mt-0.5">${suggestion.subtitle}</div>` : ''}
+              ${suggestion.subtitle ? `<div class="text-sm text-neutral-700 truncate mt-0.5">${DOMPurify.sanitize(suggestion.subtitle)}</div>` : ''}
             </div>
             <div class="flex-shrink-0">
               <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold rounded-full border-2 ${this.getBadgeClass(suggestion.type)}">
@@ -192,7 +194,12 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
               </span>
             </div>
           </div>
-        `;
+        `, {
+          ALLOWED_TAGS: ['div', 'span', 'mark', 'svg', 'path'],
+          ALLOWED_ATTR: ['class', 'stroke-linecap', 'stroke-linejoin', 'stroke-width', 'd', 'fill', 'viewBox']
+        });
+
+        li.innerHTML = sanitizedHTML;
 
         // Only add click handler for clickable items (jobs and companies)
         if (isClickable) {
@@ -206,6 +213,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
     }
 
     private showNoResults() {
+      // Safe to use innerHTML here as we're not inserting any user data
       this.resultsList.innerHTML = `
         <li class="px-4 py-8 text-center text-neutral-500">
           <svg class="mx-auto h-12 w-12 text-neutral-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

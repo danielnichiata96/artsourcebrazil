@@ -11,13 +11,19 @@ export default defineConfig({
     contentSecurityPolicy: {
       directives: {
         'default-src': ["'self'"],
-        'script-src': ["'self'", "'unsafe-inline'"],
+        // Removed 'unsafe-inline' - Astro bundles scripts as external files
+        // If inline scripts are needed, they should use hashes or nonces
+        'script-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com'],
+        // Keep unsafe-inline for styles as Tailwind uses inline styles
+        // Consider using style-src-attr if CSS-in-JS becomes an issue
         'style-src': ["'self'", "'unsafe-inline'"],
         'img-src': ["'self'", 'data:', 'https:'],
         'font-src': ["'self'", 'data:'],
-        'connect-src': ["'self'"],
+        'connect-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com'],
         'frame-ancestors': ["'self'"],
         'object-src': ["'none'"],
+        'base-uri': ["'self'"],
+        'form-action': ["'self'", 'https://buttondown.email'],
       },
     },
   },

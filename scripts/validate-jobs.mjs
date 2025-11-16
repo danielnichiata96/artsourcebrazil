@@ -9,14 +9,12 @@ const __dirname = dirname(__filename);
 const root = resolve(__dirname, '..');
 const jobsPath = resolve(root, 'src', 'data', 'jobs.json');
 
+// Valid categories matching src/lib/categories.ts
 const Categories = z.enum([
   'Game Dev',
   '3D & Animation',
   'Design',
   'VFX',
-  'Arte 3D',
-  'UX/UI',
-  'QA',
 ]);
 
 const LocationScope = z.enum([
@@ -107,6 +105,20 @@ function failAndExit(message) {
 
 try {
   const raw = readFileSync(jobsPath, 'utf-8');
+  
+  // Check file size (max 5MB to prevent performance issues)
+  const fileSizeInMB = Buffer.byteLength(raw, 'utf-8') / (1024 * 1024);
+  const MAX_FILE_SIZE_MB = 5;
+  
+  if (fileSizeInMB > MAX_FILE_SIZE_MB) {
+    failAndExit(
+      `jobs.json is too large (${fileSizeInMB.toFixed(2)}MB). Maximum allowed size is ${MAX_FILE_SIZE_MB}MB. ` +
+      `Consider archiving old jobs or optimizing data.`
+    );
+  }
+  
+  console.log(`📊 File size: ${fileSizeInMB.toFixed(2)}MB / ${MAX_FILE_SIZE_MB}MB`);
+  
   let data;
   try {
     data = JSON.parse(raw);

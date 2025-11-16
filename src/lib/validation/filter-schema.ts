@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { FILTER_CATEGORIES, type FilterCategory } from '../categories';
 
 /**
  * Schema for validating filter state
@@ -28,19 +29,14 @@ export const PartialFilterStateSchema = FilterStateSchema.partial();
 export type PartialFilterState = z.infer<typeof PartialFilterStateSchema>;
 
 /**
- * Valid job categories
+ * Valid job categories - imported from categories.ts
  */
-export const VALID_CATEGORIES = [
-  'all',
-  'Game Dev',
-  '3D & Animation',
-  'Design (UI/UX)',
-] as const;
+export { FILTER_CATEGORIES as VALID_CATEGORIES };
 
 /**
  * Schema for validating category
  */
-export const CategorySchema = z.enum(['all', 'Game Dev', '3D & Animation', 'Design']);
+export const CategorySchema = z.enum(FILTER_CATEGORIES);
 
 /**
  * Parse and validate URL search params safely

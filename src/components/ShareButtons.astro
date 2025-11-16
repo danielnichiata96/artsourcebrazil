@@ -67,14 +67,23 @@ const shareLinks = {
     const url = window.location.href;
     
     try {
+      // Check if clipboard API is available
+      if (!navigator.clipboard) {
+        throw new Error('Clipboard API not available');
+      }
+      
       await navigator.clipboard.writeText(url);
       const originalText = button.innerHTML;
-      button.innerHTML = '✓';
+      // Use textContent instead of innerHTML for simple text
+      button.textContent = '✓';
       setTimeout(() => {
         button.innerHTML = originalText;
       }, 2000);
     } catch (err) {
       console.error('Failed to copy:', err);
+      
+      // Fallback: Show alert with URL for manual copy
+      alert(`Copy this link: ${url}`);
     }
   });
 </script>

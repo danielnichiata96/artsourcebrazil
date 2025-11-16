@@ -14,15 +14,18 @@ if (!AIRTABLE_API_KEY || !AIRTABLE_BASE_ID) {
   process.exit(1);
 }
 
-// Category mapping
+// Category mapping - maps Airtable categories to canonical categories
+// Must match src/lib/categories.ts
 const categoryMap = {
   'VFX': 'VFX',
   'Arte 3D': '3D & Animation',
   '3D': '3D & Animation',
   'UX/UI': 'Design',
   'Design': 'Design',
+  'Design (UI/UX)': 'Design',
   'Game Dev': 'Game Dev',
   'Programação': 'Game Dev',
+  'QA': 'Game Dev', // Map QA to Game Dev as it's game-related
 };
 
 // Location scope mapping (matches Airtable values exactly)
@@ -37,6 +40,33 @@ const locationScopeMap = {
   'Remoto (Brasil)': 'remote-brazil',
   'Remoto (LATAM)': 'remote-latam',
 };
+
+/**
+ * Validate URL string
+ * @param {string} url - URL to validate
+ * @returns {boolean} - True if valid, false otherwise
+ */
+function isValidUrl(url) {
+  if (!url || typeof url !== 'string') return false;
+  
+  try {
+    const parsed = new URL(url);
+    // Only allow http and https protocols
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Validate and sanitize URL
+ * @param {string} url - URL to validate
+ * @param {string} fallback - Fallback URL if invalid
+ * @returns {string} - Valid URL or fallback
+ */
+function validateUrl(url, fallback = '#') {
+  return isValidUrl(url) ? url : fallback;
+}
 
 /**
  * Get company logo with smart fallback strategy:
@@ -68,8 +98,12 @@ function getCompanyLogo(record, companyName) {
   
   // Use Clearbit Logo API as fallback (free, 100k requests/month)
   // Returns transparent PNG, auto-sized
+  // Note: Clearbit may return 404 for unknown companies, browsers will show placeholder
   if (domain) {
-    return `https://logo.clearbit.com/${domain}.com`;
+    const clearbitUrl = `https://logo.clearbit.com/${domain}.com`;
+    // We don't validate Clearbit URLs at build time since they might be slow
+    // The browser will handle 404s gracefully and fall back to alt text
+    return clearbitUrl;
   }
   
   // Final fallback
@@ -166,15 +200,28 @@ async function syncJobs() {
           : description;
         
         const companyName = getCompanyName(record);
+        const companyLogo = getCompanyLogo(record, companyName);
+        const applyLink = record.get('Apply Link');
+        
+        // Validate URLs before using them
+        if (!isValidUrl(applyLink)) {
+          console.warn(`⚠️  Skipping ${id}: invalid Apply Link URL: ${applyLink}`);
+          continue;
+        }
+        
+        // Validate logo URL if it's an external URL
+        const validatedLogo = companyLogo.startsWith('http') 
+          ? validateUrl(companyLogo, '/images/company-placeholder.svg')
+          : companyLogo;
         
         const job = {
           id: id,
           companyName: companyName,
-          companyLogo: getCompanyLogo(record, companyName),
+          companyLogo: validatedLogo,
           jobTitle: record.get('Job Title'),
           description: description,
           shortDescription: shortDesc,
-          applyLink: record.get('Apply Link'),
+          applyLink: applyLink,
           postedDate: parsePostedDate(record.get('Date Posted')),
           category: categoryMap[rawCategory] || rawCategory,
           tags: tagNames,

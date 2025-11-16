@@ -3,6 +3,8 @@
  * Centralized configuration values to avoid magic numbers and strings
  */
 
+import { CATEGORY_ICONS } from './categories';
+
 export const FILTER_CONFIG = {
   /** Debounce time for search input in milliseconds */
   DEBOUNCE_MS: 150,
@@ -52,12 +54,8 @@ export const FILTER_DEFAULTS = {
   LOCATION: [] as string[],
 } as const;
 
-/** Category emoji icons mapping */
-export const CATEGORY_ICONS: Record<string, string> = {
-  'Game Dev': '🎮',
-  '3D & Animation': '🎨',
-  'Design': '🎯',
-} as const;
+/** Category emoji icons mapping - imported from categories.ts */
+export { CATEGORY_ICONS };
 
 /** Fallback navbar height in pixels when unable to calculate */
 export const FALLBACK_NAVBAR_HEIGHT = 80;
