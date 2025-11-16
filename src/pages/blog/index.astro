@@ -3,6 +3,7 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import Card from '../../components/ui/Card.astro';
 import Link from '../../components/ui/Link.astro';
+import { calculateReadingTime, formatReadingTime } from '../../lib/reading-time';
 
 const seo = {
   title: 'Blog | Art Source Brazil',
@@ -25,21 +26,33 @@ const posts = (await getCollection('blog'))
 
     <div class="mt-12 grid gap-8">
       {
-        posts.map((post) => (
-          <Link href={`/blog/${post.slug}`} class="block">
-            <Card variant="default" padding="md" class="transition-all hover:shadow-md">
-              <h2 class="font-serif text-3xl font-bold text-neutral-900">{post.data.title}</h2>
-              <p class="mt-2 text-lg text-neutral-600">{post.data.description}</p>
-              <div class="mt-4 text-sm text-neutral-500">
-                <time datetime={post.data.publishDate.toISOString()}>
-                  {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' }).format(
-                    post.data.publishDate,
-                  )}
-                </time>
-              </div>
-            </Card>
-          </Link>
-        ))
+        posts.map((post) => {
+          const readingTime = calculateReadingTime(post.body);
+          const readingTimeText = formatReadingTime(readingTime, 'pt-BR');
+          
+          return (
+            <Link href={`/blog/${post.slug}`} class="block">
+              <Card variant="default" padding="md" class="transition-all hover:shadow-md">
+                <h2 class="font-serif text-3xl font-bold text-neutral-900">{post.data.title}</h2>
+                <p class="mt-2 text-lg text-neutral-600">{post.data.description}</p>
+                <div class="mt-4 flex items-center gap-4 text-sm text-neutral-500">
+                  <time datetime={post.data.publishDate.toISOString()}>
+                    {new Intl.DateTimeFormat('pt-BR', { dateStyle: 'long' }).format(
+                      post.data.publishDate,
+                    )}
+                  </time>
+                  <span class="text-neutral-400">•</span>
+                  <span class="flex items-center gap-1">
+                    <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    {readingTimeText}
+                  </span>
+                </div>
+              </Card>
+            </Link>
+          );
+        })
       }
     </div>
   </main>

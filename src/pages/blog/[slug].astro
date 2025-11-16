@@ -1,6 +1,9 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import Card from '../../components/ui/Card.astro';
+import Link from '../../components/ui/Link.astro';
+import { calculateReadingTime, formatReadingTime } from '../../lib/reading-time';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -14,6 +17,16 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await post.render();
+
+// Calculate reading time
+const readingTime = calculateReadingTime(post.body);
+const readingTimeText = formatReadingTime(readingTime, 'en-US');
+
+// Get related posts (other posts, sorted by date, max 3)
+const allPosts = (await getCollection('blog'))
+  .filter((p) => !p.data.isDraft && p.slug !== post.slug)
+  .sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+  .slice(0, 3);
 
 const seo = {
   title: `${post.data.title} | Art Source Brazil Blog`,
@@ -68,12 +81,53 @@ const logoUrl = new URL('/images/og-default.svg', site).href;
         )
       }
       <h1>{post.data.title}</h1>
-      <div class="mb-8 text-sm text-neutral-500">
-        Published on <time datetime={post.data.publishDate.toISOString()}>
+      <div class="not-prose mb-8 flex items-center gap-4 text-sm text-neutral-600">
+        <time datetime={post.data.publishDate.toISOString()}>
           {new Intl.DateTimeFormat('en-US', { dateStyle: 'long' }).format(post.data.publishDate)}
         </time>
+        <span class="text-neutral-400">•</span>
+        <span class="flex items-center gap-1">
+          <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+          </svg>
+          {readingTimeText}
+        </span>
       </div>
       <Content />
     </article>
+
+    {allPosts.length > 0 && (
+      <section class="mt-16 border-t-4 border-neutral-900 pt-12">
+        <h2 class="mb-8 font-serif text-3xl font-bold text-neutral-900">Related Posts</h2>
+        <div class="grid gap-6 md:grid-cols-3">
+          {allPosts.map((relatedPost) => {
+            const relatedReadingTime = calculateReadingTime(relatedPost.body);
+            const relatedReadingTimeText = formatReadingTime(relatedReadingTime, 'en-US');
+            
+            return (
+              <Link href={`/blog/${relatedPost.slug}`} class="block">
+                <Card variant="default" padding="sm" class="h-full transition-all hover:shadow-md">
+                  <h3 class="font-serif text-xl font-bold text-neutral-900 line-clamp-2">
+                    {relatedPost.data.title}
+                  </h3>
+                  <p class="mt-2 text-sm text-neutral-600 line-clamp-2">
+                    {relatedPost.data.description}
+                  </p>
+                  <div class="mt-4 flex items-center gap-2 text-xs text-neutral-500">
+                    <time datetime={relatedPost.data.publishDate.toISOString()}>
+                      {new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(
+                        relatedPost.data.publishDate,
+                      )}
+                    </time>
+                    <span class="text-neutral-400">•</span>
+                    <span>{relatedReadingTimeText}</span>
+                  </div>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      </section>
+    )}
   </main>
 </Layout>
