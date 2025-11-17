@@ -82,7 +82,7 @@ const jobPosting = {
   hiringOrganization: {
     '@type': 'Organization',
     name: job.companyName,
-    sameAs: job.applyLink,
+    sameAs: job.companyWebsite || job.applyLink, // Prefer company website
     logo: new URL(job.companyLogo, site).href,
   },
   jobLocation: {
@@ -93,12 +93,23 @@ const jobPosting = {
       addressLocality: structuredLocality,
     },
   },
-  directApply: true,
   identifier: {
     '@type': 'PropertyValue',
     name: job.companyName,
     value: job.id,
   },
+  ...(job.salary && {
+    baseSalary: {
+      '@type': 'MonetaryAmount',
+      currency: job.salary.currency || 'BRL',
+      value: {
+        '@type': 'QuantitativeValue',
+        ...(job.salary.min && { minValue: job.salary.min }),
+        ...(job.salary.max && { maxValue: job.salary.max }),
+        unitText: job.salary.unit || 'MONTH',
+      },
+    },
+  }),
 };
 
 // BreadcrumbList JSON-LD
@@ -243,9 +254,10 @@ const breadcrumbs = {
       </article>
 
       <!-- Sidebar (1/3 width on desktop) -->
-      <aside class="lg:col-span-1 space-y-6">
+      <aside class="lg:col-span-1">
+        <div class="space-y-6 lg:sticky lg:top-6 lg:self-start">
         <!-- Company Info Box -->
-        <Card padding="lg" class="bg-neutral-50 sticky top-6">
+        <Card padding="lg" class="bg-neutral-50">
           <h2 class="mb-4 text-xl font-bold text-neutral-900">Sobre {job.companyName}</h2>
           <div class="space-y-4">
             <Image
@@ -296,6 +308,7 @@ const breadcrumbs = {
             Respeitamos sua privacidade. Sem spam. Powered by <a href="https://buttondown.email" target="_blank" rel="noopener noreferrer" class="underline hover:text-primary">Buttondown</a>.
           </p>
         </Card>
+        </div>
       </aside>
     </div>
 

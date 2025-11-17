@@ -6,12 +6,14 @@ export type SalaryRange = {
   min?: number | null;
   max?: number | null;
   currency: string; // ISO 4217 (BRL, USD, EUR)
+  unit?: 'HOUR' | 'DAY' | 'WEEK' | 'MONTH' | 'YEAR' | null;
 };
 
 export type Job = {
   id: string;
   companyName: string;
   companyLogo: string;
+  companyWebsite?: string | null;
   jobTitle: string;
   description: string;
   shortDescription?: string | null; // For cards/previews
