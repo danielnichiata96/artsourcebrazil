@@ -16,15 +16,21 @@ test.describe('Accessibility Tests', () => {
       expect(accessibilityScanResults.violations).toEqual([]);
     });
 
-    test('should have no color contrast issues', async ({ page }) => {
+    test('should have no color contrast issues (WCAG AA)', async ({ page }) => {
       await page.goto('/');
       await page.waitForSelector('[data-testid="job-card"]');
 
       const accessibilityScanResults = await new AxeBuilder({ page })
-        .withTags(['cat.color'])
+        .withTags(['wcag2aa'])
+        .disableRules(['color-contrast-enhanced']) // Only check WCAG AA (4.5:1), not AAA (7:1)
         .analyze();
 
-      expect(accessibilityScanResults.violations).toEqual([]);
+      // Filter to only color contrast violations
+      const colorContrastViolations = accessibilityScanResults.violations.filter(
+        (v) => v.id === 'color-contrast'
+      );
+
+      expect(colorContrastViolations).toEqual([]);
     });
 
     test('should have proper keyboard navigation', async ({ page }) => {

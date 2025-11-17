@@ -52,7 +52,7 @@ const translations = {
       clear: 'Limpar filtros',
       clearShort: 'Limpar',
       emptyList:
-        'Nenhuma vaga encontrada com os filtros selecionados. Ajuste sua busca ou limpe os filtros para ver todas as vagas disponíveis.',
+        'Nenhuma vaga encontrada com esses filtros. Tenta ajustar a busca ou limpar os filtros pra ver todas as vagas.',
       removeTemplate: 'Remover filtro {label}',
       chips: {
         search: 'Busca',
@@ -68,7 +68,7 @@ const translations = {
       toggleAria: 'Abrir filtros',
       closeAria: 'Fechar filtros',
       searchLabel: 'Buscar vagas',
-      searchPlaceholder: 'Cargo, empresa ou skill...',
+      searchPlaceholder: 'Buscar vaga, empresa, skill...',
       category: 'Categoria',
       allCategories: 'Todas as vagas',
       level: 'Nível',
@@ -80,8 +80,8 @@ const translations = {
       sidebarTitle: 'Resultados',
       sidebarEmpty: 'Nenhum filtro ativo.',
       sidebarClear: 'Limpar',
-      loadingMessage: 'Filtrando vagas...',
-      errorMessage: 'Não foi possível aplicar os filtros. Tente novamente.',
+      loadingMessage: 'Buscando vagas...',
+      errorMessage: 'Ops, algo deu errado. Tenta de novo?',
     },
     job: {
       new: 'Nova',
@@ -157,7 +157,7 @@ const translations = {
       clear: 'Clear filters',
       clearShort: 'Clear',
       emptyList:
-        'No jobs match your filters. Adjust your search or clear everything to see every open role.',
+        'No jobs match your filters. Try adjusting your search or clear everything to see all open roles.',
       removeTemplate: 'Remove filter {label}',
       chips: {
         search: 'Search',
@@ -185,8 +185,8 @@ const translations = {
       sidebarTitle: 'Results',
       sidebarEmpty: 'No filters active.',
       sidebarClear: 'Clear',
-      loadingMessage: 'Filtering jobs...',
-      errorMessage: 'We could not apply your filters. Please try again.',
+      loadingMessage: 'Searching...',
+      errorMessage: 'Oops, something went wrong. Try again?',
     },
     job: {
       new: 'New',

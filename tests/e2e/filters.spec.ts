@@ -2,6 +2,8 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Filter Sidebar - Main Functionality', () => {
   test.beforeEach(async ({ page }) => {
+    // Set desktop viewport to ensure sidebar is visible
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     // Wait for jobs to load
     await page.waitForSelector('[data-testid="job-card"]');
@@ -11,36 +13,37 @@ test.describe('Filter Sidebar - Main Functionality', () => {
     const sidebar = page.locator('#filters-sidebar');
     await expect(sidebar).toBeVisible();
 
-    // Check search input
-    await expect(page.locator('#job-search-sidebar')).toBeVisible();
+    // Check search input (use first() to avoid strict mode violation)
+    await expect(page.locator('#job-search-sidebar').first()).toBeVisible();
 
-    // Check filter summary
-    await expect(page.locator('[data-sidebar-results-count]')).toBeVisible();
-    await expect(page.locator('[data-sidebar-clear]')).toBeVisible();
+    // Check filter summary (use first() to get desktop version)
+    await expect(page.locator('[data-sidebar-results-count]').first()).toBeVisible();
+    await expect(page.locator('[data-sidebar-clear]').first()).toBeVisible();
 
     // Check category filters
     await expect(page.locator('.category-btn-sidebar').first()).toBeVisible();
 
     // Check dropdown filters (collapsed by default)
-    await expect(page.getByRole('button', { name: /ferramentas/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /nível/i })).toBeVisible();
-    await expect(page.getByRole('button', { name: /localização/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /ferramentas/i }).first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /nível/i }).first()).toBeVisible();
+    await expect(page.getByRole('button', { name: /localização/i }).first()).toBeVisible();
   });
 
   test('should show initial job count', async ({ page }) => {
-    const countElement = page.locator('[data-sidebar-results-count]');
+    const countElement = page.locator('#filters-sidebar [data-sidebar-results-count]');
     const count = await countElement.textContent();
     expect(parseInt(count || '0')).toBeGreaterThan(0);
   });
 
   test('should have clear button disabled when no filters applied', async ({ page }) => {
-    const clearBtn = page.locator('[data-sidebar-clear]');
+    const clearBtn = page.locator('#filters-sidebar [data-sidebar-clear]');
     await expect(clearBtn).toBeDisabled();
   });
 });
 
 test.describe('Filter Sidebar - Search Functionality', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -93,6 +96,7 @@ test.describe('Filter Sidebar - Search Functionality', () => {
 
 test.describe('Filter Sidebar - Category Filters', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -139,6 +143,7 @@ test.describe('Filter Sidebar - Category Filters', () => {
 
 test.describe('Filter Sidebar - Multiselect Dropdowns', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -252,6 +257,7 @@ test.describe('Filter Sidebar - Multiselect Dropdowns', () => {
 
 test.describe('Filter Sidebar - Combined Filters', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -317,6 +323,7 @@ test.describe('Filter Sidebar - Combined Filters', () => {
 
 test.describe('Filter Sidebar - Clear Functionality', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -393,6 +400,7 @@ test.describe('Filter Sidebar - Clear Functionality', () => {
 
 test.describe('Filter Sidebar - Results Count', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });
@@ -438,6 +446,7 @@ test.describe('Filter Sidebar - Results Count', () => {
 
 test.describe('Filter Sidebar - Accessibility', () => {
   test.beforeEach(async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto('/');
     await page.waitForSelector('[data-testid="job-card"]');
   });

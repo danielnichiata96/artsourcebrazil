@@ -21,16 +21,15 @@ const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
 <Layout seo={seo}>
   <main class="container mx-auto px-container py-12">
     <Card variant="elevated" padding="lg" class="mx-auto max-w-3xl text-center">
-      <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Post Your Job Opportunity</h1>
+      <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Anunciar Vaga</h1>
       <p class="mb-8 text-lg text-neutral-600">
-        Connect with Brazil's top creative talent in Game Dev, 3D, and Design.
+        Seu anúncio fica 30 dias no ar e chega direto nos melhores talentos criativos do Brasil.
       </p>
 
       <div class="mb-8 rounded-lg border-l-4 border-accent bg-accent-light p-6">
         <p class="text-2xl font-bold text-neutral-900">$99 USD</p>
         <p class="mt-2 text-neutral-700">
-          Your job post will be featured for 30 days, reaching a dedicated community of
-          professionals.
+          Sua vaga fica 30 dias no ar pra uma comunidade focada em arte e games.
         </p>
       </div>
 
@@ -38,15 +37,15 @@ const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
         href={paymentLink}
         size="lg"
         class="w-full"
-        aria-label="Proceed to Payment and Post Job"
+        aria-label="Ir para pagamento"
       >
-        Proceed to Payment & Post Job
+        Pagar e anunciar vaga
       </Button>
 
       <p class="mt-6 text-xs text-neutral-600">
-        After a successful payment, you will be redirected to a simple form to submit your job
-        details. It's fast and easy. If not redirected, you can open the form here:
-        <Link href={jobFormUrl} target="_blank" rel="noopener noreferrer">Submit Job Details</Link>.
+        Depois do pagamento, você preenche um formulário rápido com os detalhes da vaga.
+        Se não abrir automaticamente, é só <Link href={jobFormUrl} target="_blank" rel="noopener noreferrer">clicar aqui</Link>.
+        Dúvidas? Manda email pra <Link href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</Link>
       </p>
     </Card>
   </main>

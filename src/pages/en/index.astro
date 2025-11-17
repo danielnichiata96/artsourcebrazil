@@ -102,7 +102,7 @@ const jobPostings = sortedJobs.map((j) => {
         <div class="relative container mx-auto px-container py-8">
           <div class="flex flex-col items-center gap-5 text-center">
             <!-- Badge acima do logo -->
-            <div class="inline-block rounded-full bg-accent-light px-4 py-2 text-sm font-bold text-primary shadow-sm mb-6">
+            <div class="inline-block rounded-full bg-accent-light px-4 py-2 text-sm font-bold text-neutral-950 shadow-sm mb-6 border-2 border-neutral-900">
               {heroMessages.badge}
             </div>
             
@@ -116,7 +116,9 @@ const jobPostings = sortedJobs.map((j) => {
               class="h-20 w-auto"
             />
               <h1 class="max-w-3xl font-serif text-3xl font-extrabold leading-tight tracking-tight text-neutral-950 sm:text-4xl lg:text-5xl">
-                {heroMessages.title}
+                <span class="inline-block border-b-4 border-neutral-900 pb-1">
+                  {heroMessages.title}
+                </span>
               </h1>
               <p class="max-w-xl text-base leading-relaxed text-neutral-700">
                 {heroMessages.description}
@@ -128,7 +130,7 @@ const jobPostings = sortedJobs.map((j) => {
               <div class="relative mx-auto max-w-4xl">
                 <SearchWithAutocomplete
                   placeholder="Search jobs, companies or skills..."
-                  class="rounded-2xl border-4 border-neutral-900 shadow-illustration py-4 pl-14 pr-4 text-base font-semibold hover:border-primary focus:border-primary focus:ring-4 focus:ring-primary/20 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
+                  class="rounded-2xl border-4 border-neutral-900 shadow-illustration py-4 pl-14 pr-4 text-base font-semibold hover:border-primary focus:border-primary focus:ring-8 focus:ring-primary/15 sm:py-5 sm:pl-16 sm:pr-6 sm:text-lg"
                 />
               </div>
               
@@ -270,6 +272,17 @@ const jobPostings = sortedJobs.map((j) => {
 <script>
   // @ts-nocheck - Inline script with runtime type safety
   import { FilterOrchestratorController } from '../../lib/filters/orchestrator-controller';
+  // Shortcut: focus search on "/" key
+  window.addEventListener('keydown', (e) => {
+    const tag = document.activeElement?.tagName;
+    if (e.key === '/' && tag !== 'INPUT' && tag !== 'TEXTAREA') {
+      e.preventDefault();
+      const input = document.querySelector('[data-autocomplete-input]')
+        || document.querySelector('input[type="search"]')
+        || document.querySelector('input');
+      input?.focus();
+    }
+  });
 
   const resultsContainer = document.querySelector('[data-jobs]');
   const resultsSummary = document.querySelector('[data-results-summary]');

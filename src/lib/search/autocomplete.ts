@@ -82,40 +82,6 @@ export function getSearchSuggestions(
     }
   }
 
-  // Match skills/tags (lowest priority, only if space left)
-  if (suggestions.length < maxResults) {
-    const skills = new Map<string, number>();
-
-    // Collect all skills with job count
-    for (const job of jobs) {
-      for (const tag of job.tags) {
-        const tagLower = tag.toLowerCase();
-        if (tagLower.includes(lowerQuery)) {
-          skills.set(tag, (skills.get(tag) || 0) + 1);
-        }
-      }
-    }
-
-    // Sort by frequency and add to suggestions
-    const sortedSkills = Array.from(skills.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, maxResults - suggestions.length);
-
-    for (const [skill, count] of sortedSkills) {
-      const matchKey = `skill:${skill}`;
-      if (!seen.has(matchKey)) {
-        suggestions.push({
-          type: 'skill',
-          label: skill,
-          value: skill,
-          subtitle: `${count} vaga${count > 1 ? 's' : ''}`,
-          // Skills are not clickable - just informational
-        });
-        seen.add(matchKey);
-      }
-    }
-  }
-
   return suggestions.slice(0, maxResults);
 }
 

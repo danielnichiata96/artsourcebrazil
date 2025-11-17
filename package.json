@@ -12,6 +12,7 @@
     "format": "prettier . --write",
     "format:check": "prettier . --check",
     "validate:jobs": "node scripts/validate-jobs.mjs",
+    "validate:json-ld": "node scripts/validate-json-ld.mjs",
     "sync:airtable": "node scripts/sync-airtable.mjs",
     "sync:validate": "npm run sync:airtable && npm run validate:jobs",
     "test": "vitest run",

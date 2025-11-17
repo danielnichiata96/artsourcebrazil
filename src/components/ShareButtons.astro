@@ -15,46 +15,55 @@ const shareLinks = {
 ---
 
 <div class:list={['flex items-center gap-4', className]}>
-  <p class="text-sm font-semibold text-gray-700">Share this job:</p>
-  <div class="flex items-center gap-2">
+  <p class="text-sm font-semibold text-neutral-800">Share this job:</p>
+  <div class="flex items-center gap-3">
     <a
       href={shareLinks.twitter}
       target="_blank"
       rel="noopener noreferrer"
-      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-blue-100"
-      aria-label="Share on Twitter"
-      title="Share on Twitter"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
+      aria-label="Share on X"
+      title="Share on X"
     >
-      𝕏
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 3l18 18M21 3L3 21"/>
+      </svg>
     </a>
     <a
       href={shareLinks.linkedin}
       target="_blank"
       rel="noopener noreferrer"
-      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-blue-100"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
       aria-label="Share on LinkedIn"
       title="Share on LinkedIn"
     >
-      in
+      <span class="font-extrabold text-[15px] leading-none">in</span>
     </a>
     <a
       href={shareLinks.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-green-100"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
       aria-label="Share on WhatsApp"
       title="Share on WhatsApp"
     >
-      📱
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <rect x="7" y="3" width="10" height="18" rx="2" />
+        <circle cx="12" cy="6" r="0.5" />
+        <path d="M10 17h4" />
+      </svg>
     </a>
     <button
       id="copy-link-button"
       type="button"
-      class="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100 text-xl transition-colors hover:bg-gray-200"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
       aria-label="Copy link to clipboard"
       title="Copy link"
     >
-      🔗
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0L10.7 6.22" />
+        <path d="M13.3 17.78L12 19.1a5 5 0 01-7.07 0 5 5 0 010-7.07L6.34 10a5 5 0 017.07 0" />
+      </svg>
     </button>
   </div>
 </div>
