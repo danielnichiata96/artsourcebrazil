@@ -244,7 +244,13 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Link from job pages to company pages
   - [x] "Companies" link added to main navigation
   - [x] Site expanded from 17 to 22 pages (+5 pages: 1 index + 4 companies)
-- [x] **OG Images & Social Sharing**
+- [x] **OG Images & Social Sharing** ✅ COMPLETO (Parcial)
+  - [x] Dynamic OG image generation with Satori for job pages
+  - [x] Share buttons (Twitter, LinkedIn, WhatsApp, Copy Link) on job pages
+  - [x] All individual job pages have custom social sharing images
+  - [ ] OG images for category pages (using generic fallback)
+  - [ ] OG images for company pages (using company logo)
+  - [ ] OG images for blog posts (using heroImage or fallback)
   - [x] Dynamic OG image generation with Satori for each job page
   - [x] Share buttons component (Twitter, LinkedIn, WhatsApp, Copy Link)
   - [x] Fixed infinite loading issue by removing React dependencies
@@ -273,20 +279,20 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Add "Related Posts" section to blog posts ✅
   - [x] Add reading time estimate to blog posts ✅
   - [ ] Add author bio section
-- [ ] **OG Images Enhancement**
-  - [ ] Generate unique OG images for category pages (Satori)
-  - [ ] Generate OG images for blog posts (Satori)
-  - [ ] Generate OG images for company pages
-  - [ ] Generate OG images for skills pages (when implemented)
-  - [ ] Add OG image cache/optimization
+- [ ] **OG Images Enhancement (Low Priority)**
+  - **Nota**: Páginas de vagas individuais JÁ têm OG images dinâmicas com Satori ✅
+  - [ ] Generate unique OG images for category pages (Satori) - atualmente sem imagem customizada
+  - [ ] Generate OG images for blog posts (Satori) - atualmente usa heroImage ou fallback
+  - [ ] Generate OG images for company pages - atualmente usa logo da empresa
+  - **Consideração**: Enhancement é opcional, páginas já têm imagens adequadas para compartilhamento
 - [ ] **Discord/Slack community**
-  - Set up Discord server or Slack workspace for community
+  - Set up Discord server for community
   - Update /about page with real invite link
 - [ ] **Contribution guide**
   - Simple CONTRIBUTING.md for adding jobs via PR
   - Template for job JSON format
   - [ ] **A11y deeper audit**
-  - [x] Color contrast audit (WCAG AA - 91% compliant, 2 tests failing)
+  - [x] Color con trast audit (WCAG AA - 91% compliant, 2 tests failing)
   - [x] Focus-visible indicators implemented
   - [x] Automated accessibility tests with axe-core (21 tests, 20/22 passing)
   - [x] Fixed heading hierarchy (h3 → h2, tests passing)
