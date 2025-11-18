@@ -8,7 +8,9 @@ export default defineConfig({
   site: 'https://artsourcebrazil.vercel.app/', // Production URL - update with custom domain when available
   integrations: [tailwind(), sitemap()],
   output: 'hybrid', // Hybrid mode: SSG for pages, SSR for API routes
-  adapter: vercel(), // Enable serverless functions for SSR routes
+  adapter: vercel({
+    runtime: 'nodejs20.x',
+  }), // Enable serverless functions for SSR routes
   security: {
     contentSecurityPolicy: {
       directives: {
