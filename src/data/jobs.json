@@ -1,180 +1,373 @@
 [
   {
-    "id": "FG-002",
-    "companyName": "Fortis Games",
-    "companyLogo": "/images/companies/fortisgames.png",
-    "jobTitle": "QA Engineer II (Unity/SDKs)",
-    "description": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScript, C#, Python), experiência prática com bibliotecas de automação (como Playwright, Cypress ou WebdriverIO) e familiaridade com AWS, CI/CD e SQL.",
-    "shortDescription": "Buscamos um(a) Engenheiro de QA II (QA Técnico) para construir e manter nossos frameworks de automação. A função foca em criar ferramentas de eficiência e testes automatizados para ferramentas internas e SDKs (web/mobile). O candidato ideal deve ter forte conhecimento em programação (JS/TypeScrip...",
-    "applyLink": "https://www.fortisgames.com/en-us/careers?gh_jid=4573387005",
-    "postedDate": "2025-11-12T00:00:00.000Z",
-    "category": "Game Dev",
-    "tags": [
-      "Javascript",
-      "Typescript",
-      "C#",
-      "Python",
-      "Playwright",
-      "Cypress",
-      "AWS",
-      "Linux",
-      "CI/CD",
-      "DevOps tooling"
-    ],
-    "location": {
-      "scope": "remote-brazil"
-    }
-  },
-  {
-    "id": "WL-001",
+    "id": "WIL-155002",
     "companyName": "Wildlife Studios",
     "companyLogo": "/images/companies/wildlifestudios.svg",
-    "jobTitle": "Senior 3D Game Artist",
-    "description": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os workflows de IA Generativa (Gen-AI) para acelerar a iteração. É uma vaga altamente colaborativa e de ritmo rápido, que exige experiência profunda em Unity e paixão por criar jogos.",
-    "shortDescription": "Procuramos um(a) Senior 3D Game Artist que seja um(a) verdadeiro(a) generalista, confortável em transitar entre disciplinas 2D e 3D (concept, modelagem, textura, iluminação, animação). Uma parte única e essencial da função é ser um(a) \"Nativo de IA\": você usará ativamente e ajudará a evoluir os w...",
-    "applyLink": "https://careers.wildlifestudios.com/jobs/senior-3d-game-artist-8282998002/",
-    "postedDate": "2025-11-12T00:00:00.000Z",
-    "category": "3D & Animation",
+    "jobTitle": "Senior 2D Game Artist",
+    "description": "The Art Team at Wildlife is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artists working in synergy with designers, engineers, and PMs to create iconic mobile games. We embrace innovation and creative ownership, and are continuously evolving our processes, including exploring how emerging tools like Gen-AI can support faster and more inspired iterations. About the Role Our 2D Game Artists are adaptable creators who contribute across multiple areas of art to bring games to life. You’ll work closely with cross-disciplinary teams to transform ideas into compelling visual experiences, from early prototypes to polished production assets. Who you are Game Developer: You're passionate about making games. You understand how visuals influence gameplay, UX, and player engagement. You enjoy working collaboratively to solve problems and deliver high-quality results. Visual Worldbuilder: You think in stories, moods, and aesthetics. You’re great at using images to evoke emotion, suggest lore, and communicate style direction. Hybrid Creator: You bring strong 2D fundamentals (composition, color, anatomy, lighting), and you’re also comfortable using Gen-AI tools to sketch ideas, refine directions, or build references faster. AI-Native Explorer: You are not just a user of Gen-AI tools—you push them. You understand how to control model quality, build custom prompts, use inpainting workflows, and combine Gen-AI results with traditional techniques (paintover, photobash, etc.). Team Player: You are a self-motivated team player who proactively seeks feedback and shares knowledge. You are good at interacting with a wide range of people, from very distinct backgrounds and specialities. What you'll do Leading art vision: Small teams are the best to bring ideas to life. You will be the main artist in the core game team and will define how art will play in the game. You will not be alone, we have a set of art directors and a strong art department to support you in delivering your best. Game Artist: Your premiere skill will be 2D art, but at times you will have the opportunity to work with other art specialities depending on what is best for the game, ranging from UI to some level of 3D and animation. We call it T-shaped artists. Collaboration: You will be part of a multidisciplinary team, everyone focused on creating a unique game experience. You will be able to contribute to shaping the game design to find the fun. You will also collaborate with other Wildlife areas, such as Marketing, to define the Art theme of the game using real data from players. Problem Solving: You will help transform GDDs into playable mobile games, as well, as help define the pipelines for the next phases of development. That means that you will encounter all sorts of problems and obstacles along the way, working your way around them as efficiently as possible. Iteration : You will iterate in multiple ways to find the best solution for gameplay and the overall player experience. That means working fast, failing fast and making corrections also fast. Build and evolve workflows: You'll help define how and when we use Gen-AI, which tools we adopt, and how we ensure output quality and consistency. What you'll need A strong portfolio with examples of illustration, concept art, and visual storytelling. Experience creating artwork for games, animation, comics, or entertainment IPs. Proficiency with Photoshop (or equivalent painting tools). Demonstrated use of Gen-AI tools in your process, with clear artistic direction. High/Intermediate communication skills in English. We welcome people from all backgrounds who seek the opportunity to help build the best gaming company, where everyone thrives. Please note that an art test may be required during the evaluation process. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8290155002",
+    "postedDate": "2025-11-13T00:00:00.000Z",
+    "category": "Animation",
     "tags": [
       "Unity",
+      "TypeScript",
+      "Go",
       "3D",
-      "Senior",
+      "2D",
+      "Animation",
+      "Design",
+      "Artist",
+      "AI",
+      "Mobile"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "The Art Team at Wildlife is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artist..."
+  },
+  {
+    "id": "WIL-008002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Creative Producer - Marketing",
+    "description": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Creative Producer to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creative vision behind our performance marketing campaigns while ensuring every decision is rooted in data, insight, and a deep understanding of the mobile games industry. As a Senior Creative Producer at Wildlife, you’ll lead creative development from strategic planning through execution — guiding the production of video, playable, and static ads used in User Acquisition campaigns. You will co-own the creative strategy across titles, collaborating closely with Product Marketing Managers (PMMs) and our in-house production team to i) identify key ad concepts; ii) define what we should produce; iii) how we will produce it and iv) evaluate results You will work at the intersection of creativity, data, market analysis, and production — with full accountability over the end-to-end process. The ideal candidate brings a strong creative vision, a performance marketing mindset, and a natural curiosity for trends, players, competitors, and innovations. What you'll do Co-own and drive the creative strategy across multiple games in collaboration with PMMs. Write clear and actionable creative briefs that connect strategic insight to execution. Lead the end-to-end development of high-performing creative assets (video, playable, static) for performance marketing campaigns. Analyze creative performance results and iterate based on key metrics (Spend Share, IPM, CTR, CPI, ROAS). Continuously benchmark creative trends from the gaming and mobile ad industries — translating insights into innovative and effective campaigns. Stay on top of market and genre trends, player behavior, and competitive creative strategies. Use or collaborate with creative intelligence tools to guide planning and ideation. Partner with PMMs and Data Scientists to define test methodologies and uncover actionable insights. Act as a central point of alignment for creative priorities across Marketing and Production. Raise the creative bar while scaling output, helping the team hit volume, quality, and performance targets. Support continuous improvement of creative operations through structure, process, and leadership. What you'll need Solid track record in performance marketing, with deep involvement in creative strategy and execution for User Acquisition campaigns. Strong understanding of creative KPIs and performance metrics — and how to apply them to iteration and decision-making. Experience conducting creative benchmarking and extracting insights from the market. Nice to have Familiarity with the mobile gaming industry, or experience working on performance creatives for games or apps. Familiarity with motion design and/or playable ads development. Familiarity with market intelligence tools (e.g., Sensor Tower, AppMagic, or similar). Experience managing UA channels for digital products. Experience working with creative A/B testing. More about you You are highly results-oriented — you make creative decisions with performance in mind. You are analytically curious — numbers and benchmarks are part of your creative toolbox. You stay plugged into the market, trends, platforms, and competitors — always looking for the next idea to test. You have high creative standards and attention to detail, balanced with agility and pragmatism. You believe that creative excellence comes from a balance between insight, craft, and iteration. You have excellent communication and stakeholder management skills. You can thrive in fast-paced, high-output environments. Full working proficiency in English. You are resilient and do not let setbacks demotivate you when results don't go as expected. You are flexible to understand that working in a fast-paced environment means that change is constant. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8289008002",
+    "postedDate": "2025-11-13T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
+      "Git",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Senior"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Creative Producer to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creat..."
+  },
+  {
+    "id": "WIL-998002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "3D Game Artist",
+    "description": "The Art Team at New Games is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artists working in synergy with designers, engineers, and PMs to create iconic mobile games. We embrace innovation and creative ownership, and are continuously evolving our processes, including exploring how emerging tools like Gen-AI can support faster and more inspired iterations. About the Role Our Senior 3D Game Artists are adaptable creators who contribute across multiple areas of art to bring 3D games to life. You’ll work closely with cross-disciplinary teams to transform ideas into compelling visual experiences, from early prototypes to polished production assets. Who you are: Game Developer: You're passionate about making games. You understand how visuals influence gameplay, UX, and player engagement. You enjoy working collaboratively to solve problems and deliver high-quality results. Versatile Artist: You’re comfortable moving between 2D and 3D disciplines (concepting, modelling, texturing, lighting, or animating as needed). You have a solid understanding of creating game-ready assets efficiently without sacrificing visual appeal. AI-Native Explorer: You are not just a user of AI tools—you push them. You understand how to control model consistency, build custom prompts, use inpainting workflows, and combine Gen-AI results with traditional techniques (paintover, photobash, etc.). Team Player: You are a self-motivated team player who proactively seeks feedback and shares knowledge. You are good interacting with a wide range of people, from very distinct backgrounds and specialities. Engine Expertise: You have experience working with Unity and or other game engines, as well as Git, knowing your way from the folder structures to implementing a fully playable game. What you'll do: Collaboration: You will be part of multiple teams, with distinct members, objectives and problems to solve in each of them. You'll also be communicating with a wide range of stakeholders, from junior game developers and game designers all the way to senior leadership. Problem Solving: You will help transform GDDs into playable mobile games, as well, as help define the pipelines for the next phases of development. That means that you will encounter all sorts of problems and obstacles along the way, working your way around them as efficiently as possible. Iteration : You will iterate in multiple ways to find the best solution for gameplay and the overall player experience. That means working fast, failing fast and making corrections also fast. Build and evolve workflows: You'll help define how and when we use Gen-AI, which tools we adopt, and how we ensure output quality and consistency. What you'll need: Experience making multiple games, as an indie and/or inside a game studio. Experience working with Unity engine. Experience with a 3D software package. Intermediate oral and written communication skills in English. A portfolio showcasing your work. We welcome people from all backgrounds who seek the opportunity to help build the best gaming company, where everyone thrives. Please note that an art test may be required during the evaluation process. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8282998002",
+    "postedDate": "2025-11-10T00:00:00.000Z",
+    "category": "3D",
+    "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
+      "Git",
+      "3D",
+      "2D",
+      "Animation",
+      "Design",
+      "Artist",
       "AI"
     ],
     "location": {
-      "scope": "remote-brazil"
-    }
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "The Art Team at New Games is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artis..."
   },
   {
-    "id": "BFF-001",
-    "companyName": "Beffio",
-    "companyLogo": "/images/companies/beffio.png",
-    "jobTitle": "Lead Real-Time VFX Artist – Unity3D",
-    "description": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (explosões, magia, FX ambiental) otimizados e de alta qualidade para títulos AA/AAA. Requer 6+ anos de experiência e um portfólio robusto.",
-    "shortDescription": "Procuramos um(a) Lead Real-Time VFX Artist para liderar a visão de VFX em todos os projetos Unity3D. É uma posição de liderança \"mão na massa\" para um especialista em VFX Graph, Shader Graph e HLSL/C# da Unity. Você irá mentorar a equipe, definir pipelines (URP/HDRP) e criar efeitos visuais (expl...",
-    "applyLink": "https://careers.beffio.com/jobs/6653408-lead-real-time-vfx-artist-unity3d-remote-permanent",
-    "postedDate": "2025-11-11T00:00:00.000Z",
-    "category": "VFX",
-    "tags": [
-      "3D",
-      "Unity3D",
-      "HLSL",
-      "C# scripting",
-      "Houdini",
-      "After Effects",
-      "Lead"
-    ],
-    "location": {
-      "scope": "remote-worldwide"
-    }
-  },
-  {
-    "id": "AU-001",
-    "companyName": "Automattic",
-    "companyLogo": "/images/companies/automattic.png",
-    "jobTitle": "Brand/Creative Designer",
-    "description": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de férias ilimitadas e faixa salarial global de $95.000-$200.000 USD (pago na moeda local). Exige portfólio robusto e ampla experiência em branding e web design.",
-    "shortDescription": "A Automattic (empresa dona do WordPress.com, WooCommerce e Tumblr) está contratando um(a) Senior Brand/Creative Designer. A função foca em criar campanhas de marketing de alto nível e evoluir os sistemas de design da marca. É uma vaga 100% remota, assíncrona (sem horário fixo), com política de fé...",
-    "applyLink": "https://automattic.com/work-with-us/job/brand-creative-designer/",
-    "postedDate": "2025-11-12T00:00:00.000Z",
-    "category": "Design",
-    "tags": [
-      "Brand Design",
-      "Marketing Design",
-      "Web Design",
-      "Senior"
-    ],
-    "location": {
-      "scope": "remote-worldwide"
-    }
-  },
-  {
-    "id": "AU-002",
-    "companyName": "Automattic",
-    "companyLogo": "/images/companies/automattic.png",
-    "jobTitle": "Senior Product Designer",
-    "description": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pesquisa e definição até a prototipagem (em Figma) e colaboração com engenheiros. É uma vaga 100% remota, assíncrona, com férias ilimitadas e salário global de $95.000-$200.000 USD (pagos na moeda local).",
-    "shortDescription": "A Automattic (WordPress, WooCommerce) está contratando um(a) Senior Product Designer para sua equipe do WordPress VIP. A função foca em projetar experiências de produto excepcionais (do início ao fim) para seus clientes de nível enterprise. Você trabalhará em todas as fases do design, desde a pes...",
-    "applyLink": "https://automattic.com/work-with-us/job/senior-product-designer/",
-    "postedDate": "2025-11-12T00:00:00.000Z",
-    "category": "Design",
-    "tags": [
-      "Product Design",
-      "UX Design",
-      "UI Design",
-      "Figma",
-      "Senior"
-    ],
-    "location": {
-      "scope": "remote-worldwide"
-    }
-  },
-  {
-    "id": "FG-001",
-    "companyName": "Fortis Games",
-    "companyLogo": "/images/companies/fortisgames.png",
-    "jobTitle": "Staff Game Engineer",
-    "description": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C#, POO (princípios SOLID) e otimização de performance. Você será responsável por decisões de arquitetura, escrita de código testável (testes unitários/integrados) e mentoria, exigindo experiência comprovada no lançamento de jogos mobile.",
-    "shortDescription": "Buscamos um(a) Staff Game Engineer para liderar a arquitetura e o design de um novo jogo multiplayer real-time para dispositivos móveis. É uma função-chave focada em construir sistemas de gameplay reutilizáveis e de alta qualidade usando Unity3D. O candidato ideal deve ter expertise profunda em C...",
-    "applyLink": "https://www.fortisgames.com/en-us/careers?gh_jid=4596958005",
-    "postedDate": "2025-11-12T00:00:00.000Z",
+    "id": "WIL-896002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Manager, Software Engineer",
+    "description": "We're looking for a hardworking and passionate Software Engineer Manager to join Wildlife's Engineering team. We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, and comfortable in a “take the initiative” environment, loves solving problems, and can thrive in a fast and growing business. The Platform Team at Wildlife is reinventing itself. It started providing services for the games online features and has since evolved to provide a platform that leverages the best of our teams when creating, operating, and distributing our games. We know that the work we do has a high impact on our company's success, and to achieve that, we work with a broad technology stack and have an approach of being fully responsible for our systems, from their conception to incident resolution and troubleshooting in production. We own several services that, combined, serve more than 1 million requests per minute. We know this number will only grow, and we're looking for managers who can help with the challenges of developing systems that perform well at a large scale. What you’ll do Participate in the architecture design of systems, focusing on your customer, whether they are players or other Wildlife employees; Oversee two engineering teams,responsible for delivering features critical to all company games; Oversee the design, development, and maintenance of scalable infrastructure components and tools, ensuring performance, reliability, and cost efficiency; Collaborate closely with leaders across engineering, product, and design to align priorities, balance trade-offs, and remove roadblocks; Collaborate across diverse teams and disciplines to speed up game development, streamline operations, and uncover new avenues for feature expansion and value generation. What you'll need Bachelor's degree in computer science or equivalent tech areas and/or equivalent experience; Solid experience in software development and solution design; Solid understanding of computer concepts (data structures, networking, concurrency, memory management, and algorithm analysis); Proven ability to manage engineering teams, develop infrastructure budget estimates, and translate company strategies into tangible, actionable projects. Nice to have Experience developing and maintaining systems with a high volume of requests; Experience developing systems in the games industry; Experience developing platform products; Business knowledge about the games industry; Experience in Golang; Experience in network sockets; Experience in Unity development. More about you You're passionate about software development and know how to ensure its quality. You're motivated by building up back-end services and SDKs, aware of their different architectures. Experienced working in an environment that uses and stimulates DevOps culture; You're creative when solving problems and are continuously seeking improvements for processes and solutions. You can communicate clearly with your team, other teams, and the company to identify issues and demands. You know when and how to manage up, explaining what you need to achieve your goals. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Today, we have offices in Brazil, Finland and the United States. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8226896002",
+    "postedDate": "2025-10-24T00:00:00.000Z",
     "category": "Game Dev",
     "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Engine"
+    ],
+    "location": {
+      "scope": "onsite"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a hardworking and passionate Software Engineer Manager to join Wildlife's Engineering team. We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, and comfortable in a “take the initiative” env..."
+  },
+  {
+    "id": "WIL-904002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Manager, Site Reliability Engineer",
+    "description": "We're looking for a talented and passionate Site Reliability Engineer Manager, to join Wildlife's Cloud Platform team. As an SRE Manager you will have the goal to provide easy-to-use, highly available systems to all the engineers in the company. As an SRE Manager, your main goal is to enable your team to improve the infrastructure services, using and refining our existing automations while being able to contribute in technical and business decisions for new services that will support the scalability and usability of the infrastructure services in the company and improving the team career growth, engagement and retention. We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, proactive, loves solving problems, and can thrive in a fast and growing business. What you'll do Be the manager of a cross-functional team, contributing to the team roadmap and growth of its individual contributors; Develop, maintain, and optimize infrastructure clusters (e.g., Kubernetes, NATS, ETCD, Postgres, MongoDB, Redis, Elasticsearch), infrastructure services (e.g., Gitlab, Jenkins, Vault, Artifactory, Datadog, Jaeger, etc.), and our APIs and automations to manage them (e.g., Kubernetes Operators, Infrastructure as code, Pipelines, CLIs,); Analyze costs of infrastructure services and help define and optimize the budget of our infrastructure and game teams; Contribute to improvements on monitoring and observability patterns for infrastructure services; Troubleshoot, manage and lead incidents in production; Manage and improve the tools and processes related to infrastructure management across the company (Infrastructure-as-code standards, CI/CD design, build of our Internal Developer Platform, etc.); Help partner teams to architect and scale their applications and infrastructure with cloud-native best practices. What you'll need We expect our Managers to be Technical, dedicating around 50% of their time to working together with the ICs in their day-to-day work and being an active voice and participative on the team technical roadmap. Experience managing small teams with infrastructure background; Some level of leadership skills, including the areas of people management, communications, project management, talent development, performance management, team effectiveness, agility, hiring, decision making, planning, budgeting, and collaboration; Coding experience in at least one programming language. We work mostly with Go and Python; University degree in courses related to computing such as Computer Engineering, Computer Science, Information Systems, and Systems Analysis and Development or equivalent Market Experience; Solid understanding of computer concepts (operational systems, networking, concurrency, memory management, and algorithm analysis); Experience with cloud computing services such as Amazon AWS, Google Cloud, or Microsoft Azure; Experience with Infrastructure as Code automations, such as Terraform, Packer, Ansible, Crossplane, etc; Experience managing Kubernetes clusters and developing Kubernetes operators; Experience automating routine tasks, such as deployments and monitoring setup; Experience with incident management and being oncall for productive systems and workloads; Strong written and spoken communication skills in English; Experience with complex, large-scale, and high-available systems; Experience with monitoring and telemetry in applications and infrastructure; History of technical leadership and ownership of critical projects, including the mentoring of junior team members. More about you Player focused. We are player-oriented, and infrastructure has a great impact on their experience. You have empathy with our players and focus on ensuring they have an amazing experience. You aim for a top-level infrastructure, guaranteeing the highest availability possible. Automation is key to scaling. We look for engineers who have a history of projecting and executing automation projects in order to get rid of any manual and repetitive tasks. Calm and pragmatism. When everything seems to be falling apart around you, you have a plan and keep calm. Bleeding edge. You are curious and like to study new technologies, test new solutions, and measure the impact brought by changes. We want to ensure we are using the best stack possible. Metrics-oriented. We make decisions based on data and metrics. We measure the results of our tasks against the expected outcome. And we ensure our work has delivered the correct impact on our customers. We believe in ownership and in shipping features end to end. Bar raiser. You want to elevate your team skills and raise the bar, by mentoring your peers, spreading knowledge, being proactive and a tech lead. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, color, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8226904002",
+    "postedDate": "2025-10-24T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "Python",
+      "TypeScript",
+      "Go",
+      "AWS",
+      "Kubernetes",
+      "Git",
+      "CI/CD",
+      "Design",
+      "AI"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Site Reliability Engineer Manager, to join Wildlife's Cloud Platform team. As an SRE Manager you will have the goal to provide easy-to-use, highly available systems to all the engineers in the company. As an SRE Manager, your main goal is to enable your..."
+  },
+  {
+    "id": "WIL-951002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Site Reliability Engineer",
+    "description": "We're looking for a talented and passionate Site Reliability Engineer to join Wildlife's Cloud Platform team. As an SRE, your goal will be to provide easy-to-use, highly available systems for all engineers in the company. Within the Cloud Platform team, your main focus will be on improving infrastructure services—leveraging and refining existing automations while contributing to the development of new services that enhance scalability and usability. We know that the work we do has a high impact on Wildlife’s success and culture. The right person for this position is curious, proactive, passionate about problem-solving, and thrives in a fast-paced, growing environment. What you'll do Be part of a cross-functional team, directly contributing to feature development and maintenance of existing and new infrastructure services; Develop, maintain, and optimize infrastructure clusters (Kubernetes, NATS, ETCD, Postgres, MongoDB, Redis, Elasticsearch, etc.) and infrastructure services (Gitlab, Jenkins, Vault, Artifactory, Datadog, Jaeger, etc.); Manage the infrastructure required to run build pipelines on both Linux and macOS nodes in our cloud environment; Define monitoring and observability patterns for infrastructure services; Troubleshoot and manage incidents in production; Manage and improve the tools and processes related to infrastructure management across the company (Infrastructure-as-code standards, CI/CD design, build of our Internal Developer Platform, etc.); Help partner teams to architect and scale their applications and infrastructure with Cloud best practices. What you'll need Solid coding experience in at least one programming language. We work mostly with Go and Python; University degree in courses related to computing such as Computer Engineering, Computer Science, Information Systems, and Systems Analysis and Development or equivalent Market Experience; Solid understanding of computer concepts (operational systems, networking, concurrency, memory management, and algorithm analysis); Experience with cloud computing services such as Amazon AWS, Google Cloud, or Microsoft Azure; Experience with Infrastructure as Code automations, such as Terraform, Packer, Ansible, Crossplane, etc; Experience automating routine tasks, such as deployments and monitoring setup; Experience with incident management and being oncall for productive systems and workloads; Excellent written communication skills in English, including reading and drafting document; Experience with complex, large-scale, and high-available systems; Experience with monitoring and telemetry in applications and infrastructure; History of technical leadership and ownership of critical projects, including the mentoring of junior team members; Nice to have Experience in building and automating mobile workloads and their technology (iOS, Android, Flutter, etc.). Extra Bonus if related to gaming (e.g Unity, Godot). More about you Player focused. We are player-oriented, and infrastructure has a great impact on their experience. You have empathy with our players and focus on ensuring they have an amazing experience. You aim for a top-level infrastructure, guaranteeing the highest availability possible. Automation is key to scaling. We look for engineers who have a history of projecting and executing automation projects in order to get rid of any manual and repetitive tasks. Calm and pragmatism. When everything seems to be falling apart around you, you have a plan and keep calm. Bleeding edge. You are curious and like to study new technologies, test new solutions, and measure the impact brought by changes. We want to ensure we are using the best stack possible Metrics-oriented. We make decisions based on data and metrics. We measure the results of our tasks against the expected outcome. And we ensure our work has delivered the correct impact on our customers. We believe in ownership and in shipping features end to end. Bar raiser. You want to elevate your team skills and raise the bar, by mentoring your peers, spreading knowledge, being proactive and a tech lead. About Wildlife Wildlife is one of the world’s leading mobile game developers and publishers. We have released over 60 titles, reaching billions of players worldwide. We create games that excite, intrigue, and engage players for years to come! Diversity & Inclusion at Wildlife At Wildlife, we encourage everyone to bring their whole selves to work every day. We believe that diverse and inclusive teams are key to driving innovation and taking our company to the next level. Our teams are multicultural and spread across the globe, and as we continue to grow, we strive to create an environment where people from all backgrounds feel valued and empowered. Happiness has no gender, no skin color, no age, and no badge. Everyone deserves to feel happy and fulfilled. That’s why we invest in diversity initiatives such as Wild Pride, Wild Panthers, and Women++, ensuring that our values, rituals, benefits, and people programs reflect our commitment to inclusion. Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based on race, color, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or any other legally protected characteristic. We also consider qualified applicants with criminal histories, in accordance with applicable laws. If you need accommodations during the hiring process, we are happy to provide support.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8226951002",
+    "postedDate": "2025-10-24T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "Python",
+      "TypeScript",
+      "Go",
+      "Node.js",
+      "AWS",
+      "Kubernetes",
+      "Git",
+      "CI/CD",
+      "Design"
+    ],
+    "location": {
+      "scope": "remote-worldwide"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Site Reliability Engineer to join Wildlife's Cloud Platform team. As an SRE, your goal will be to provide easy-to-use, highly available systems for all engineers in the company. Within the Cloud Platform team, your main focus will be on improving infras..."
+  },
+  {
+    "id": "WIL-649002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Performance Marketing Analyst - Creatives ",
+    "description": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Performance Marketing Analyst to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creative vision behind our performance marketing campaigns while ensuring every decision is rooted in data, insight, and a deep understanding of the mobile games industry. As a Senior Performance Marketing Analyst at Wildlife, you’ll lead creative development from strategic planning through execution — guiding the production of video, playable, and static ads used in User Acquisition campaigns. You will co-own the creative strategy across titles, collaborating closely with Product Marketing Managers (PMMs) and our in-house production team to i) identify key ad concepts; ii) define what we should produce; iii) how we will produce it and iv) evaluate results You will work at the intersection of creativity, data, market analysis, and production — with full accountability over the end-to-end process. The ideal candidate brings a strong creative vision, a performance marketing mindset, and a natural curiosity for trends, players, competitors, and innovations. What you'll do Co-own and drive the creative strategy across multiple games in collaboration with PMMs. Write clear and actionable creative briefs that connect strategic insight to execution. Lead the end-to-end development of high-performing creative assets (video, playable, static) for performance marketing campaigns. Analyze creative performance results and iterate based on key metrics (Spend Share, IPM, CTR, CPI, ROAS). Continuously benchmark creative trends from the gaming and mobile ad industries — translating insights into innovative and effective campaigns. Stay on top of market and genre trends, player behavior, and competitive creative strategies. Use or collaborate with creative intelligence tools to guide planning and ideation. Partner with PMMs and Data Scientists to define test methodologies and uncover actionable insights. Act as a central point of alignment for creative priorities across Marketing and Production. Raise the creative bar while scaling output, helping the team hit volume, quality, and performance targets. Support continuous improvement of creative operations through structure, process, and leadership. What you'll need Solid track record in performance marketing, with deep involvement in creative strategy and execution for User Acquisition campaigns. Strong understanding of creative KPIs and performance metrics — and how to apply them to iteration and decision-making. Experience conducting creative benchmarking and extracting insights from the market. Nice to have Familiarity with the mobile gaming industry, or experience working on performance creatives for games or apps. Familiarity with motion design and/or playable ads development. Familiarity with market intelligence tools (e.g., Sensor Tower, AppMagic, or similar). Experience managing UA channels for digital products. Experience working with creative A/B testing. More about you You are highly results-oriented — you make creative decisions with performance in mind. You are analytically curious — numbers and benchmarks are part of your creative toolbox. You stay plugged into the market, trends, platforms, and competitors — always looking for the next idea to test. You have high creative standards and attention to detail, balanced with agility and pragmatism. You believe that creative excellence comes from a balance between insight, craft, and iteration. You have excellent communication and stakeholder management skills. You can thrive in fast-paced, high-output environments. Full working proficiency in English. You are resilient and do not let setbacks demotivate you when results don't go as expected. You are flexible to understand that working in a fast-paced environment means that change is constant. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8206649002",
+    "postedDate": "2025-10-09T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
+      "Git",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Senior"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Performance Marketing Analyst to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to drivi..."
+  },
+  {
+    "id": "WIL-895002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Wildlife Studios Internship Program - 2026 ",
+    "description": "Please carefully read the details of our internship programs below and apply for Regular Internship or International Summer Internship using our application form at the bottom of the page. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create and maintain games that will excite, intrigue, and engage our players for years to come! About the Programs At Wildlife Studios, our Internship Programs are designed to develop students that are eager to start their careers in the gaming industry. As an intern, you’ll work alongside experienced professionals, contribute to real projects, and be part of a company that creates games played by millions worldwide. Throughout the program, you’ll have access to technical and soft-skill training, mentorship, and structured development opportunities to prepare you for future career growth. What You’ll Do Support analysis, projects, and initiatives that directly impact our games and business; Participate in technical and business cases, problem-solving challenges, and brainstorming sessions with peers and leaders; Engage in structured learning sessions and mentorship to accelerate your development; Bring fresh perspectives and innovative ideas to help shape the future of our products. Where You Can Work Regular Internship Engineering (Game Tech & Platform Eng): Work on the maintenance of released games, with millions of daily players. Engage in activities required to keep the apps alive as well as implementing new features to enhance player experience. Product Management: Support product managers to plan and deliver new features, run A/B tests, and analyze data to guide product decisions. Help shape the game vision, align with engineering, art, data, and distribution, and take ownership of your deliveries with real autonomy to impact the player experience. Data Science: Expand game potential by providing non-trivial solutions to business questions, such as how to analyze game performance, engage players, customize content, run successful experiments, and optimize game economy. Data Engineering: Design, build, and maintain the scalable data pipelines that process billions of events from our global player base. You'll work with massive datasets, ensuring the reliability and quality of the data infrastructure that empowers data-driven decisions across the company, and collaborating closely with data scientists and analysts. Business & Marketing: Develop business initiatives, analyzing markets, and creating creative strategies to drive the growth of our games. Work on advertising campaigns, influencer collaborations, partnerships, and ROI studies, combining creativity, data, and strategic insight to expand the reach and impact of our games. Business Analyst: User Acquisition (UA) brings players into our worlds and gets smarter every day. We mix data, code, and creativity to reach the right players across Meta, Google, and TikTok. Think of us as growth hackers who love testing, building, and optimizing. We run global campaigns, partner with engineers and data scientists, and make every decision driven by data and curiosity. In UA, your work shapes how millions of players discover and enjoy our games. International Summer Internship Our International Summer Internship has opportunities in Data Science, Data Engineering, Product Management, Business & Marketing, Engineering and Business Analyst. Explore Our Programs In this application form you will have the opportunity to apply for Regular Internship or an International Summer Internship depending on your availability. Please see the details of our programs below: Internship Program (1-2 years of contract, working on-site, hybrid or remote, depending on the area.) Undergraduate students graduating between Dec/2026 and Dec/2027. Advanced/Fluent English. Availability to work remote, hybrid, or on-site, depending on the team. Availability for 30 hours or internship per week. Genuine interest in games and technology. Creative and collaborative mindset with eagerness to learn. Strong soft skills such as collaboration, curiosity, clear communication, and ownership. Summer Undergrad Program (8 weeks between Jun-Aug, São Paulo) Students enrolled in universities in the US or Europe. Undergraduate students with estimated graduation date on December 2026 or later. Advanced/Fluent English. Advanced/Fluent Portuguese Availability for 30 hours of internship per week in São Paulo, from Jun-Aug 2026. Active work permit (temporary CLT contract). Genuine interest in games and technology. Creative and collaborative mindset with eagerness to learn. Strong soft skills such as collaboration, curiosity, clear communication, and ownership. Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, color, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8169895002",
+    "postedDate": "2025-09-16T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Engine"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "Please carefully read the details of our internship programs below and apply for Regular Internship or International Summer Internship using our application form at the bottom of the page. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have re...",
+    "contractType": "Internship"
+  },
+  {
+    "id": "WIL-562002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Game Engineer",
+    "description": "We're looking for a talented and passionate Game Engineer, to join Wildlife's Live Games Tech Team working from Sao Paulo. As a game engineer, you will work on the maintenance of released games, with millions of daily players. You will be involved in activities required to keep the apps alive as well as implementing new features to enhance player experience. We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, comfortable in a \"take the initiative\" environment, loves solving problems, and can thrive in a fast and growing business. What you'll do Work on live games with millions of active players. Implement and test business logic on games and services. Perform maintenance and updates to keep the game running live. Ship new versions to production, supervise metrics and user feedback after the release. Provide timely transparency of development status and risks to interested parties. You will help to solve the most challenging technical issues in the game, partnering with team members to solve them. Work in an agile environment. What you'll need Experience developing mobile apps or games. Bachelor’s degree in Computer Science, Computer Engineering or equivalent combination of education and experience. Working proficiency in English (all documents and some meetings are in English). Plus: you have published apps/games in the mobile app stores. Plus: experience with C++, Objective C, Java for Android, OpenGL, C#, Unity. Plus: experience with backend (JavaScript, Node, GoLang, and Kubernetes). Plus: experience being a technical reference for more junior colleagues. More about you You are motivated to work on games that have millions of players. You feel comfortable navigating on large projects and investigating the code to understand how things work. You like to learn different technologies. You are proactive, understand overall goals, and work towards them autonomously. You can communicate clearly with your team. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create and maintain games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8160562002",
+    "postedDate": "2025-09-09T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "JavaScript",
+      "TypeScript",
       "C#",
-      "Animation",
-      "Unity3D",
-      "UI",
-      "Networking",
-      "Senior"
+      "Go",
+      "Java",
+      "C++",
+      "Node.js",
+      "Kubernetes",
+      "AI"
     ],
     "location": {
-      "scope": "remote-brazil"
-    }
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Game Engineer, to join Wildlife's Live Games Tech Team working from Sao Paulo. As a game engineer, you will work on the maintenance of released games, with millions of daily players. You will be involved in activities required to keep the apps alive as ..."
   },
   {
-    "id": "CSO-001",
-    "companyName": "Circle.so",
-    "companyLogo": "/images/companies/circleso.png",
-    "jobTitle": "Senior Growth Designer",
-    "description": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web design focado em conversão e ser especialista em Figma. A vaga é 100% remota, assíncrona, com salário de $100k-$120k USD, 35 dias de folga (PTO) e retreats globais da empresa duas vezes ao ano.",
-    "shortDescription": "A Circle (plataforma \"all-in-one\" para criadores) está contratando um(a) Senior Growth Designer. Esta não é uma vaga de design de produto; você irá liderar o design visual do site de marketing e landing pages da empresa, com foco em branding e conversão. É essencial ter um portfólio com web desig...",
-    "applyLink": "https://circle.so/careers/greenhouse--4905487008",
-    "postedDate": "2025-11-12T00:00:00.000Z",
-    "category": "Design",
+    "id": "WIL-573002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior 2D Artist",
+    "description": "The Art Team at Wildlife is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artists working in synergy with designers, engineers, and PMs to create iconic mobile games. We embrace innovation and creative ownership, and are continuously evolving our processes, including exploring how emerging tools like Gen-AI can support faster and more inspired iterations. About the Role Our 2D Game Artists are adaptable creators who contribute across multiple areas of art to bring games to life. You’ll work closely with cross-disciplinary teams to transform ideas into compelling visual experiences, from early prototypes to polished production assets. Who you are Game Developer: You're passionate about making games. You understand how visuals influence gameplay, UX, and player engagement. You enjoy working collaboratively to solve problems and deliver high-quality results. Visual Worldbuilder: You think in stories, moods, and aesthetics. You’re great at using images to evoke emotion, suggest lore, and communicate style direction. Hybrid Creator: You bring strong 2D fundamentals (composition, color, anatomy, lighting), and you’re also comfortable using Gen-AI tools to sketch ideas, refine directions, or build references faster. AI-Native Explorer: You are not just a user of Gen-AI tools—you push them. You understand how to control model quality, build custom prompts, use inpainting workflows, and combine Gen-AI results with traditional techniques (paintover, photobash, etc.). Team Player: You are a self-motivated team player who proactively seeks feedback and shares knowledge. You are good at interacting with a wide range of people, from very distinct backgrounds and specialities. What you'll do Leading art vision: Small teams are the best to bring ideas to life. You will be the main artist in the core game team and will define how art will play in the game. You will not be alone, we have a set of art directors and a strong art department to support you in delivering your best. Game Artist: Your premiere skill will be 2D art, but at times you will have the opportunity to work with other art specialities depending on what is best for the game, ranging from UI to some level of 3D and animation. We call it T-shaped artists. Collaboration: You will be part of a multidisciplinary team, everyone focused on creating a unique game experience. You will be able to contribute to shaping the game design to find the fun. You will also collaborate with other Wildlife areas, such as Marketing, to define the Art theme of the game using real data from players. Problem Solving: You will help transform GDDs into playable mobile games, as well, as help define the pipelines for the next phases of development. That means that you will encounter all sorts of problems and obstacles along the way, working your way around them as efficiently as possible. Iteration : You will iterate in multiple ways to find the best solution for gameplay and the overall player experience. That means working fast, failing fast and making corrections also fast. Build and evolve workflows: You'll help define how and when we use Gen-AI, which tools we adopt, and how we ensure output quality and consistency. What you'll need A strong portfolio with examples of illustration, concept art, and visual storytelling. Experience creating artwork for games, animation, comics, or entertainment IPs. Proficiency with Photoshop (or equivalent painting tools). Demonstrated use of Gen-AI tools in your process, with clear artistic direction. High/Intermediate communication skills in English. We welcome people from all backgrounds who seek the opportunity to help build the best gaming company, where everyone thrives. Please note that an art test may be required during the evaluation process. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8160573002",
+    "postedDate": "2025-09-09T00:00:00.000Z",
+    "category": "Animation",
     "tags": [
-      "Growth Design",
-      "Marketing Design",
-      "Web Design",
-      "UI Design",
-      "Figma",
-      "Brand Design",
-      "Senior"
-    ],
-    "location": {
-      "scope": "remote-worldwide"
-    }
-  },
-  {
-    "id": "BFF-002",
-    "companyName": "Beffio",
-    "companyLogo": "/images/companies/beffio.png",
-    "jobTitle": "Lead 3D Artist",
-    "description": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil, capaz de criar assets (cenários, props, iluminação) de alta qualidade tanto no estilo realista quanto estilizado.",
-    "shortDescription": "Procuramos um(a) Lead 3D Artist experiente para definir a direção visual e mentorar a equipe. É uma posição de liderança \"mão na massa\", exigindo experiência no lançamento de pelo menos um título AA/AAA e profundo conhecimento técnico em Unity e Unreal Engine. O candidato ideal deve ser versátil,...",
-    "applyLink": "https://careers.beffio.com/jobs/6653367-lead-3d-artist-environment-world-building-unity3d-remote-permanent",
-    "postedDate": "2025-11-11T00:00:00.000Z",
-    "category": "3D & Animation",
-    "tags": [
+      "Unity",
+      "TypeScript",
+      "Go",
       "3D",
-      "Unreal Engine",
-      "Lead",
-      "Substance Painter/Designer",
-      "Blender",
-      "3ds Max",
-      "Maya"
+      "2D",
+      "Animation",
+      "Design",
+      "Artist",
+      "AI",
+      "Mobile"
     ],
     "location": {
-      "scope": "remote-worldwide"
-    }
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "The Art Team at Wildlife is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artist..."
+  },
+  {
+    "id": "WIL-785002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Playable Ads Developer",
+    "description": "We’re looking for a talented and passionate Senior Game Engineer to join Wildlife’s Marketing Art team in São Paulo, Brazil. As a Senior Engineer on the Playables Team, you will not only be responsible for developing playable ads that will attract millions of new users to our games, but also for mentoring junior engineers, leading technical initiatives, and driving improvements to our frameworks and processes. You will play a key role in shaping the technical strategy of our Playables production pipeline, ensuring we deliver high-performance, scalable, and creative interactive ads across multiple platforms. We know that the work we do has a high impact on our company's success and culture. The right person for this position is technically excellent, collaborative, proactive, passionate about raising the bar for the entire team and can thrive in a fast and growing business. What you'll do Develop high-quality playable ads that set industry benchmarks. Provide regular updates on ongoing tasks and inform risks to stakeholders Propose, design and implement reusable frameworks, tools, and systems to improve the efficiency and scalability of Playables production. Provide technical guidance and mentorship to junior and mid-level engineers, fostering their growth and ensuring adherence to best practices. Conduct and encourage rigorous code reviews to maintain a high standard of code quality. Collaborate closely with Artists, Creative Directors, Product Marketing Specialists, and Data Analysts to align technical solutions with creative and business objectives. Constantly challenge the status quo and drive innovation within the Playables team. Communicate clearly, respectfully, and effectively, fostering a collaborative and inclusive team environment. What you'll need Bachelor’s degree in Computer Science, Computer Engineering or equivalent combination of education and experience Strong understanding of computer science concepts (data structures, memory management, algorithm analysis, etc) Expertise in JavaScript/TypeScript (web and Node.js ecosystem), HTML, CSS, as well as experience with PixiJS, ThreeJS, and Git. Knowledge of shaders and experience with WebGL/WebGI. Understanding of game design principles Ability to design and implement scalable architectures and abstract technical solutions into reusable components. Experience in the game industry & game development Demonstrated experience in leading technical initiatives and collaborating with cross-functional teams. Skills in resource optimization (graphics, sounds, models, etc.) Experience optimizing performance across different devices More about you You´re passionate about software development and dedicated to technical excellence; You have strong communication skills, fostering a respectful and inclusive environment; You enjoy mentoring and empowering others to grow in their careers; You are proactive, continuously seeking improvements for processes and solutions; You're motivated by building up back-end services and is aware of its different architectures; Experienced working in an environment which uses and stimulates DevOps culture; You're creative when solving problems and is continuously seeking improvements for processes and solutions; You have the autonomy to recognize priorities, propose impactful solutions, and drive them to completion. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create and maintain games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8127785002",
+    "postedDate": "2025-08-19T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "JavaScript",
+      "TypeScript",
+      "Go",
+      "Java",
+      "Node.js",
+      "Git",
+      "Design",
+      "Artist",
+      "AI"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We’re looking for a talented and passionate Senior Game Engineer to join Wildlife’s Marketing Art team in São Paulo, Brazil. As a Senior Engineer on the Playables Team, you will not only be responsible for developing playable ads that will attract millions of new users to our games, but also for ..."
+  },
+  {
+    "id": "WIL-441002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Game Engineer",
+    "description": "We're looking for a talented and passionate Game Engineer, to join Wildlife's Live Games Tech Team working from Sao Paulo. As a game engineer, you will work on the maintenance of released games, with millions of daily players. You will be involved in activities required to keep the apps alive as well as implementing new features to enhance player experience. We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, comfortable in a \"take the initiative\" environment, loves solving problems, and can thrive in a fast and growing business. What you'll do Work on live games with millions of active players. Implement and test business logic on games and services. Perform maintenance and updates to keep the game running live. Ship new versions to production, supervise metrics and user feedback after the release. Provide timely transparency of development status and risks to interested parties. You will help to solve the most challenging technical issues in the game, partnering with team members to solve them. Work in an agile environment. What you'll need Experience developing mobile apps or games. Bachelor’s degree in Computer Science, Computer Engineering or equivalent combination of education and experience. Working proficiency in English (all documents and some meetings are in English). Plus: you have published apps/games in the mobile app stores. Plus: experience with C++, Objective C, Java for Android, OpenGL, C#, Unity. Plus: experience with backend (JavaScript, Node, GoLang, and Kubernetes). Plus: experience being a technical reference for more junior colleagues. More about you You are motivated to work on games that have millions of players. You feel comfortable navigating on large projects and investigating the code to understand how things work. You like to learn different technologies. You are proactive, understand overall goals, and work towards them autonomously. You can communicate clearly with your team. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create and maintain games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8041441002",
+    "postedDate": "2025-07-30T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "JavaScript",
+      "TypeScript",
+      "C#",
+      "Go",
+      "Java",
+      "C++",
+      "Node.js",
+      "Kubernetes",
+      "AI"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Game Engineer, to join Wildlife's Live Games Tech Team working from Sao Paulo. As a game engineer, you will work on the maintenance of released games, with millions of daily players. You will be involved in activities required to keep the apps alive as ..."
+  },
+  {
+    "id": "WIL-475002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Data Scientist",
+    "description": "We're looking for a talented and passionate Data Scientist to join Wildlife's Marketing Tech team in São Paulo, Brazil. Wildlife is one of the largest gaming companies in the world. Besides building amazing games, part of the reason it has been super successful has been its ability to acquire new users more efficiently than other companies. As a Data Scientist, you'll play a key role in our Performance Marketing operations by handling data from millions of users, thousands of campaigns, and dozens of different channels, helping us to solve our most challenging quests. We know that the work we do has a high impact on our company's success and culture. The right person for this position is naturally curious, comfortable in a \"take the initiative\" environment, loves solving problems, is resilient, and can thrive in a fast and growing business. What you'll do Solve complex and open-ended problems that directly impact one of the most critical areas of the company; Help to evolve and improve the performance of our current marketing frameworks, models, and data products; Be part of a cross-functional team, directly contributing end-to-end to our processes, making sure our products are in production and working properly (final impact); Work in a challenging and fun environment to produce exceptional results. What you'll need Experience working on designing and developing data-intensive applications in the cloud with technologies such as Spark, SQL, Python, Airflow, etc Experience applying appropriate statistical or machine learning techniques in different situations Excellent high-level communication skills Proficiency in written English Main Challenges The team is responsible for designing, building, and evolving data-intensive applications. As a Data Scientist, you will help us to: Make sense of large and complex data sets describing the behaviour of millions of players to support the Marketing organization; Continuously improve our performance measurement framework, which includes estimating the lifetime value of our users to understand the long-term return on our Marketing investments; Create and improve the tools to optimize our acquisition campaigns Support the decision-making of our Marketing operations through high-quality data products and well-structured dashboards; Build the capabilities to run experiments to continuously improve the performance of our creative assets and our Marketing operations; More about you You are impact-driven and interested in learning more about adjacent disciplines. You like to solve open-ended problems with non-obvious solutions; You communicate in a structured way, both speaking and writing, including in English; You are an excellent teammate and raise the bar of those around you. About Wildlife Wildlife is one of the world's leading mobile game developers and publishers. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based on race, color, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/7937475002",
+    "postedDate": "2025-05-05T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "Python",
+      "TypeScript",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Senior"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Data Scientist to join Wildlife's Marketing Tech team in São Paulo, Brazil. Wildlife is one of the largest gaming companies in the world. Besides building amazing games, part of the reason it has been super successful has been its ability to acquire new..."
+  },
+  {
+    "id": "WIL-483002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "Senior Data Engineer",
+    "description": "We're looking for a talented and passionate Senior Data Engineer to join Wildlife's Marketing Tech team in São Paulo, Brazil. Wildlife is one of the largest gaming companies in the world. Besides building amazing games, part of the reason it has been super successful has been its ability to acquire new users more efficiently than other companies. As a Senior Data Engineer, you'll play a key role in our Performance Marketing operations by handling data from millions of users, thousands of campaigns, and dozens of different channels, helping us to solve our most challenging quests. Some of them are: Evolve integrations with several third-party APIs including Ad Networks, MMPs, and other data providers Attribute the users to the marketing campaigns that drove their financial impact; Estimate the lifetime value of our users to measure the long-term return on our Marketing investments; Build the capabilities to run experiments to continuously improve the performance of our creative assets and our Marketing operations; Support the decision-making of our Marketing operations through high-quality data products and well-structured dashboards; We know that the work we do has a high impact on our company's success and culture. The right person for this position is naturally curious, comfortable in a \"take the initiative\" environment, loves solving problems, is resilient, and can thrive in a fast and growing business. What you'll do Solve complex and open-ended problems that directly impact one of the most critical areas of the company; Help to evolve and improve the performance of our current solutions and build new data products and systems Be part of a cross-functional team, directly contributing end-to-end to our processes, making sure our products are in production and working properly (final impact); Work in a challenging and fun environment to produce exceptional results. What you'll need Experience working on designing and developing data-intensive applications in the cloud with technologies such as Spark, SQL, Python, Airflow, etc Excellent high-level communication skills Proficiency in written English Main Challenges The team is responsible for designing, building, and evolving a big set of complex data-intensive applications including batch data apps, near real-time data ingestion, ML models, and BI pipelines These applications also require the team to build, maintain, and evolve integrations with several third-party APIs including Ad Networks, MMPs, and other data providers used in Digital Marketing As a Senior Data Engineer, you will help the team to ensure high availability, reliability, robustness, performance, cost-effectiveness, and maintainability of the developed solutions We have a multidisciplinary environment and you will interact with people from diverse backgrounds, including Game Engineers, Backend Engineers, Data Scientists, and Product Marketing Managers. More about you You are impact-driven and interested in learning more about adjacent disciplines (e.g.: Backend, Data Science, etc); You like to solve open-ended problems with non-obvious solutions; You communicate in a structured way both speaking and writing, including in English; You are an excellent teammate and raise the bar of those around you. About Wildlife Wildlife is one of the world's leading mobile game developers and publishers. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based on race, color, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law.",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/7937483002",
+    "postedDate": "2025-04-23T00:00:00.000Z",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "Python",
+      "TypeScript",
+      "Git",
+      "Design",
+      "AI",
+      "Mobile",
+      "Game Dev",
+      "Engine",
+      "Senior"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "companyWebsite": "https://wildlifestudios.com/",
+    "shortDescription": "We're looking for a talented and passionate Senior Data Engineer to join Wildlife's Marketing Tech team in São Paulo, Brazil. Wildlife is one of the largest gaming companies in the world. Besides building amazing games, part of the reason it has been super successful has been its ability to acqui..."
   }
 ]

@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import jobs from '../../data/jobs.json';
+import { getCachedJobs } from '../../lib/getJobs';
 import Layout from '../../layouts/Layout.astro';
 import JobCard from '../../components/JobCard.astro';
 import ShareButtons from '../../components/ShareButtons.astro';
@@ -20,7 +20,7 @@ import {
 } from '../../lib/location';
 
 export async function getStaticPaths() {
-  const allJobs = jobs as Job[];
+  const allJobs = await getCachedJobs();
   return allJobs.map((job) => ({
     params: {
       id: job.id,
@@ -42,8 +42,11 @@ const locationNote = (job.location.note || '').trim();
 const locationCountryCode = getJobLocationCountryCode(job.location);
 const structuredLocality = locationLabel.replace(/\s*•\s*/g, ' - ');
 
+// Get all jobs for related jobs
+const allJobs = await getCachedJobs();
+
 // Related jobs: same category, excluding current
-const relatedJobs = (jobs as Job[])
+const relatedJobs = allJobs
   .filter((j) => j.category === job.category && j.id !== job.id)
   .slice(0, 3);
 

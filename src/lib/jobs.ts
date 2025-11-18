@@ -1,6 +1,6 @@
 import type { JobLocation } from './location';
 
-export type ContractType = 'CLT' | 'PJ' | 'B2B' | 'Freelance' | 'Estágio';
+export type ContractType = 'CLT' | 'PJ' | 'B2B' | 'Freelance' | 'Estágio' | 'Internship';
 
 export type SalaryRange = {
   min?: number | null;

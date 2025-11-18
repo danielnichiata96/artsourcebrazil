@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import jobs from '../../data/jobs.json';
+import { getJobs } from '../../lib/getJobs';
 import Layout from '../../layouts/Layout.astro';
 import Button from '../../components/ui/Button.astro';
 import Badge from '../../components/ui/Badge.astro';
@@ -10,7 +10,7 @@ import Link from '../../components/ui/Link.astro';
 import { slugify } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
 
-const allJobs = jobs as Job[];
+const allJobs = await getJobs();
 
 // Group jobs by company
 const companiesMap = new Map<

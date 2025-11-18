@@ -82,13 +82,15 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
 </div>
 
 <script>
-  import jobs from '../data/jobs.json';
   import type { Job } from '../lib/jobs';
   import { getSearchSuggestions, highlightMatch } from '../lib/search/autocomplete';
   import type { SearchSuggestion } from '../lib/search/autocomplete';
   import DOMPurify from 'dompurify';
 
-  const allJobs = jobs as Job[];
+  // Fetch jobs from API endpoint (which gets fresh data from Supabase)
+  const response = await fetch('/api/vagas.json');
+  const data = await response.json();
+  const allJobs = data.jobs as Job[];
 
   class AutocompleteSearch {
     private container: HTMLElement;

@@ -103,9 +103,9 @@ Notes:
 - `contractType` (opcional) tipo de contrato. Suporta: CLT, PJ, B2B, Freelance, Estágio.
 - `salary` (opcional) faixa salarial. Requer `currency` (ISO 4217: BRL, USD, EUR). `min` e `max` são opcionais mas pelo menos um deve existir se salary estiver presente.
 
-### Airtable
+### Supabase
 
-Para detalhes completos sobre campos, mapeamentos e script de sincronização, consulte **[docs/AIRTABLE_MAPPING.md](docs/AIRTABLE_MAPPING.md)**.
+Para detalhes completos sobre schema, migrations e setup, consulte **[docs/SUPABASE_SETUP.md](docs/SUPABASE_SETUP.md)**.
 
 **Campos principais:**
 - **Obrigatórios:** ID, Job_Title, Company_Name, Apply_Link, Date_Posted_Original, Category, Tags, Location_Scope, Description_Short_PT

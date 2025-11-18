@@ -9,7 +9,9 @@
  */
 export const CATEGORIES = [
   'Game Dev',
-  '3D & Animation',
+  '3D',
+  '2D Art',
+  'Animation',
   'Design',
   'VFX',
 ] as const;
@@ -34,19 +36,25 @@ export type FilterCategory = (typeof FILTER_CATEGORIES)[number];
  */
 export const CATEGORY_ICONS: Record<string, string> = {
   'Game Dev': '🎮',
-  '3D & Animation': '🎨',
+  '3D': '🎨',
+  '2D Art': '🖼️',
+  'Animation': '🎬',
   'Design': '🎯',
   'VFX': '✨',
 } as const;
 
 /**
- * Category mapping for Airtable import
- * Maps various category names from Airtable to canonical categories
+ * Category mapping for external sources (legacy compatibility)
+ * Maps various category names from external sources to canonical categories
+ * Used for backward compatibility and data migration
  */
-export const AIRTABLE_CATEGORY_MAP: Record<string, Category> = {
+export const EXTERNAL_CATEGORY_MAP: Record<string, Category> = {
   'VFX': 'VFX',
-  'Arte 3D': '3D & Animation',
-  '3D': '3D & Animation',
+  'Arte 3D': '3D',
+  '3D': '3D',
+  '2D Art': '2D Art',
+  '2D Animation': 'Animation',
+  'Animation': 'Animation',
   'UX/UI': 'Design',
   'Design': 'Design',
   'Design (UI/UX)': 'Design',
@@ -70,12 +78,20 @@ export function isValidFilterCategory(value: unknown): value is FilterCategory {
 }
 
 /**
- * Map an Airtable category to a canonical category
+ * Map an external category name to a canonical category
  * Returns the mapped category or null if invalid
+ * @deprecated Use direct category mapping in sync scripts
+ */
+export function mapExternalCategory(externalCategory: string): Category | null {
+  const mapped = EXTERNAL_CATEGORY_MAP[externalCategory];
+  return mapped || null;
+}
+
+/**
+ * @deprecated Use mapExternalCategory instead
  */
 export function mapAirtableCategory(airtableCategory: string): Category | null {
-  const mapped = AIRTABLE_CATEGORY_MAP[airtableCategory];
-  return mapped || null;
+  return mapExternalCategory(airtableCategory);
 }
 
 /**

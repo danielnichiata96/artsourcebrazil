@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import jobs from '../../data/jobs.json';
+import { getJobs } from '../../lib/getJobs';
 import JobCard from '../../components/JobCard.astro';
 import FiltersSidebar from '../../components/FiltersSidebar.astro';
 import SearchWithAutocomplete from '../../components/SearchWithAutocomplete.astro';
@@ -15,9 +15,12 @@ import { getMessages, defaultLocale } from '../../lib/i18n';
 
 import type { Job } from '../../lib/jobs';
 
+// Fetch jobs from Supabase at build time
+const jobs = await getJobs();
+
 // Use shared helpers so behavior is covered by unit tests
-const sortedJobs = sortJobsByDateDesc(jobs as Job[]);
-const { categories, tags } = collectFacets(jobs as Job[]);
+const sortedJobs = sortJobsByDateDesc(jobs);
+const { categories, tags } = collectFacets(jobs);
 const totalJobs = sortedJobs.length;
 const totalCompanies = new Set(sortedJobs.map((job) => job.companyName)).size;
 const totalCategories = categories.length;

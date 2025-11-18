@@ -12,7 +12,9 @@ const jobsPath = resolve(root, 'src', 'data', 'jobs.json');
 // Valid categories matching src/lib/categories.ts
 const Categories = z.enum([
   'Game Dev',
-  '3D & Animation',
+  '3D',
+  '2D Art',
+  'Animation',
   'Design',
   'VFX',
 ]);
@@ -25,7 +27,7 @@ const LocationScope = z.enum([
   'onsite',
 ]);
 
-const ContractType = z.enum(['CLT', 'PJ', 'B2B', 'Freelance', 'Estágio']);
+const ContractType = z.enum(['CLT', 'PJ', 'B2B', 'Freelance', 'Estágio', 'Internship']);
 
 const jobSchema = z.object({
   id: z.string().min(1, 'id is required'),

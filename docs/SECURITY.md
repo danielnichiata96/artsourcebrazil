@@ -68,11 +68,11 @@ This document outlines the security measures implemented in Art Source Brazil.
 #### Server-Side Only (Build Time)
 ```bash
 # 🔒 Never exposed to browser
-AIRTABLE_API_KEY=""
-AIRTABLE_BASE_ID=""
-AIRTABLE_TABLE_NAME=""
+SUPABASE_URL=""
+SUPABASE_SERVICE_ROLE_KEY=""
+PUBLIC_SUPABASE_ANON_KEY=""
 ```
-- Used in: `scripts/sync-airtable.mjs` (Node.js only)
+- Used in: Supabase client and sync scripts (Node.js only)
 - Not accessible from client-side code
 
 #### Public Variables (Browser-Exposed)
@@ -103,7 +103,7 @@ PUBLIC_NEWSLETTER_SUBSCRIBE_URL=""
 
 #### URL Validation
 - External links use `rel="noopener noreferrer"` to prevent `window.opener` attacks
-- Apply links validated via Airtable sync process
+- Apply links validated via Supabase sync process
 
 ### 5. Markdown Sanitization
 

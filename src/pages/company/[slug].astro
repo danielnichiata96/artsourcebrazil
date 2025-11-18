@@ -1,5 +1,5 @@
 ---
-import jobs from '../../data/jobs.json';
+import { getCachedJobs } from '../../lib/getJobs';
 import Layout from '../../layouts/Layout.astro';
 import JobCard from '../../components/JobCard.astro';
 import Badge from '../../components/ui/Badge.astro';
@@ -12,7 +12,7 @@ import { slugify, sortJobsByDateDesc } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
 
 export async function getStaticPaths() {
-  const allJobs = jobs as Job[];
+  const allJobs = await getCachedJobs();
   
   // Group jobs by company
   const companiesMap = new Map<string, { name: string; logo: string; jobs: Job[] }>();

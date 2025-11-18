@@ -1,9 +1,11 @@
 import type { APIRoute } from 'astro';
-import jobs from '../data/jobs.json';
+import { getJobs } from '../lib/getJobs';
 const site = 'https://artsourcebrazil.vercel.app';
 
 export const GET: APIRoute = async () => {
-  const items = (jobs as any[])
+  // Fetch fresh jobs from Supabase at request time (or build time for SSG)
+  const jobs = await getJobs();
+  const items = jobs
     .sort((a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime())
     .map(
       (j) => `

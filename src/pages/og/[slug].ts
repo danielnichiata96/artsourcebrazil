@@ -1,18 +1,21 @@
 import { generateOgImageForJob } from '../../lib/og';
 import type { APIRoute } from 'astro';
-import jobs from '../../data/jobs.json';
+import { getCachedJobs } from '../../lib/getJobs';
 import { slugify } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
 
-// Generate a map for quick lookups
-const jobsMap = new Map<string, Job>();
-(jobs as Job[]).forEach((job) => {
-  const key = `${job.id}-${slugify(job.jobTitle)}`;
-  jobsMap.set(key, job);
-});
-
 export const GET: APIRoute = async ({ params }) => {
   const { slug } = params;
+
+  // Fetch jobs from Supabase (cached per build)
+  const jobs = await getCachedJobs();
+
+  // Generate a map for quick lookups
+  const jobsMap = new Map<string, Job>();
+  jobs.forEach((job) => {
+    const key = `${job.id}-${slugify(job.jobTitle)}`;
+    jobsMap.set(key, job);
+  });
 
   if (!slug || !jobsMap.has(slug)) {
     return new Response('Job not found', { status: 404 });
@@ -31,8 +34,9 @@ export const GET: APIRoute = async ({ params }) => {
 };
 
 // This is required to generate the routes for all jobs
-export function getStaticPaths() {
-  return (jobs as Job[]).map((job) => ({
+export async function getStaticPaths() {
+  const jobs = await getCachedJobs();
+  return jobs.map((job) => ({
     params: { slug: `${job.id}-${slugify(job.jobTitle)}.png` },
   }));
 }
