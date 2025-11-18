@@ -1,0 +1,93 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Mascote Art Source Brazil com camisa do brasil sentado usando laptop Art Source Brazil Remote Creative Jobs" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - img "Mascote Art Source Brazil com camisa do brasil sentado usando laptop" [ref=e7]
+        - generic [ref=e8]:
+          - generic [ref=e9]: Art Source Brazil
+          - generic [ref=e10]: Remote Creative Jobs
+      - generic [ref=e11]:
+        - link "Empresas" [ref=e12] [cursor=pointer]:
+          - /url: /companies
+        - link "Blog" [ref=e13] [cursor=pointer]:
+          - /url: /blog
+        - link "Sobre" [ref=e14] [cursor=pointer]:
+          - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/category/design
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - heading "404" [level=1] [ref=e20]
+        - paragraph [ref=e21]: Página não encontrada
+        - paragraph [ref=e22]: Essa página não existe. Que tal voltar pro início?
+        - generic [ref=e23]:
+          - link "Voltar pro início" [ref=e24] [cursor=pointer]:
+            - /url: /
+          - link "Ver blog" [ref=e25] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=e26]:
+          - heading "Categorias populares" [level=2] [ref=e27]
+          - generic [ref=e28]:
+            - link "Vagas em Game Dev" [ref=e29] [cursor=pointer]:
+              - /url: /category/game-dev
+            - link "Vagas em 3D & Animation" [ref=e30] [cursor=pointer]:
+              - /url: /category/3d-and-animation
+            - link "Vagas em Design" [ref=e31] [cursor=pointer]:
+              - /url: /category/design
+    - generic [ref=e33]:
+      - heading "Fique por dentro" [level=3] [ref=e34]
+      - paragraph [ref=e35]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e36]:
+        - textbox "seu-email@exemplo.com" [ref=e37]
+        - button "Assinar" [ref=e38] [cursor=pointer]
+      - paragraph [ref=e39]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e40] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e41]:
+    - generic [ref=e43]:
+      - generic [ref=e44]:
+        - link "Sobre" [ref=e45] [cursor=pointer]:
+          - /url: /about
+        - link "Contato" [ref=e46] [cursor=pointer]:
+          - /url: /contact
+        - link "Política de Privacidade" [ref=e47] [cursor=pointer]:
+          - /url: /privacy
+        - link "Termos de Uso" [ref=e48] [cursor=pointer]:
+          - /url: /terms
+        - link "Blog" [ref=e49] [cursor=pointer]:
+          - /url: /blog
+      - link "artsourcebrazil@gmail.com" [ref=e51] [cursor=pointer]:
+        - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e52]:
+        - generic [ref=e53]: "Feeds:"
+        - link "Jobs RSS" [ref=e54] [cursor=pointer]:
+          - /url: /jobs.xml
+        - link "Jobs JSON" [ref=e55] [cursor=pointer]:
+          - /url: /jobs.json
+        - link "Blog RSS" [ref=e56] [cursor=pointer]:
+          - /url: /blog.xml
+      - paragraph [ref=e57]: © 2025 Art Source Brazil. Todos os direitos reservados.
+  - generic [ref=e60]:
+    - button "Menu" [ref=e61]:
+      - img [ref=e63]
+      - generic: Menu
+    - button "Inspect" [ref=e67]:
+      - img [ref=e69]
+      - generic: Inspect
+    - button "Audit" [ref=e71]:
+      - img [ref=e73]
+      - generic: Audit
+    - button "Settings" [ref=e76]:
+      - img [ref=e78]
+      - generic: Settings
+```

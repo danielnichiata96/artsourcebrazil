@@ -22,14 +22,20 @@ describe('constants', () => {
   describe('CATEGORY_ICONS', () => {
     it('has icons for all main categories', () => {
       expect(CATEGORY_ICONS['Game Dev']).toBeDefined();
-      expect(CATEGORY_ICONS['3D & Animation']).toBeDefined();
-      expect(CATEGORY_ICONS['Design (UI/UX)']).toBeDefined();
+      expect(CATEGORY_ICONS['3D']).toBeDefined();
+      expect(CATEGORY_ICONS['2D Art']).toBeDefined();
+      expect(CATEGORY_ICONS['Animation']).toBeDefined();
+      expect(CATEGORY_ICONS['Design']).toBeDefined();
+      expect(CATEGORY_ICONS['VFX']).toBeDefined();
     });
 
     it('has correct emoji mapping', () => {
       expect(CATEGORY_ICONS['Game Dev']).toBe('🎮');
-      expect(CATEGORY_ICONS['3D & Animation']).toBe('🎨');
-      expect(CATEGORY_ICONS['Design (UI/UX)']).toBe('🎯');
+      expect(CATEGORY_ICONS['3D']).toBe('🎨');
+      expect(CATEGORY_ICONS['2D Art']).toBe('🖼️');
+      expect(CATEGORY_ICONS['Animation']).toBe('🎬');
+      expect(CATEGORY_ICONS['Design']).toBe('🎯');
+      expect(CATEGORY_ICONS['VFX']).toBe('✨');
     });
   });
 });

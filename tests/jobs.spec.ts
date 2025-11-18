@@ -23,7 +23,7 @@ describe('sortJobsByDateDesc', () => {
       description: 'Cutting edge design role for future experiences.',
       applyLink: 'https://example.com/2',
       postedDate: '2025-11-04T09:00:00Z',
-      category: 'Design (UI/UX)',
+      category: 'Design',
       tags: ['Figma'],
       location: { scope: 'remote-worldwide' },
     },
@@ -35,7 +35,7 @@ describe('sortJobsByDateDesc', () => {
       description: 'Incomplete data should push this job to the end.',
       applyLink: 'https://example.com/3',
       postedDate: 'not-a-date',
-      category: '3D & Animation',
+      category: '3D',
       tags: ['Blender'],
       location: { scope: 'remote-latam' },
     },
@@ -78,7 +78,7 @@ describe('collectFacets', () => {
       description: 'Job description B',
       applyLink: 'https://example.com/2',
       postedDate: '2024-02-01T00:00:00Z',
-      category: 'Design (UI/UX)',
+      category: 'Design',
       tags: ['Figma', 'unity'],
       location: { scope: 'remote-worldwide' },
     },
@@ -86,7 +86,7 @@ describe('collectFacets', () => {
 
   it('returns unique sorted categories and tags (tags case-insensitive unique)', () => {
     const { categories, tags } = collectFacets(jobs);
-    expect(categories).toEqual(['Design (UI/UX)', 'Game Dev']);
+    expect(categories).toEqual(['Design', 'Game Dev']);
     // Expect only one Unity, preserving first casing, and overall A→Z
     expect(tags).toEqual(['C#', 'Figma', 'Unity']);
   });
@@ -99,7 +99,9 @@ describe('slugify', () => {
   });
 
   it('handles special characters and ampersand', () => {
-    expect(slugify('3D & Animation')).toBe('3d-and-animation');
+    expect(slugify('2D Art')).toBe('2d-art');
+    expect(slugify('3D')).toBe('3d');
+    expect(slugify('Animation')).toBe('animation');
     expect(slugify('Design')).toBe('design');
   });
 

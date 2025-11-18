@@ -283,9 +283,8 @@ This file is the single source of truth for what to do next. Coding agents and h
   - [x] Added ARIA labels to navigation elements
   - [x] Focus-visible styles implemented globally (2px green outline)
   - [x] Test pass rate: 20/22 (91%)
-  - [ ] **REMAINING:** 2 tests failing due to brown text color contrast issues
-    - Issue: Browser rendering text colors lighter than specified (opacity effect)
-    - Affects: Badge components, category links, date/salary labels
+  - [ ] - Issue: Browser rendering text colors lighter than specified (opacity effect) 
+  - Affects: Badge components, category links, date/salary labels
     - Solution needed: Redesign brown color palette or use pure black for small text
 - [x] **Design System - Phase 3: Refactor Remaining Pages** ✅
   - [x] All pages refactored with UI component library (Card, Badge, Link, Button, Breadcrumb)

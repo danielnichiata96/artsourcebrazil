@@ -296,7 +296,7 @@ test.describe('Filter Sidebar - Combined Filters', () => {
     await page.locator('#job-search-sidebar').fill('3D');
     
     // Category
-    await page.locator('.category-btn-sidebar').filter({ hasText: '3D & Animation' }).click();
+    await page.locator('.category-btn-sidebar').filter({ hasText: '3D' }).click();
     
     // Tool
     const toolsDropdown = page.getByRole('button', { name: /ferramentas/i });

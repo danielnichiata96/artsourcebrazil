@@ -20,7 +20,15 @@ config();
 const { SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = process.env;
 
 if (!SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
-  console.error('❌ Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in .env');
+  console.error('❌ Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY in environment variables');
+  console.error('');
+  console.error('To fix this:');
+  console.error('1. In Vercel: Go to Project Settings → Environment Variables');
+  console.error('2. Add these variables:');
+  console.error('   - SUPABASE_URL: Your Supabase project URL');
+  console.error('   - SUPABASE_SERVICE_ROLE_KEY: Your Supabase service role key (keep secret!)');
+  console.error('');
+  console.error('See docs/SUPABASE_SETUP.md for detailed instructions.');
   process.exit(1);
 }
 

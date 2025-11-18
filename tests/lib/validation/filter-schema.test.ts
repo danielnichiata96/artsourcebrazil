@@ -61,6 +61,7 @@ describe('filter-schema validation', () => {
     const defaults: FilterState = {
       search: '',
       category: 'all',
+      skills: [],
       level: [],
       tools: [],
       contract: [],
