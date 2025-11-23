@@ -24,13 +24,13 @@ const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 // Valid technology tags (to validate AI output)
 const VALID_TECH_TAGS = new Set([
-  'Unity', 'Unreal', 'Python', 'JavaScript', 'TypeScript', 'C#', 'Go', 'Java', 
+  'Unity', 'Unreal', 'Python', 'JavaScript', 'TypeScript', 'C#', 'Go', 'Java',
   'C++', 'React', 'Node.js', 'AWS', 'Docker', 'Kubernetes', 'Git', 'CI/CD',
 ]);
 
 // Valid role/skill tags
 const VALID_ROLE_TAGS = new Set([
-  '3D', '2D', 'Animation', 'VFX', 'Design', 'Artist', 'AI', 'Mobile', 
+  '3D', '2D', 'Animation', 'VFX', 'Design', 'Artist', 'AI', 'Mobile',
   'Game Dev', 'Engine', 'Senior',
 ]);
 
@@ -45,7 +45,7 @@ function buildTagExtractionPrompt(title = '', description = '') {
 
 IMPORTANT RULES:
 1. Extract ONLY technologies and skills explicitly mentioned or clearly required
-2. DO NOT include tags from partial word matches (e.g., "Go" from "Google" or "going")
+2. DO NOT include tags from partial word matches (e.g., "Go" from "Google", "Mongo", or "Django")
 3. Return ONLY the tags as a comma-separated list
 4. Use these exact tag names (case-sensitive): Unity, Unreal, Python, JavaScript, TypeScript, C#, Go, Java, C++, React, Node.js, AWS, Docker, Kubernetes, Git, CI/CD, 3D, 2D, Animation, VFX, Design, Artist, AI, Mobile, Game Dev, Engine
 5. If no relevant tags found, return "none"
@@ -170,7 +170,7 @@ function extractTagsWithKeywordMatching(title = '', content = '') {
     { tag: 'JavaScript', pattern: /\b(javascript|js|ecmascript)\b/gi },
     { tag: 'TypeScript', pattern: /\b(typescript|ts)\b/gi },
     { tag: 'C#', pattern: /\b(c#|c-sharp|csharp)\b/gi },
-    { tag: 'Go', pattern: /\b(golang|go language|programming in go)\b/gi }, // Only explicit Go mentions
+    { tag: 'Go', pattern: /\b(golang|go language)\b|\bGo\b(?!\w)/g }, // Strict Go matching
     { tag: 'Java', pattern: /\bjava\b/gi },
     { tag: 'C++', pattern: /\b(c\+\+|cpp|c plus plus)\b/gi },
     { tag: 'React', pattern: /\b(react|reactjs)\b/gi },
@@ -257,7 +257,7 @@ export async function extractTagsIntelligently(title = '', description = '') {
 if (import.meta.url === `file://${process.argv[1]}`) {
   const title = process.argv[2] || '';
   const description = process.argv[3] || '';
-  
+
   extractTagsIntelligently(title, description)
     .then(tags => {
       console.log('Tags:', tags);

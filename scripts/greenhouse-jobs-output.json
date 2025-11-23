@@ -8,16 +8,37 @@
     "shortDescription": "The Art Team at New Games is growing. With an audience of millions, our games are a gateway to unforgettable characters, vibrant worlds, and emotionally rich experiences. This is no small mission, but our secret weapon is our people. We are a collective of versatile, curious, and passionate artis...",
     "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8282998002",
     "postedDate": "2025-11-10T13:03:22-05:00",
-    "category": "2D Art",
+    "category": "3D",
     "tags": [
       "Senior",
       "3D",
+      "2D",
       "Artist",
+      "Animation",
+      "AI",
       "Game Dev",
       "Unity",
-      "Git",
-      "2D",
-      "AI"
+      "Git"
+    ],
+    "location": {
+      "scope": "hybrid"
+    },
+    "contractType": null,
+    "salary": null
+  },
+  {
+    "id": "WIL-516002",
+    "companyName": "Wildlife Studios",
+    "companyLogo": "/images/companies/wildlifestudios.svg",
+    "jobTitle": "IT End-User Support Analyst ",
+    "description": "We're looking for a talented and passionate IT Support Analyst, to join Wildlife's Corporate Technology team. As an IT Support Analyst, you'll play a key role in providing the best tech support experience for all Wilders around the globe. You'll be in constant contact with all departments of the company, seeking to provide the best assistance and also helping to constantly improve procedures and systems so we can provide best-in-class support services. It is highly important to bring not only a great technical background but also excellent communication and organizational skills! We know that the work we do has a high impact on our company's success and culture. The right person for this position is curious by nature, and comfortable in a \"take the initiative\" environment, loves solving problems, and can thrive in a fast-paced business. What you'll do Be responsible for all tickets assigned to you in our ticket management system and guarantee our SLA, customer satisfaction as well as definitive solutions for current problems; Be responsible for supporting the onboarding of new Wilders by guaranteeing that all newcomers will have all the accounts, permissions, instructions, and devices needed to perform their roles; Be responsible for end-user workstation and other IT devices provisioning and de-provisioning by following and improving our IT Asset Management process to guarantee accurate IT inventory control; Be responsible for license provisioning, installation, upgrade, and troubleshooting for a variety of software related to video and game production such as Adobe Creative Suite, Autodesk Suite, Unity, Cursor, Krea, and others; Be responsible for support and troubleshooting incidents related to MacOS and Windows workstation environments, and with mobile devices running iOS and Android as well; Creating excellent structured documentation of tasks and processes for use by both our internal team and our end-users, such as knowledge base articles, how-tos, and user guidelines; Not just solve service requests and incident tickets but also proactively identify opportunities to improve systems and procedures by creating efficiency, automation, and documentation to achieve best-in-class support services; Be responsible for office infrastructure support such as local servers, Cisco Wifi, Google Meet rooms, etc; Be responsible for managing Google Workspace requests and incidents in Google tools like Gmail, Calendar, and Drive. Be responsible for managing other systems such as Jira, Confluence, Unity, Microsoft Entra, and Okta access permission requests and troubleshooting; Configure and support remote connection applications for our Artist environments such as Parsec and AnyDesk; Support and troubleshoot Artist devices and peripherals such as specialized monitors and Wacom Cintiq drawing tablets; Liaise with all Corporate Technology squads by being the owner of each request and guaranteeing the right solution from beginning to end; Be part of a cross-functional team, directly contributing to Wilders tech support experiences. What you'll need Availability to work in hybrid mode On-Call availability for off-hours requests Excellent verbal and oral communication skills; Extensive knowledge of Mac OS and Windows operating systems; Knowledge of Google Workspace applications (Docs, Sheets, Gmail, etc) is essential; A completed degree or diploma in Network, Systems, or Computing; Previous experience providing tech support in a corporate environment; Experience in the Jira Service Management ticketing system Experience with general IT systems administration. Experience with supporting cloud-based SaaS applications such as Google Workspace, Slack, Okta, Atlassian (Jira, JSM, Confluence); Documentation skills. What’s nice to have Fluent English (both spoken and written); Hands on experience with maintaining and servicing Mac and Windows laptop hardware ITIL and/or Project Management, IT Support related courses or certifications; Knowledge of iOS, Android, and Linux operating systems; Experience with corporate network design and management (IP networking, wifi, etc). More about you You are versed in customer-oriented culture; You have strong analytical, organizational skills, and you have training in root cause analysis; Curious, proactive, full of energy, and seeking constant learning; You are a fast learner and know how to manage the time spent on each task; You can easily adapt to a dynamic environment with a lot of changes; You can multitask and handle changes in direction; You can manage tasks in the most proactive way; You´re creative when solving problems and are continuously seeking improvements for processes and solutions; You have the autonomy to recognize both current and new priorities, evaluating the impact of their outcomes in the final result. You can communicate clearly with your team and the company to identify issues and demands. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create and maintain games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
+    "shortDescription": "We're looking for a talented and passionate IT Support Analyst, to join Wildlife's Corporate Technology team. As an IT Support Analyst, you'll play a key role in providing the best tech support experience for all Wilders around the globe. You'll be in constant contact with all departments of the ...",
+    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8285516002",
+    "postedDate": "2025-11-20T09:47:17-05:00",
+    "category": "Game Dev",
+    "tags": [
+      "Unity",
+      "Mobile"
     ],
     "location": {
       "scope": "hybrid"
@@ -36,13 +57,9 @@
     "postedDate": "2025-10-24T15:58:09-04:00",
     "category": "Game Dev",
     "tags": [
-      "Python",
-      "AWS",
       "Kubernetes",
-      "CI/CD",
-      "Design",
-      "Mobile",
-      "Game Dev"
+      "Git",
+      "CI/CD"
     ],
     "location": {
       "scope": "remote-worldwide"
@@ -62,7 +79,6 @@
     "category": "Game Dev",
     "tags": [
       "Unity",
-      "Go",
       "Design",
       "Mobile",
       "Game Dev"
@@ -84,15 +100,12 @@
     "postedDate": "2025-09-09T17:47:02-04:00",
     "category": "2D Art",
     "tags": [
-      "3D",
+      "Senior",
       "2D",
-      "Animation",
-      "Design",
       "Artist",
-      "AI",
-      "Mobile",
       "Game Dev",
-      "Senior"
+      "AI",
+      "Mobile"
     ],
     "location": {
       "scope": "hybrid"
@@ -111,34 +124,11 @@
     "postedDate": "2025-11-13T13:19:07-05:00",
     "category": "2D Art",
     "tags": [
-      "3D",
       "2D",
       "Animation",
       "Design",
       "Artist",
       "AI",
-      "Mobile",
-      "Game Dev",
-      "Senior"
-    ],
-    "location": {
-      "scope": "hybrid"
-    },
-    "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "WIL-008002",
-    "companyName": "Wildlife Studios",
-    "companyLogo": "/images/companies/wildlifestudios.svg",
-    "jobTitle": "Senior Creative Producer - Marketing",
-    "description": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Creative Producer to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creative vision behind our performance marketing campaigns while ensuring every decision is rooted in data, insight, and a deep understanding of the mobile games industry. As a Senior Creative Producer at Wildlife, you’ll lead creative development from strategic planning through execution — guiding the production of video, playable, and static ads used in User Acquisition campaigns. You will co-own the creative strategy across titles, collaborating closely with Product Marketing Managers (PMMs) and our in-house production team to i) identify key ad concepts; ii) define what we should produce; iii) how we will produce it and iv) evaluate results You will work at the intersection of creativity, data, market analysis, and production — with full accountability over the end-to-end process. The ideal candidate brings a strong creative vision, a performance marketing mindset, and a natural curiosity for trends, players, competitors, and innovations. What you'll do Co-own and drive the creative strategy across multiple games in collaboration with PMMs. Write clear and actionable creative briefs that connect strategic insight to execution. Lead the end-to-end development of high-performing creative assets (video, playable, static) for performance marketing campaigns. Analyze creative performance results and iterate based on key metrics (Spend Share, IPM, CTR, CPI, ROAS). Continuously benchmark creative trends from the gaming and mobile ad industries — translating insights into innovative and effective campaigns. Stay on top of market and genre trends, player behavior, and competitive creative strategies. Use or collaborate with creative intelligence tools to guide planning and ideation. Partner with PMMs and Data Scientists to define test methodologies and uncover actionable insights. Act as a central point of alignment for creative priorities across Marketing and Production. Raise the creative bar while scaling output, helping the team hit volume, quality, and performance targets. Support continuous improvement of creative operations through structure, process, and leadership. What you'll need Solid track record in performance marketing, with deep involvement in creative strategy and execution for User Acquisition campaigns. Strong understanding of creative KPIs and performance metrics — and how to apply them to iteration and decision-making. Experience conducting creative benchmarking and extracting insights from the market. Nice to have Familiarity with the mobile gaming industry, or experience working on performance creatives for games or apps. Familiarity with motion design and/or playable ads development. Familiarity with market intelligence tools (e.g., Sensor Tower, AppMagic, or similar). Experience managing UA channels for digital products. Experience working with creative A/B testing. More about you You are highly results-oriented — you make creative decisions with performance in mind. You are analytically curious — numbers and benchmarks are part of your creative toolbox. You stay plugged into the market, trends, platforms, and competitors — always looking for the next idea to test. You have high creative standards and attention to detail, balanced with agility and pragmatism. You believe that creative excellence comes from a balance between insight, craft, and iteration. You have excellent communication and stakeholder management skills. You can thrive in fast-paced, high-output environments. Full working proficiency in English. You are resilient and do not let setbacks demotivate you when results don't go as expected. You are flexible to understand that working in a fast-paced environment means that change is constant. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
-    "shortDescription": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Creative Producer to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creat...",
-    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8289008002",
-    "postedDate": "2025-11-13T07:52:02-05:00",
-    "category": "Game Dev",
-    "tags": [
-      "Design",
       "Mobile",
       "Game Dev",
       "Senior"
@@ -184,9 +174,6 @@
     "category": "Game Dev",
     "tags": [
       "Python",
-      "AI",
-      "Mobile",
-      "Game Dev",
       "Senior"
     ],
     "location": {
@@ -206,14 +193,16 @@
     "postedDate": "2025-07-30T15:04:50-04:00",
     "category": "Game Dev",
     "tags": [
+      "Senior",
+      "Game Dev",
+      "Mobile",
+      "C++",
+      "Java",
+      "C#",
       "Unity",
       "JavaScript",
-      "Go",
-      "Java",
-      "Kubernetes",
-      "Mobile",
-      "Game Dev",
-      "Senior"
+      "Node.js",
+      "Kubernetes"
     ],
     "location": {
       "scope": "hybrid"
@@ -232,36 +221,16 @@
     "postedDate": "2025-09-09T19:12:31-04:00",
     "category": "Game Dev",
     "tags": [
+      "Senior",
+      "Game Dev",
+      "Mobile",
+      "C++",
+      "Java",
+      "C#",
       "Unity",
       "JavaScript",
-      "Go",
-      "Java",
-      "Kubernetes",
-      "Mobile",
-      "Game Dev",
-      "Senior"
-    ],
-    "location": {
-      "scope": "hybrid"
-    },
-    "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "WIL-649002",
-    "companyName": "Wildlife Studios",
-    "companyLogo": "/images/companies/wildlifestudios.svg",
-    "jobTitle": "Senior Performance Marketing Analyst - Creatives ",
-    "description": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Performance Marketing Analyst to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to driving the creative vision behind our performance marketing campaigns while ensuring every decision is rooted in data, insight, and a deep understanding of the mobile games industry. As a Senior Performance Marketing Analyst at Wildlife, you’ll lead creative development from strategic planning through execution — guiding the production of video, playable, and static ads used in User Acquisition campaigns. You will co-own the creative strategy across titles, collaborating closely with Product Marketing Managers (PMMs) and our in-house production team to i) identify key ad concepts; ii) define what we should produce; iii) how we will produce it and iv) evaluate results You will work at the intersection of creativity, data, market analysis, and production — with full accountability over the end-to-end process. The ideal candidate brings a strong creative vision, a performance marketing mindset, and a natural curiosity for trends, players, competitors, and innovations. What you'll do Co-own and drive the creative strategy across multiple games in collaboration with PMMs. Write clear and actionable creative briefs that connect strategic insight to execution. Lead the end-to-end development of high-performing creative assets (video, playable, static) for performance marketing campaigns. Analyze creative performance results and iterate based on key metrics (Spend Share, IPM, CTR, CPI, ROAS). Continuously benchmark creative trends from the gaming and mobile ad industries — translating insights into innovative and effective campaigns. Stay on top of market and genre trends, player behavior, and competitive creative strategies. Use or collaborate with creative intelligence tools to guide planning and ideation. Partner with PMMs and Data Scientists to define test methodologies and uncover actionable insights. Act as a central point of alignment for creative priorities across Marketing and Production. Raise the creative bar while scaling output, helping the team hit volume, quality, and performance targets. Support continuous improvement of creative operations through structure, process, and leadership. What you'll need Solid track record in performance marketing, with deep involvement in creative strategy and execution for User Acquisition campaigns. Strong understanding of creative KPIs and performance metrics — and how to apply them to iteration and decision-making. Experience conducting creative benchmarking and extracting insights from the market. Nice to have Familiarity with the mobile gaming industry, or experience working on performance creatives for games or apps. Familiarity with motion design and/or playable ads development. Familiarity with market intelligence tools (e.g., Sensor Tower, AppMagic, or similar). Experience managing UA channels for digital products. Experience working with creative A/B testing. More about you You are highly results-oriented — you make creative decisions with performance in mind. You are analytically curious — numbers and benchmarks are part of your creative toolbox. You stay plugged into the market, trends, platforms, and competitors — always looking for the next idea to test. You have high creative standards and attention to detail, balanced with agility and pragmatism. You believe that creative excellence comes from a balance between insight, craft, and iteration. You have excellent communication and stakeholder management skills. You can thrive in fast-paced, high-output environments. Full working proficiency in English. You are resilient and do not let setbacks demotivate you when results don't go as expected. You are flexible to understand that working in a fast-paced environment means that change is constant. About Wildlife Wildlife is one of the leading mobile game developers and publishers in the world. We have released more than 60 titles, reaching billions of people around the globe. Here, we create games that will excite, intrigue, and engage our players for years to come! Equal Opportunity Wildlife is proud to be an Equal Opportunity and Affirmative Action employer. We do not discriminate based upon race, colour, national origin, gender, gender identity, sexual orientation, protected veteran status, disability, age, or other applicable legally protected characteristics. We also consider qualified applicants with criminal histories, consistent with applicable federal, state, and local law. We're committed to providing accommodations for candidates with disabilities in our recruiting process.",
-    "shortDescription": "Are you ready to shape the creative future of mobile gaming at scale? We’re looking for a Senior Performance Marketing Analyst to join our Creative Strategy team — someone who is equally passionate about great ideas, measurable outcomes, and market intelligence. This role will be central to drivi...",
-    "applyLink": "https://job-boards.greenhouse.io/wildlifestudios/jobs/8206649002",
-    "postedDate": "2025-10-09T17:11:59-04:00",
-    "category": "Game Dev",
-    "tags": [
-      "Design",
-      "Mobile",
-      "Game Dev",
-      "Senior"
+      "Node.js",
+      "Kubernetes"
     ],
     "location": {
       "scope": "hybrid"
@@ -282,12 +251,12 @@
     "tags": [
       "JavaScript",
       "TypeScript",
-      "Node.js",
-      "Git",
-      "Design",
-      "Mobile",
-      "Game Dev",
-      "Senior"
+      "C#",
+      "Senior",
+      "2D",
+      "Animation",
+      "Artist",
+      "Game Dev"
     ],
     "location": {
       "scope": "hybrid"
@@ -306,14 +275,11 @@
     "postedDate": "2025-10-24T14:09:24-04:00",
     "category": "Game Dev",
     "tags": [
-      "Unity",
       "Python",
-      "AWS",
+      "Go",
       "Kubernetes",
+      "Git",
       "CI/CD",
-      "Design",
-      "Mobile",
-      "Game Dev",
       "Senior"
     ],
     "location": {
@@ -333,7 +299,6 @@
     "postedDate": "2025-09-16T12:17:35-04:00",
     "category": "Game Dev",
     "tags": [
-      "Design",
       "Mobile",
       "Game Dev"
     ],

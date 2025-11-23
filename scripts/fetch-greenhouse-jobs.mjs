@@ -89,7 +89,7 @@ function shouldFilterJob(title = '') {
 
 /**
  * Map job title and departments to our category
- * Intelligently separates 3D, Animation, and 3D & Animation
+ * Intelligently separates 3D, 2D Art, and Animation
  * @param {string} title - Job title
  * @param {string} description - Job description (for context)
  * @param {string[]} departments - Array of department names
@@ -99,54 +99,51 @@ function mapCategory(title = '', description = '', departments = []) {
   const lowerTitle = title.toLowerCase();
   const lowerDescription = description.toLowerCase();
   const allText = `${lowerTitle} ${lowerDescription}`;
-  
+
   // Filter out irrelevant jobs
   if (shouldFilterJob(title)) {
     return null; // Signal to filter out
   }
-  
-  // Check for VFX first (more specific)
+
+  // PRIORITY 1: Explicit "3D" in title (most specific)
+  // This prevents "3D Game Artist" from being categorized as "2D Art"
+  if (/\b3d\b/i.test(title)) {
+    return '3D';
+  }
+
+  // PRIORITY 2: VFX (very specific keywords)
   if (titleCategoryMap['VFX'].some(keyword => allText.includes(keyword))) {
     return 'VFX';
   }
-  
-  // Check for Design
-  if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
-    return 'Design';
-  }
-  
-  // Check for 2D Art (before Animation, more specific)
-  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
-    return '2D Art';
-  }
-  
-  // Smart 3D vs Animation detection
-  // Priority: If title has "animation" specifically → Animation
-  // Otherwise, if has "3D" keywords → 3D
+
+  // PRIORITY 3: Animation (before 2D Art, as some 2D artists also animate)
   const hasAnimationKeywords = titleCategoryMap['Animation'].some(keyword => lowerTitle.includes(keyword));
-  const has3DKeywords = titleCategoryMap['3D'].some(keyword => allText.includes(keyword));
-  
-  // Check title first - more specific (but not 2D Art, already checked above)
   if (hasAnimationKeywords && /animation|rigging/i.test(lowerTitle)) {
     return 'Animation';
   }
-  
-  if (has3DKeywords) {
-    return '3D';
+
+  // PRIORITY 4: 2D Art (after 3D and Animation checks)
+  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
+    return '2D Art';
   }
-  
-  // Check for Game Dev
+
+  // PRIORITY 5: Design
+  if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
+    return 'Design';
+  }
+
+  // PRIORITY 6: Game Dev (catch-all for tech roles)
   if (titleCategoryMap['Game Dev'].some(keyword => allText.includes(keyword))) {
     return 'Game Dev';
   }
-  
+
   // Then try departments
   for (const dept of departments) {
     const name = dept.name || dept;
     if (departmentCategoryMap[name]) {
       return departmentCategoryMap[name];
     }
-    
+
     // Check for partial matches
     const lowerName = name.toLowerCase();
     for (const [key, value] of Object.entries(departmentCategoryMap)) {
@@ -155,8 +152,9 @@ function mapCategory(title = '', description = '', departments = []) {
       }
     }
   }
-  
-  // Default category (only if not filtered out)
+
+  // FALLBACK: Log warning and use default category
+  console.warn(`⚠️  No category match for "${title}", using fallback: ${DEFAULT_CATEGORY}`);
   return DEFAULT_CATEGORY;
 }
 
@@ -183,12 +181,12 @@ function determineLocationScope(metadata = [], location = {}) {
       return 'hybrid';
     }
   }
-  
+
   // Default to onsite if location specified
   if (location?.name) {
     return 'onsite';
   }
-  
+
   // Fallback
   return 'remote-brazil';
 }
@@ -214,22 +212,22 @@ async function extractTags(title = '', content = '') {
  */
 function decodeHtmlEntities(html = '') {
   if (!html) return '';
-  
+
   let text = html;
-  
+
   // IMPORTANT: Process numeric entities FIRST, then named entities
   // This prevents conflicts (e.g., &#39; should be processed before &amp;)
-  
+
   // Replace hex entities (&#x27;)
   text = text.replace(/&#x([0-9a-fA-F]+);/gi, (match, hex) => {
     return String.fromCharCode(parseInt(hex, 16));
   });
-  
+
   // Replace numeric entities (&#39;)
   text = text.replace(/&#(\d+);/g, (match, num) => {
     return String.fromCharCode(parseInt(num, 10));
   });
-  
+
   // Common named HTML entities (must come after numeric to avoid conflicts)
   // Use a more comprehensive approach with regex that matches word boundaries
   const entityMap = {
@@ -251,26 +249,26 @@ function decodeHtmlEntities(html = '') {
     '&rdquo;': '\u201D',  // Right double quotation mark
     '&ldquo;': '\u201C',  // Left double quotation mark
   };
-  
+
   // Replace named entities (process &amp; FIRST to avoid double-encoding)
   // Process &amp; separately first since it's the most common and critical
   text = text.replace(/&amp;/gi, '&');
-  
+
   // Then replace all other named entities
   for (const [entity, replacement] of Object.entries(entityMap)) {
     // Skip &amp; as we already processed it
     if (entity === '&amp;') continue;
-    
+
     // Escape special regex characters and create case-insensitive regex
     const escapedEntity = entity.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
     text = text.replace(new RegExp(escapedEntity, 'gi'), replacement);
   }
-  
+
   // Final pass: handle any remaining numeric entities that might have been missed
   text = text.replace(/&#(\d+);/g, (match, num) => {
     return String.fromCharCode(parseInt(num, 10));
   });
-  
+
   return text;
 }
 
@@ -310,11 +308,11 @@ function generateJobId(greenhouseId, companyName) {
 async function fetchJobDetails(jobId) {
   const url = `${GREENHOUSE_API_BASE}/${COMPANY_SLUG}/jobs/${jobId}`;
   const response = await fetch(url);
-  
+
   if (!response.ok) {
     throw new Error(`Failed to fetch job ${jobId}: ${response.statusText}`);
   }
-  
+
   return await response.json();
 }
 
@@ -326,7 +324,7 @@ async function fetchJobDetails(jobId) {
  */
 function detectContractType(title = '', description = '') {
   const allText = `${title} ${description}`.toLowerCase();
-  
+
   // Check for internship/estágio (higher priority in title)
   if (/\b(intern|internship|estágio|estagio)\b/i.test(title)) {
     return 'Internship'; // Use English version for consistency
@@ -334,15 +332,15 @@ function detectContractType(title = '', description = '') {
   if (/\b(intern|internship|estágio|estagio)\b/i.test(description)) {
     return 'Internship';
   }
-  
+
   // Check for other contract types
   if (/\b(freelance|freelancer|consultant|consultoria)\b/i.test(allText)) {
     return 'Freelance';
   }
-  
+
   // CLT, PJ, B2B are usually specified in job descriptions
   // but we can't reliably detect them without explicit keywords
-  
+
   return null;
 }
 
@@ -354,39 +352,39 @@ function detectContractType(title = '', description = '') {
 async function normalizeJob(greenhouseJob) {
   // Fetch full job details
   const details = await fetchJobDetails(greenhouseJob.id);
-  
+
   const title = greenhouseJob.title || details.title || '';
   const content = details.content || '';
   const description = htmlToText(content); // This now decodes HTML entities
-  
+
   // Limit description length for shortDescription (max 300 chars)
-  const shortDescription = description.length > 300 
-    ? description.slice(0, 297) + '...' 
+  const shortDescription = description.length > 300
+    ? description.slice(0, 297) + '...'
     : description;
-  
+
   // Map category with description context for better detection
   const category = mapCategory(
     title,
     description,
     details.departments || greenhouseJob.departments || []
   );
-  
+
   // Filter out irrelevant jobs (returns null)
   if (!category) {
     return null;
   }
-  
+
   const tags = await extractTags(title, description);
   const locationScope = determineLocationScope(
     details.metadata || greenhouseJob.metadata || [],
     details.location || greenhouseJob.location || {}
   );
-  
+
   // Detect contract type
   const contractType = detectContractType(title, description);
-  
+
   const id = generateJobId(greenhouseJob.id, greenhouseJob.company_name || 'WLF');
-  
+
   return {
     id,
     companyName: greenhouseJob.company_name || 'Wildlife Studios',
@@ -413,23 +411,23 @@ async function fetchGreenhouseJobs() {
   console.log('🚀 Fetching jobs from Greenhouse API...');
   console.log(`📋 Company: ${COMPANY_SLUG}`);
   console.log('═'.repeat(60));
-  
+
   try {
     // Fetch job list
     const listUrl = `${GREENHOUSE_API_BASE}/${COMPANY_SLUG}/jobs`;
     console.log(`🔍 Fetching job list from: ${listUrl}`);
-    
+
     const listResponse = await fetch(listUrl);
     if (!listResponse.ok) {
       throw new Error(`Failed to fetch job list: ${listResponse.statusText}`);
     }
-    
+
     const listData = await listResponse.json();
     const jobs = listData.jobs || [];
-    
+
     console.log(`📦 Found ${jobs.length} jobs`);
     console.log('\n🔄 Processing jobs...\n');
-    
+
     // Process each job
     const normalizedJobs = [];
     for (let i = 0; i < jobs.length; i++) {
@@ -437,33 +435,33 @@ async function fetchGreenhouseJobs() {
       try {
         console.log(`[${i + 1}/${jobs.length}] Processing: ${job.title}`);
         const normalized = await normalizeJob(job);
-        
+
         if (!normalized) {
           console.log(`  ⏭️  Filtered out (not relevant for creative/tech focus)`);
           continue;
         }
-        
+
         normalizedJobs.push(normalized);
         console.log(`  ✅ Created: ${normalized.id} - ${normalized.category}`);
-        
+
         // Small delay to avoid rate limiting
         await new Promise(resolve => setTimeout(resolve, 100));
       } catch (error) {
         console.error(`  ❌ Error processing job ${job.id}: ${error.message}`);
       }
     }
-    
+
     console.log('\n' + '═'.repeat(60));
     console.log(`✅ Successfully processed ${normalizedJobs.length} jobs`);
     console.log('═'.repeat(60));
-    
+
     // Save to JSON file for inspection
     const outputPath = resolve(process.cwd(), 'scripts/greenhouse-jobs-output.json');
     writeFileSync(outputPath, JSON.stringify(normalizedJobs, null, 2), 'utf-8');
-    
+
     console.log(`\n📄 Output saved to: ${outputPath}`);
     console.log('💡 Review the output and adjust mapping as needed before integrating into main jobs.json');
-    
+
     // Show summary
     const categories = {};
     const locationScopes = {};
@@ -471,11 +469,11 @@ async function fetchGreenhouseJobs() {
       categories[job.category] = (categories[job.category] || 0) + 1;
       locationScopes[job.location.scope] = (locationScopes[job.location.scope] || 0) + 1;
     });
-    
+
     console.log('\n📊 Summary:');
     console.log('Categories:', categories);
     console.log('Location Scopes:', locationScopes);
-    
+
   } catch (error) {
     console.error('❌ Error fetching Greenhouse jobs:', error.message);
     process.exit(1);

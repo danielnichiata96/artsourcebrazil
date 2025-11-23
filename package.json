@@ -14,6 +14,7 @@
     "validate:jobs": "node scripts/validate-jobs.mjs",
     "validate:json-ld": "node scripts/validate-json-ld.mjs",
     "fetch:greenhouse": "node scripts/fetch-greenhouse-jobs.mjs",
+    "sync:greenhouse": "node scripts/sync-greenhouse-to-supabase.mjs",
     "sync:greenhouse:supabase": "node scripts/sync-greenhouse-to-supabase.mjs",
     "sync:greenhouse:supabase:full": "npm run fetch:greenhouse && npm run sync:greenhouse:supabase",
     "sync:supabase": "node scripts/sync-supabase.mjs",

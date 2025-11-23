@@ -76,12 +76,12 @@ const seo = {
                         <!-- Categories -->
                         <div class="border-2 border-ink bg-white p-6 shadow-hard-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
                             <h3 class="font-display text-lg font-bold uppercase tracking-wide mb-5 border-b-2 border-ink pb-2 inline-block">
-                                {messages.filters.category}
+                                {messages.filters.area}
                             </h3>
                             <div class="space-y-3" id="category-filters">
                                 <label class="flex items-center gap-3 cursor-pointer group hover:translate-x-1 transition-transform">
                                     <input type="radio" name="category-filter" value="all" checked class="studio-checkbox" />
-                                    <span class="font-bold text-sm uppercase group-hover:text-accent-purple transition-colors">{messages.filters.allCategories}</span>
+                                    <span class="font-bold text-sm uppercase group-hover:text-accent-purple transition-colors">{messages.filters.allAreas}</span>
                                 </label>
                                 <!-- JS Injected -->
                             </div>
@@ -173,11 +173,9 @@ const getLocationLabel = (scope) => {
 
 // --- 3. RENDERING ---
 
-function renderFilters() {
+function renderCategories() {
     const categories = [...new Set(jobsData.map(j => j.category))].sort();
-    const allTags = jobsData.flatMap(j => j.tags);
-    const popularTags = [...new Set(allTags)].sort((a,b) => allTags.filter(t=>t===b).length - allTags.filter(t=>t===a).length).slice(0,10);
-
+    
     const renderCats = (containerId) => {
         const container = document.getElementById(containerId);
         if(!container) return;
@@ -198,20 +196,29 @@ function renderFilters() {
         });
     };
 
-    const renderTags = (containerId) => {
-        const container = document.getElementById(containerId);
-        if(!container) return;
-        popularTags.forEach(tag => {
-            const btn = document.createElement('button');
-            btn.dataset.tag = tag;
-            btn.className = "tag-filter border border-ink bg-white px-2 py-1 text-xs font-bold uppercase hover:bg-ink hover:text-white transition-colors";
-            btn.textContent = tag;
-            container.appendChild(btn);
-        });
-    };
-
     renderCats('category-filters');
-    renderTags('tag-filters');
+}
+
+function updateTagFacets(filteredJobs) {
+    const allTags = filteredJobs.flatMap(j => j.tags);
+    const popularTags = [...new Set(allTags)]
+        .sort((a,b) => allTags.filter(t=>t===b).length - allTags.filter(t=>t===a).length)
+        .slice(0,10);
+
+    const container = document.getElementById('tag-filters');
+    if(!container) return;
+    
+    // Clear existing tags
+    container.innerHTML = '';
+    
+    // Render new tags
+    popularTags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.dataset.tag = tag;
+        btn.className = "tag-filter border border-ink bg-white px-2 py-1 text-xs font-bold uppercase hover:bg-ink hover:text-white transition-colors";
+        btn.textContent = tag;
+        container.appendChild(btn);
+    });
 }
 
 // --- 4. INTERACTION ---
@@ -222,6 +229,8 @@ function initLogic() {
     const runFilter = () => {
         const cards = document.querySelectorAll('.job-card');
         let count = 0;
+        const visibleJobs = [];
+        
         cards.forEach(card => {
             const matchS = state.search === '' || card.dataset.title.includes(state.search) || card.dataset.company.includes(state.search) || card.dataset.tags.includes(state.search);
             const matchC = state.category === 'all' || card.dataset.category === state.category;
@@ -230,10 +239,17 @@ function initLogic() {
             if (matchS && matchC && matchT) {
                 card.style.display = 'flex';
                 count++;
+                // Find matching job in jobsData
+                const jobId = card.dataset.id;
+                const job = jobsData.find(j => j.id === jobId);
+                if (job) visibleJobs.push(job);
             } else {
                 card.style.display = 'none';
             }
         });
+        
+        // Update tag facets based on visible jobs
+        updateTagFacets(visibleJobs);
         
         const empty = document.getElementById('empty-state');
         if (count === 0) empty.classList.remove('hidden'); 
@@ -289,7 +305,8 @@ function initLogic() {
 // --- INIT ---
 document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('job-count').textContent = jobsData.length;
-    renderFilters();
+    renderCategories();
+    updateTagFacets(jobsData); // Initial tags from all jobs
     initLogic();
 });
 </script>

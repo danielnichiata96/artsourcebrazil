@@ -32,16 +32,62 @@ export const FILTER_CATEGORIES = ['all', ...CATEGORIES] as const;
 export type FilterCategory = (typeof FILTER_CATEGORIES)[number];
 
 /**
- * Category emoji icons mapping
+ * Category metadata interface
  */
-export const CATEGORY_ICONS: Record<string, string> = {
-  'Game Dev': '🎮',
-  '3D': '🎨',
-  '2D Art': '🖼️',
-  'Animation': '🎬',
-  'Design': '🎯',
-  'VFX': '✨',
+export interface CategoryMeta {
+  name: Category;
+  slug: string;
+  color: string;
+  description: string;
+}
+
+/**
+ * Category metadata with slugs, colors, and descriptions
+ * Colors follow Canvas design system principles
+ */
+export const CATEGORY_META: Record<Category, CategoryMeta> = {
+  'Game Dev': {
+    name: 'Game Dev',
+    slug: 'game-dev',
+    color: '#9C27B0', // Purple - Tech/Engineering
+    description: 'Programação, engenharia, QA'
+  },
+  '3D': {
+    name: '3D',
+    slug: '3d',
+    color: '#FF5722', // Deep Orange - 3D/Modeling
+    description: 'Modelagem 3D, texturização'
+  },
+  '2D Art': {
+    name: '2D Art',
+    slug: '2d-art',
+    color: '#2196F3', // Blue - 2D Art
+    description: 'Arte 2D, ilustração, concept'
+  },
+  'Animation': {
+    name: 'Animation',
+    slug: 'animation',
+    color: '#4CAF50', // Green - Animation/Motion
+    description: 'Animação 2D/3D, rigging'
+  },
+  'Design': {
+    name: 'Design',
+    slug: 'design',
+    color: '#00BCD4', // Cyan - UI/UX Design
+    description: 'UI/UX, Product Design'
+  },
+  'VFX': {
+    name: 'VFX',
+    slug: 'vfx',
+    color: '#FFC107', // Amber - VFX/Effects
+    description: 'Efeitos visuais, partículas'
+  },
 } as const;
+
+/**
+ * Fallback category for unmapped jobs
+ */
+export const FALLBACK_CATEGORY: Category = 'Game Dev';
 
 /**
  * Category mapping for external sources (legacy compatibility)
@@ -87,12 +133,24 @@ export function mapExternalCategory(externalCategory: string): Category | null {
   return mapped || null;
 }
 
-
+/**
+ * Get category metadata
+ * Returns metadata for a category or null if not found
+ */
+export function getCategoryMeta(category: string): CategoryMeta | null {
+  return CATEGORY_META[category as Category] || null;
+}
 
 /**
- * Get category icon
- * Returns the icon for a category or a default icon if not found
+ * Get category slug for URL
  */
-export function getCategoryIcon(category: string): string {
-  return CATEGORY_ICONS[category] || '📋';
+export function getCategorySlug(category: string): string {
+  return CATEGORY_META[category as Category]?.slug || 'all';
+}
+
+/**
+ * Get category color
+ */
+export function getCategoryColor(category: string): string {
+  return CATEGORY_META[category as Category]?.color || '#757575';
 }
