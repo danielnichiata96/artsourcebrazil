@@ -42,6 +42,7 @@ const logoAlt = `${job.companyName} logo`;
     data-tags={job.tags.join(',').toLowerCase()}
     data-title={job.jobTitle.toLowerCase()}
     data-company={job.companyName.toLowerCase()}
+    data-testid="job-card"
 >
     <div class:list={["w-full md:w-4 border-b-2 md:border-b-0 md:border-r-2 border-ink h-4 md:h-auto flex-shrink-0", accentColor]}></div>
     <a href={jobHref} class="flex-1 flex flex-col md:flex-row cursor-pointer focus-visible:outline-none" aria-label={`${job.jobTitle} na ${job.companyName}`}>

@@ -27,18 +27,37 @@ const translations = {
       },
     },
     hero: {
-      badge: 'Curadoria humana para talentos criativos do Brasil',
+      badge: 'Live Beta v3.0',
+      badgeLabel: 'Curadoria humana para talentos criativos do Brasil',
+      titleLine1: 'CRIADO NO',
+      titleLine2: 'BRASIL.',
+      titleLine3: 'DEPLOYADO GLOBAL.',
       title: 'Art Source Brazil',
       description:
-        'Selecionamos manualmente vagas remotas reais em Game Dev, 3D & Animation e UI/UX. Conectamos talentos brasileiros a estúdios que valorizam criatividade e cultura.',
+        'O hub definitivo para <span class="font-bold text-ink">Artistas 3D</span>, <span class="font-bold text-ink">Mestres de VFX</span> e <span class="font-bold text-ink">Game Devs</span> no Brasil procurando trabalho remoto internacional.',
       primaryCta: 'Ver vagas selecionadas',
       secondaryCta: 'Postar uma vaga',
-      sectionTitle: 'Últimas oportunidades',
+      sectionTitle: 'Vagas Recentes',
+      emptyStateTitle: 'Fim da linha.',
+      emptyStateReset: 'Resetar',
       stats: {
         jobs: { label: 'Vagas abertas', unitSingular: 'posição', unitPlural: 'posições' },
         companies: { label: 'Estúdios parceiros', unitSingular: 'empresa', unitPlural: 'empresas' },
         categories: { label: 'Categorias criativas', unitSingular: 'categoria', unitPlural: 'categorias' },
         skills: { label: 'Skills em destaque', unitSingular: 'skill', unitPlural: 'skills' },
+      },
+      timeAgo: {
+        today: 'HOJE',
+        yesterday: 'ONTEM',
+        daysAgo: '{days}D ATRÁS',
+      },
+      location: {
+        brazilOnly: 'SOMENTE BRASIL',
+        latamRemote: 'REMOTO LATAM',
+        global: 'GLOBAL',
+        hybrid: 'HÍBRIDO',
+        onsite: 'PRESENCIAL',
+        remote: 'REMOTO',
       },
     },
     results: {
@@ -68,9 +87,10 @@ const translations = {
       toggleAria: 'Abrir filtros',
       closeAria: 'Fechar filtros',
       searchLabel: 'Buscar vagas',
-      searchPlaceholder: 'Buscar vaga, empresa, skill...',
+      searchPlaceholder: 'Buscar vagas...',
       category: 'Categoria',
-      allCategories: 'Todas as vagas',
+      discipline: 'Disciplina',
+      allCategories: 'Todas as Disciplinas',
       level: 'Nível',
       tools: 'Ferramentas',
       contract: 'Contrato',
@@ -82,6 +102,9 @@ const translations = {
       sidebarClear: 'Limpar',
       loadingMessage: 'Buscando vagas...',
       errorMessage: 'Ops, algo deu errado. Tenta de novo?',
+      hiringTitle: 'Contratando?',
+      hiringSubtitle: 'Alcance 5.000+ criativos brasileiros.',
+      postNow: 'Postar Agora',
     },
     job: {
       new: 'Nova',
@@ -136,18 +159,37 @@ const translations = {
       },
     },
     hero: {
-      badge: 'Human-curated for Brazilian creative talent',
+      badge: 'Live Beta v3.0',
+      badgeLabel: 'Human-curated for Brazilian creative talent',
+      titleLine1: 'CRAFTED IN',
+      titleLine2: 'BRAZIL.',
+      titleLine3: 'DEPLOYED GLOBAL.',
       title: 'Art Source Brazil',
       description:
-        'Remote roles in Game Dev, 3D & Animation, and UI/UX for Brazilian creative talent.',
+        'The definitive hub for <span class="font-bold text-ink">3D Artists</span>, <span class="font-bold text-ink">VFX Wizards</span>, and <span class="font-bold text-ink">Game Devs</span> in Brazil looking for international remote work.',
       primaryCta: 'Explore handpicked jobs',
       secondaryCta: 'Post a job',
-      sectionTitle: 'Latest opportunities',
+      sectionTitle: 'Fresh Roles',
+      emptyStateTitle: 'Dead End.',
+      emptyStateReset: 'Reset',
       stats: {
         jobs: { label: 'Open roles', unitSingular: 'role', unitPlural: 'roles' },
         companies: { label: 'Hiring studios', unitSingular: 'studio', unitPlural: 'studios' },
         categories: { label: 'Creative categories', unitSingular: 'category', unitPlural: 'categories' },
         skills: { label: 'Featured skills', unitSingular: 'skill', unitPlural: 'skills' },
+      },
+      timeAgo: {
+        today: 'TODAY',
+        yesterday: 'YESTERDAY',
+        daysAgo: '{days}D AGO',
+      },
+      location: {
+        brazilOnly: 'BRAZIL ONLY',
+        latamRemote: 'LATAM REMOTE',
+        global: 'GLOBAL',
+        hybrid: 'HYBRID',
+        onsite: 'ON-SITE',
+        remote: 'REMOTE',
       },
     },
     results: {
@@ -177,9 +219,10 @@ const translations = {
       toggleAria: 'Open filters',
       closeAria: 'Close filters',
       searchLabel: 'Job search',
-      searchPlaceholder: 'Role, company or skill...',
+      searchPlaceholder: 'Search roles...',
       category: 'Category',
-      allCategories: 'All openings',
+      discipline: 'Discipline',
+      allCategories: 'All Disciplines',
       level: 'Level',
       tools: 'Tools',
       contract: 'Contract',
@@ -191,6 +234,9 @@ const translations = {
       sidebarClear: 'Clear',
       loadingMessage: 'Searching...',
       errorMessage: 'Oops, something went wrong. Try again?',
+      hiringTitle: 'Hiring?',
+      hiringSubtitle: 'Reach 5,000+ Brazilian creatives.',
+      postNow: 'Post Now',
     },
     job: {
       new: 'New',
@@ -232,12 +278,19 @@ export function getMessages(locale: Locale): Messages {
 }
 
 export function resolveLocale(url: URL): Locale {
+  // 1. Check if we are in a subpath (e.g. /en/...)
+  const [, firstPath] = url.pathname.split('/');
+  if (firstPath === 'en') return 'en';
+
+  // 2. Check query param (legacy/fallback)
   const param = url.searchParams.get('lang');
   if (param) {
     const normalized = param.toLowerCase();
     if (normalized === 'pt-br') return 'pt-BR';
     if (normalized === 'en') return 'en';
   }
+
+  // 3. Default to pt-BR
   return defaultLocale;
 }
 

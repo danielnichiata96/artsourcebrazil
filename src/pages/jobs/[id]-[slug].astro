@@ -171,8 +171,8 @@ const breadcrumbs = {
         <JobHeader job={job} class="mb-8" />
 
         <!-- Job Description Section -->
-        <Card padding="lg" class="mb-8 bg-white">
-          <h2 class="mb-4 text-2xl font-bold text-neutral-900">Sobre a vaga</h2>
+        <Card padding="lg" class="mb-8 bg-white border-2 border-ink shadow-hard">
+          <h2 class="mb-4 font-display text-2xl font-bold uppercase tracking-wide text-ink">Sobre a vaga</h2>
           <div
             class="prose prose-lg max-w-none text-neutral-700"
             set:html={renderMarkdownToHtml(job.description)}
@@ -185,7 +185,7 @@ const breadcrumbs = {
               target="_blank"
               rel="noopener noreferrer"
               size="lg"
-              class="w-full"
+              class="w-full rounded-none border-2 border-ink bg-accent-lime text-ink shadow-hard hover:bg-accent-teal hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all uppercase font-bold"
             >
               Candidatar-se a esta vaga →
             </Button>
@@ -203,8 +203,8 @@ const breadcrumbs = {
       <aside class="lg:col-span-1">
         <div class="space-y-6 lg:sticky lg:top-6 lg:self-start">
         <!-- Company Info Box -->
-        <Card padding="lg" class="bg-neutral-50">
-          <h2 class="mb-4 text-xl font-bold text-neutral-900">Sobre {job.companyName}</h2>
+        <Card padding="lg" class="bg-white border-2 border-ink shadow-hard-sm">
+          <h2 class="mb-4 font-display text-xl font-bold uppercase tracking-wide text-ink">Sobre {job.companyName}</h2>
           <div class="space-y-4">
             <Image
               src={job.companyLogo}
@@ -263,7 +263,7 @@ const breadcrumbs = {
       relatedJobs.length > 0 && (
         <section class="mt-16 pt-12 border-t-2 border-neutral-200">
           <div class="mb-8 text-center">
-            <h2 class="text-3xl font-bold text-neutral-900 mb-2">Vagas similares em {job.category}</h2>
+            <h2 class="font-display text-3xl font-bold uppercase tracking-wide text-ink mb-2">Vagas similares em {job.category}</h2>
             <p class="text-neutral-600">Outras oportunidades que podem te interessar</p>
           </div>
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -272,7 +272,7 @@ const breadcrumbs = {
             ))}
           </div>
           <div class="mt-10 text-center">
-            <Button href={`/category/${slugify(job.category)}`} variant="outline" size="lg">
+            <Button href={`/category/${slugify(job.category)}`} variant="outline" size="lg" class="rounded-none border-2 border-ink shadow-hard hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all uppercase font-bold">
               Explorar todas as vagas de {job.category} →
             </Button>
           </div>

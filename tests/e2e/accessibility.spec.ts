@@ -182,7 +182,7 @@ test.describe('Accessibility Tests', () => {
       await page.waitForSelector('[data-testid="job-card"]');
 
       // Focus on search input
-      const searchInput = page.locator('#job-search-sidebar');
+      const searchInput = page.locator('#search-input');
       await searchInput.focus();
 
       // Check if it has proper labels and ARIA attributes

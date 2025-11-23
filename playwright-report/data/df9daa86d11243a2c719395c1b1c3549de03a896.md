@@ -1,0 +1,96 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Br Art Source BRAZIL EDITION" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Br
+        - generic [ref=e7]:
+          - generic [ref=e8]: Art Source
+          - generic [ref=e9]: BRAZIL EDITION
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Empresas" [ref=e12] [cursor=pointer]:
+            - /url: /companies
+          - link "Blog" [ref=e13] [cursor=pointer]:
+            - /url: /blog
+          - link "Sobre" [ref=e14] [cursor=pointer]:
+            - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/jobs/FG-001-staff-game-engineer
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e19]:
+        - heading "404" [level=1] [ref=e20]
+        - paragraph [ref=e21]: Página não encontrada
+        - paragraph [ref=e22]: Essa página não existe. Que tal voltar pro início?
+        - generic [ref=e23]:
+          - link "Voltar pro início" [ref=e24] [cursor=pointer]:
+            - /url: /
+          - link "Ver blog" [ref=e25] [cursor=pointer]:
+            - /url: /blog
+        - generic [ref=e26]:
+          - heading "Categorias populares" [level=2] [ref=e27]
+          - generic [ref=e28]:
+            - link "Vagas em Game Dev" [ref=e29] [cursor=pointer]:
+              - /url: /category/game-dev
+            - link "Vagas em 3D & Animation" [ref=e30] [cursor=pointer]:
+              - /url: /category/3d-and-animation
+            - link "Vagas em Design" [ref=e31] [cursor=pointer]:
+              - /url: /category/design
+    - generic [ref=e33]:
+      - heading "Fique por dentro" [level=3] [ref=e34]
+      - paragraph [ref=e35]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e36]:
+        - textbox "seu-email@exemplo.com" [ref=e37]
+        - button "Assinar" [ref=e38] [cursor=pointer]
+      - paragraph [ref=e39]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e40] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e41]:
+    - generic [ref=e42]:
+      - generic [ref=e43]:
+        - generic [ref=e44]:
+          - paragraph [ref=e45]: Quer contratar talento brasileiro?
+          - paragraph [ref=e46]: Poste sua vaga e alcance nossa comunidade curada de artistas, devs e storytellers.
+        - link "Postar vaga" [ref=e47] [cursor=pointer]:
+          - /url: /post-a-job
+      - generic [ref=e48]:
+        - generic [ref=e49]:
+          - paragraph [ref=e50]: Art Source Brazil
+          - paragraph [ref=e51]: Remote Creative Jobs
+          - link "artsourcebrazil@gmail.com" [ref=e52] [cursor=pointer]:
+            - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e53]:
+          - paragraph [ref=e54]: Navegação
+          - generic [ref=e55]:
+            - link "Sobre" [ref=e56] [cursor=pointer]:
+              - /url: /about
+            - link "Contato" [ref=e57] [cursor=pointer]:
+              - /url: /contact
+            - link "Política de Privacidade" [ref=e58] [cursor=pointer]:
+              - /url: /privacy
+            - link "Termos de Uso" [ref=e59] [cursor=pointer]:
+              - /url: /terms
+            - link "Blog" [ref=e60] [cursor=pointer]:
+              - /url: /blog
+        - generic [ref=e61]:
+          - paragraph [ref=e62]: "Feeds:"
+          - generic [ref=e63]:
+            - link "Jobs RSS" [ref=e64] [cursor=pointer]:
+              - /url: /jobs.xml
+            - link "Jobs JSON" [ref=e65] [cursor=pointer]:
+              - /url: /jobs.json
+            - link "Blog RSS" [ref=e66] [cursor=pointer]:
+              - /url: /blog.xml
+      - generic [ref=e67]:
+        - paragraph [ref=e68]: © 2025 Art Source Brazil. Todos os direitos reservados.
+        - generic [ref=e69]: Feito no Brasil
+```

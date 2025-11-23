@@ -16,262 +16,40 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
-- [x] **Canvas Design System – Paleta oficial**
-  - [x] Definir tokens yellow/blue/green no `tailwind.config.mjs`
-  - [x] Documentar uso das cores/gradiente em `docs/DESIGN_SYSTEM_CANVAS.md`
-- [x] **Navbar & Footer – Canvas refresh**
-  - [x] Recriar `Navbar.astro` com bloco “Br”, gradiente e CTA amarelo ⇒ azul
-  - [x] Novo footer minimalista com CTA, links essenciais e feeds
-- [x] **Job Details Page – Canvas Refresh**
-  - [x] Implementar `JobHeader.astro` com design system Canvas (accent borders, logo box)
-  - [x] Implementar `JobModal.astro` (shell para uso futuro)
-  - [x] Atualizar página de detalhes `/jobs/[id]-[slug]` com novo header
-- [x] **Code Quality Improvements (AI-Generated Code)** ✅ 100% COMPLETO
-  - [x] Remove `@ts-nocheck` ✅ (0 files with @ts-nocheck)
-  - [x] Add proper TypeScript types ✅ (FiltersSidebarElements, FilterState interfaces)
-  - [x] Modularize inline JavaScript ✅ (sidebar-controller.ts, orchestrator-controller.ts, hero-integration-controller.ts)
-  - [x] Add error handling and validation ✅ (16 try-catch blocks, validateFilterUpdate)
-  - [x] Extract magic numbers to constants ✅ (src/lib/constants.ts com FILTER_CONFIG)
-  - [x] Add cleanup for event listeners ✅ (destroy() methods, beforeunload handlers)
-  - [x] Add loading/error states for user feedback ✅ ('Aplicando...' / 'Limpando...' button states with disabled + opacity)
-  - [x] Extract remaining inline JS from index.astro ✅ (HeroIntegrationController created, 95 lines)
-- [x] **Hero, Cards & Sidebar UI Pass**
-  - [x] Ajustar microcopys do hero para destacar diferenciais da curadoria ✅ (badge, descrição e CTA agora reforçam curadoria humana)
-  - [x] Mostrar filtros ativos como chips e destacar contagem de resultados ✅ (Sidebar e header já exibem chips dinâmicos)
-- [x] **Localization & Language Consistency** ✅ COMPLETO
-  - [x] Default locale definido: PT-BR (about, companies, blog agora em português)
-  - [x] Estrutura /en/ criada para versões em inglês (/en/about, /en/companies, /en/blog)
-  - [x] Textos centralizados em `src/lib/i18n.ts` com chaves reutilizáveis
-  - [x] Cada página usa apenas um idioma por vez
-  - [x] Toggle de idioma visível no navbar (EN/PT) com aria-label adequado
-  - [x] Revisar microcopy para tom consistente e com voz da marca ✅ COMPLETO
-    - [x] Documentado guia de tom de voz em `docs/CONTENT_VOICE_GUIDE.md`
-    - [x] Página "Sobre" reescrita com tom casual e autêntico
-    - [x] Página "Post a Job" simplificada e humanizada
-    - [x] Página "Contato" com tom mais friendly
-    - [x] Mensagens de sistema atualizadas (loading, erro, vazio)
-    - [x] Página 404 com tom casual
-    - [x] Autocomplete "nenhum resultado" simplificado
-    - [x] Tom eliminado: "AI voice", corporativês, jargões genéricos
-- [x] **Responsive Design - Mobile/Tablet/Desktop** ✅ COMPLETO
-  - [x] Sidebar de filtros escondida no mobile (< 1024px)
-  - [x] Hero section responsivo: tamanhos de texto ajustados (text-3xl → text-5xl)
-  - [x] Searchbar responsivo: padding e ícone ajustados para mobile
-  - [x] Category pills responsivos: text-xs px-3 py-1.5 (mobile) → text-sm px-4 py-2 (tablet+)
-  - [x] Todos os 3 pills cabem em 1 linha no mobile 360px
-  - [x] Breakpoints testados: 360px, 768px, 1024px+
-- [x] **Search Autocomplete** ✅ COMPLETO
-  - [x] Created `src/lib/search/autocomplete.ts` with getSearchSuggestions and highlightMatch
-  - [x] Created `SearchWithAutocomplete.astro` component with dropdown UI
-  - [x] Implemented keyboard navigation (↑↓ Enter Esc)
-  - [x] Added debouncing (200ms) for performance
-  - [x] Suggestion types: job (with company), company (with count), skill (with count)
-  - [x] Max 8 suggestions per query, 2-char minimum
-  - [x] Integrated in Portuguese homepage (index.astro)
-  - [x] Integrated in English homepage (en/index.astro)
-  - [x] Mobile-responsive dropdown with loading indicator
-  - [x] Accessibility: ARIA roles (combobox, listbox), keyboard navigation
-  - [x] Add E2E tests for autocomplete functionality ✅ (31 tests, 100% passing)
-- [x] **🔄 Sistema de Vagas - Evolução (MVP Greenhouse)** ✅ FASE 1 COMPLETA
-  - [x] **Fase 1: Pesquisa e Análise** ✅ COMPLETO
-    - [x] Pesquisa de APIs: Greenhouse, Ashby, Lever analisadas ✅
-    - [x] Análise comparativa: ATS públicos vs agregadores (Remotive) ✅
-    - [x] Decisão estratégica: Foco em ATS públicos (links diretos) ✅
-    - [x] Documentação: `docs/plano_evolucao_vagas.md` criado ✅
-  - [x] **Fase 2: Categorias Otimizadas** ✅ COMPLETO
-    - [x] Separação "3D & Animation" → "3D" e "Animation" ✅
-    - [x] Atualizado `src/lib/categories.ts` (5 categorias: Game Dev, 3D, Animation, Design, VFX) ✅
-    - [x] Atualizado `src/lib/jobs.ts` (ContractType inclui "Internship") ✅
-    - [x] Atualizado `scripts/validate-jobs.mjs` (validação das novas categorias) ✅
-    - [x] Mapeamento inteligente: 3D (modelagem) vs Animation (2D animation) ✅
-  - [x] **Fase 3: Greenhouse Integration - Scripts Criados** ✅ COMPLETO
-    - [x] Script de teste: `scripts/test-greenhouse.mjs` (validação de endpoint) ✅
-    - [x] Script de fetch: `scripts/fetch-greenhouse-jobs.mjs` (busca e normalização) ✅
-    - [x] Script de sync: `scripts/sync-greenhouse-to-supabase.mjs` (sincronização com Supabase) ✅
-    - [x] Endpoint validado: `https://boards-api.greenhouse.io/v1/boards/{company}/jobs` ✅
-    - [x] Testado com Wildlife Studios: 16 vagas encontradas → 14 processadas ✅
-  - [x] **Fase 4: Data Processing & Cleanup** ✅ COMPLETO
-    - [x] HTML entities decodificadas: `&amp;` → `&`, `&#39;` → `'` ✅
-    - [x] Decodificação robusta: suporta entidades nomeadas, numéricas e hex ✅
-    - [x] Limpeza final no sync: função `cleanHtmlEntities()` garante dados limpos ✅
-    - [x] Contract type detection: "Internship" detectado automaticamente ✅
-    - [x] Location mapping: `job.location.scope` → string (correção crítica) ✅
-  - [x] **Fase 5: Supabase Schema Documentation** ✅ COMPLETO
-    - [x] Documentação completa: `docs/SUPABASE_SETUP.md` e `docs/SUPABASE_MIGRATION.md` criados ✅
-    - [x] Estrutura otimizada documentada (Jobs, Companies, Categories, Tags) ✅
-    - [x] Suporte a Linked Records e fallback para Single Select/Text ✅
-    - [x] Mapeamento de campos documentado (Location Scope, Status, Source) ✅
-    - [x] Campos de gestão: Source, Last Synced adicionados ✅
-  - [x] **Fase 6: Testes e Validação** ✅ COMPLETO
-    - [x] Testar sync real com Supabase (executar `npm run sync:greenhouse:supabase:full`) ✅
-    - [x] Validar campos preenchidos corretamente no Supabase ✅
-    - [x] Verificar Linked Records (Companies, Categories, Tags) funcionando ✅
-    - [x] Confirmar que HTML entities foram limpas completamente ✅
-    - [x] Testar deduplicação (jobs já existentes não duplicam) ✅
-    - [x] Ajustar mapeamentos conforme necessário após teste real ✅
-    - [x] Corrigir formato de data (ISO → YYYY-MM-DD) ✅
-    - [x] Ajustar Location Scope para formato do Supabase ✅
-    - [x] Scripts de teste criados (test-supabase-connection.mjs) ✅
-    - [x] 14 jobs da Wildlife Studios sincronizados com sucesso ✅
-  - [ ] **🔄 Fase 7: Migração para Supabase** 🎯 PRIORIDADE MÁXIMA
-    - [x] **Setup Supabase** ✅ ESTRUTURA CRIADA
-      - [x] Instalar cliente Supabase (`@supabase/supabase-js`) ✅
-      - [x] Criar arquivo de migração (`supabase/migrations/001_initial_schema.sql`) ✅
-      - [x] Criar cliente Supabase (`src/lib/supabase.ts`) ✅
-      - [x] Scripts de setup e teste criados ✅
-      - [x] Documentação de setup criada (`docs/SUPABASE_SETUP.md`) ✅
-      - [x] Variáveis de ambiente adicionadas ao `.env.example` ✅
-      - [x] Criar projeto no Supabase (supabase.com) ✅
-      - [x] Configurar variáveis de ambiente no `.env` ✅
-      - [x] Aplicar schema SQL no Supabase Dashboard ✅
-      - [x] Testar conexão (todos os testes passaram) ✅
-    - [ ] **Schema Database**
-      - [ ] Criar tabela `jobs` com estrutura completa
-      - [ ] Criar tabela `companies` (substitui Linked Records)
-      - [ ] Criar tabela `categories` (substitui Linked Records)
-      - [ ] Criar tabela `tags` (substitui Linked Records)
-      - [ ] Criar tabela `job_tags` (relação many-to-many)
-      - [ ] Configurar foreign keys e constraints
-      - [ ] Adicionar índices para performance
-      - [ ] Configurar Row Level Security (RLS) policies
-    - [ ] **Migração de Dados** 📋 PRÓXIMO PASSO
-      - [x] Migração completa para Supabase ✅
-      - [x] Scripts antigos do Airtable removidos ✅
-      - [x] Dependência do Airtable removida ✅
-    - [x] **Scripts de Sincronização** ✅
-      - [x] Criar `sync-greenhouse-to-supabase.mjs` ✅
-      - [x] Atualizar funções de create/update para usar Supabase ✅
-      - [x] Implementar upsert (insert ou update) para deduplicação ✅
-      - [x] Manter lógica de HTML entities cleanup ✅
-      - [x] Criar `sync-supabase.mjs` (lê do Supabase e gera `jobs.json`) ✅
-    - [x] **Scripts de Leitura** ✅
-      - [x] Criar `sync-supabase.mjs` (gera jobs.json do Supabase) ✅
-      - [x] Reescrever queries para Supabase (SQL) ✅
-      - [x] Gerar `jobs.json` a partir do Supabase ✅
-      - [x] Manter compatibilidade com frontend existente ✅
-    - [ ] **Testes e Validação**
-      - [ ] Testar sync Greenhouse → Supabase
-      - [ ] Testar geração de jobs.json a partir do Supabase
-      - [ ] Validar que frontend continua funcionando
-      - [ ] Testar Table Editor visual do Supabase
-    - [ ] **Documentação**
-      - [ ] Atualizar `docs/plano_evolucao_vagas.md` com nova arquitetura
-      - [ ] Criar `docs/SUPABASE_SCHEMA.md` com estrutura completa
-      - [ ] Documentar migração e setup
-  - [ ] **Fase 8: Expansão - Ashby e Lever** 📋 PRÓXIMO
-    - [ ] Criar adaptador para Lever API (`scripts/fetch-lever-jobs.mjs`)
-    - [ ] Criar adaptador para Ashby (endpoints variáveis)
-    - [ ] Testar com empresas relevantes (Netflix, Reddit, etc.)
-    - [ ] Normalizar dados de diferentes fontes para formato único
-    - [ ] Integrar adaptadores no orquestrador
-  - [ ] **Fase 8: Orquestrador Completo** 📋 FUTURO
-    - [ ] Criar `scripts/sync-all-sources.mjs` (orquestrador principal)
-    - [ ] Implementar deduplicação robusta (comparar por ID, título, URL)
-    - [ ] Unificar todos os adaptadores (Greenhouse, Ashby, Lever)
-    - [ ] Implementar logging detalhado e error handling
-    - [ ] Adicionar modo dry-run para testar sem criar registros
-  - [ ] **Fase 9: Automação** 📋 FUTURO
-    - [ ] Configurar GitHub Actions para sync periódico (diário/semanal)
-    - [ ] Ou configurar cron job / serverless function
-    - [ ] Notificações de erro (email/Slack se sync falhar)
-    - [ ] Dashboard de métricas (vagas por fonte, taxa de sucesso)
-- [ ] **Filters Sidebar Enhancements** 🎯
-  - [x] Mobile UX: Sidebar escondida em telas pequenas (< lg)
-  - [x] Add results count display in sidebar (mostrando valor + pluralização)
-  - [x] Show active filter badges/chips when filters are applied (chips dinâmicos com remoção)
-  - [x] Add "Reset filters" quick action when filters are active (botão "Limpar" habilita automaticamente)
-  - [x] Add loading state when filters are being applied (texto "Aplicando..." / "Limpando...")
-- [x] **E2E Tests for Filters Sidebar** ✅ COMPLETO
-  - [x] Test sidebar toggle on mobile
-  - [x] Test filter application (search, category, level, tools, contract, location)
-  - [x] Test clear filters functionality
-  - [x] Test URL sync with filters
-  - [x] Test sidebar responsiveness (mobile/desktop)
-  - [x] 50+ testes cobrindo todos os cenários de filtragem
-- [x] Deploy to Vercel or Netlify
-- [x] Configure production env vars
-- [x] Post-a-Job flow polish
-- [x] Smoke tests (Playwright)
-- [x] SEO & Community (Milestone)
-  - [x] Static Category pages at `/category/{slug}` with JobPosting JSON-LD
-  - [x] Wire homepage category chips to the new routes
-  - [x] Add Category routes to sitemap (auto via @astrojs/sitemap)
-  - [x] JSON-LD Organization in `Layout.astro` and JobPosting for each job (home + category)
-  - [x] Mark `/post-a-job/success` as `noindex`
-  - [x] Jobs Feed (RSS + JSON) at `/jobs.xml` and `/jobs.json`
-  - [x] Blog RSS feed at `/blog.xml`
-  - [x] Newsletter capture in footer (Buttondown/ConvertKit form)
-  - [x] Blog setup (content collections, /blog, /blog/[slug], BlogPosting JSON-LD)
-  - [x] About page (/about) for E-E-A-T
-- [x] Monitoring & basics
-  - [x] Enable Vercel Analytics (script added; enable in Vercel Dashboard)
-- [x] Legal & Compliance
-  - [x] Privacy Policy page (/privacy)
-  - [x] Terms of Service page (/terms)
-  - [x] Contact page (/contact)
-  - [x] Footer links updated with legal pages
-  - [x] Real email configured (artsourcebrazil@gmail.com)
-- [x] Minimal tests
-  - [x] Vitest with 8 unit tests for utilities (sortJobsByDateDesc, collectFacets, slugify)
-- [x] ESLint setup
-  - [x] Astro ESLint plugin configured
-  - [x] CI check added
-- [x] **SEO: Individual Job Pages**
-  - [x] `/jobs/[id]-[slug].astro` dynamic route created
-  - [x] Complete JobPosting JSON-LD with validThrough
-  - [x] BreadcrumbList JSON-LD for navigation
-  - [x] Related jobs section (same category, max 3)
-  - [x] JobCard links to individual pages instead of external apply
-  - [x] 8 E2E tests for individual job pages (all passing)
-  - [x] Site expanded from 13 to 17 indexable pages (+4 job pages)
-- [x] **🔴 Security & Audit Fixes (URGENTE)** - Baseado em AUDIT_REPORT.md ✅ FASE 1 COMPLETA
-  - [x] **Fase 1: Segurança (CRÍTICO)** ✅ COMPLETO
-    - [x] Corrigir vulnerabilidade XSS: `innerHTML` sem sanitização em `SearchWithAutocomplete.astro` e `ShareButtons.astro` ✅
-      - [x] ✅ **JÁ IMPLEMENTADO**: DOMPurify 3.3.0 sanitizando todo user input em SearchWithAutocomplete
-      - [x] ✅ **VERIFICADO SEGURO**: ShareButtons.astro usa innerHTML apenas para emojis hardcoded (sem input do usuário)
-    - [x] Melhorar `.env.example` com todas as variáveis documentadas ✅
-      - [x] Adicionado 🔒 SERVER-SIDE vs 🌐 PUBLIC indicators
-      - [x] Documentado todas as variáveis: AIRTABLE_API_KEY, PUBLIC_STRIPE_PAYMENT_LINK, PUBLIC_JOB_FORM_URL, PUBLIC_PLAUSIBLE_DOMAIN, PUBLIC_NEWSLETTER_SUBSCRIBE_URL
-      - [x] Adicionado seção de segurança com avisos sobre exposição de dados
-    - [x] Melhorar CSP: remover `'unsafe-inline'` de `script-src` em `astro.config.mjs` ✅
-      - [x] ✅ **JÁ SEGURO**: Astro compila todos <script> tags como módulos externos (/_astro/*.js)
-      - [x] Adicionado script-src-elem para scripts externos (Google Fonts, Analytics)
-      - [x] Melhorados comentários explicando por que não precisa de 'unsafe-inline'
-      - [x] JSON-LD schemas usam type="application/ld+json" (não executável)
-    - [x] **Criado SECURITY.md** ✅ - Documentação completa de auditoria de segurança
-  - [x] **Fase 2: Validação e Robustez (IMPORTANTE)** ✅ COMPLETO
-    - [x] Unificar validação de categorias: criar `src/lib/categories.ts` com enum único ✅
-      - [x] ✅ **JÁ UNIFICADO**: Verificado que src/lib/categories.ts é a fonte única de verdade
-      - [x] Atualizar `scripts/validate-jobs.mjs` para usar constantes centralizadas ✅ (já usa enum Zod com 4 categorias)
-      - [x] Atualizar `src/lib/validation/filter-schema.ts` para usar mesmas constantes ✅ (já importa FILTER_CATEGORIES)
-      - [x] Atualizar `src/lib/constants.ts` para usar mesmas constantes ✅ (já importa CATEGORY_ICONS)
-      - [x] Resolver inconsistência: ✅ **NÃO EXISTE** - Design (UI/UX) já foi renomeado para Design anteriormente
-    - [x] Adicionar validação de URLs externas no `scripts/sync-supabase.mjs` ✅
-      - [x] Validar `applyLink` e `companyLogo` com Zod antes de salvar ✅
-      - [x] Implementado UrlSchema com Zod para validação robusta (http/https only)
-      - [x] validateUrl() com error reporting detalhado e fallback seguro
-      - [x] Apply Link: skip job se URL inválida (crítico para segurança)
-      - [x] Company Logo: fallback para placeholder se URL inválida
-    - [x] Adicionar tratamento de erros para API Clearbit (fallback para placeholder) ✅
-      - [x] ✅ **JÁ IMPLEMENTADO**: getCompanyLogo() tem fallback de 3 níveis (local → Clearbit → placeholder)
-    - [x] **Criado docs/CATEGORIES_GUIDE.md** ✅ - Guia completo de categorias
-  - [x] **Fase 3: Performance e UX (MÉDIO)** ✅ COMPLETO
-    - [x] Adicionar validação de tamanho máximo de `jobs.json` (ex: 5MB) no script de validação ✅
-      - [x] ✅ **JÁ IMPLEMENTADO**: validate-jobs.mjs verifica max 5MB e exibe progresso
-    - [x] Melhorar tratamento de clipboard API em `ShareButtons.astro` (fallback para método antigo) ✅
-      - [x] Implementado estratégia de 3 níveis de progressive enhancement
-      - [x] Tier 1: Clipboard API moderna (Chrome 63+, Firefox 53+, Safari 13.1+)
-      - [x] Tier 2: execCommand fallback para navegadores antigos (IE11, Safari antigo)
-      - [x] Tier 3: Input overlay manual com melhor UX que alert
-      - [x] Feedback visual de sucesso (checkmark verde com mudança de cor)
-      - [x] Auto-cleanup após 5 segundos para overlay manual
-    - [x] Adicionar validação de formato de imagem para logos (PNG, SVG, JPG) ✅
-      - [x] Valida formatos locais: .png, .jpg, .jpeg, .svg, .webp, .gif
-      - [x] Verifica URLs externas para extensões válidas
-      - [x] Tratamento especial para Clearbit API (sem extensão)
-      - [x] Mensagens de erro detalhadas com lista de formatos válidos
-      - [x] Warnings para URLs externas sem extensão reconhecida
-  <!-- AI-ANCHOR:IMMEDIATE-TASKS-END -->
+- [ ] **🔄 Sistema de Vagas - Expansão e Automação**
+  - [ ] **GitHub Actions (Sync Diário)**
+    - [ ] Configurar workflow `.github/workflows/daily-sync.yml`
+    - [ ] Agendar cron job (ex: `0 9 * * *` - 9am BRT)
+    - [ ] Configurar secrets (SUPABASE_URL, SUPABASE_KEY, etc.)
+    - [ ] Adicionar passo de "Rebuild Vercel" após sync bem-sucedido
+  - [ ] **Adaptadores Adicionais (Fase 8)**
+    - [ ] Criar adaptador Lever (`scripts/fetch-lever-jobs.mjs`)
+    - [ ] Criar adaptador Ashby (`scripts/fetch-ashby-jobs.mjs`)
+    - [ ] Unificar normalização de dados entre todas as fontes
+  - [ ] **Busca Server-Side (Supabase)**
+    - [ ] Configurar PostgreSQL Full Text Search na tabela `jobs`
+    - [ ] Criar índice `search_vector` (title, description, company name)
+    - [ ] Implementar rota API `/api/search` ou usar SDK no cliente
+    - [ ] Preparar frontend para busca híbrida (client-side para poucos dados, server-side para muitos)
+
+- [ ] **🎨 UX & Performance**
+  - [ ] **Otimização de Imagens (Logos)**
+    - [ ] Implementar componente `<Image />` do Astro para logos
+    - [ ] Configurar `remotePatterns` para domínios de ATS (greenhouse.io, lever.co, etc.)
+    - [ ] Adicionar proxy de imagem ou fallback robusto para evitar CLS
+    - [ ] Garantir aspect ratio consistente no "Canvas Design"
+  - [ ] **Métricas no Hero (Social Proof)**
+    - [ ] Adicionar contador dinâmico: "X vagas curadas esta semana"
+    - [ ] Adicionar lista de empresas recentes (logos em grayscale)
+
+- [ ] **🤖 Enriquecimento com IA (Future/Nice to have)**
+  - [ ] **Smart Tagging**
+    - [ ] Criar script de classificação usando LLM (GPT-4o-mini / Gemini Flash)
+    - [ ] Ler descrição da vaga e atribuir categoria correta (Game Dev vs 3D vs VFX)
+    - [ ] Extrair skills/tags automaticamente
+    - [ ] Custo estimado: < $0.01 por vaga
+
+<!-- AI-ANCHOR:IMMEDIATE-TASKS-END -->
 
 ---
 
@@ -279,129 +57,81 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-START -->
 
-- [x] **Design System Overhaul - Phase 1: Complete** ✅
-  - [x] Tailwind config: Brand colors, neutral palette, custom spacing tokens
-  - [x] UI Component Library: Button, Badge, Card, Link, Breadcrumb, Navbar
-  - [x] Layout refactored with Navbar component
-  - [x] Homepage and job pages using component system
-  - [x] Build passing with zero hardcoded color classes
-- [x] **Design System - Phase 1.5: Accessibility Audit** ⚠️ 91% COMPLETO
-  - [x] Automated testing with @axe-core/playwright (21 tests implemented)
-  - [x] Primary button/link colors adjusted for 4.5:1+ contrast
-  - [x] Added underlines to all links (non-color distinguishability)
-  - [x] Fixed heading hierarchy (h3→h2 in FiltersSidebar)
-  - [x] Added ARIA labels to navigation elements
-  - [x] Focus-visible styles implemented globally (2px green outline)
-  - [x] Test pass rate: 20/22 (91%)
-  - [ ] - Issue: Browser rendering text colors lighter than specified (opacity effect) 
-  - Affects: Badge components, category links, date/salary labels
-    - Solution needed: Redesign brown color palette or use pure black for small text
-- [x] **Design System - Phase 3: Refactor Remaining Pages** ✅
-  - [x] All pages refactored with UI component library (Card, Badge, Link, Button, Breadcrumb)
-  - [x] Consistent px-container spacing and design tokens across all pages
-  - [x] Company pages, post-a-job flow, legal pages, blog pages all using components
-  - [x] Build passing with zero hardcoded styling
-  - [x] All E2E tests passing (15/16)
 - [ ] **Content & Messaging Audit**
   - [ ] Documentar tom de voz (friendly, editorial, brasileiro)
   - [ ] Revisar títulos e CTAs para manter idioma consistente
-  - [ ] Adicionar métricas/estatísticas relevantes no hero
-- [x] **Testing Suite Expansion** ✅
-  - [x] Add E2E tests for company pages (/companies, /company/[slug]) - 10 tests
-  - [x] Add E2E tests for blog pages (/blog, /blog/[slug]) with JSON-LD validation - 8 tests
-  - [x] Add E2E tests for /about page - 5 tests
-  - [x] Add E2E tests for category pages (/category/[slug]) with breadcrumbs - 7 tests
-  - [x] All tests passing: 44/46 E2E + 8 unit tests = 52 total tests
-  - [x] Add accessibility testing with @axe-core/playwright (21 tests, 20/22 passing = 91%)
-- [ ] **Content Marketing & SEO**
-  - [x] Add editorial serif font (Crimson Pro from Google Fonts)
-  - [x] Improve font hierarchy and heading sizes (h1-h6)
-  - [x] Enhanced line-height and letter-spacing scale
-  - [x] Display font sizes for hero sections with tighter tracking
-  - [x] Better paragraph spacing and text density
-  - [x] Applied to homepage, about, blog, companies pages
-- [x] **Design System - Phase 4: Micro-interactions** ✅ COMPLETO
-  - [x] Smooth transitions on hover states (padronizado duration-200, scale reduzido)
-  - [x] Loading states (já implementado: FiltersSidebar, SearchAutocomplete)
-  - [x] Focus indicators (já implementado: 2px verde com transition suave)
-  - [x] **Prioridade 1 - Melhorias aplicadas**:
-    - Transitions padronizadas: `duration-200` em todos components
-    - Hovers suavizados: Logo `scale-105` (was 110), CategoryButtons `scale-102` (was 105)
-    - Opacity reduzida: Background hover `opacity-40` (was 70)
-    - Active state refinado: Button `active:scale-98` (was translate-y-0.5)
-  - [x] **Prioridade 2 - Polish COMPLETO**:
-    - Custom easing curves: `in-out-soft`, `out-soft`, `spring` (cubic-bezier)
-    - Shadow refinements: `hover:shadow-lg` → `hover:shadow-md` (3 componentes)
-    - Performance: `will-change-transform` em Button, Navbar logo, CategoryButtons
-  - [x] **Ícones Phosphor minimalistas**:
-    - Sidebar filtros: Wrench (Ferramentas), TrendUp (Nível), MapPin (Localização)
-    - JobCard padronizado: MapPin (localização), Calendar (data)
-    - Todos com `stroke-width="2"` e `viewBox="0 0 256 256"` para consistência
-- [x] 404 page
-  - Custom 404.astro with links back to home and categories
-- [x] **Validate Rich Results** ✅ COMPLETO
-  - [x] Validated all JSON-LD schemas with Google Rich Results Test
-  - [x] Organization schema (site-wide): ✅ Valid
-  - [x] JobPosting schema (homepage, category, job pages): ✅ Valid - Eligible for Google Jobs
-  - [x] BreadcrumbList schema (4 page types): ✅ Valid - Eligible for breadcrumb rich results
-  - [x] BlogPosting schema: ✅ Valid - Eligible for article rich results
-  - [x] Organization schema (company pages): ✅ Valid
-  - [x] 5/5 schema types validated (100% success rate)
-  - [x] Created comprehensive validation report: `docs/JSON_LD_VALIDATION.md`
-- [x] **Company Pages**
-  - [x] `/company/[slug]` dynamic route created
-  - [x] `/companies` index page with all companies
-  - [x] Organization JSON-LD for each company
-  - [x] BreadcrumbList JSON-LD
-  - [x] Link from job pages to company pages
-  - [x] "Companies" link added to main navigation
-  - [x] Site expanded from 17 to 22 pages (+5 pages: 1 index + 4 companies)
-- [x] **OG Images & Social Sharing** ✅ COMPLETO (Parcial)
-  - [x] Dynamic OG image generation with Satori for job pages
-  - [x] Share buttons (Twitter, LinkedIn, WhatsApp, Copy Link) on job pages
-  - [x] All individual job pages have custom social sharing images
-  - [ ] OG images for category pages (using generic fallback)
-  - [ ] OG images for company pages (using company logo)
-  - [ ] OG images for blog posts (using heroImage or fallback)
-  - [x] Dynamic OG image generation with Satori for each job page
-  - [x] Share buttons component (Twitter, LinkedIn, WhatsApp, Copy Link)
-  - [x] Fixed infinite loading issue by removing React dependencies
-  - [x] Pure HTML/CSS/JS implementation (zero-JS by default)
-  - [x] All pages now have proper og:image meta tags
-- [ ] **🔄 Sistema de Vagas - Expansão e Automação** 📋 SHORT-TERM
-  - [ ] **Identificação de Empresas**
-    - [ ] Listar empresas relevantes usando Greenhouse (Automattic, Stripe, Shopify, Reddit)
-    - [ ] Listar empresas relevantes usando Lever (Netflix, Reddit, etc.)
-    - [ ] Listar empresas relevantes usando Ashby
-    - [ ] Validar quais empresas publicam vagas remotas para Brasil/LATAM
-  - [ ] **Adaptadores Adicionais**
-    - [ ] Implementar adaptador Lever (`scripts/fetch-lever-jobs.mjs`)
-    - [ ] Implementar adaptador Ashby (`scripts/fetch-ashby-jobs.mjs`)
-    - [ ] Unificar normalização de dados entre todas as fontes
-    - [ ] Mapeamento de categorias consistente entre fontes
-  - [ ] **Orquestrador Unificado (Supabase)**
-    - [ ] Criar `scripts/sync-all-sources.mjs` (busca de todas as fontes)
-    - [ ] Implementar deduplicação inteligente usando Supabase upsert (por ID, título, company+title, URL)
-    - [ ] Priorização de fontes (ex: Greenhouse > Ashby > Lever > Manual)
-    - [ ] Merge de dados quando mesma vaga vem de múltiplas fontes
-    - [ ] Usar transações do Supabase para garantir atomicidade
-  - [ ] **Validação e Qualidade**
-    - [x] Validação de schema implementada no Supabase (constraints SQL) ✅
-    - [ ] Implementar rate limiting para evitar bloqueios de API
-    - [ ] Error recovery (continuar mesmo se uma fonte falhar)
-    - [ ] Relatório de sync (vagas criadas, atualizadas, filtradas, erros)
-  - [ ] **Automação (Cron/GitHub Actions)**
-    - [ ] Configurar GitHub Actions workflow para sync diário
-    - [ ] Ou configurar serverless function (Vercel/Netlify cron)
-    - [ ] Notificações de erro (email/Slack se sync falhar)
-    - [ ] Monitoring dashboard básico (vagas por fonte, taxa de sucesso)
+
 - [ ] **Filters Sidebar - Advanced Features**
   - [ ] Add filter presets/saved searches (localStorage)
   - [x] Show filter count badge on mobile toggle button ✅
   - [ ] Add keyboard shortcuts (e.g., `/` to focus search, `Esc` to clear)
   - [ ] Collapsible filter sections (accordion style)
   - [ ] Show popular tags based on current filters
-- [ ] **🔄 Sistema de Vagas - Melhorias Futuras** 🔮 FUTURE IDEAS
+
+- [ ] **Content Marketing & SEO**
+  - [ ] Write 2–3 more blog posts:
+    - [ ] "Salary Guide for Artists in Brazil"
+    - [ ] "How to Build a Portfolio for Game Studios"
+    - [ ] "Remote Work Tips for Brazilian Creatives"
+  - [ ] Share blog posts on LinkedIn/X to drive organic traffic
+
+- [ ] **Uptime Monitoring**
+  - [ ] Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
+  - [ ] Alert on downtime or slow response (>3s)
+  - [ ] Monitor Core Web Vitals (LCP, FID, CLS)
+
+- [ ] **Blog Enhancements**
+  - [ ] Add Twitter/LinkedIn share buttons on individual blog posts
+  - [ ] Add author bio section
+
+- [ ] **Discord/Slack community**
+  - [ ] Set up Discord server for community
+  - [ ] Update /about page with real invite link
+
+- [ ] **Contribution guide**
+  - [ ] Simple CONTRIBUTING.md for adding jobs via PR
+  - [ ] Template for job JSON format
+
+- [ ] **A11y deeper audit**
+  - [ ] Verify landmarks, ARIA labels
+  - [ ] Test with screen reader (NVDA/VoiceOver)
+  - [ ] Add skip links for keyboard navigation
+  - [ ] Test prefers-reduced-motion support
+
+- [ ] **Performance Optimization**
+  - [ ] Image optimization: Add width/height to all logos
+  - [ ] Compress/optimize static images (use Sharp/ImageOptim)
+  - [ ] Lazy load images below fold
+  - [ ] Add loading="lazy" to job card logos
+  - [ ] Implement virtual scrolling for large job lists (if >50 jobs)
+  - [ ] Add service worker for offline support (PWA)
+
+- [ ] **Analytics & Insights**
+  - [ ] Track filter usage (which filters are most used)
+  - [ ] Track job click-through rates
+  - [ ] Add conversion tracking for "Post a Job" flow
+  - [ ] Monitor search queries (popular searches)
+  - [ ] Track mobile vs desktop usage patterns
+
+<!-- AI-ANCHOR:SHORT-TERM-BACKLOG-END -->
+
+---
+
+## Future Ideas (Nice to have)
+
+<!-- AI-ANCHOR:FUTURE-IDEAS-START -->
+- [ ] Ciclo de vida de deploy Hook no Supabase ou GitHub Actions. Assim, quando o seu script de sync rodar e detectar novas vagas, ele pode disparar um rebuild automático na Vercel, atualizando também as páginas estáticas (SSG)
+- [ ] Auto-generate OG images (Satori/og-image)
+- [ ] Basic admin script to lint/normalize job entries
+- [ ] Scheduled data validation in CI (nightly)
+- [ ] Tag popularity insights
+- [ ] Intake automation (no backend): Tally → GitHub Issue/PR via Zapier/Make
+  - Each new submission becomes an Issue or PR with a filled job JSON stub
+- [x] i18n (PT → EN) minimal ✅
+  - Static alternate homepage in PT-BR and `/post-a-job` page copy for BR companies
+  - Migrated to Astro native i18n routing (`astro:i18n`) ✅
+
+- [ ] **🔄 Sistema de Vagas - Melhorias Futuras** 🔮
   - [ ] **Scrapers Complementares**
     - [ ] Scraper para Wildlife Studios (página de carreiras - já identificado como Greenhouse)
     - [ ] Scraper para outras empresas sem API pública
@@ -420,84 +150,8 @@ This file is the single source of truth for what to do next. Coding agents and h
     - [ ] Tracking de performance de cada fonte (taxa de sucesso, qualidade)
     - [ ] Alertas automáticos (falhas, mudanças significativas)
     - [ ] Relatórios periódicos (vagas novas, empresas adicionadas, etc.)
-- [ ] **Content Marketing & SEO**
-  - [ ] Write 2–3 more blog posts:
-    - [ ] "Salary Guide for Artists in Brazil"
-    - [ ] "How to Build a Portfolio for Game Studios"
-    - [ ] "Remote Work Tips for Brazilian Creatives"
-  - [ ] Share blog posts on LinkedIn/X to drive organic traffic
-  - [x] Add "Related Posts" section to blog posts ✅
-  - [x] Add reading time estimate to blog posts ✅
-- [ ] **Uptime Monitoring**
-  - [ ] Add simple probe (Checkly/Cronitor/Better Uptime) for `/` and `/post-a-job`
-  - [ ] Alert on downtime or slow response (>3s)
-  - [ ] Monitor Core Web Vitals (LCP, FID, CLS)
-- [ ] **Blog Enhancements**
-  - [ ] Add Twitter/LinkedIn share buttons on individual blog posts
-  - [x] Add "Related Posts" section to blog posts ✅
-  - [x] Add reading time estimate to blog posts ✅
-  - [ ] Add author bio section
-- [ ] **OG Images Enhancement (Low Priority)**
-  - **Nota**: Páginas de vagas individuais JÁ têm OG images dinâmicas com Satori ✅
-  - [ ] Generate unique OG images for category pages (Satori) - atualmente sem imagem customizada
-  - [ ] Generate OG images for blog posts (Satori) - atualmente usa heroImage ou fallback
-  - [ ] Generate OG images for company pages - atualmente usa logo da empresa
-  - **Consideração**: Enhancement é opcional, páginas já têm imagens adequadas para compartilhamento
-- [ ] **Discord/Slack community**
-  - Set up Discord server for community
-  - Update /about page with real invite link
-- [ ] **Contribution guide**
-  - Simple CONTRIBUTING.md for adding jobs via PR
-  - Template for job JSON format
-  - [ ] **A11y deeper audit**
-  - [x] Color con trast audit (WCAG AA - 91% compliant, 2 tests failing)
-  - [x] Focus-visible indicators implemented
-  - [x] Automated accessibility tests with axe-core (21 tests, 20/22 passing)
-  - [x] Fixed heading hierarchy (h3 → h2, tests passing)
-  - [x] **Brown color palette contrast issue FIXED** ✅
-    - **Problema identificado:** Códigos hexadecimais hardcoded antigos (#1a1614) em Badge.astro e JobCard.astro
-    - **Causa:** Quando a paleta foi atualizada (neutral-950: #1a1614 → #3d2817), 6 lugares ficaram com texto hardcoded
-    - **Solução:** Substituído `text-[#1a1614]` por `text-neutral-950` para usar paleta semântica
-    - **Resultado:** Texto agora renderiza com #3d2817 (marrom mais escuro consistente) em badges e labels
-    - Build passing, cor marrom escura agora uniforme em todo o site
-  - [ ] Verify landmarks, ARIA labels
-  - [ ] Test with screen reader (NVDA/VoiceOver)
-  - [ ] Add skip links for keyboard navigation
-  - [ ] Test prefers-reduced-motion support
-- [ ] **Performance Optimization**
-  - [ ] Image optimization: Add width/height to all logos
-  - [ ] Compress/optimize static images (use Sharp/ImageOptim)
-  - [ ] Lazy load images below fold
-  - [ ] Add loading="lazy" to job card logos
-  - [ ] Implement virtual scrolling for large job lists (if >50 jobs)
-  - [ ] Add service worker for offline support (PWA)
-- [ ] **Analytics & Insights**
-  - [ ] Track filter usage (which filters are most used)
-  - [ ] Track job click-through rates
-  - [ ] Add conversion tracking for "Post a Job" flow
-  - [ ] Monitor search queries (popular searches)
-  - [ ] Track mobile vs desktop usage patterns
-- [x] **Validate Rich Results** ✅ COMPLETO
-  - [x] Tested all JSON-LD (Organization, JobPosting, BlogPosting, BreadcrumbList) with validation methodology
-  - [x] 5/5 schema types validated successfully (100% pass rate)
-  - [x] Created comprehensive documentation in docs/JSON_LD_VALIDATION.md
-  <!-- AI-ANCHOR:SHORT-TERM-BACKLOG-END -->
 
----
-
-## Future Ideas (Nice to have)
-
-<!-- AI-ANCHOR:FUTURE-IDEAS-START -->
-- [ ] Ciclo de vida de deploy Hook no Supabase ou GitHub Actions. Assim, quando o seu script de sync rodar e detectar novas vagas, ele pode disparar um rebuild automático na Vercel, atualizando também as páginas estáticas (SSG)
-- [ ] Auto-generate OG images (Satori/og-image)
-- [ ] Basic admin script to lint/normalize job entries
-- [ ] Scheduled data validation in CI (nightly)
-- [ ] Tag popularity insights
-- [ ] Intake automation (no backend): Tally → GitHub Issue/PR via Zapier/Make
-  - Each new submission becomes an Issue or PR with a filled job JSON stub
-- [ ] i18n (PT → EN) minimal
-  - Static alternate homepage in PT-BR and `/post-a-job` page copy for BR companies
-  <!-- AI-ANCHOR:FUTURE-IDEAS-END -->
+<!-- AI-ANCHOR:FUTURE-IDEAS-END -->
 
 ---
 
@@ -604,4 +258,5 @@ Copy and fill this block when updating:
   - Added/updated/removed task: <brief>
   - Status: not-started | in-progress | completed | deferred
   - Notes: <context/links>
+- 2025-11-23: **Test Suite Verification & Layout Check**: (1) **Layout Verified**: Confirmed `index.astro` and `JobCard.astro` match the `gemini_canvas.md` design specs (colors, shadows, fonts, structure). (2) **Test Suite Repaired**: Fixed outdated E2E tests. Updated `filters.spec.ts` to match the new sidebar structure (removed dropdowns, added radio/tag logic). Updated `accessibility.spec.ts` with correct selectors (`#search-input`, `id="filters-sidebar"`). Added `data-testid="job-card"` to `JobCard.astro` and `aria-label` to search input in `index.astro` to fix timeouts. (3) **Autocomplete Update**: Removed `search-autocomplete.spec.ts` as the complex dropdown feature was replaced by a simpler client-side filter in the new Canvas layout, aligning with the prototype. All remaining tests passing.
 ```

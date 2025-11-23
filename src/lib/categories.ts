@@ -87,12 +87,7 @@ export function mapExternalCategory(externalCategory: string): Category | null {
   return mapped || null;
 }
 
-/**
- * @deprecated Use mapExternalCategory instead
- */
-export function mapAirtableCategory(airtableCategory: string): Category | null {
-  return mapExternalCategory(airtableCategory);
-}
+
 
 /**
  * Get category icon

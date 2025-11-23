@@ -1,9 +1,10 @@
 ---
+import { getAbsoluteLocaleUrl } from 'astro:i18n';
 import Navbar from '../components/ui/Navbar.astro';
 import Button from '../components/ui/Button.astro';
 import Link from '../components/ui/Link.astro';
 import type { Locale, Messages } from '../lib/i18n';
-import { defaultLocale, resolveLocale, getMessages } from '../lib/i18n';
+import { defaultLocale, getMessages } from '../lib/i18n';
 
 interface SEO {
   title: string;
@@ -25,19 +26,25 @@ const canonicalUrl = new URL(Astro.url.pathname, site).href;
 const ogImage = new URL(seo.image ?? '/images/artsource-brazil-logo.svg', site).href;
 const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN as string | undefined;
 
-// Use passed locale or detect from URL path
-const locale = propsLocale ?? resolveLocale(Astro.url);
+// Use passed locale or detect from Astro context
+const locale = (propsLocale ?? Astro.currentLocale ?? defaultLocale) as Locale;
 const messages = getMessages(locale);
 
-// Generate hreflang alternate URLs
+// Generate hreflang alternate URLs using Astro i18n helper
+// We need to get the current relative path without locale prefix to generate alternates
 const currentPath = Astro.url.pathname;
+const pathWithoutLocale = currentPath.startsWith('/en/') ? currentPath.replace('/en/', '') : currentPath.replace(/^\/en$/, '');
+
 const hreflangs = {
-  'pt-BR': new URL(currentPath.replace(/^\/en/, '') || '/', site).href,
-  'en': new URL(currentPath.startsWith('/en') ? currentPath : `/en${currentPath}`, site).href,
+  'pt-BR': getAbsoluteLocaleUrl('pt-BR', pathWithoutLocale),
+  'en': getAbsoluteLocaleUrl('en', pathWithoutLocale),
 };
 
 const withLocale = (href: string) => {
-  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  if (!href || href.startsWith('#') || href.startsWith('http')) return href;
+  // If it's an absolute path, we can use getAbsoluteLocaleUrl or just prepend locale
+  // But for internal links, we usually want relative.
+  // Let's keep simple logic for now or use getRelativeLocaleUrl if we import it.
   const baseHref = href.startsWith('/') ? href : `/${href}`;
   return locale === 'en' ? `/en${baseHref}` : baseHref;
 };

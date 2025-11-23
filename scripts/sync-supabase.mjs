@@ -39,7 +39,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY, {
   },
 });
 
-// URL validation schema (same as sync-airtable.mjs)
+// URL validation schema
 const UrlSchema = z
   .string()
   .url('Invalid URL format')
@@ -106,7 +106,7 @@ function getCompanyLogo(companyLogoUrl, companyName) {
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, '')
     .replace(/^the|^a|^an/, '');
-  
+
   // Default to .svg first (most common), fallback to placeholder if not found
   return `/images/companies/${slug}.svg`;
 }

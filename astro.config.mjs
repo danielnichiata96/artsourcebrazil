@@ -9,6 +9,13 @@ export default defineConfig({
   integrations: [tailwind(), sitemap()],
   output: 'hybrid', // Hybrid mode: SSG for pages, SSR for API routes
   adapter: vercel(), // Enable serverless functions for SSR routes
+  i18n: {
+    defaultLocale: 'pt-BR',
+    locales: ['pt-BR', 'en'],
+    routing: {
+      prefixDefaultLocale: false,
+    },
+  },
   security: {
     contentSecurityPolicy: {
       directives: {

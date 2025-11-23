@@ -1,0 +1,516 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Br Art Source BRAZIL EDITION" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Br
+        - generic [ref=e7]:
+          - generic [ref=e8]: Art Source
+          - generic [ref=e9]: BRAZIL EDITION
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Empresas" [ref=e12] [cursor=pointer]:
+            - /url: /companies
+          - link "Blog" [ref=e13] [cursor=pointer]:
+            - /url: /blog
+          - link "Sobre" [ref=e14] [cursor=pointer]:
+            - /url: /about
+        - link "Postar vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e21]:
+        - generic [ref=e24]: Live Beta v3.0
+        - heading "CRAFTED IN BRAZIL. DEPLOYED GLOBAL." [level=1] [ref=e25]:
+          - text: CRAFTED IN
+          - text: BRAZIL.
+          - text: DEPLOYED GLOBAL.
+        - generic [ref=e26]:
+          - paragraph [ref=e27]: The definitive hub for 3D Artists, VFX Wizards, and Game Devs in Brazil looking for international remote work.
+          - generic [ref=e29]:
+            - textbox "Search roles" [ref=e30]:
+              - /placeholder: Search roles...
+            - button [ref=e31] [cursor=pointer]:
+              - img [ref=e32]
+      - generic [ref=e35]:
+        - complementary [ref=e36]:
+          - generic [ref=e37]:
+            - generic [ref=e38]:
+              - heading "Discipline" [level=3] [ref=e39]
+              - generic [ref=e40]:
+                - generic [ref=e41] [cursor=pointer]:
+                  - radio "All Disciplines" [checked] [ref=e42]
+                  - generic [ref=e43]: All Disciplines
+                - generic [ref=e44] [cursor=pointer]:
+                  - radio "3D" [ref=e45]
+                  - generic [ref=e46]: 3D
+                - generic [ref=e47] [cursor=pointer]:
+                  - radio "Animation" [ref=e48]
+                  - generic [ref=e49]: Animation
+                - generic [ref=e50] [cursor=pointer]:
+                  - radio "Game Dev" [ref=e51]
+                  - generic [ref=e52]: Game Dev
+            - generic [ref=e53]:
+              - heading "Hot Skills" [level=3] [ref=e54]: Hot Skills
+              - generic [ref=e56]:
+                - button "Unity" [ref=e57] [cursor=pointer]
+                - button "TypeScript" [ref=e58] [cursor=pointer]
+                - button "AI" [ref=e59] [cursor=pointer]
+                - button "Design" [ref=e60] [cursor=pointer]
+                - button "Go" [ref=e61] [cursor=pointer]
+                - button "Mobile" [ref=e62] [cursor=pointer]
+                - button "Git" [ref=e63] [cursor=pointer]
+                - button "Game Dev" [ref=e64] [cursor=pointer]
+                - button "Artist" [ref=e65] [cursor=pointer]
+                - button "Senior" [ref=e66] [cursor=pointer]
+            - generic [ref=e67]:
+              - paragraph [ref=e68]: Hiring?
+              - paragraph [ref=e69]: Reach 5,000+ Brazilian creatives.
+              - button "Post Now" [ref=e70] [cursor=pointer]
+        - generic [ref=e71]:
+          - heading "Fresh Roles 14" [level=2] [ref=e73]
+          - generic [ref=e74]:
+            - article [ref=e75]:
+              - link "Senior 2D Game Artist na Wildlife Studios" [ref=e77] [cursor=pointer]:
+                - /url: /jobs/WIL-155002-senior-2d-game-artist
+                - generic [ref=e78]:
+                  - generic [ref=e79]:
+                    - generic [ref=e81]:
+                      - img "Wildlife Studios logo" [ref=e83]
+                      - generic [ref=e84]:
+                        - heading "Senior 2D Game Artist" [level=3] [ref=e85]
+                        - paragraph [ref=e86]: Wildlife Studios
+                    - generic [ref=e88]:
+                      - img [ref=e89]
+                      - text: Híbrido
+                  - generic [ref=e92]:
+                    - generic [ref=e93]: 3D
+                    - generic [ref=e94]: Design
+                    - generic [ref=e95]: Go
+                    - generic [ref=e96]: Animation
+                    - generic [ref=e97]: Mobile
+                    - generic [ref=e98]: AI
+                    - generic [ref=e99]: 2D
+                    - generic [ref=e100]: Unity
+                    - generic [ref=e101]: Artist
+                    - generic [ref=e102]: TypeScript
+                - generic [ref=e103]:
+                  - time [ref=e104]: 10D AGO
+                  - img [ref=e106]
+            - article [ref=e108]:
+              - link "Senior Creative Producer - Marketing na Wildlife Studios" [ref=e110] [cursor=pointer]:
+                - /url: /jobs/WIL-008002-senior-creative-producer-marketing
+                - generic [ref=e111]:
+                  - generic [ref=e112]:
+                    - generic [ref=e114]:
+                      - img "Wildlife Studios logo" [ref=e116]
+                      - generic [ref=e117]:
+                        - heading "Senior Creative Producer - Marketing" [level=3] [ref=e118]
+                        - paragraph [ref=e119]: Wildlife Studios
+                    - generic [ref=e121]:
+                      - img [ref=e122]
+                      - text: Híbrido
+                  - generic [ref=e125]:
+                    - generic [ref=e126]: Design
+                    - generic [ref=e127]: Go
+                    - generic [ref=e128]: Git
+                    - generic [ref=e129]: Game Dev
+                    - generic [ref=e130]: Mobile
+                    - generic [ref=e131]: Senior
+                    - generic [ref=e132]: AI
+                    - generic [ref=e133]: Unity
+                    - generic [ref=e134]: TypeScript
+                - generic [ref=e135]:
+                  - time [ref=e136]: 10D AGO
+                  - img [ref=e138]
+            - article [ref=e140]:
+              - link "3D Game Artist na Wildlife Studios" [ref=e142] [cursor=pointer]:
+                - /url: /jobs/WIL-998002-3d-game-artist
+                - generic [ref=e143]:
+                  - generic [ref=e144]:
+                    - generic [ref=e146]:
+                      - img "Wildlife Studios logo" [ref=e148]
+                      - generic [ref=e149]:
+                        - heading "3D Game Artist" [level=3] [ref=e150]
+                        - paragraph [ref=e151]: Wildlife Studios
+                    - generic [ref=e153]:
+                      - img [ref=e154]
+                      - text: Híbrido
+                  - generic [ref=e157]:
+                    - generic [ref=e158]: 3D
+                    - generic [ref=e159]: Design
+                    - generic [ref=e160]: Go
+                    - generic [ref=e161]: Git
+                    - generic [ref=e162]: Animation
+                    - generic [ref=e163]: AI
+                    - generic [ref=e164]: 2D
+                    - generic [ref=e165]: Unity
+                    - generic [ref=e166]: Artist
+                    - generic [ref=e167]: TypeScript
+                - generic [ref=e168]:
+                  - time [ref=e169]: 13D AGO
+                  - img [ref=e171]
+            - article [ref=e173]:
+              - link "Manager, Site Reliability Engineer na Wildlife Studios" [ref=e175] [cursor=pointer]:
+                - /url: /jobs/WIL-904002-manager-site-reliability-engineer
+                - generic [ref=e176]:
+                  - generic [ref=e177]:
+                    - generic [ref=e179]:
+                      - img "Wildlife Studios logo" [ref=e181]
+                      - generic [ref=e182]:
+                        - heading "Manager, Site Reliability Engineer" [level=3] [ref=e183]
+                        - paragraph [ref=e184]: Wildlife Studios
+                    - generic [ref=e186]:
+                      - img [ref=e187]
+                      - text: Remoto • Global
+                  - generic [ref=e190]:
+                    - generic [ref=e191]: Design
+                    - generic [ref=e192]: Go
+                    - generic [ref=e193]: Git
+                    - generic [ref=e194]: Python
+                    - generic [ref=e195]: AI
+                    - generic [ref=e196]: CI/CD
+                    - generic [ref=e197]: AWS
+                    - generic [ref=e198]: Unity
+                    - generic [ref=e199]: Kubernetes
+                    - generic [ref=e200]: TypeScript
+                - generic [ref=e201]:
+                  - time [ref=e202]: 30D AGO
+                  - img [ref=e204]
+            - article [ref=e206]:
+              - link "Manager, Software Engineer na Wildlife Studios" [ref=e208] [cursor=pointer]:
+                - /url: /jobs/WIL-896002-manager-software-engineer
+                - generic [ref=e209]:
+                  - generic [ref=e210]:
+                    - generic [ref=e212]:
+                      - img "Wildlife Studios logo" [ref=e214]
+                      - generic [ref=e215]:
+                        - heading "Manager, Software Engineer" [level=3] [ref=e216]
+                        - paragraph [ref=e217]: Wildlife Studios
+                    - generic [ref=e219]:
+                      - img [ref=e220]
+                      - text: Presencial
+                  - generic [ref=e223]:
+                    - generic [ref=e224]: Design
+                    - generic [ref=e225]: Go
+                    - generic [ref=e226]: Game Dev
+                    - generic [ref=e227]: Mobile
+                    - generic [ref=e228]: AI
+                    - generic [ref=e229]: Unity
+                    - generic [ref=e230]: Engine
+                    - generic [ref=e231]: TypeScript
+                - generic [ref=e232]:
+                  - time [ref=e233]: 30D AGO
+                  - img [ref=e235]
+            - article [ref=e237]:
+              - link "Senior Site Reliability Engineer na Wildlife Studios" [ref=e239] [cursor=pointer]:
+                - /url: /jobs/WIL-951002-senior-site-reliability-engineer
+                - generic [ref=e240]:
+                  - generic [ref=e241]:
+                    - generic [ref=e243]:
+                      - img "Wildlife Studios logo" [ref=e245]
+                      - generic [ref=e246]:
+                        - heading "Senior Site Reliability Engineer" [level=3] [ref=e247]
+                        - paragraph [ref=e248]: Wildlife Studios
+                    - generic [ref=e250]:
+                      - img [ref=e251]
+                      - text: Remoto • Global
+                  - generic [ref=e254]:
+                    - generic [ref=e255]: Design
+                    - generic [ref=e256]: Go
+                    - generic [ref=e257]: Git
+                    - generic [ref=e258]: Python
+                    - generic [ref=e259]: CI/CD
+                    - generic [ref=e260]: AWS
+                    - generic [ref=e261]: Unity
+                    - generic [ref=e262]: Kubernetes
+                    - generic [ref=e263]: Node.js
+                    - generic [ref=e264]: TypeScript
+                - generic [ref=e265]:
+                  - time [ref=e266]: 30D AGO
+                  - img [ref=e268]
+            - article [ref=e270]:
+              - link "Senior Performance Marketing Analyst - Creatives na Wildlife Studios" [ref=e272] [cursor=pointer]:
+                - /url: /jobs/WIL-649002-senior-performance-marketing-analyst-creatives
+                - generic [ref=e273]:
+                  - generic [ref=e274]:
+                    - generic [ref=e276]:
+                      - img "Wildlife Studios logo" [ref=e278]
+                      - generic [ref=e279]:
+                        - heading "Senior Performance Marketing Analyst - Creatives" [level=3] [ref=e280]
+                        - paragraph [ref=e281]: Wildlife Studios
+                    - generic [ref=e283]:
+                      - img [ref=e284]
+                      - text: Híbrido
+                  - generic [ref=e287]:
+                    - generic [ref=e288]: Design
+                    - generic [ref=e289]: Go
+                    - generic [ref=e290]: Git
+                    - generic [ref=e291]: Game Dev
+                    - generic [ref=e292]: Mobile
+                    - generic [ref=e293]: Senior
+                    - generic [ref=e294]: AI
+                    - generic [ref=e295]: Unity
+                    - generic [ref=e296]: TypeScript
+                - generic [ref=e297]:
+                  - time [ref=e298]: 45D AGO
+                  - img [ref=e300]
+            - article [ref=e302]:
+              - link "Wildlife Studios Internship Program - 2026 na Wildlife Studios" [ref=e304] [cursor=pointer]:
+                - /url: /jobs/WIL-895002-wildlife-studios-internship-program-2026
+                - generic [ref=e305]:
+                  - generic [ref=e306]:
+                    - generic [ref=e308]:
+                      - img "Wildlife Studios logo" [ref=e310]
+                      - generic [ref=e311]:
+                        - heading "Wildlife Studios Internship Program - 2026" [level=3] [ref=e312]
+                        - paragraph [ref=e313]: Wildlife Studios
+                    - generic [ref=e314]:
+                      - generic [ref=e315]:
+                        - img [ref=e316]
+                        - text: Híbrido
+                      - generic [ref=e319]:
+                        - img [ref=e320]
+                        - text: Internship
+                  - generic [ref=e322]:
+                    - generic [ref=e323]: Design
+                    - generic [ref=e324]: Go
+                    - generic [ref=e325]: Game Dev
+                    - generic [ref=e326]: Mobile
+                    - generic [ref=e327]: AI
+                    - generic [ref=e328]: Unity
+                    - generic [ref=e329]: Engine
+                    - generic [ref=e330]: TypeScript
+                - generic [ref=e331]:
+                  - time [ref=e332]: 68D AGO
+                  - img [ref=e334]
+            - article [ref=e336]:
+              - link "Senior Game Engineer na Wildlife Studios" [ref=e338] [cursor=pointer]:
+                - /url: /jobs/WIL-562002-senior-game-engineer
+                - generic [ref=e339]:
+                  - generic [ref=e340]:
+                    - generic [ref=e342]:
+                      - img "Wildlife Studios logo" [ref=e344]
+                      - generic [ref=e345]:
+                        - heading "Senior Game Engineer" [level=3] [ref=e346]
+                        - paragraph [ref=e347]: Wildlife Studios
+                    - generic [ref=e349]:
+                      - img [ref=e350]
+                      - text: Híbrido
+                  - generic [ref=e353]:
+                    - generic [ref=e354]: Java
+                    - generic [ref=e355]: Go
+                    - generic [ref=e356]: C#
+                    - generic [ref=e357]: C++
+                    - generic [ref=e358]: JavaScript
+                    - generic [ref=e359]: AI
+                    - generic [ref=e360]: Unity
+                    - generic [ref=e361]: Kubernetes
+                    - generic [ref=e362]: Node.js
+                    - generic [ref=e363]: TypeScript
+                - generic [ref=e364]:
+                  - time [ref=e365]: 75D AGO
+                  - img [ref=e367]
+            - article [ref=e369]:
+              - link "Senior 2D Artist na Wildlife Studios" [ref=e371] [cursor=pointer]:
+                - /url: /jobs/WIL-573002-senior-2d-artist
+                - generic [ref=e372]:
+                  - generic [ref=e373]:
+                    - generic [ref=e375]:
+                      - img "Wildlife Studios logo" [ref=e377]
+                      - generic [ref=e378]:
+                        - heading "Senior 2D Artist" [level=3] [ref=e379]
+                        - paragraph [ref=e380]: Wildlife Studios
+                    - generic [ref=e382]:
+                      - img [ref=e383]
+                      - text: Híbrido
+                  - generic [ref=e386]:
+                    - generic [ref=e387]: 3D
+                    - generic [ref=e388]: Design
+                    - generic [ref=e389]: Go
+                    - generic [ref=e390]: Animation
+                    - generic [ref=e391]: Mobile
+                    - generic [ref=e392]: AI
+                    - generic [ref=e393]: 2D
+                    - generic [ref=e394]: Unity
+                    - generic [ref=e395]: Artist
+                    - generic [ref=e396]: TypeScript
+                - generic [ref=e397]:
+                  - time [ref=e398]: 75D AGO
+                  - img [ref=e400]
+            - article [ref=e402]:
+              - link "Senior Playable Ads Developer na Wildlife Studios" [ref=e404] [cursor=pointer]:
+                - /url: /jobs/WIL-785002-senior-playable-ads-developer
+                - generic [ref=e405]:
+                  - generic [ref=e406]:
+                    - generic [ref=e408]:
+                      - img "Wildlife Studios logo" [ref=e410]
+                      - generic [ref=e411]:
+                        - heading "Senior Playable Ads Developer" [level=3] [ref=e412]
+                        - paragraph [ref=e413]: Wildlife Studios
+                    - generic [ref=e415]:
+                      - img [ref=e416]
+                      - text: Híbrido
+                  - generic [ref=e419]:
+                    - generic [ref=e420]: Java
+                    - generic [ref=e421]: Design
+                    - generic [ref=e422]: Go
+                    - generic [ref=e423]: Git
+                    - generic [ref=e424]: JavaScript
+                    - generic [ref=e425]: AI
+                    - generic [ref=e426]: Unity
+                    - generic [ref=e427]: Node.js
+                    - generic [ref=e428]: Artist
+                    - generic [ref=e429]: TypeScript
+                - generic [ref=e430]:
+                  - time [ref=e431]: 96D AGO
+                  - img [ref=e433]
+            - article [ref=e435]:
+              - link "Senior Game Engineer na Wildlife Studios" [ref=e437] [cursor=pointer]:
+                - /url: /jobs/WIL-441002-senior-game-engineer
+                - generic [ref=e438]:
+                  - generic [ref=e439]:
+                    - generic [ref=e441]:
+                      - img "Wildlife Studios logo" [ref=e443]
+                      - generic [ref=e444]:
+                        - heading "Senior Game Engineer" [level=3] [ref=e445]
+                        - paragraph [ref=e446]: Wildlife Studios
+                    - generic [ref=e448]:
+                      - img [ref=e449]
+                      - text: Híbrido
+                  - generic [ref=e452]:
+                    - generic [ref=e453]: Java
+                    - generic [ref=e454]: Go
+                    - generic [ref=e455]: C#
+                    - generic [ref=e456]: C++
+                    - generic [ref=e457]: JavaScript
+                    - generic [ref=e458]: AI
+                    - generic [ref=e459]: Unity
+                    - generic [ref=e460]: Kubernetes
+                    - generic [ref=e461]: Node.js
+                    - generic [ref=e462]: TypeScript
+                - generic [ref=e463]:
+                  - time [ref=e464]: 116D AGO
+                  - img [ref=e466]
+            - article [ref=e468]:
+              - link "Senior Data Scientist na Wildlife Studios" [ref=e470] [cursor=pointer]:
+                - /url: /jobs/WIL-475002-senior-data-scientist
+                - generic [ref=e471]:
+                  - generic [ref=e472]:
+                    - generic [ref=e474]:
+                      - img "Wildlife Studios logo" [ref=e476]
+                      - generic [ref=e477]:
+                        - heading "Senior Data Scientist" [level=3] [ref=e478]
+                        - paragraph [ref=e479]: Wildlife Studios
+                    - generic [ref=e481]:
+                      - img [ref=e482]
+                      - text: Híbrido
+                  - generic [ref=e485]:
+                    - generic [ref=e486]: Design
+                    - generic [ref=e487]: Python
+                    - generic [ref=e488]: Game Dev
+                    - generic [ref=e489]: Mobile
+                    - generic [ref=e490]: Senior
+                    - generic [ref=e491]: AI
+                    - generic [ref=e492]: Unity
+                    - generic [ref=e493]: TypeScript
+                - generic [ref=e494]:
+                  - time [ref=e495]: 202D AGO
+                  - img [ref=e497]
+            - article [ref=e499]:
+              - link "Senior Data Engineer na Wildlife Studios" [ref=e501] [cursor=pointer]:
+                - /url: /jobs/WIL-483002-senior-data-engineer
+                - generic [ref=e502]:
+                  - generic [ref=e503]:
+                    - generic [ref=e505]:
+                      - img "Wildlife Studios logo" [ref=e507]
+                      - generic [ref=e508]:
+                        - heading "Senior Data Engineer" [level=3] [ref=e509]
+                        - paragraph [ref=e510]: Wildlife Studios
+                    - generic [ref=e512]:
+                      - img [ref=e513]
+                      - text: Híbrido
+                  - generic [ref=e516]:
+                    - generic [ref=e517]: Design
+                    - generic [ref=e518]: Git
+                    - generic [ref=e519]: Python
+                    - generic [ref=e520]: Game Dev
+                    - generic [ref=e521]: Mobile
+                    - generic [ref=e522]: Senior
+                    - generic [ref=e523]: AI
+                    - generic [ref=e524]: Unity
+                    - generic [ref=e525]: Engine
+                    - generic [ref=e526]: TypeScript
+                - generic [ref=e527]:
+                  - time [ref=e528]: 214D AGO
+                  - img [ref=e530]
+    - generic [ref=e533]:
+      - heading "Fique por dentro" [level=3] [ref=e534]
+      - paragraph [ref=e535]: Receba as vagas mais recentes diretamente no seu e-mail.
+      - generic [ref=e536]:
+        - textbox "seu-email@exemplo.com" [ref=e537]
+        - button "Assinar" [ref=e538] [cursor=pointer]
+      - paragraph [ref=e539]:
+        - text: Respeitamos sua privacidade. Sem spam. Powered by
+        - link "Buttondown" [ref=e540] [cursor=pointer]:
+          - /url: https://buttondown.email
+        - text: .
+  - contentinfo [ref=e541]:
+    - generic [ref=e542]:
+      - generic [ref=e543]:
+        - generic [ref=e544]:
+          - paragraph [ref=e545]: Quer contratar talento brasileiro?
+          - paragraph [ref=e546]: Poste sua vaga e alcance nossa comunidade curada de artistas, devs e storytellers.
+        - link "Postar vaga" [ref=e547] [cursor=pointer]:
+          - /url: /post-a-job
+      - generic [ref=e548]:
+        - generic [ref=e549]:
+          - paragraph [ref=e550]: Art Source Brazil
+          - paragraph [ref=e551]: Remote Creative Jobs
+          - link "artsourcebrazil@gmail.com" [ref=e552] [cursor=pointer]:
+            - /url: mailto:artsourcebrazil@gmail.com
+        - generic [ref=e553]:
+          - paragraph [ref=e554]: Navegação
+          - generic [ref=e555]:
+            - link "Sobre" [ref=e556] [cursor=pointer]:
+              - /url: /about
+            - link "Contato" [ref=e557] [cursor=pointer]:
+              - /url: /contact
+            - link "Política de Privacidade" [ref=e558] [cursor=pointer]:
+              - /url: /privacy
+            - link "Termos de Uso" [ref=e559] [cursor=pointer]:
+              - /url: /terms
+            - link "Blog" [ref=e560] [cursor=pointer]:
+              - /url: /blog
+        - generic [ref=e561]:
+          - paragraph [ref=e562]: "Feeds:"
+          - generic [ref=e563]:
+            - link "Jobs RSS" [ref=e564] [cursor=pointer]:
+              - /url: /jobs.xml
+            - link "Jobs JSON" [ref=e565] [cursor=pointer]:
+              - /url: /jobs.json
+            - link "Blog RSS" [ref=e566] [cursor=pointer]:
+              - /url: /blog.xml
+      - generic [ref=e567]:
+        - paragraph [ref=e568]: © 2025 Art Source Brazil. Todos os direitos reservados.
+        - generic [ref=e569]: Feito no Brasil
+  - generic [ref=e572]:
+    - button "Menu" [ref=e573]:
+      - img [ref=e575]
+      - generic: Menu
+    - button "Inspect" [ref=e579]:
+      - img [ref=e581]
+      - generic: Inspect
+    - button "Audit" [ref=e583]:
+      - img [ref=e585]
+      - generic: Audit
+    - button "Settings" [ref=e588]:
+      - img [ref=e590]
+      - generic: Settings
+```

@@ -4,14 +4,19 @@ import JobCard from '../components/JobCard.astro';
 import { getJobs } from '../lib/getJobs';
 import type { Job } from '../lib/jobs';
 import { sortJobsByDateDesc } from '../lib/jobs';
+import { getMessages } from '../lib/i18n';
 
 // Fetch jobs from Supabase at build time
 const jobs: Job[] = await getJobs();
 const sortedJobs = sortJobsByDateDesc(jobs);
 
+// Get Portuguese messages
+const messages = getMessages('pt-BR');
+const { hero, seo: seoMessages, filters, results } = messages;
+
 const seo = {
-  title: 'Art Source Brazil | Creative Jobs',
-  description: 'The definitive hub for 3D Artists, VFX Wizards, and Game Devs in Brazil looking for international remote work.',
+  title: seoMessages.home.title,
+  description: seoMessages.home.description,
 };
 ---
 
@@ -25,19 +30,17 @@ const seo = {
                     <!-- Animated Badge -->
                     <div class="inline-flex items-center gap-2 border-2 border-ink bg-white px-3 py-1 mb-8 shadow-hard-sm animate-fade-in-up">
                         <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
-                        <span class="text-xs font-bold uppercase tracking-widest">Live Beta v3.0</span>
+                        <span class="text-xs font-bold uppercase tracking-widest">{hero.badge}</span>
                     </div>
 
                     <h1 class="font-display text-6xl sm:text-8xl font-bold leading-[0.9] mb-8 tracking-tighter animate-fade-in-up delay-100">
-                        CRAFTED IN <br/>
-                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple to-accent-teal">BRAZIL.</span> <br/>
-                        DEPLOYED GLOBAL.
+                        {hero.titleLine1} <br/>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-purple to-accent-teal">{hero.titleLine2}</span> <br/>
+                        {hero.titleLine3}
                     </h1>
                     
                     <div class="flex flex-col md:flex-row gap-8 items-start md:items-center animate-fade-in-up delay-200">
-                        <p class="text-xl text-stone-600 font-medium max-w-lg leading-relaxed border-l-4 border-accent-lime pl-6">
-                            The definitive hub for <span class="font-bold text-ink">3D Artists</span>, <span class="font-bold text-ink">VFX Wizards</span>, and <span class="font-bold text-ink">Game Devs</span> in Brazil looking for international remote work.
-                        </p>
+                        <p class="text-xl text-stone-600 font-medium max-w-lg leading-relaxed border-l-4 border-accent-lime pl-6" set:html={hero.description}></p>
 
                         <!-- Search Input -->
                         <div class="relative w-full md:w-auto flex-1 max-w-md">
@@ -46,7 +49,8 @@ const seo = {
                                     type="text"
                                     id="search-input"
                                     class="w-full bg-transparent border-none py-4 pl-4 text-lg font-bold placeholder:text-stone-300 focus:ring-0 uppercase tracking-wide"
-                                    placeholder="Search roles..."
+                                    placeholder={filters.searchPlaceholder}
+                                    aria-label={filters.searchLabel}
                                 />
                                 <button class="bg-accent-lime text-ink px-6 border-l-2 border-ink hover:bg-accent-teal transition-colors">
                                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
@@ -67,17 +71,17 @@ const seo = {
             <div class="flex flex-col lg:flex-row gap-12">
                 
                 <!-- Desktop Sidebar -->
-                <aside class="hidden lg:block w-72 flex-shrink-0">
+                <aside id="filters-sidebar" class="hidden lg:block w-72 flex-shrink-0">
                     <div class="sticky top-28 space-y-10">
                         <!-- Categories -->
                         <div class="border-2 border-ink bg-white p-6 shadow-hard-sm transform rotate-1 hover:rotate-0 transition-transform duration-300">
                             <h3 class="font-display text-lg font-bold uppercase tracking-wide mb-5 border-b-2 border-ink pb-2 inline-block">
-                                Discipline
+                                {filters.discipline}
                             </h3>
                             <div class="space-y-3" id="category-filters">
                                 <label class="flex items-center gap-3 cursor-pointer group hover:translate-x-1 transition-transform">
                                     <input type="radio" name="category-filter" value="all" checked class="studio-checkbox" />
-                                    <span class="font-bold text-sm uppercase group-hover:text-accent-purple transition-colors">All Disciplines</span>
+                                    <span class="font-bold text-sm uppercase group-hover:text-accent-purple transition-colors">{filters.allCategories}</span>
                                 </label>
                                 <!-- JS Injected -->
                             </div>
@@ -86,7 +90,7 @@ const seo = {
                         <!-- Tags -->
                         <div>
                             <h3 class="font-display text-lg font-bold uppercase tracking-wide mb-4 flex items-center gap-2">
-                                <span class="w-2 h-2 bg-accent-lime border border-ink"></span> Hot Skills
+                                <span class="w-2 h-2 bg-accent-lime border border-ink"></span> {hero.stats.skills.label}
                             </h3>
                             <div class="flex flex-wrap gap-2" id="tag-filters">
                                 <!-- JS Injected -->
@@ -95,9 +99,9 @@ const seo = {
 
                         <!-- Ad Box -->
                         <div class="bg-ink text-paper p-6 border-2 border-ink shadow-hard text-center">
-                            <p class="font-display font-bold text-xl mb-2">Hiring?</p>
-                            <p class="text-sm text-stone-400 mb-4">Reach 5,000+ Brazilian creatives.</p>
-                            <button class="w-full bg-paper text-ink font-bold uppercase py-2 hover:bg-accent-lime transition-colors">Post Now</button>
+                            <p class="font-display font-bold text-xl mb-2">{filters.hiringTitle}</p>
+                            <p class="text-sm text-stone-400 mb-4">{filters.hiringSubtitle}</p>
+                            <button class="w-full bg-paper text-ink font-bold uppercase py-2 hover:bg-accent-lime transition-colors">{filters.postNow}</button>
                         </div>
                     </div>
                 </aside>
@@ -107,13 +111,13 @@ const seo = {
                     <!-- Feed Header -->
                     <div class="mb-8 flex items-center justify-between border-b-2 border-stone-300 pb-4 sticky top-20 bg-paper/95 backdrop-blur z-20 pt-4 lg:pt-0">
                         <h2 class="font-display text-3xl font-bold uppercase">
-                            Fresh Roles <span class="ml-2 bg-accent-lime border border-ink text-ink text-lg px-2 py-0.5 align-middle rounded-none shadow-[2px_2px_0px_0px_#000]" id="job-count">0</span>
+                            {hero.sectionTitle} <span class="ml-2 bg-accent-lime border border-ink text-ink text-lg px-2 py-0.5 align-middle rounded-none shadow-[2px_2px_0px_0px_#000]" id="job-count">0</span>
                         </h2>
                         
                         <!-- Mobile Filter Trigger -->
                         <button id="mobile-filter-btn" class="lg:hidden flex items-center gap-2 font-bold uppercase tracking-wide border-2 border-ink px-4 py-2 bg-white hover:bg-ink hover:text-white transition-colors shadow-hard-sm">
                             <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
-                            Filters
+                            {filters.toggle}
                         </button>
                     </div>
 
@@ -127,10 +131,10 @@ const seo = {
                     <!-- Empty State -->
                     <div id="empty-state" class="hidden py-24 text-center border-2 border-dashed border-ink bg-white/50">
                         <div class="font-display text-6xl mb-4 grayscale">💀</div>
-                        <h3 class="font-display text-2xl font-bold mb-2">Dead End.</h3>
-                        <p class="text-stone-500 mb-6">No jobs match those filters.</p>
+                        <h3 class="font-display text-2xl font-bold mb-2">{hero.emptyStateTitle}</h3>
+                        <p class="text-stone-500 mb-6">{results.emptyList}</p>
                         <button id="clear-filters" class="border-2 border-ink bg-accent-lime px-6 py-2 font-bold uppercase shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
-                            Reset
+                            {hero.emptyStateReset}
                         </button>
                     </div>
                 </div>
@@ -139,13 +143,13 @@ const seo = {
     </main>
 </Layout>
 
-<script define:vars={{ jobsData: sortedJobs }}>
+<script define:vars={{ jobsData: sortedJobs, messages }}>
 // --- 2. HELPERS ---
 const timeAgo = (dateStr) => {
     const days = Math.floor((new Date() - new Date(dateStr)) / (86400000));
-    if (days === 0) return "TODAY";
-    if (days === 1) return "YESTERDAY";
-    return `${days}D AGO`;
+    if (days === 0) return messages.hero.timeAgo.today;
+    if (days === 1) return messages.hero.timeAgo.yesterday;
+    return messages.hero.timeAgo.daysAgo.replace('{days}', days);
 };
 
 const formatSalary = (s) => {
@@ -156,8 +160,14 @@ const formatSalary = (s) => {
 };
 
 const getLocationLabel = (scope) => {
-    const map = { 'remote-brazil': 'BRAZIL ONLY', 'remote-latam': 'LATAM REMOTE', 'remote-worldwide': 'GLOBAL', 'hybrid': 'HYBRID', 'onsite': 'ON-SITE' };
-    return map[scope] || 'REMOTE';
+    const map = {
+        'remote-brazil': messages.hero.location.brazilOnly,
+        'remote-latam': messages.hero.location.latamRemote,
+        'remote-worldwide': messages.hero.location.global,
+        'hybrid': messages.hero.location.hybrid,
+        'onsite': messages.hero.location.onsite
+    };
+    return map[scope] || messages.hero.location.remote;
 };
 
 // --- 3. RENDERING ---
@@ -173,7 +183,7 @@ function renderFilters() {
         container.innerHTML = `
             <label class="flex items-center gap-3 cursor-pointer group hover:translate-x-1 transition-transform mb-3">
                 <input type="radio" name="${containerId}-radio" value="all" checked class="studio-checkbox" />
-                <span class="font-bold text-sm uppercase">All Disciplines</span>
+                <span class="font-bold text-sm uppercase">${messages.filters.allCategories}</span>
             </label>
         `;
         categories.forEach(cat => {

@@ -43,7 +43,7 @@ async function testConnection() {
   console.log('─'.repeat(60));
   try {
     const { data, error } = await supabase.from('categories').select('count').limit(1);
-    
+
     if (error && error.message.includes('relation "categories" does not exist')) {
       console.log('⚠️  Connection works, but tables not created yet');
       console.log('   → Run the SQL migration in Supabase Dashboard (SQL Editor)');
@@ -53,7 +53,7 @@ async function testConnection() {
     } else if (error) {
       throw error;
     }
-    
+
     console.log('✅ Connection successful!');
   } catch (error) {
     console.error(`❌ Connection failed: ${error.message}`);
@@ -139,7 +139,7 @@ async function testConnection() {
   console.log('─'.repeat(60));
   try {
     const testCompanyName = '__TEST_CONNECTION__';
-    
+
     // Try to upsert a test company
     const { data: upsertData, error: upsertError } = await supabase
       .from('companies')
@@ -178,7 +178,7 @@ async function testConnection() {
     console.log('✅ All tests passed!');
     console.log('\n💡 Your Supabase connection is ready.');
     console.log('   Next steps:');
-    console.log('   1. Migrate data from Airtable (if needed)');
+
     console.log('   2. Test sync: npm run fetch:greenhouse && npm run sync:greenhouse:supabase');
   } else {
     console.log('❌ Some tests failed. Check errors above.');
