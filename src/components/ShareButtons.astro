@@ -1,11 +1,17 @@
 ---
+import { getMessages } from '../lib/i18n';
+import type { Locale } from '../lib/i18n';
+
 export interface Props {
   url: string;
   title: string;
   className?: string;
+  locale?: Locale;
 }
 
-const { url, title, className } = Astro.props;
+const { url, title, className, locale = 'pt-BR' } = Astro.props;
+const messages = getMessages(locale);
+const shareMessages = messages.job.share;
 
 const shareLinks = {
   twitter: `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
@@ -15,17 +21,17 @@ const shareLinks = {
 ---
 
 <div class:list={['flex items-center gap-4', className]}>
-  <p class="text-sm font-semibold text-neutral-800">Share this job:</p>
+  <p class="text-sm font-bold uppercase tracking-wide text-ink">{shareMessages.label}</p>
   <div class="flex items-center gap-3">
     <a
       href={shareLinks.twitter}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
-      aria-label="Share on X"
-      title="Share on X"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-none border-2 border-ink bg-white text-ink shadow-hard-sm transition-all hover:bg-primary hover:text-ink hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] focus:outline-none focus:ring-2 focus:ring-primary/30"
+      aria-label={shareMessages.twitter}
+      title={shareMessages.twitter}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M3 3l18 18M21 3L3 21"/>
       </svg>
     </a>
@@ -33,21 +39,21 @@ const shareLinks = {
       href={shareLinks.linkedin}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
-      aria-label="Share on LinkedIn"
-      title="Share on LinkedIn"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-none border-2 border-ink bg-white text-ink shadow-hard-sm transition-all hover:bg-brazil-blue hover:text-white hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] focus:outline-none focus:ring-2 focus:ring-brazil-blue/30"
+      aria-label={shareMessages.linkedin}
+      title={shareMessages.linkedin}
     >
-      <span class="font-extrabold text-[15px] leading-none">in</span>
+      <span class="font-display font-extrabold text-base leading-none">in</span>
     </a>
     <a
       href={shareLinks.whatsapp}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
-      aria-label="Share on WhatsApp"
-      title="Share on WhatsApp"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-none border-2 border-ink bg-white text-ink shadow-hard-sm transition-all hover:bg-brazil-green hover:text-white hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] focus:outline-none focus:ring-2 focus:ring-brazil-green/30"
+      aria-label={shareMessages.whatsapp}
+      title={shareMessages.whatsapp}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <rect x="7" y="3" width="10" height="18" rx="2" />
         <circle cx="12" cy="6" r="0.5" />
         <path d="M10 17h4" />
@@ -56,11 +62,11 @@ const shareLinks = {
     <button
       id="copy-link-button"
       type="button"
-      class="inline-flex h-12 w-12 items-center justify-center rounded-full border-2 border-neutral-900 bg-white text-neutral-900 shadow-illustration transition-colors hover:bg-primary-light focus:outline-none focus:ring-4 focus:ring-primary/20"
-      aria-label="Copy link to clipboard"
-      title="Copy link"
+      class="inline-flex h-12 w-12 items-center justify-center rounded-none border-2 border-ink bg-white text-ink shadow-hard-sm transition-all hover:bg-ink hover:text-paper hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] focus:outline-none focus:ring-2 focus:ring-ink/30"
+      aria-label={shareMessages.copyLink}
+      title={shareMessages.copyLink}
     >
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
         <path d="M10 13a5 5 0 007.07 0l1.41-1.41a5 5 0 000-7.07 5 5 0 00-7.07 0L10.7 6.22" />
         <path d="M13.3 17.78L12 19.1a5 5 0 01-7.07 0 5 5 0 010-7.07L6.34 10a5 5 0 017.07 0" />
       </svg>
@@ -169,15 +175,15 @@ const shareLinks = {
     
     // Show success feedback
     if (success) {
-      const originalText = button.innerHTML;
-      button.textContent = '✓';
-      button.style.backgroundColor = '#298639';
-      button.style.color = 'white';
+      const originalHTML = button.innerHTML;
+      button.innerHTML = '<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>';
+      button.classList.remove('bg-white', 'text-ink');
+      button.classList.add('bg-brazil-green', 'text-white');
       
       setTimeout(() => {
-        button.innerHTML = originalText;
-        button.style.backgroundColor = '';
-        button.style.color = '';
+        button.innerHTML = originalHTML;
+        button.classList.remove('bg-brazil-green', 'text-white');
+        button.classList.add('bg-white', 'text-ink');
       }, 2000);
     }
   });

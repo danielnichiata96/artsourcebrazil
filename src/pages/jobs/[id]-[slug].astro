@@ -20,6 +20,7 @@ import {
   getJobLocationType,
   getLocationLabel,
 } from '../../lib/location';
+import { resolveLocale } from '../../lib/i18n';
 
 export async function getStaticPaths() {
   const allJobs = await getCachedJobs();
@@ -39,6 +40,7 @@ interface Props {
 const { job } = Astro.props;
 const site = Astro.site ?? new URL('http://localhost:4321');
 const canonicalUrl = new URL(Astro.url.pathname, site).href;
+const locale = resolveLocale(Astro.url);
 const locationLabel = getLocationLabel(job.location.scope);
 const locationNote = (job.location.note || '').trim();
 const locationCountryCode = getJobLocationCountryCode(job.location);
@@ -144,7 +146,7 @@ const breadcrumbs = {
 };
 ---
 
-<Layout seo={seo}>
+<Layout seo={seo} locale={locale}>
   <Fragment slot="head">
     <!-- JobPosting JSON-LD -->
     <script type="application/ld+json" set:html={JSON.stringify(jobPosting)} />
@@ -192,9 +194,8 @@ const breadcrumbs = {
           </div>
 
           <!-- Share Buttons -->
-          <div class="mt-6 pt-6 border-t border-neutral-200">
-            <p class="text-sm text-neutral-600 mb-3">Compartilhe esta vaga:</p>
-            <ShareButtons url={canonicalUrl} title={job.jobTitle} className="justify-start" />
+          <div class="mt-6 pt-6 border-t-2 border-ink">
+            <ShareButtons url={canonicalUrl} title={job.jobTitle} locale={locale} className="justify-start" />
           </div>
         </Card>
       </article>

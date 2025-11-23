@@ -110,6 +110,14 @@ const translations = {
       new: 'Nova',
       remote: 'Remoto • Brasil',
       button: 'Ver detalhes',
+      share: {
+        label: 'Compartilhe esta vaga:',
+        twitter: 'Compartilhar no X',
+        linkedin: 'Compartilhar no LinkedIn',
+        whatsapp: 'Compartilhar no WhatsApp',
+        copyLink: 'Copiar link',
+        copied: 'Link copiado!',
+      },
     },
     newsletter: {
       heading: 'Fique por dentro',
@@ -242,6 +250,14 @@ const translations = {
       new: 'New',
       remote: 'Remote • Brazil',
       button: 'View details',
+      share: {
+        label: 'Share this job:',
+        twitter: 'Share on X',
+        linkedin: 'Share on LinkedIn',
+        whatsapp: 'Share on WhatsApp',
+        copyLink: 'Copy link',
+        copied: 'Link copied!',
+      },
     },
     newsletter: {
       heading: 'Stay updated',
