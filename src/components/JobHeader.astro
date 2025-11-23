@@ -1,0 +1,99 @@
+---
+import type { Job } from '../lib/jobs';
+import { getLocationLabel } from '../lib/location';
+import { formatSalaryRange } from '../lib/salary';
+import Badge from './ui/Badge.astro';
+import Button from './ui/Button.astro';
+import Link from './ui/Link.astro';
+
+import { slugify } from '../lib/jobs';
+
+export interface Props {
+  job: Job;
+  class?: string;
+}
+
+const { job, class: className } = Astro.props;
+
+const timeAgo = (dateStr: string) => {
+    const days = Math.floor((new Date().getTime() - new Date(dateStr).getTime()) / 86400000);
+    if (days === 0) return "HOJE";
+    if (days === 1) return "ONTEM";
+    return `${days}D ATRÁS`;
+};
+
+const salary = formatSalaryRange(job.salary);
+const isNew = (new Date().getTime() - new Date(job.postedDate).getTime()) < (3 * 86400000);
+const categoryAccents: Record<string, string> = {
+    'Game Dev': 'bg-accent-teal',
+    '3D': 'bg-accent-purple',
+    '2D Art': 'bg-accent-pink',
+    'Animation': 'bg-accent-orange',
+    'Design': 'bg-accent-lime',
+    'VFX': 'bg-accent-teal',
+};
+
+const accentColor = categoryAccents[job.category] ?? 'bg-accent-lime';
+const companyLogo = job.companyLogo || '/images/company-placeholder.svg';
+const logoAlt = `${job.companyName} logo`;
+---
+
+<div class:list={["flex flex-col border-2 border-ink bg-white shadow-hard relative", className]}>
+    <!-- Accent Line (Top on mobile, Left on desktop) -->
+    <div class:list={["h-4 w-full md:w-4 md:h-auto md:absolute md:left-0 md:top-0 md:bottom-0 border-b-2 md:border-b-0 md:border-r-2 border-ink", accentColor]}></div>
+    
+    <div class="flex-1 p-6 md:pl-10 flex flex-col gap-6">
+        <!-- Top Row: Logo, Title, Company, New Badge -->
+        <div class="flex flex-col md:flex-row md:items-start justify-between gap-4">
+            <div class="flex items-start gap-4">
+                <div class="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 border-2 border-ink bg-white shadow-hard-sm flex items-center justify-center p-2">
+                    <img src={companyLogo} alt={logoAlt} loading="lazy" class="h-full w-full object-contain" />
+                </div>
+                <div>
+                    <h1 class="font-display text-2xl md:text-3xl font-bold leading-tight text-ink">{job.jobTitle}</h1>
+                    <p class="text-lg font-medium text-neutral-600 mt-1">
+                        <Link href={`/company/${slugify(job.companyName)}`} variant="secondary" underline>
+                            {job.companyName}
+                        </Link>
+                    </p>
+                </div>
+            </div>
+            
+            <div class="flex items-center gap-3 self-start">
+                {isNew && <span class="border-2 border-ink bg-accent-lime px-3 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000]">Nova</span>}
+                <div class="hidden md:flex flex-col items-end">
+                     <span class="text-xs font-bold text-neutral-400 uppercase tracking-widest">{timeAgo(job.postedDate)}</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Metadata Row -->
+        <div class="flex flex-wrap gap-4 text-sm font-bold uppercase tracking-wider text-neutral-600">
+            <span class="flex items-center gap-2 text-ink bg-neutral-100 px-3 py-1.5 border border-ink rounded-sm">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                {getLocationLabel(job.location.scope)}
+            </span>
+            {job.contractType && (
+                <span class="flex items-center gap-2 text-ink bg-neutral-100 px-3 py-1.5 border border-ink rounded-sm">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    {job.contractType}
+                </span>
+            )}
+            {salary && <span class="flex items-center gap-2 text-emerald-900 bg-emerald-100 px-3 py-1.5 border border-emerald-300 rounded-sm shadow-sm">{salary}</span>}
+        </div>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2">
+            {job.tags.map(tag => (
+                <span class="border border-ink bg-white px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#e5e5e5] hover:bg-ink hover:text-white transition-colors cursor-default">
+                    {tag}
+                </span>
+            ))}
+        </div>
+        
+        <!-- Actions (Mobile only mostly, or consistent everywhere) -->
+        <div class="flex md:hidden items-center justify-between pt-4 border-t-2 border-dashed border-neutral-200">
+             <span class="text-xs font-bold text-neutral-400 uppercase tracking-widest">{timeAgo(job.postedDate)}</span>
+        </div>
+    </div>
+</div>

@@ -1,9 +1,8 @@
 ---
-import { Image } from 'astro:assets';
 import Button from './Button.astro';
 import Link from './Link.astro';
-import type { Locale, Messages } from '../../lib/i18n';
-import { getAlternateLocale, defaultLocale, getMessages } from '../../lib/i18n';
+import type { Locale } from '../../lib/i18n';
+import { defaultLocale, getMessages } from '../../lib/i18n';
 
 export interface Props {
   locale: Locale;
@@ -14,7 +13,6 @@ const messages = getMessages(locale);
 
 const navItems = messages.nav.items;
 const ctaText = messages.nav.cta;
-const toggleLocale = getAlternateLocale(locale);
 
 // Generate toggle URL based on current path
 const currentPath = Astro.url.pathname;
@@ -34,53 +32,45 @@ const withLocale = (href: string) => {
 const ctaHref = withLocale('/post-a-job');
 ---
 
-<header class="sticky top-0 z-50 border-b border-neutral-200 bg-white shadow-sm">
-  <nav class="container mx-auto flex items-center justify-between px-container py-4" aria-label="Main navigation">
-    <!-- Logo com estilo editorial -->
-    <a href="/" class="flex items-center gap-3 group">
-      <div class="relative">
-        <!-- Círculo decorativo atrás do logo -->
-        <div class="absolute -inset-2 rounded-full bg-accent-light opacity-0 transition-all duration-200 group-hover:opacity-40"></div>
-        <Image
-          src="/images/logo-navbar.svg"
-          alt="Mascote Art Source Brazil com camisa do brasil sentado usando laptop"
-          width={64}
-          height={64}
-          loading="eager"
-          class="relative z-10 h-8 w-8 transition-transform duration-200 will-change-transform group-hover:scale-105 md:h-10 md:w-10 lg:h-12 lg:w-12"
-        />
+<header class="sticky top-0 z-50 border-b-2 border-ink bg-paper/90 backdrop-blur-sm">
+  <nav class="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8" aria-label="Main navigation">
+    <!-- Logo -->
+    <a href={withLocale('/')} class="flex items-center gap-4 group">
+      <div class="h-12 w-12 border-2 border-ink bg-primary text-ink shadow-hard-sm transition-all duration-200 flex items-center justify-center rounded-none group-hover:translate-x-[3px] group-hover:translate-y-[3px]">
+        <span class="font-display text-2xl font-bold leading-none">Br</span>
       </div>
-      <div class="flex flex-col">
-        <span class="font-serif text-2xl font-extrabold leading-none tracking-tight text-neutral-950 transition-colors group-hover:text-primary">
-          Art Source Brazil
-        </span>
-        <span class="text-xs font-bold uppercase tracking-widest text-neutral-700">
-          {messages.nav.tagline}
+      <div class="flex flex-col leading-tight">
+        <span class="font-display text-2xl font-bold uppercase tracking-tight text-ink">Art Source</span>
+        <span class="text-[0.6rem] font-bold tracking-[0.4em] text-neutral-500 transition-colors group-hover:text-ink">
+          BRAZIL EDITION
         </span>
       </div>
     </a>
 
-    <!-- Navigation Items com estilo editorial -->
-    <div class="flex items-center gap-6">
-      {navItems.map((item) => (
-        <Link 
-          href={withLocale(item.href)} 
-          variant="secondary"
-          class="relative font-semibold uppercase tracking-wide text-sm text-neutral-700 transition-colors hover:text-primary after:absolute after:bottom-0 after:left-0 after:h-0.5 after:w-0 after:bg-primary after:transition-all hover:after:w-full"
-        >
-          {item.label}
-        </Link>
-      ))}
-      <Button 
+    <div class="flex items-center gap-4">
+      <div class="hidden md:flex items-center gap-6 text-xs sm:text-sm font-semibold uppercase tracking-[0.2em] text-ink">
+        {navItems.map((item) => (
+          <Link
+            href={withLocale(item.href)}
+            variant="secondary"
+            class="relative text-ink transition-colors hover:text-brazil-blue after:absolute after:-bottom-1 after:left-0 after:h-0.5 after:w-full after:origin-left after:scale-x-0 after:bg-brazil-blue after:transition-transform after:duration-200 hover:after:scale-x-100"
+          >
+            {item.label}
+          </Link>
+        ))}
+      </div>
+
+      <Button
         href={ctaHref}
-        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-md"
+        class="rounded-none border-ink bg-ink text-paper shadow-hard hover:bg-brazil-blue hover:text-white"
       >
         {ctaText}
       </Button>
+
       <a
         href={toggleHref}
         aria-label={toggleAria}
-        class="inline-flex items-center justify-center rounded-full border border-neutral-200 px-3 py-1 text-xs font-semibold uppercase tracking-widest text-neutral-700 transition hover:border-primary hover:text-primary focus:outline-none focus:ring-2 focus:ring-primary/20"
+        class="inline-flex h-10 w-10 items-center justify-center border-2 border-ink bg-white text-ink font-display text-xs tracking-widest shadow-hard-sm transition-colors hover:bg-ink hover:text-paper focus:outline-none focus:ring-2 focus:ring-brazil-blue/30"
       >
         {toggleLabel}
       </a>

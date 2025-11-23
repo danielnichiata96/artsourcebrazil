@@ -1,185 +1,87 @@
 ---
-import { Image } from 'astro:assets';
+import type { Job } from '../lib/jobs';
 import { slugify } from '../lib/jobs';
-import Button from './ui/Button.astro';
-import Badge from './ui/Badge.astro';
-import Card from './ui/Card.astro';
-import Link from './ui/Link.astro';
-import type { Locale, Messages } from '../lib/i18n';
-import { defaultLocale, getMessages } from '../lib/i18n';
-import { getLocationLabel, type JobLocation } from '../lib/location';
-import { formatSalaryRange, getContractTypeLabel } from '../lib/salary';
-import type { ContractType, SalaryRange } from '../lib/jobs';
+import { getLocationLabel } from '../lib/location';
+import { formatSalaryRange } from '../lib/salary';
 
-export interface Job {
-  id: string;
-  companyName: string;
-  companyLogo: string;
-  jobTitle: string;
-  description: string;
-  shortDescription?: string | null;
-  applyLink: string;
-  postedDate: string;
-  category: string;
-  tags: string[];
-  location: JobLocation;
-  contractType?: ContractType | null;
-  salary?: SalaryRange | null;
+export interface Props {
+  job: Job;
 }
 
-// Accept arbitrary attributes to allow data-* forwarding from parent (for filters)
-const { job, locale: propsLocale, ...attrs } = Astro.props as { job: Job; locale?: Locale } & Record<string, any>;
-const locale = propsLocale ?? defaultLocale;
-const messages = getMessages(locale);
-const jobMessages = messages.job;
-const dateLocale = locale === 'en' ? 'en-US' : 'pt-BR';
-const locationLabel = getLocationLabel(job.location.scope, locale);
-const locationNote = (job.location.note || '').trim();
-const salaryLabel = formatSalaryRange(job.salary, locale);
-const contractLabel = getContractTypeLabel(job.contractType, locale);
+const { job, ...rest } = Astro.props;
 
-const withLocale = (href: string) => {
-  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
-  const baseHref = href.startsWith('/') ? href : `/${href}`;
-  return locale === 'en' ? `/en${baseHref}` : baseHref;
+const timeAgo = (dateStr: string) => {
+    const days = Math.floor((new Date().getTime() - new Date(dateStr).getTime()) / 86400000);
+    if (days === 0) return "TODAY";
+    if (days === 1) return "YESTERDAY";
+    return `${days}D AGO`;
 };
 
-const formattedDate = (() => {
-  try {
-    return new Date(job.postedDate).toLocaleDateString(dateLocale, {
-      year: 'numeric',
-      month: 'long',
-      day: 'numeric',
-    });
-  } catch {
-    return job.postedDate;
-  }
-})();
+const salary = formatSalaryRange(job.salary);
+const isNew = (new Date().getTime() - new Date(job.postedDate).getTime()) < (3 * 86400000);
+const categoryAccents: Record<string, string> = {
+    'Game Dev': 'bg-accent-teal',
+    '3D': 'bg-accent-purple',
+    '2D Art': 'bg-accent-pink',
+    'Animation': 'bg-accent-orange',
+    'Design': 'bg-accent-lime',
+    'VFX': 'bg-accent-teal',
+};
 
-const isNew = (() => {
-  try {
-    const posted = new Date(job.postedDate);
-    if (Number.isNaN(posted.getTime())) return false;
-    const diffDays = (Date.now() - posted.getTime()) / (1000 * 60 * 60 * 24);
-    return diffDays <= 7;
-  } catch {
-    return false;
-  }
-})();
+const accentColor = categoryAccents[job.category] ?? 'bg-accent-lime';
+const companyLogo = job.companyLogo || '/images/company-placeholder.svg';
+const jobHref = `/jobs/${job.id}-${slugify(job.jobTitle)}`;
+const logoAlt = `${job.companyName} logo`;
 ---
 
-<Card {...attrs} class="relative overflow-hidden bg-white">
-  <div class="relative flex flex-col gap-6 md:flex-row md:items-start md:justify-between md:gap-10">
-    <div class="flex flex-col gap-4 md:flex-row md:items-start md:gap-6">
-      <!-- Logo com destaque editorial -->
-      <div class="flex-shrink-0">
-        <div class="rounded-2xl bg-white p-3 border-thick border-neutral-900 shadow-illustration">
-          <Image
-            src={job.companyLogo}
-            alt={`${job.companyName} logo`}
-            width={64}
-            height={64}
-            loading="lazy"
-            class="h-14 w-14 object-contain"
-          />
+<article 
+    {...rest}
+    class="job-card group relative flex flex-col md:flex-row border-2 border-ink bg-white p-0 shadow-hard hover:shadow-none hover:translate-x-[5px] hover:translate-y-[5px] transition-all duration-200"
+    data-id={job.id}
+    data-category={job.category}
+    data-tags={job.tags.join(',').toLowerCase()}
+    data-title={job.jobTitle.toLowerCase()}
+    data-company={job.companyName.toLowerCase()}
+>
+    <div class:list={["w-full md:w-4 border-b-2 md:border-b-0 md:border-r-2 border-ink h-4 md:h-auto flex-shrink-0", accentColor]}></div>
+    <a href={jobHref} class="flex-1 flex flex-col md:flex-row cursor-pointer focus-visible:outline-none" aria-label={`${job.jobTitle} na ${job.companyName}`}>
+        <div class="flex-1 p-6 flex flex-col justify-between">
+            <div>
+                <div class="flex items-start justify-between gap-4 mb-3">
+                    <div class="flex items-center gap-4">
+                        <div class="h-14 w-14 border-2 border-ink bg-white shadow-hard-sm flex items-center justify-center">
+                            <img src={companyLogo} alt={logoAlt} loading="lazy" class="h-12 w-12 object-contain" />
+                        </div>
+                        <div>
+                            <h3 class="font-display text-xl font-bold leading-tight group-hover:text-stone-600 transition-colors">{job.jobTitle}</h3>
+                            <p class="text-base font-medium text-stone-500 mt-1">{job.companyName}</p>
+                        </div>
+                    </div>
+                    {isNew && <span class="border-2 border-ink bg-accent-lime px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000]">New</span>}
+                </div>
+                <div class="flex flex-wrap gap-3 mt-4 text-xs font-bold uppercase tracking-wider text-stone-500">
+                    <span class="flex items-center gap-1 text-ink">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                        {getLocationLabel(job.location.scope)}
+                    </span>
+                    {job.contractType && (
+                        <span class="flex items-center gap-1 text-ink">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            {job.contractType}
+                        </span>
+                    )}
+                    {salary && <span class="text-emerald-700 bg-emerald-100 px-1 border border-emerald-200">{salary}</span>}
+                </div>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2 relative z-10">
+                {job.tags.map(tag => <span class="border border-ink bg-white px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#e5e5e5] hover:bg-ink hover:text-white transition-colors">{tag}</span>)}
+            </div>
         </div>
-      </div>
-
-      <div class="space-y-4">
-        <!-- Nome da empresa em destaque -->
-        <div class="flex flex-wrap items-center gap-2">
-          <Badge variant="primary" size="sm">
-            {job.companyName}
-          </Badge>
-          <span class="text-xs text-neutral-700 font-bold">•</span>
-          <Link
-            href={withLocale(`/category/${slugify(job.category)}`)}
-            variant="secondary"
-            class="text-sm font-semibold text-neutral-600 hover:text-primary"
-          >
-            {job.category}
-          </Link>
-          {isNew && (
-            <Badge variant="accent" size="sm" class="font-extrabold">
-              {jobMessages.new}
-            </Badge>
-          )}
+        <div class="p-6 pt-0 md:pt-6 md:border-l-2 md:border-ink flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 bg-stone-50 md:bg-transparent">
+            <time class="text-xs font-bold text-stone-400 uppercase tracking-widest">{timeAgo(job.postedDate)}</time>
+            <div class="hidden md:flex w-10 h-10 border-2 border-ink rounded-full items-center justify-center group-hover:bg-ink group-hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </div>
         </div>
-
-        <!-- Título estilo manchete -->
-        <h2 class="font-serif text-2xl font-bold leading-tight text-neutral-950">
-          <Link href={`/jobs/${job.id}-${slugify(job.jobTitle)}`} variant="secondary" class="hover:text-primary">
-            {job.jobTitle}
-          </Link>
-        </h2>
-
-        <!-- Metadados com estilo editorial -->
-        <div class="flex flex-wrap items-center gap-3 text-sm">
-          <span
-            class="inline-flex items-center gap-1 rounded-full bg-neutral-100 border-2 border-neutral-900 px-3 py-1 font-bold text-neutral-950"
-            title={locationNote || undefined}
-          >
-            <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 256 256">
-              <path d="M128,64a40,40,0,1,0,40,40A40,40,0,0,0,128,64Zm0,64a24,24,0,1,1,24-24A24,24,0,0,1,128,128Zm0-112a88.1,88.1,0,0,0-88,88c0,31.4,14.51,64.68,42,96.25a254.19,254.19,0,0,0,41.45,38.3,8,8,0,0,0,9.18,0A254.19,254.19,0,0,0,174,200.25c27.45-31.57,42-64.85,42-96.25A88.1,88.1,0,0,0,128,16Zm0,206c-16.53-13-72-60.75-72-118a72,72,0,0,1,144,0C200,161.23,144.53,209,128,222Z"/>
-            </svg>
-            {locationLabel}
-          </span>
-          {locationNote && (
-            <span class="flex items-center gap-1 text-xs font-semibold text-neutral-600">
-              {locationNote}
-            </span>
-          )}
-          <span class="flex items-center gap-1 font-bold text-neutral-600">
-            <svg class="h-4 w-4 text-primary" fill="currentColor" viewBox="0 0 256 256">
-              <path d="M208,32H184V24a8,8,0,0,0-16,0v8H88V24a8,8,0,0,0-16,0v8H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V48A16,16,0,0,0,208,32ZM72,48v8a8,8,0,0,0,16,0V48h80v8a8,8,0,0,0,16,0V48h24V80H48V48ZM208,208H48V96H208V208Zm-96-88v64a8,8,0,0,1-16,0V132.94l-4.42,2.22a8,8,0,0,1-7.16-14.32l16-8A8,8,0,0,1,112,120Zm59.16,30.45L152,176h16a8,8,0,0,1,0,16H136a8,8,0,0,1-6.4-12.8l28.78-38.37A8,8,0,1,0,145.07,132a8,8,0,1,1-13.85-8A24,24,0,0,1,176,136,23.76,23.76,0,0,1,171.16,150.45Z"/>
-            </svg>
-            {formattedDate}
-          </span>
-        </div>
-
-        <!-- Contract & Salary -->
-        {(contractLabel || salaryLabel) && (
-          <div class="flex flex-wrap items-center gap-3 text-sm">
-            {contractLabel && (
-              <span class="inline-flex items-center gap-1 rounded-md bg-primary-light px-2 py-1 font-semibold text-neutral-950">
-                {contractLabel}
-              </span>
-            )}
-            {salaryLabel && (
-              <span class="flex items-center gap-1 font-bold text-neutral-600">
-                💰 {salaryLabel}
-              </span>
-            )}
-          </div>
-        )}
-
-        <!-- Tags com estilo editorial (limitadas para evitar height excessivo) -->
-        <div class="flex flex-wrap gap-2">
-          {
-            job.tags.slice(0, 5).map((tag) => (
-              <Badge variant="default" size="sm" class="font-bold">
-                {tag}
-              </Badge>
-            ))
-          }
-          {job.tags.length > 5 && (
-            <Badge variant="default" size="sm" class="bg-neutral-200 border-2 border-neutral-400 text-neutral-700 font-bold">
-              +{job.tags.length - 5}
-            </Badge>
-          )}
-        </div>
-      </div>
-    </div>
-
-    <!-- Botão de ação com cor pastel -->
-    <div class="flex shrink-0 items-start md:justify-end">
-      <Button
-        href={withLocale(`/jobs/${job.id}-${slugify(job.jobTitle)}`)}
-        size="md"
-        class="bg-primary text-white shadow-md transition-all hover:bg-primary-hover hover:shadow-md"
-      >
-        {jobMessages.button}
-      </Button>
-    </div>
-  </div>
-</Card>
+    </a>
+</article>

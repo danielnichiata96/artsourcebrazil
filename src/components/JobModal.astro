@@ -1,0 +1,62 @@
+---
+import JobHeader from './JobHeader.astro';
+import type { Job } from '../lib/jobs';
+import Button from './ui/Button.astro';
+
+export interface Props {
+  job: Job;
+  isOpen?: boolean;
+}
+
+const { job, isOpen = false } = Astro.props;
+---
+
+<dialog class="fixed inset-0 z-50 m-0 h-full w-full max-w-none bg-transparent p-0 backdrop:bg-ink/50 backdrop:backdrop-blur-sm" open={isOpen}>
+  <div class="flex h-full w-full items-center justify-center p-4 md:p-8" onclick="event.target === this && this.closest('dialog').close()">
+    <div class="flex max-h-full w-full max-w-4xl flex-col overflow-hidden border-2 border-ink bg-paper shadow-hard-lg">
+      <!-- Modal Header / Toolbar -->
+      <div class="flex items-center justify-between border-b-2 border-ink bg-white px-4 py-3">
+        <span class="font-display text-sm font-bold uppercase tracking-widest text-neutral-500">Detalhes da Vaga</span>
+        <form method="dialog">
+          <button class="flex h-8 w-8 items-center justify-center rounded-none border-2 border-transparent text-ink hover:border-ink hover:bg-neutral-100 focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </form>
+      </div>
+
+      <!-- Scrollable Content -->
+      <div class="flex-1 overflow-y-auto p-0">
+        <JobHeader job={job} class="border-0 border-b-2 shadow-none" />
+        
+        <div class="grid grid-cols-1 gap-8 p-6 md:grid-cols-3 md:p-8">
+            <div class="md:col-span-2 prose prose-neutral max-w-none">
+                <slot name="description" />
+            </div>
+            <div class="md:col-span-1 space-y-6">
+                <slot name="sidebar" />
+            </div>
+        </div>
+      </div>
+      
+      <!-- Sticky Footer -->
+      <div class="border-t-2 border-ink bg-white p-4 md:px-8 flex justify-end gap-4">
+        <form method="dialog">
+            <Button variant="outline">Fechar</Button>
+        </form>
+        <Button href={job.applyLink} target="_blank" rel="noopener noreferrer">Candidatar-se</Button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  dialog::backdrop {
+    background: rgba(26, 25, 24, 0.6);
+    backdrop-filter: blur(4px);
+  }
+  dialog[open] {
+    animation: fade-in 0.2s ease-out;
+  }
+</style>

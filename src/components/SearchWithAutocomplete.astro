@@ -17,7 +17,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
     <input
       type="search"
       id="search-input"
-      class={`w-full rounded-lg border-2 border-neutral-200 px-4 py-3 pl-12 text-base transition-colors focus:border-accent focus:outline-none ${className || ''}`}
+      class={`w-full rounded-lg border-2 border-neutral-200 px-4 py-3 pl-12 text-base transition-colors focus:border-primary focus:outline-none ${className || ''}`}
       placeholder={placeholder}
       autocomplete="off"
       role="combobox"
@@ -61,7 +61,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
     aria-hidden="true"
   >
     <svg
-      class="h-5 w-5 animate-spin text-accent"
+      class="h-5 w-5 animate-spin text-primary"
       fill="none"
       viewBox="0 0 24 24"
     >
@@ -172,7 +172,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
         // Skills are not clickable - different styling
         const isClickable = suggestion.type !== 'skill';
         li.className = isClickable 
-          ? 'cursor-pointer px-4 py-3 transition-all hover:bg-accent-light border-b border-neutral-100 last:border-b-0'
+          ? 'cursor-pointer px-4 py-3 transition-all hover:bg-primary-light border-b border-neutral-100 last:border-b-0'
           : 'cursor-default px-4 py-3 border-b border-neutral-100 last:border-b-0 opacity-75';
 
         const icon = this.getIconForType(suggestion.type);
@@ -284,12 +284,12 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
 
       items.forEach((item, index) => {
         if (index === this.currentFocus) {
-          item.classList.add('bg-accent-light', 'border-accent');
+          item.classList.add('bg-primary-light', 'border-primary');
           item.classList.remove('border-neutral-100');
           item.setAttribute('aria-selected', 'true');
           item.scrollIntoView({ block: 'nearest' });
         } else {
-          item.classList.remove('bg-accent-light', 'border-accent');
+          item.classList.remove('bg-primary-light', 'border-primary');
           item.classList.add('border-neutral-100');
           item.setAttribute('aria-selected', 'false');
         }
@@ -357,7 +357,7 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
     private getBadgeClass(type: string): string {
       switch (type) {
         case 'job':
-          return 'bg-accent border-accent text-neutral-950';
+          return 'bg-primary border-primary text-neutral-950';
         case 'company':
           return 'bg-blue-100 border-blue-600 text-blue-900';
         case 'skill':
@@ -409,17 +409,17 @@ const { placeholder = 'Buscar vagas, empresas ou habilidades...', class: classNa
 
   /* Highlight matches */
   :global(.search-with-autocomplete mark) {
-    background-color: theme('colors.accent.light');
+    background-color: theme('colors.primary.light');
     color: theme('colors.neutral.950');
     font-weight: 700;
     padding: 1px 3px;
     border-radius: 4px;
-    box-shadow: inset 0 -2px 0 theme('colors.accent.DEFAULT');
+    box-shadow: inset 0 -2px 0 theme('colors.primary.DEFAULT');
   }
 
   /* Focus styles */
   [data-search-input]:focus {
-    box-shadow: 0 0 0 3px theme('colors.accent.light');
+    box-shadow: 0 0 0 3px theme('colors.primary.light');
   }
 
   /* Loading spinner animation */

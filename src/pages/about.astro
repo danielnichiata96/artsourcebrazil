@@ -11,14 +11,24 @@ const seo = {
 
 <Layout seo={seo}>
   <main class="container mx-auto max-w-4xl px-container py-section">
-    <div class="prose prose-lg mx-auto max-w-none animate-fade-in-up">
-      <h1 class="font-serif">Sobre o Art Source Brazil</h1>
+    <div class="mx-auto max-w-none text-center mb-16">
+      <div class="inline-flex items-center gap-2 border-2 border-ink bg-white px-3 py-1 mb-6 shadow-hard-sm">
+          <span class="w-2 h-2 rounded-full bg-brazil-purple animate-pulse"></span>
+          <span class="text-xs font-bold uppercase tracking-widest">Nossa Missão</span>
+      </div>
+      <h1 class="font-display text-5xl md:text-6xl font-bold text-ink mb-6">Sobre o Art Source Brazil</h1>
+      <p class="text-xl font-medium leading-relaxed text-neutral-600 max-w-2xl mx-auto">
+        Conectando os melhores talentos criativos do Brasil com as melhores oportunidades globais.
+      </p>
+    </div>
+
+    <div class="prose prose-lg mx-auto max-w-none prose-headings:font-display prose-headings:font-bold prose-headings:text-ink">
       <p class="text-xl leading-relaxed text-neutral-600">
         E aí! O Art Source Brazil nasceu pra resolver um problema simples: artistas incríveis no
         Brasil e vagas reais espalhadas pela internet. A gente junta os dois.
       </p>
 
-      <h2 class="font-serif">O que a gente faz</h2>
+      <h2>O que a gente faz</h2>
       <p>
         O Brasil tá cheio de artistas, designers e devs de games incríveis. Mas achar a vaga certa?
         Complicado. A gente seleciona vagas reais em Game Dev, 3D, Animation e UI/UX. Só oportunidade
@@ -39,13 +49,14 @@ const seo = {
         mais tempo criando.
       </p>
 
-      <div class="not-prose my-12 animate-scale-in rounded-lg bg-gradient-to-br from-accent-light via-accent-lightest to-background-cream p-8 text-center shadow-sm">
-        <h2 class="font-serif text-3xl font-bold text-neutral-900">Bora construir junto</h2>
-        <p class="mt-4 text-lg text-neutral-800">
+      <div class="not-prose my-16 border-2 border-ink bg-white p-8 md:p-12 shadow-hard text-center relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-2 bg-brazil-hero"></div>
+        <h2 class="font-display text-3xl md:text-4xl font-bold text-ink mb-4">Bora construir junto</h2>
+        <p class="text-lg text-neutral-600 max-w-xl mx-auto mb-8">
           Tamo montando uma comunidade pra networking, feedback de portfólio e papo sobre a indústria.
           Quer fazer parte?
         </p>
-        <Button href="#" size="lg" class="mt-6">
+        <Button href="#" size="lg" variant="primary">
           Discord em breve 🎮
         </Button>
       </div>
@@ -56,7 +67,7 @@ const seo = {
         na área e conhece as dores de quem procura vaga e de quem contrata. É um projeto feito com
         carinho pra comunidade.
       </p>
-      <p>Valeu por estar aqui! 🇧🇷</p>
+      <p class="font-bold text-ink">Valeu por estar aqui! 🇧🇷</p>
     </div>
   </main>
 </Layout>

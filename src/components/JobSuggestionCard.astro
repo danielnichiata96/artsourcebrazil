@@ -1,0 +1,92 @@
+---
+import type { Job } from '../lib/jobs';
+import { slugify } from '../lib/jobs';
+import { getLocationLabel } from '../lib/location';
+import { formatSalaryRange } from '../lib/salary';
+
+export interface Props {
+  job: Job;
+}
+
+const { job, ...rest } = Astro.props;
+
+const timeAgo = (dateStr: string) => {
+    const days = Math.floor((new Date().getTime() - new Date(dateStr).getTime()) / 86400000);
+    if (days === 0) return "HOJE";
+    if (days === 1) return "ONTEM";
+    return `${days} DE SET.`; // Simulating the format from screenshot "8 de set."
+};
+
+// Format date like "8 de set."
+const formatDate = (dateStr: string) => {
+    const date = new Date(dateStr);
+    return date.toLocaleDateString('pt-BR', { day: 'numeric', month: 'short' }).replace('.', '');
+};
+
+const salary = formatSalaryRange(job.salary);
+const isNew = (new Date().getTime() - new Date(job.postedDate).getTime()) < (7 * 86400000); // 7 days for new badge
+const companyLogo = job.companyLogo || '/images/company-placeholder.svg';
+const jobHref = `/jobs/${job.id}-${slugify(job.jobTitle)}`;
+const logoAlt = `${job.companyName} logo`;
+---
+
+<article 
+    {...rest}
+    class="job-suggestion-card group relative flex flex-col border-2 border-ink bg-white shadow-hard hover:shadow-none hover:translate-x-[5px] hover:translate-y-[5px] transition-all duration-200 overflow-hidden p-6 md:p-8"
+    data-id={job.id}
+>
+    <a href={jobHref} class="flex-1 flex flex-col gap-6 cursor-pointer focus-visible:outline-none" aria-label={`${job.jobTitle} na ${job.companyName}`}>
+        
+        <!-- Header: Logo + Company Name + Category -->
+        <div class="flex items-start gap-4">
+            <div class="h-16 w-16 border-2 border-ink bg-white rounded-xl flex-shrink-0 flex items-center justify-center p-2">
+                <img src={companyLogo} alt={logoAlt} loading="lazy" class="h-full w-full object-contain" />
+            </div>
+            <div class="flex flex-col items-start">
+                <span class="inline-block px-3 py-1 rounded-full bg-primary border-2 border-ink text-xs font-bold uppercase tracking-wide mb-1">
+                    {job.companyName}
+                </span>
+                <p class="text-sm font-bold text-neutral-500">{job.category}</p>
+            </div>
+        </div>
+
+        <!-- Title -->
+        <h3 class="font-display text-3xl font-bold leading-tight text-ink group-hover:text-neutral-700 transition-colors">
+            {job.jobTitle}
+        </h3>
+
+        <!-- Metadata (Location + Date) -->
+        <div class="flex flex-wrap gap-3 text-sm font-bold text-neutral-600">
+            <span class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 border-2 border-transparent">
+                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                {getLocationLabel(job.location.scope)}
+            </span>
+            <span class="flex items-center gap-2 px-3 py-1.5 rounded-full bg-neutral-100 border-2 border-transparent">
+                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                {formatDate(job.postedDate)}
+            </span>
+        </div>
+
+        <!-- Tags -->
+        <div class="flex flex-wrap gap-2">
+            {job.tags.slice(0, 4).map(tag => (
+                <span class="border-2 border-ink bg-white px-3 py-1 rounded-full text-sm font-bold text-ink hover:bg-neutral-50 transition-colors">
+                    {tag}
+                </span>
+            ))}
+            {job.tags.length > 4 && (
+                <span class="border-2 border-ink bg-white px-3 py-1 rounded-full text-sm font-bold text-ink">
+                    +{job.tags.length - 4}
+                </span>
+            )}
+        </div>
+
+        <!-- Divider -->
+        <div class="h-px w-full bg-neutral-200 my-2"></div>
+
+        <!-- CTA Button -->
+        <div class="w-full bg-primary border-2 border-ink py-3 text-center font-bold text-ink shadow-[2px_2px_0px_0px_#1a1918] group-hover:translate-x-[1px] group-hover:translate-y-[1px] group-hover:shadow-none transition-all">
+            Ver detalhes
+        </div>
+    </a>
+</article>

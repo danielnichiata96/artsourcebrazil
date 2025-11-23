@@ -50,29 +50,10 @@ const withLocale = (href: string) => {
     <meta name="viewport" content="width=device-width" />
     <meta name="generator" content={Astro.generator} />
     
-    <!-- Google Fonts - Crimson Pro for headings -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&display=swap"
-      rel="stylesheet"
-    />
-    
-    <!-- Preload critical self-hosted fonts for performance -->
-    <link
-      rel="preload"
-      href="/fonts/outfit-v15-latin-regular.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
-    <link
-      rel="preload"
-      href="/fonts/outfit-v15-latin-700.woff2"
-      as="font"
-      type="font/woff2"
-      crossorigin
-    />
+    <!-- Fonts: Space Grotesk & Public Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <title>{seo.title}</title>
     <meta name="description" content={seo.description} />
@@ -98,7 +79,64 @@ const withLocale = (href: string) => {
     <meta name="twitter:image" content={ogImage} />
 
     <slot name="head" />
+    <style>
+        /* Base Setup & Texture */
+        body {
+            background-color: #f4f3f0;
+            color: #1a1918;
+            /* Dot pattern background */
+            background-image: radial-gradient(#1a1918 0.5px, transparent 0.5px);
+            background-size: 24px 24px;
+        }
 
+        /* Noise Overlay for "Paper" Feel */
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.06;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+        
+        /* Custom Checkbox */
+        .studio-checkbox {
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #1a1918;
+            background: white;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s;
+        }
+        .studio-checkbox::before {
+            content: "";
+            width: 0.65rem;
+            height: 0.65rem;
+            background: #1a1918;
+            transform: scale(0);
+            transition: 0.2s transform ease-in-out;
+        }
+        .studio-checkbox:checked::before {
+            transform: scale(1);
+        }
+        .studio-checkbox:checked {
+            background: #F7DD00; /* Brazil Yellow accent on check */
+        }
+
+        /* Utilities */
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        /* Staggered Animation Delays */
+        .delay-100 { animation-delay: 100ms; }
+        .delay-200 { animation-delay: 200ms; }
+        .delay-300 { animation-delay: 300ms; }
+    </style>
   <!-- Vercel Web Analytics (no-code, cookie-free). Load only in production to avoid 404s in dev. -->
   {import.meta.env.PROD && <script defer src="/_vercel/insights/script.js"></script>}
 
@@ -117,11 +155,13 @@ const withLocale = (href: string) => {
         name: 'Art Source Brazil',
         url: new URL('/', site).href,
         email: 'artsourcebrazil@gmail.com',
-  logo: new URL('/images/artsource-brazil-logo.svg', site).href,
+        logo: new URL('/images/artsource-brazil-logo.svg', site).href,
       })}
     />
   </head>
-  <body class="flex min-h-screen flex-col bg-neutral-50 font-sans text-neutral-900">
+  <body class="min-h-screen flex flex-col font-sans overflow-x-hidden">
+    <!-- Global Texture -->
+    <div class="noise-overlay"></div>
     <Navbar locale={locale} />
 
     <main class="flex-grow">
@@ -129,8 +169,8 @@ const withLocale = (href: string) => {
 
       <!-- Newsletter Section -->
       <div class="container mx-auto mt-12 px-container">
-        <div class="mx-auto max-w-md rounded-xl bg-background-cream p-6 shadow-sm">
-          <h3 class="text-xl font-semibold text-neutral-900">{messages.newsletter.heading}</h3>
+        <div class="mx-auto max-w-md border-2 border-ink bg-white p-6 shadow-hard">
+          <h3 class="font-display text-xl font-bold text-ink">{messages.newsletter.heading}</h3>
           <p class="mt-2 text-neutral-700">
             {messages.newsletter.description}
           </p>
@@ -138,17 +178,17 @@ const withLocale = (href: string) => {
             action={import.meta.env.PUBLIC_NEWSLETTER_SUBSCRIBE_URL}
             method="post"
             target="_blank"
-            class="mt-4 flex flex-col items-center sm:flex-row sm:justify-center"
+            class="mt-4 flex flex-col items-center sm:flex-row sm:justify-center gap-3"
           >
             <input
               type="email"
               name="email"
               required
               placeholder={messages.newsletter.placeholder}
-              class="w-full rounded-md border-neutral-300 px-4 py-2 shadow-sm transition-colors focus:border-primary focus:ring-primary sm:max-w-xs"
+              class="w-full rounded-none border-2 border-ink bg-white px-4 py-2 shadow-sm transition-colors focus:border-primary focus:ring-0 sm:max-w-xs"
             />
             <input type="hidden" name="tag" value="artsource-brazil-website" />
-            <Button type="submit" class="mt-3 w-full sm:ml-3 sm:mt-0 sm:w-auto">
+            <Button type="submit" class="w-full sm:w-auto rounded-none border-2 border-ink bg-primary text-ink shadow-hard hover:bg-primary-hover hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all">
               {messages.newsletter.button}
             </Button>
           </form>
@@ -169,37 +209,58 @@ const withLocale = (href: string) => {
       </div>
     </main>
 
-    <footer class="mt-12 border-t border-neutral-300 bg-background-pastel py-8 text-center">
-      <div class="container mx-auto px-container">
-        <div class="text-neutral-700">
-          <!-- Footer Links -->
-          <div class="mb-4 flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm">
-            <Link href={withLocale('/about')} variant="muted">{messages.footer.about}</Link>
-            <Link href={withLocale('/contact')} variant="muted">{messages.footer.contact}</Link>
-            <Link href={withLocale('/privacy')} variant="muted">{messages.footer.privacy}</Link>
-            <Link href={withLocale('/terms')} variant="muted">{messages.footer.terms}</Link>
-            <Link href={withLocale('/blog')} variant="muted">{messages.footer.blog}</Link>
+    <footer class="mt-16 border-t-2 border-ink bg-paper py-12">
+      <div class="mx-auto flex max-w-7xl flex-col gap-10 px-4 sm:px-6 lg:px-8 text-ink">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+          <div class="max-w-2xl space-y-2">
+            <p class="font-display text-3xl uppercase tracking-tight">{messages.footer.ctaTitle}</p>
+            <p class="text-sm sm:text-base text-neutral-600">{messages.footer.ctaSubtitle}</p>
           </div>
+          <Button
+            href={withLocale('/post-a-job')}
+            class="rounded-none border-ink bg-primary text-ink shadow-hard hover:bg-brazil-blue hover:text-white"
+          >
+            {messages.nav.cta}
+          </Button>
+        </div>
 
-          <!-- Email -->
-          <div class="mb-4 text-center text-sm">
-            <Link href="mailto:artsourcebrazil@gmail.com" variant="muted">
+        <div class="grid gap-8 md:grid-cols-3">
+          <div class="space-y-3">
+            <p class="text-xs font-bold uppercase tracking-[0.4em] text-neutral-500">Art Source Brazil</p>
+            <p class="text-sm text-neutral-600">{messages.nav.tagline}</p>
+            <Link
+              href="mailto:artsourcebrazil@gmail.com"
+              variant="muted"
+              class="inline-flex items-center gap-2 font-semibold text-ink hover:text-brazil-blue"
+            >
               artsourcebrazil@gmail.com
             </Link>
           </div>
 
-          <!-- Feeds -->
-          <div class="mb-4 flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
-            <span class="text-neutral-700 font-semibold">{messages.footer.feedsLabel}</span>
-            <Link href={withLocale('/jobs.xml')} variant="muted">{messages.footer.jobsRss}</Link>
-            <Link href={withLocale('/jobs.json')} variant="muted">{messages.footer.jobsJson}</Link>
-            <Link href={withLocale('/blog.xml')} variant="muted">{messages.footer.blogRss}</Link>
+          <div class="space-y-3">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500">{messages.footer.navigationLabel}</p>
+            <div class="flex flex-col gap-2 text-sm font-semibold">
+              <Link href={withLocale('/about')} variant="muted">{messages.footer.about}</Link>
+              <Link href={withLocale('/contact')} variant="muted">{messages.footer.contact}</Link>
+              <Link href={withLocale('/privacy')} variant="muted">{messages.footer.privacy}</Link>
+              <Link href={withLocale('/terms')} variant="muted">{messages.footer.terms}</Link>
+              <Link href={withLocale('/blog')} variant="muted">{messages.footer.blog}</Link>
+            </div>
           </div>
 
-          <!-- Copyright -->
-          <p class="text-center text-sm">
-            &copy; {new Date().getFullYear()} Art Source Brazil. {messages.footer.copyright}
-          </p>
+          <div class="space-y-3">
+            <p class="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500">{messages.footer.feedsLabel}</p>
+            <div class="flex flex-col gap-2 text-sm font-semibold">
+              <Link href={withLocale('/jobs.xml')} variant="muted">{messages.footer.jobsRss}</Link>
+              <Link href={withLocale('/jobs.json')} variant="muted">{messages.footer.jobsJson}</Link>
+              <Link href={withLocale('/blog.xml')} variant="muted">{messages.footer.blogRss}</Link>
+            </div>
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-2 border-t-2 border-dashed border-ink pt-4 text-sm text-neutral-600 sm:flex-row sm:items-center sm:justify-between">
+          <p>&copy; {new Date().getFullYear()} Art Source Brazil. {messages.footer.copyright}</p>
+          <span class="text-xs uppercase tracking-[0.4em] text-neutral-500">{messages.footer.signature}</span>
         </div>
       </div>
     </footer>

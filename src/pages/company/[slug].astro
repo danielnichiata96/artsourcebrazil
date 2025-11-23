@@ -7,6 +7,7 @@ import Button from '../../components/ui/Button.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
 import Card from '../../components/ui/Card.astro';
 import Link from '../../components/ui/Link.astro';
+import CompanyHeader from '../../components/CompanyHeader.astro';
 import { Image } from 'astro:assets';
 import { slugify, sortJobsByDateDesc } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
@@ -126,64 +127,15 @@ const breadcrumbs = {
 
     <!-- Company Header -->
     <header class="mb-12">
-      <Card padding="lg">
-        <div class="flex flex-col items-center gap-6 sm:flex-row sm:items-start">
-          <!-- Company Logo -->
-          <div class="flex-shrink-0">
-            <Image
-              src={company.logo}
-              alt={`${company.name} logo`}
-              width={128}
-              height={128}
-              loading="lazy"
-              class="rounded-xl border border-neutral-200 object-cover shadow-md"
-            />
-          </div>
-
-          <!-- Company Info -->
-          <div class="flex-grow text-center sm:text-left">
-            <h1 class="mb-3 text-4xl font-extrabold text-neutral-900">{company.name}</h1>
-            <p class="mb-4 text-lg text-neutral-600">
-              {company.jobs.length} open position{company.jobs.length > 1 ? 's' : ''} for creative
-              professionals in Brazil
-            </p>
-
-            <!-- Categories -->
-            <div class="mb-4">
-              <p class="mb-2 text-sm font-semibold text-neutral-700">Hiring for:</p>
-              <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
-                {
-                  categories.map((category) => (
-                    <Link
-                      href={`/category/${slugify(category)}`}
-                      class="inline-block rounded-full bg-accent-light px-4 py-2 text-sm font-medium text-neutral-900 transition-colors hover:bg-accent"
-                    >
-                      {category}
-                    </Link>
-                  ))
-                }
-              </div>
-            </div>
-
-            <!-- Tags -->
-            {
-              uniqueTags.length > 0 && (
-                <div>
-                  <p class="mb-2 text-sm font-semibold text-neutral-700">Required skills:</p>
-                  <div class="flex flex-wrap justify-center gap-2 sm:justify-start">
-                    {uniqueTags.slice(0, 8).map((tag) => (
-                      <Badge variant="neutral">{tag}</Badge>
-                    ))}
-                    {uniqueTags.length > 8 && (
-                      <Badge variant="neutral">+{uniqueTags.length - 8} more</Badge>
-                    )}
-                  </div>
-                </div>
-              )
-            }
-          </div>
-        </div>
-      </Card>
+      <CompanyHeader 
+        company={{
+          name: company.name,
+          logo: company.logo,
+          location: "Brasil", // Defaulting to Brasil as per context, or could be derived if available
+          website: company.website || undefined
+        }}
+        jobCount={company.jobs.length}
+      />
     </header>
 
     <!-- Jobs List -->
