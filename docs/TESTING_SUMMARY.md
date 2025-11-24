@@ -56,20 +56,19 @@
 
 ---
 
-### E2E Tests (9 tests)
+### E2E Tests (8 tests)
 
 #### **admin-dashboard.spec.ts** - *(NEW)*
 Tests the complete admin flow for job approval/rejection.
 
 ##### Authentication Tests (3 tests)
 - ✅ Login form display when unauthenticated
-- ✅ Successful login with correct password
 - ✅ Login rejection with incorrect password
+- ⚠️ Successful login with correct password (investigating dashboard navigation)
 
-##### Dashboard UI Tests (3 tests)
-- ✅ Empty state display when no drafts
-- ✅ Logout button visibility
-- ✅ Draft count display
+##### Dashboard UI Tests (2 tests)  
+- ⚠️ Dashboard display after login (investigating SSR rendering)
+- ⚠️ Logout button visibility after login (investigating element selectors)
 
 ##### Draft Cards Tests (1 test)
 - ⏭️ Draft information display (skipped - requires DB data)
@@ -78,6 +77,13 @@ Tests the complete admin flow for job approval/rejection.
 - ⏭️ Approval confirmation dialog (skipped - requires DB data)
 - ⏭️ Rejection prompt dialog (skipped - requires DB data)
 
+> **Status:** 2/5 active tests passing, 3 tests skipped (require DB data)
+> 
+> **Known Issues:**
+> - Dashboard UI not rendering correctly after login (cookie/SSR issue)
+> - Investigating Astro SSR cookie handling in test environment
+> - Some selectors may be affected by dev toolbar elements
+>
 > **Note:** Some E2E tests are skipped by default as they require real draft data in Supabase. Enable them manually when testing with production-like data.
 
 ---
@@ -147,9 +153,18 @@ npm run test:unit tests/lib/email.test.ts
 
 ## 🚨 Known Limitations
 
-1. **Database-dependent tests**: Some E2E tests require a populated Supabase database and are skipped by default.
-2. **Environment variables**: Some tests check for environment variables that may not exist in test mode.
-3. **External API mocking**: Email and Stripe tests don't call real APIs (by design).
+1. **E2E Admin Dashboard Tests**: 3/5 tests failing due to SSR/cookie authentication issues in test environment
+   - Login form tests pass ✅
+   - Dashboard rendering after login needs investigation ⚠️
+   - Consider using Playwright storage state for authentication
+
+2. **Database-dependent tests**: Some E2E tests require a populated Supabase database and are skipped by default.
+
+3. **Environment variables**: Some tests check for environment variables that may not exist in test mode.
+
+4. **External API mocking**: Email and Stripe tests don't call real APIs (by design).
+
+5. **Playwright Configuration**: Tests run sequentially with single worker to avoid race conditions and server conflicts.
 
 ---
 
