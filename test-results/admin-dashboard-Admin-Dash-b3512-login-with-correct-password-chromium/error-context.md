@@ -1,0 +1,133 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - navigation "Main navigation" [ref=e3]:
+      - link "Br Art Source BRAZIL EDITION" [ref=e4] [cursor=pointer]:
+        - /url: /
+        - generic [ref=e6]: Br
+        - generic [ref=e7]:
+          - generic [ref=e8]: Art Source
+          - generic [ref=e9]: BRAZIL EDITION
+      - generic [ref=e10]:
+        - generic [ref=e11]:
+          - link "Vagas" [ref=e12] [cursor=pointer]:
+            - /url: /vagas
+          - link "Blog" [ref=e13] [cursor=pointer]:
+            - /url: /blog
+          - link "Preços" [ref=e14] [cursor=pointer]:
+            - /url: /post-a-job
+        - link "Anunciar Vaga" [ref=e15] [cursor=pointer]:
+          - /url: /post-a-job
+        - link "Ver site em inglês" [ref=e16] [cursor=pointer]:
+          - /url: /en/admin/drafts
+          - text: EN
+  - main [ref=e17]:
+    - main [ref=e18]:
+      - generic [ref=e20]:
+        - heading "Admin Login" [level=1] [ref=e21]
+        - generic [ref=e22]:
+          - strong [ref=e23]: "Erro:"
+          - text: Senha incorreta
+        - generic [ref=e24]:
+          - generic [ref=e25]:
+            - generic [ref=e26]: Password
+            - textbox "Password" [active] [ref=e27]
+          - button "Login" [ref=e28] [cursor=pointer]
+    - generic [ref=e34]:
+      - generic [ref=e36]: Newsletter Semanal
+      - heading "Não perca a vaga dos sonhos" [level=2] [ref=e37]
+      - paragraph [ref=e38]: Receba a curadoria semanal de vagas em Game Dev, 3D, VFX e Animation direto no seu e-mail. Toda segunda-feira, antes de todo mundo.
+      - generic [ref=e39]:
+        - paragraph [ref=e40]:
+          - generic [ref=e41]: ✓
+          - generic [ref=e42]: Vagas exclusivas antes de serem públicas
+        - paragraph [ref=e43]:
+          - generic [ref=e44]: ✓
+          - generic [ref=e45]: Curadoria humana (sem spam)
+        - paragraph [ref=e46]:
+          - generic [ref=e47]: ✓
+          - generic [ref=e48]: Dicas de carreira e portfólio
+      - generic [ref=e49]:
+        - textbox "seu-email@exemplo.com" [ref=e50]
+        - button "Quero receber" [ref=e51] [cursor=pointer]
+      - paragraph [ref=e52]: Respeitamos sua privacidade. Sem spam.
+  - contentinfo [ref=e53]:
+    - generic [ref=e54]:
+      - generic [ref=e55]:
+        - generic [ref=e56]:
+          - paragraph [ref=e57]: Quer contratar talento brasileiro?
+          - paragraph [ref=e58]: Poste sua vaga e alcance nossa comunidade curada de artistas, devs e storytellers.
+        - link "Anunciar Vaga" [ref=e59] [cursor=pointer]:
+          - /url: /post-a-job
+      - generic [ref=e60]:
+        - generic [ref=e61]:
+          - paragraph [ref=e62]: Explorar Vagas
+          - generic [ref=e63]:
+            - link "Vagas de Game Dev" [ref=e64] [cursor=pointer]:
+              - /url: /category/game-dev
+            - link "Vagas de 3D Art" [ref=e65] [cursor=pointer]:
+              - /url: /category/3d
+            - link "Vagas de 2D Art" [ref=e66] [cursor=pointer]:
+              - /url: /category/2d-art
+            - link "Vagas de Animation" [ref=e67] [cursor=pointer]:
+              - /url: /category/animation
+            - link "Vagas de VFX" [ref=e68] [cursor=pointer]:
+              - /url: /category/vfx
+            - link "Vagas de Design" [ref=e69] [cursor=pointer]:
+              - /url: /category/design
+            - link "Ver todas as categorias →" [ref=e70] [cursor=pointer]:
+              - /url: /
+        - generic [ref=e71]:
+          - paragraph [ref=e72]: Comunidade & Recursos
+          - generic [ref=e73]:
+            - link "Diretório de Empresas" [ref=e74] [cursor=pointer]:
+              - /url: /companies
+            - link "Blog & Notícias" [ref=e75] [cursor=pointer]:
+              - /url: /blog
+            - link "Newsletter" [ref=e76] [cursor=pointer]:
+              - /url: "#newsletter"
+        - generic [ref=e77]:
+          - paragraph [ref=e78]: Sobre o Art Source
+          - generic [ref=e79]:
+            - link "Sobre Nós" [ref=e80] [cursor=pointer]:
+              - /url: /about
+            - link "Contato" [ref=e81] [cursor=pointer]:
+              - /url: /contact
+            - link "Termos de Uso" [ref=e82] [cursor=pointer]:
+              - /url: /terms
+            - link "Política de Privacidade" [ref=e83] [cursor=pointer]:
+              - /url: /privacy
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: Social
+          - generic [ref=e86]:
+            - link "LinkedIn" [ref=e87] [cursor=pointer]:
+              - /url: https://linkedin.com/company/artsourcebrazil
+            - link "Instagram" [ref=e88] [cursor=pointer]:
+              - /url: https://instagram.com/artsourcebrazil
+            - link "Twitter" [ref=e89] [cursor=pointer]:
+              - /url: https://twitter.com/artsourcebr
+          - generic [ref=e90]:
+            - paragraph [ref=e91]: Email
+            - link "artsourcebrazil@gmail.com" [ref=e92] [cursor=pointer]:
+              - /url: mailto:artsourcebrazil@gmail.com
+      - generic [ref=e93]:
+        - paragraph [ref=e94]: © 2025 Art Source Brazil. Todos os direitos reservados.
+        - generic [ref=e95]: Feito no Brasil
+  - generic [ref=e98]:
+    - button "Menu" [ref=e99]:
+      - img [ref=e101]
+      - generic: Menu
+    - button "Inspect" [ref=e105]:
+      - img [ref=e107]
+      - generic: Inspect
+    - button "Audit" [ref=e109]:
+      - generic [ref=e110]:
+        - img [ref=e111]
+        - img [ref=e114]
+      - generic: Audit
+    - button "Settings" [ref=e117]:
+      - img [ref=e119]
+      - generic: Settings
+```

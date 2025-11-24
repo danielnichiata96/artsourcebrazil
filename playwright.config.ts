@@ -9,14 +9,17 @@ process.env.ASTRO_DEV_TOOLBAR_ENABLED = 'false';
  */
 export default defineConfig({
   testDir: './tests/e2e',
-  fullyParallel: true,
+  fullyParallel: false, // Run tests sequentially to avoid issues
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
-  reporter: 'html',
+  workers: 1, // Single worker to avoid race conditions
+  reporter: 'list', // More concise output
+  timeout: 30000, // 30s timeout per test
   use: {
     baseURL: 'http://localhost:4321',
     trace: 'on-first-retry',
+    actionTimeout: 10000, // 10s timeout for actions
+    navigationTimeout: 15000, // 15s timeout for navigation
   },
   projects: [
     {
@@ -27,9 +30,9 @@ export default defineConfig({
   webServer: {
     command: 'npm run dev',
     url: 'http://localhost:4321',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true, // Always reuse existing server
     timeout: 120_000,
-    stdout: 'pipe',
+    stdout: 'ignore',
     stderr: 'pipe',
   },
 });

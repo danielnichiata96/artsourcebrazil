@@ -169,7 +169,7 @@ npm run test:unit tests/lib/email.test.ts
 - [ ] Visual regression tests with Playwright
 - [ ] Accessibility audit automation
 - [ ] Load testing for API routes
-
+    
 ---
 
 ## 📝 Test Conventions
