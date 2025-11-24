@@ -101,10 +101,11 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 3.  **Identificação de Empresas:** Listar empresas relevantes que usam Greenhouse, Ashby ou Lever e que publicam vagas remotas para o mercado brasileiro.
 4.  **Desenvolvimento do Orquestrador:** Implementar o script inicial para buscar e processar os dados de múltiplas fontes (ATS públicos) no Supabase.
 5.  **Implementação dos Adaptadores:**
-    - ✅ Criar adaptador para Greenhouse Board API (já feito, migrar para Supabase)
-    - Criar adaptador para Lever API
-    - Criar adaptador para Ashby (estrutura variável)
-    - Criar adaptador/scraper para Wildlife Studios (complementar)
+    - ✅ Criar adaptador para Greenhouse Board API (Concluído - Wildlife Studios, Automattic, GitLab)
+    - ✅ Criar adaptador para Lever API (Concluído - Fanatee)
+    - ✅ Criar adaptador para Ashby GraphQL (Concluído - Deel, Ashby)
+    - ⏳ Testar adaptadores com empresas reais
+    - ⏳ Criar adaptador/scraper para Wildlife Studios (complementar)
 6.  **Normalização e Deduplicação:** Implementar lógica usando upsert do Supabase para normalizar dados de diferentes fontes e evitar duplicatas.
 7.  **Testes:** Garantir que os dados são coletados, normalizados e salvos corretamente no Supabase e gerados no formato esperado (`src/data/jobs.json`).
 8.  **Validação de Links Diretos:** Confirmar que todos os links de aplicação são diretos (sem intermediários).
@@ -114,4 +115,43 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 ## 6. Documentação Adicional
 
 - **`docs/SUPABASE_MIGRATION.md`** - Plano completo de migração do Airtable para Supabase
+- **`docs/FETCHERS_GUIDE.md`** - Guia completo dos fetchers de vagas (Greenhouse, Lever, Ashby)
 - **`archive/AIRTABLE_SCHEMA_OPTIMIZED.md`** - Schema anterior (Airtable) - arquivado como referência histórica
+
+## 7. Status Atual da Implementação
+
+### ✅ Concluído:
+- [x] Fetcher Greenhouse (Wildlife Studios, Automattic, GitLab, Monks, AE.Studio)
+- [x] Fetcher Lever (Fanatee)
+- [x] Fetcher Ashby (Deel, Ashby)
+- [x] Sistema de categorização inteligente (VFX, 3D, 2D Art, Animation, Design, Game Dev)
+- [x] Detecção de location scope (remote-brazil, remote-latam, remote-worldwide, hybrid, onsite)
+- [x] Extração inteligente de tags (AI + fallback)
+- [x] Filtros de vagas relevantes
+- [x] Documentação completa dos fetchers
+
+### ⏳ Em Andamento:
+- [ ] Testar Lever com Fanatee (aguardando execução)
+- [ ] Testar Ashby com Deel (aguardando execução)
+- [ ] Validar outputs e ajustar mapeamentos se necessário
+
+### 📋 Próximas Ações:
+1. **Testar os fetchers criados:**
+   ```bash
+   node scripts/fetch-lever-jobs.mjs
+   node scripts/fetch-ashby-jobs.mjs
+   ```
+
+2. **Revisar outputs:**
+   - `scripts/lever-jobs-output.json`
+   - `scripts/ashby-jobs-output.json`
+
+3. **Ajustar mapeamentos** se necessário (categorias, location scopes)
+
+4. **Adicionar mais empresas** usando os mesmos fetchers
+
+5. **Criar orquestrador** para executar todos os fetchers
+
+6. **Integrar com Supabase** para salvar vagas no banco
+
+7. **Automatizar** com GitHub Actions (daily sync)
