@@ -21,7 +21,8 @@
       "Git"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -41,7 +42,8 @@
       "Mobile"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -62,7 +64,8 @@
       "CI/CD"
     ],
     "location": {
-      "scope": "remote-worldwide"
+      "scope": "remote-worldwide",
+      "text": "Remote"
     },
     "contractType": null,
     "salary": null
@@ -84,7 +87,8 @@
       "Game Dev"
     ],
     "location": {
-      "scope": "onsite"
+      "scope": "onsite",
+      "text": "São Paulo, São Paulo, Brasil"
     },
     "contractType": null,
     "salary": null
@@ -108,7 +112,8 @@
       "Mobile"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -125,16 +130,16 @@
     "category": "2D Art",
     "tags": [
       "2D",
-      "Animation",
-      "Design",
       "Artist",
       "AI",
       "Mobile",
       "Game Dev",
+      "Design",
       "Senior"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -157,7 +162,8 @@
       "Senior"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -177,7 +183,8 @@
       "Senior"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -205,7 +212,8 @@
       "Kubernetes"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -233,7 +241,8 @@
       "Kubernetes"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": null,
     "salary": null
@@ -255,11 +264,13 @@
       "Senior",
       "2D",
       "Animation",
+      "Design",
       "Artist",
       "Game Dev"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo - SP"
     },
     "contractType": null,
     "salary": null
@@ -283,7 +294,8 @@
       "Senior"
     ],
     "location": {
-      "scope": "remote-worldwide"
+      "scope": "remote-worldwide",
+      "text": "Remote"
     },
     "contractType": null,
     "salary": null
@@ -303,7 +315,8 @@
       "Game Dev"
     ],
     "location": {
-      "scope": "hybrid"
+      "scope": "hybrid",
+      "text": "São Paulo"
     },
     "contractType": "Internship",
     "salary": null

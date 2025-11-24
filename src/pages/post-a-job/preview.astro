@@ -145,10 +145,87 @@ const seo = {
       window.location.href = '/post-a-job';
     }
 
-    // Publish button
-    document.getElementById('publish-btn')?.addEventListener('click', () => {
-      // TODO: Create draft in Supabase, redirect to Stripe
-      alert('Integração com Stripe em desenvolvimento!\n\nEm breve você poderá:\n1. Salvar rascunho no Supabase\n2. Redirecionar para pagamento Stripe\n3. Receber confirmação por email');
+    // Publish button - Create Stripe Checkout Session
+    document.getElementById('publish-btn')?.addEventListener('click', async () => {
+      // Get draft data from localStorage
+      const saved = localStorage.getItem('job_draft');
+      if (!saved) {
+        alert('Erro: Rascunho não encontrado. Por favor, volte e preencha o formulário novamente.');
+        window.location.href = '/post-a-job';
+        return;
+      }
+
+      const draftId = localStorage.getItem('job_draft_id');
+      const draftData = JSON.parse(saved);
+
+      try {
+        // Show loading state
+        const btn = document.getElementById('publish-btn');
+        if (btn) {
+          btn.textContent = 'Processando...';
+          btn.setAttribute('disabled', 'true');
+        }
+
+        // Always send draft_data to API - it will create/update the draft if needed
+        // If draft_id exists, API will use it; otherwise it will create a new draft
+        const requestBody = draftId 
+          ? { draft_id: draftId }
+          : { draft_data: draftData };
+
+        console.log('Sending request to API:', { 
+          hasDraftId: !!draftId, 
+          requestBodyKeys: Object.keys(requestBody),
+          draftDataKeys: draftData ? Object.keys(draftData) : null
+        });
+
+        // Validate request body before sending
+        if (!requestBody.draft_id && (!requestBody.draft_data || !requestBody.draft_data.email || !requestBody.draft_data.company_name)) {
+          throw new Error('Invalid draft data: missing email or company_name');
+        }
+
+        // Call API to create Checkout Session
+        const response = await fetch('/api/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        // Parse response with error handling
+        let data;
+        try {
+          const responseText = await response.text();
+          if (!responseText || responseText.trim() === '') {
+            throw new Error('Empty response from server');
+          }
+          data = JSON.parse(responseText);
+        } catch (parseError) {
+          console.error('Failed to parse API response:', parseError);
+          throw new Error('Invalid response from server');
+        }
+
+        if (!response.ok) {
+          throw new Error(data.error || `Server error: ${response.status}`);
+        }
+
+        // Redirect to Stripe Checkout
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          throw new Error('No checkout URL returned');
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Erro ao processar pagamento. Por favor, tente novamente.');
+        
+        // Reset button
+        const btn = document.getElementById('publish-btn');
+        if (btn) {
+          btn.textContent = 'Publicar ($99)';
+          btn.removeAttribute('disabled');
+        }
+      }
     });
   });
 

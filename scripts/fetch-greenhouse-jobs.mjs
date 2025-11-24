@@ -397,7 +397,8 @@ async function normalizeJob(greenhouseJob) {
     category,
     tags: tags.length > 0 ? tags : [category], // Fallback to category if no tags
     location: {
-      scope: locationScope, // This will be converted to string in orquestrador
+      scope: locationScope,
+      text: details.location?.name || greenhouseJob.location?.name || 'Remote',
     },
     contractType, // Now detects Estágio for internships
     salary: null,

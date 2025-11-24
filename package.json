@@ -14,6 +14,8 @@
     "validate:jobs": "node scripts/validate-jobs.mjs",
     "validate:json-ld": "node scripts/validate-json-ld.mjs",
     "fetch:greenhouse": "node scripts/fetch-greenhouse-jobs.mjs",
+    "fetch:lever": "node scripts/fetch-lever-jobs.mjs",
+    "fetch:ashby": "node scripts/fetch-ashby-jobs.mjs",
     "sync:greenhouse": "node scripts/sync-greenhouse-to-supabase.mjs",
     "sync:greenhouse:supabase": "node scripts/sync-greenhouse-to-supabase.mjs",
     "sync:greenhouse:supabase:full": "npm run fetch:greenhouse && npm run sync:greenhouse:supabase",
@@ -28,7 +30,9 @@
     "test:all": "npm run test:unit && npm run test:e2e",
     "lint": "eslint . --ext .js,.ts,.astro",
     "lint:fix": "eslint . --ext .js,.ts,.astro --fix",
-    "check:improvements": "node scripts/check-improvements.mjs"
+    "check:improvements": "node scripts/check-improvements.mjs",
+    "stripe:webhook": "./scripts/stripe-webhook-dev.sh",
+    "stripe:webhook:custom": "./scripts/stripe-webhook-dev.sh"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.6.0",
@@ -39,15 +43,18 @@
     "dompurify": "^3.3.0",
     "dotenv": "^16.4.5",
     "markdown-it": "^14.1.0",
+    "resend": "^6.5.2",
     "sanitize-html": "^2.13.0",
     "satori": "^0.18.3",
     "satori-html": "^0.3.2",
     "sharp": "^0.34.4",
+    "stripe": "^20.0.0",
     "tailwindcss": "^3.4.7"
   },
   "devDependencies": {
     "@astrojs/vercel": "^7.8.2",
     "@axe-core/playwright": "^4.11.0",
+    "@phosphor-icons/web": "^2.1.2",
     "@playwright/test": "^1.56.1",
     "@types/dompurify": "^3.0.5",
     "@types/node": "^24.10.0",

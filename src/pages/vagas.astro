@@ -1,0 +1,299 @@
+---
+import Layout from '../layouts/Layout.astro';
+import JobCard from '../components/JobCard.astro';
+import { getJobs } from '../lib/getJobs';
+import type { Job } from '../lib/jobs';
+import { sortJobsByDateDesc } from '../lib/jobs';
+import { getMessages } from '../lib/i18n';
+
+// Fetch jobs from Supabase at build time
+const jobs: Job[] = await getJobs();
+const sortedJobs = sortJobsByDateDesc(jobs);
+
+// Get Portuguese messages
+const messages = getMessages('pt-BR');
+const { filters, results } = messages;
+
+const seo = {
+  title: 'Vagas Remotas em Game Dev, 3D e VFX — Art Source Brazil',
+  description: 'Encontre vagas remotas em Game Dev, 3D Art, Animation, VFX e Design. Filtre por categoria, localização e skills. Trabalhe para estúdios internacionais do Brasil.',
+};
+---
+
+<Layout seo={seo}>
+    <main class="flex-1 relative">
+        <!-- Page Header -->
+        <section class="border-b-2 border-ink bg-paper py-12">
+            <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h1 class="font-display text-4xl sm:text-5xl font-bold uppercase tracking-tight">
+                            Vagas Abertas
+                        </h1>
+                        <p class="mt-2 text-lg text-neutral-600">
+                            {sortedJobs.length} oportunidades remotas em Game Dev, 3D, VFX e Animation
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Content Area -->
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-12 relative">
+            <div class="flex flex-col lg:flex-row gap-8">
+                
+                <!-- Desktop Sidebar -->
+                <aside id="filters-sidebar" class="hidden lg:block w-80 flex-shrink-0">
+                    <div class="sticky top-28 space-y-6">
+                        <!-- Search -->
+                        <div class="border-2 border-ink bg-white p-4 shadow-hard">
+                            <label for="search-input" class="block text-xs font-bold uppercase tracking-[0.3em] text-neutral-500 mb-3">
+                                {filters.searchLabel}
+                            </label>
+                            <div class="flex shadow-hard-sm bg-white border-2 border-ink">
+                                <input
+                                    type="text"
+                                    id="search-input"
+                                    class="w-full bg-transparent border-none py-2 px-3 text-sm font-medium placeholder:text-neutral-400 focus:ring-0"
+                                    placeholder={filters.searchPlaceholder}
+                                    aria-label={filters.searchLabel}
+                                />
+                                <button class="bg-brazil-yellow text-ink px-3 border-l-2 border-ink hover:bg-brazil-blue hover:text-white transition-colors">
+                                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Categories -->
+                        <div class="border-2 border-ink bg-white p-4 shadow-hard">
+                            <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500 mb-3">
+                                {filters.area}
+                            </h3>
+                            <div class="space-y-2" id="category-filters">
+                                <label class="flex items-center gap-2 cursor-pointer group">
+                                    <input type="radio" name="category-filter" value="all" checked class="studio-checkbox" />
+                                    <span class="font-semibold text-sm uppercase">{filters.allAreas}</span>
+                                </label>
+                                <!-- JS Injected -->
+                            </div>
+                        </div>
+
+                        <!-- Location -->
+                        <div class="border-2 border-ink bg-white p-4 shadow-hard">
+                            <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500 mb-3">
+                                {filters.location}
+                            </h3>
+                            <div class="space-y-2" id="location-filters">
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="location-filter" value="all" checked class="studio-checkbox" />
+                                    <span class="font-semibold text-sm">{filters.locationAll}</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="location-filter" value="remote-brazil" class="studio-checkbox" />
+                                    <span class="font-semibold text-sm">{filters.locationRemoteBrazil}</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="location-filter" value="remote-worldwide" class="studio-checkbox" />
+                                    <span class="font-semibold text-sm">{filters.locationRemoteWorldwide}</span>
+                                </label>
+                                <label class="flex items-center gap-2 cursor-pointer">
+                                    <input type="radio" name="location-filter" value="hybrid" class="studio-checkbox" />
+                                    <span class="font-semibold text-sm">{filters.locationHybrid}</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="border-2 border-ink bg-white p-4 shadow-hard">
+                            <h3 class="text-xs font-bold uppercase tracking-[0.3em] text-neutral-500 mb-3">
+                                {filters.tags}
+                            </h3>
+                            <div class="flex flex-wrap gap-2" id="tag-filters">
+                                <!-- JS Injected -->
+                            </div>
+                        </div>
+
+                        <!-- CTA Box -->
+                        <div class="bg-ink text-paper p-6 border-2 border-ink shadow-hard text-center">
+                            <p class="font-display font-bold text-xl mb-2">{filters.hiringTitle}</p>
+                            <p class="text-sm text-neutral-400 mb-4">{filters.hiringSubtitle}</p>
+                            <a href="/post-a-job" class="block w-full bg-paper text-ink font-bold uppercase py-2 hover:bg-brazil-yellow transition-colors">
+                                {filters.postNow}
+                            </a>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Feed -->
+                <div class="flex-1">
+                    <!-- Feed Header -->
+                    <div class="mb-6 flex items-center justify-between border-b-2 border-neutral-300 pb-4 sticky top-20 bg-paper/95 backdrop-blur z-20 pt-4 lg:pt-0">
+                        <div class="flex items-center gap-3">
+                            <span class="font-display text-2xl font-bold uppercase">Resultados</span>
+                            <span class="bg-brazil-yellow border-2 border-ink text-ink text-sm font-bold px-3 py-1 shadow-hard-sm" id="job-count">0</span>
+                        </div>
+                        
+                        <!-- Mobile Filter Trigger -->
+                        <button id="mobile-filter-btn" class="lg:hidden flex items-center gap-2 font-bold uppercase tracking-wide text-sm border-2 border-ink px-4 py-2 bg-white hover:bg-ink hover:text-white transition-colors shadow-hard-sm">
+                            <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" /></svg>
+                            {filters.toggle}
+                        </button>
+                    </div>
+
+                    <!-- Job Grid -->
+                    <div id="job-list" class="grid gap-6">
+                        {sortedJobs.map(job => (
+                            <JobCard {job} />
+                        ))}
+                    </div>
+                    
+                    <!-- Empty State -->
+                    <div id="empty-state" class="hidden py-24 text-center border-2 border-dashed border-ink bg-white/50">
+                        <div class="font-display text-6xl mb-4 grayscale">💀</div>
+                        <h3 class="font-display text-2xl font-bold mb-2">Nenhuma vaga encontrada</h3>
+                        <p class="text-neutral-600 mb-6">{results.emptyList}</p>
+                        <button id="clear-filters" class="border-2 border-ink bg-brazil-yellow px-6 py-2 font-bold uppercase shadow-hard hover:translate-x-[2px] hover:translate-y-[2px] hover:shadow-none transition-all">
+                            Limpar filtros
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</Layout>
+
+<script define:vars={{ jobsData: sortedJobs, messages }}>
+// Reuse filtering logic from index.astro
+const timeAgo = (dateStr) => {
+    const days = Math.floor((new Date() - new Date(dateStr)) / (86400000));
+    if (days === 0) return messages.hero.timeAgo.today;
+    if (days === 1) return messages.hero.timeAgo.yesterday;
+    return messages.hero.timeAgo.daysAgo.replace('{days}', days);
+};
+
+function renderCategories() {
+    const categories = [...new Set(jobsData.map(j => j.category))].sort();
+    const container = document.getElementById('category-filters');
+    if(!container) return;
+    
+    categories.forEach(cat => {
+        const label = document.createElement('label');
+        label.className = "flex items-center gap-2 cursor-pointer group";
+        label.innerHTML = `
+            <input type="radio" name="category-filter" value="${cat}" class="studio-checkbox" />
+            <span class="font-semibold text-sm uppercase">${cat}</span>
+        `;
+        container.appendChild(label);
+    });
+}
+
+function updateTagFacets(filteredJobs) {
+    const allTags = filteredJobs.flatMap(j => j.tags);
+    const popularTags = [...new Set(allTags)]
+        .sort((a,b) => allTags.filter(t=>t===b).length - allTags.filter(t=>t===a).length)
+        .slice(0,12);
+
+    const container = document.getElementById('tag-filters');
+    if(!container) return;
+    
+    container.innerHTML = '';
+    popularTags.forEach(tag => {
+        const btn = document.createElement('button');
+        btn.dataset.tag = tag;
+        btn.className = "tag-filter border-2 border-ink bg-white px-2 py-1 text-xs font-bold uppercase hover:bg-ink hover:text-white transition-colors";
+        btn.textContent = tag;
+        container.appendChild(btn);
+    });
+}
+
+function initLogic() {
+    const searchInput = document.getElementById('search-input');
+    let state = { search: '', category: 'all', location: 'all', tag: null };
+
+    const runFilter = () => {
+        const cards = document.querySelectorAll('.job-card');
+        let count = 0;
+        const visibleJobs = [];
+        
+        cards.forEach(card => {
+            const matchS = state.search === '' || card.dataset.title.includes(state.search) || card.dataset.company.includes(state.search) || card.dataset.tags.includes(state.search);
+            const matchC = state.category === 'all' || card.dataset.category === state.category;
+            const matchL = state.location === 'all' || card.dataset.location === state.location;
+            const matchT = state.tag === null || card.dataset.tags.includes(state.tag.toLowerCase());
+
+            if (matchS && matchC && matchL && matchT) {
+                card.style.display = 'flex';
+                count++;
+                const jobId = card.dataset.id;
+                const job = jobsData.find(j => j.id === jobId);
+                if (job) visibleJobs.push(job);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        updateTagFacets(visibleJobs);
+        
+        const empty = document.getElementById('empty-state');
+        if (count === 0) empty.classList.remove('hidden'); 
+        else empty.classList.add('hidden');
+        document.getElementById('job-count').textContent = count;
+    };
+
+    // Search
+    searchInput.addEventListener('input', (e) => { state.search = e.target.value.toLowerCase(); runFilter(); });
+
+    // Categories & Location
+    document.addEventListener('change', (e) => {
+        if (e.target.name === 'category-filter') {
+            state.category = e.target.value;
+            runFilter();
+        }
+        if (e.target.name === 'location-filter') {
+            state.location = e.target.value;
+            runFilter();
+        }
+    });
+
+    // Tags
+    document.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tag-filter')) {
+            const tag = e.target.dataset.tag;
+            const isActive = state.tag === tag;
+            state.tag = isActive ? null : tag;
+
+            document.querySelectorAll('.tag-filter').forEach(b => {
+                if (b.dataset.tag === state.tag) {
+                    b.classList.remove('bg-white');
+                    b.classList.add('bg-ink', 'text-white');
+                } else {
+                    b.classList.add('bg-white');
+                    b.classList.remove('bg-ink', 'text-white');
+                }
+            });
+            runFilter();
+        }
+    });
+
+    // Clear
+    document.getElementById('clear-filters').addEventListener('click', () => {
+        state = { search: '', category: 'all', location: 'all', tag: null };
+        searchInput.value = '';
+        document.querySelector('input[name="category-filter"][value="all"]').checked = true;
+        document.querySelector('input[name="location-filter"][value="all"]').checked = true;
+        document.querySelectorAll('.tag-filter').forEach(b => {
+            b.classList.add('bg-white');
+            b.classList.remove('bg-ink', 'text-white');
+        });
+        runFilter();
+    });
+}
+
+// INIT
+document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('job-count').textContent = jobsData.length;
+    renderCategories();
+    updateTagFacets(jobsData);
+    initLogic();
+});
+</script>

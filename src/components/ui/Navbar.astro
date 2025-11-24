@@ -24,7 +24,7 @@ const toggleLabel = messages.nav.languageToggle.shortLabel;
 const toggleAria = messages.nav.languageToggle.ariaLabel;
 
 const withLocale = (href: string) => {
-  if (!href || href.startsWith('#') || locale === defaultLocale) return href;
+  if (!href || href.startsWith('#') || href.startsWith('http') || locale === defaultLocale) return href;
   const baseHref = href.startsWith('/') ? href : `/${href}`;
   return locale === 'en' ? `/en${baseHref}` : baseHref;
 };

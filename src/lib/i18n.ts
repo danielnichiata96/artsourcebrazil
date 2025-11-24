@@ -15,11 +15,11 @@ const translations = {
     },
     nav: {
       items: [
-        { label: 'Empresas', href: '/companies' },
+        { label: 'Vagas', href: '/vagas' },
         { label: 'Blog', href: '/blog' },
-        { label: 'Sobre', href: '/about' },
+        { label: 'Preços', href: '/post-a-job' },
       ],
-      cta: 'Postar vaga',
+      cta: 'Anunciar Vaga',
       tagline: 'Remote Creative Jobs',
       languageToggle: {
         shortLabel: 'EN',
@@ -137,19 +137,61 @@ const translations = {
       poweredBy: 'Powered by',
       provider: 'Buttondown',
     },
+    newsletterCta: {
+      badge: 'Newsletter Semanal',
+      title: 'Não perca a vaga dos sonhos',
+      subtitle: 'Receba a curadoria semanal de vagas em Game Dev, 3D, VFX e Animation direto no seu e-mail. Toda segunda-feira, antes de todo mundo.',
+      placeholder: 'seu-email@exemplo.com',
+      button: 'Quero receber',
+      benefits: [
+        '✓ Vagas exclusivas antes de serem públicas',
+        '✓ Curadoria humana (sem spam)',
+        '✓ Dicas de carreira e portfólio',
+      ],
+    },
     footer: {
-      about: 'Sobre',
-      contact: 'Contato',
-      privacy: 'Política de Privacidade',
-      terms: 'Termos de Uso',
-      blog: 'Blog',
       ctaTitle: 'Quer contratar talento brasileiro?',
       ctaSubtitle: 'Poste sua vaga e alcance nossa comunidade curada de artistas, devs e storytellers.',
-      navigationLabel: 'Navegação',
-      feedsLabel: 'Feeds:',
-      jobsRss: 'Jobs RSS',
-      jobsJson: 'Jobs JSON',
-      blogRss: 'Blog RSS',
+      ctaButton: 'Anunciar Vaga',
+      columns: {
+        jobs: {
+          title: 'Explorar Vagas',
+          links: [
+            { label: 'Vagas de Game Dev', href: '/category/game-dev' },
+            { label: 'Vagas de 3D Art', href: '/category/3d' },
+            { label: 'Vagas de 2D Art', href: '/category/2d-art' },
+            { label: 'Vagas de Animation', href: '/category/animation' },
+            { label: 'Vagas de VFX', href: '/category/vfx' },
+            { label: 'Vagas de Design', href: '/category/design' },
+          ],
+          viewAll: { label: 'Ver todas as categorias', href: '/' },
+        },
+        community: {
+          title: 'Comunidade & Recursos',
+          links: [
+            { label: 'Diretório de Empresas', href: '/companies' },
+            { label: 'Blog & Notícias', href: '/blog' },
+            { label: 'Newsletter', href: '#newsletter' },
+          ],
+        },
+        about: {
+          title: 'Sobre o Art Source',
+          links: [
+            { label: 'Sobre Nós', href: '/about' },
+            { label: 'Contato', href: '/contact' },
+            { label: 'Termos de Uso', href: '/terms' },
+            { label: 'Política de Privacidade', href: '/privacy' },
+          ],
+        },
+        social: {
+          title: 'Social',
+          links: [
+            { label: 'LinkedIn', href: 'https://linkedin.com/company/artsourcebrazil' },
+            { label: 'Instagram', href: 'https://instagram.com/artsourcebrazil' },
+            { label: 'Twitter', href: 'https://twitter.com/artsourcebr' },
+          ],
+        },
+      },
       copyright: 'Todos os direitos reservados.',
       signature: 'Feito no Brasil',
     },
@@ -164,11 +206,11 @@ const translations = {
     },
     nav: {
       items: [
-        { label: 'Companies', href: '/companies' },
+        { label: 'Jobs', href: '/vagas' },
         { label: 'Blog', href: '/blog' },
-        { label: 'About', href: '/about' },
+        { label: 'Pricing', href: '/post-a-job' },
       ],
-      cta: 'Post a job',
+      cta: 'Post a Job',
       tagline: 'Remote Creative Jobs',
       languageToggle: {
         shortLabel: 'PT',
@@ -286,19 +328,61 @@ const translations = {
       poweredBy: 'Powered by',
       provider: 'Buttondown',
     },
+    newsletterCta: {
+      badge: 'Weekly Newsletter',
+      title: "Don't miss your dream job",
+      subtitle: 'Get our weekly curated list of Game Dev, 3D, VFX, and Animation jobs delivered to your inbox. Every Monday, before everyone else.',
+      placeholder: 'your-email@example.com',
+      button: 'Sign me up',
+      benefits: [
+        '✓ Exclusive jobs before they go public',
+        '✓ Human-curated (no spam)',
+        '✓ Career and portfolio tips',
+      ],
+    },
     footer: {
-      about: 'About',
-      contact: 'Contact',
-      privacy: 'Privacy Policy',
-      terms: 'Terms of Service',
-      blog: 'Blog',
       ctaTitle: 'Hiring Brazilian creative talent?',
       ctaSubtitle: 'Share your role and reach our curated community of artists, developers, and storytellers.',
-      navigationLabel: 'Navigation',
-      feedsLabel: 'Feeds:',
-      jobsRss: 'Jobs RSS',
-      jobsJson: 'Jobs JSON',
-      blogRss: 'Blog RSS',
+      ctaButton: 'Post a Job',
+      columns: {
+        jobs: {
+          title: 'Browse Jobs',
+          links: [
+            { label: 'Game Dev Jobs', href: '/category/game-dev' },
+            { label: '3D Art Jobs', href: '/category/3d' },
+            { label: '2D Art Jobs', href: '/category/2d-art' },
+            { label: 'Animation Jobs', href: '/category/animation' },
+            { label: 'VFX Jobs', href: '/category/vfx' },
+            { label: 'Design Jobs', href: '/category/design' },
+          ],
+          viewAll: { label: 'View all categories', href: '/' },
+        },
+        community: {
+          title: 'Community & Resources',
+          links: [
+            { label: 'Company Directory', href: '/companies' },
+            { label: 'Blog & News', href: '/blog' },
+            { label: 'Newsletter', href: '#newsletter' },
+          ],
+        },
+        about: {
+          title: 'About Art Source',
+          links: [
+            { label: 'About Us', href: '/about' },
+            { label: 'Contact', href: '/contact' },
+            { label: 'Terms of Service', href: '/terms' },
+            { label: 'Privacy Policy', href: '/privacy' },
+          ],
+        },
+        social: {
+          title: 'Social',
+          links: [
+            { label: 'LinkedIn', href: 'https://linkedin.com/company/artsourcebrazil' },
+            { label: 'Instagram', href: 'https://instagram.com/artsourcebrazil' },
+            { label: 'Twitter', href: 'https://twitter.com/artsourcebr' },
+          ],
+        },
+      },
       copyright: 'All rights reserved.',
       signature: 'Made in Brazil',
     },

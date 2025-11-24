@@ -1,39 +1,166 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import Card from '../../components/ui/Card.astro';
 import Button from '../../components/ui/Button.astro';
-import Link from '../../components/ui/Link.astro';
 
 const seo = {
-  title: 'Payment Successful — Art Source Brazil',
-  description: 'Your payment was successful. Please submit your job details.',
+  title: 'Pagamento Confirmado — Art Source Brazil',
+  description: 'Sua vaga foi enviada para aprovação e será publicada em breve.',
 };
-// Safe fallback if env is not set in the current environment or is an empty string
-const rawFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL;
-const jobFormUrl =
-  typeof rawFormUrl === 'string' && rawFormUrl.trim()
-    ? rawFormUrl.trim()
-    : 'https://tally.so/r/9qGdD5'; // Direct fallback to your Tally form
+
+// Get session_id from URL params (optional, for tracking)
+const sessionId = Astro.url.searchParams.get('session_id');
 ---
 
-<Layout seo={seo} noindex={true}>
-  <main class="container mx-auto px-container py-12">
-    <Card variant="elevated" padding="lg" class="mx-auto max-w-3xl text-center">
-      <h1 class="mb-4 text-4xl font-extrabold text-neutral-900">Pronto!</h1>
-      <p class="mb-2 text-xl text-neutral-700">Pagamento confirmado.</p>
-      <p class="mb-8 text-neutral-600">
-        Agora é só preencher os detalhes da vaga no formulário. A gente analisa e publica em até 24h.
+<Layout seo={seo}>
+  <main class="container mx-auto px-4 py-12 max-w-3xl">
+    <!-- Success Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center justify-center w-20 h-20 rounded-full border-4 border-brazil-green bg-brazil-green/10 mb-6">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 256 256" class="text-brazil-green">
+          <polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+        </svg>
+      </div>
+      
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-ink mb-4">
+        Pagamento Confirmado! 🎉
+      </h1>
+      <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+        Obrigado! Sua vaga foi enviada para nossa equipe de revisão.
       </p>
+    </div>
 
-      <Button href={jobFormUrl} target="_blank" rel="noopener noreferrer" size="lg">
-        Preencher detalhes da vaga
+    <!-- Progress Steps -->
+    <div class="mb-12 flex items-center justify-center gap-4">
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-white flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+            <polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-sm uppercase">Preencher</span>
+      </div>
+      <div class="w-12 h-0.5 bg-ink"></div>
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-white flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+            <polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-sm uppercase">Preview</span>
+      </div>
+      <div class="w-12 h-0.5 bg-ink"></div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-brazil-green text-white flex items-center justify-center font-bold text-sm">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+            <polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-sm uppercase">Publicar</span>
+      </div>
+    </div>
+
+    <!-- What Happens Next -->
+    <div class="border-2 border-ink bg-white p-8 shadow-hard space-y-6">
+      <h2 class="font-display text-2xl font-bold text-ink flex items-center gap-3">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="none" viewBox="0 0 256 256">
+          <circle cx="128" cy="128" r="96" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <polyline points="128 128 128 72" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <polyline points="128 128 168 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        </svg>
+        O que acontece agora?
+      </h2>
+
+      <div class="space-y-4">
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-ink bg-brazil-yellow flex items-center justify-center font-bold text-sm">
+            1
+          </div>
+          <div>
+            <h3 class="font-bold text-ink mb-1">Revisão Manual (até 24 horas)</h3>
+            <p class="text-sm text-neutral-600">
+              Nossa equipe irá revisar sua vaga para garantir qualidade e relevância para a comunidade.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-ink bg-brazil-blue text-white flex items-center justify-center font-bold text-sm">
+            2
+          </div>
+          <div>
+            <h3 class="font-bold text-ink mb-1">Publicação</h3>
+            <p class="text-sm text-neutral-600">
+              Após aprovação, sua vaga será publicada no site e ficará visível por 30 dias.
+            </p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="flex-shrink-0 w-8 h-8 rounded-full border-2 border-ink bg-brazil-green text-white flex items-center justify-center font-bold text-sm">
+            3
+          </div>
+          <div>
+            <h3 class="font-bold text-ink mb-1">Notificação por Email</h3>
+            <p class="text-sm text-neutral-600">
+              Você receberá um email quando sua vaga for aprovada e publicada.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Important Info -->
+    <div class="mt-8 bg-brazil-yellow/10 border-2 border-brazil-yellow p-6">
+      <div class="flex items-start gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 256 256" class="flex-shrink-0 mt-1">
+          <circle cx="128" cy="128" r="96" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <line x1="128" y1="120" x2="128" y2="176" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <circle cx="128" cy="84" r="12" fill="currentColor"/>
+        </svg>
+        <div>
+          <p class="font-bold text-ink mb-2">Importante:</p>
+          <ul class="text-sm text-neutral-700 space-y-1 list-disc list-inside">
+            <li>Sua vaga ficará ativa por <strong>30 dias</strong> após a publicação</li>
+            <li>Você receberá candidaturas diretamente no link de aplicação fornecido</li>
+            <li>Em caso de dúvidas, entre em contato conosco</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Actions -->
+    <div class="mt-8 flex flex-col sm:flex-row gap-4">
+      <Button
+        href="/"
+        variant="secondary"
+        class="flex-1 flex items-center justify-center gap-2"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 256 256">
+          <path d="M152,208V160a8,8,0,0,0-8-8H112a8,8,0,0,0-8,8v48a8,8,0,0,1-8,8H48a8,8,0,0,1-8-8V115.54a8,8,0,0,1,2.62-5.92l80-75.54a8,8,0,0,1,10.77,0l80,75.54a8,8,0,0,1,2.62,5.92V208a8,8,0,0,1-8,8H160A8,8,0,0,1,152,208Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        </svg>
+        Voltar para Home
       </Button>
-
-      <p class="mt-6 text-sm text-neutral-600">
-        Dúvidas? Manda email pra <Link
-          href="mailto:artsourcebrazil@gmail.com">artsourcebrazil@gmail.com</Link
-        >.
-      </p>
-    </Card>
+      
+      <Button
+        href="/vagas"
+        variant="primary"
+        class="flex-1 flex items-center justify-center gap-2"
+      >
+        Ver Vagas Publicadas
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 256 256">
+          <line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <polyline points="144 56 216 128 144 200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+        </svg>
+      </Button>
+    </div>
   </main>
 </Layout>
+
+<script>
+  // Clear localStorage draft data on success page
+  document.addEventListener('DOMContentLoaded', () => {
+    localStorage.removeItem('job_draft');
+    localStorage.removeItem('job_draft_id');
+    console.log('Draft data cleared from localStorage');
+  });
+</script>

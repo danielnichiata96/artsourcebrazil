@@ -1,0 +1,326 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { supabase } from '../../lib/supabase';
+
+// IMPORTANT: This must be false to run on the server (SSR), not at build time
+export const prerender = false;
+
+const seo = {
+  title: 'Admin - Aprovação de Vagas',
+  description: 'Dashboard administrativo para aprovar vagas pagas',
+  noindex: true,
+};
+
+// Simple authentication check
+const authToken = Astro.cookies.get('admin_token')?.value;
+const validToken = import.meta.env.ADMIN_TOKEN || 'admin123'; // Change in production!
+
+// Check for login error
+const loginError = Astro.url.searchParams.get('error');
+
+// Fetch pending drafts (paid, awaiting approval)
+let drafts: any[] = [];
+let error: string | null = null;
+
+if (authToken === validToken) {
+  try {
+    const { data, error: fetchError } = await supabase
+      .from('job_drafts')
+      .select('*')
+      .eq('status', 'paid')
+      .order('paid_at', { ascending: false });
+
+    if (fetchError) {
+      error = fetchError.message;
+      console.error('Error fetching drafts:', fetchError);
+    } else {
+      drafts = data || [];
+    }
+  } catch (e) {
+    error = 'Failed to connect to database';
+    console.error('Database error:', e);
+  }
+}
+---
+
+<Layout seo={seo}>
+  <main class="min-h-screen bg-neutral-50">
+    {authToken !== validToken ? (
+      <!-- Login Form -->
+      <div class="container mx-auto px-4 py-20 max-w-md">
+        <div class="bg-white border-2 border-ink p-8 shadow-hard">
+          <h1 class="font-display text-3xl font-bold text-ink mb-6">
+            Admin Login
+          </h1>
+          
+          {loginError && (
+            <div class="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 mb-4">
+              <strong>Erro:</strong> {loginError === 'invalid' ? 'Senha incorreta' : 'Erro ao fazer login'}
+            </div>
+          )}
+          
+          <form method="POST" action="/api/admin/login" class="space-y-4">
+            <div>
+              <label for="password" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                autofocus
+                class="w-full bg-white border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+              />
+            </div>
+            
+            <button
+              type="submit"
+              class="w-full bg-ink text-white font-bold uppercase tracking-wider px-6 py-3 border-2 border-ink hover:bg-white hover:text-ink transition-colors"
+            >
+              Login
+            </button>
+          </form>
+        </div>
+      </div>
+    ) : (
+      <!-- Admin Dashboard -->
+      <div class="container mx-auto px-4 py-8 max-w-7xl">
+        <!-- Header -->
+        <div class="flex items-center justify-between mb-8">
+          <div>
+            <h1 class="font-display text-4xl font-bold text-ink mb-2">
+              Aprovação de Vagas
+            </h1>
+            <p class="text-neutral-600">
+              Vagas pagas aguardando aprovação
+            </p>
+          </div>
+          
+          <div class="flex items-center gap-4">
+            <div class="bg-white border-2 border-ink px-4 py-2 shadow-hard">
+              <span class="text-sm uppercase font-bold text-neutral-700">Pendentes:</span>
+              <span class="text-2xl font-bold text-brazil-blue ml-2">{drafts.length}</span>
+            </div>
+            
+            <form method="POST" action="/api/admin/logout">
+              <button
+                type="submit"
+                class="text-sm uppercase font-bold text-neutral-600 hover:text-ink transition-colors"
+              >
+                Logout
+              </button>
+            </form>
+          </div>
+        </div>
+
+        {error && (
+          <div class="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 mb-6">
+            <strong>Erro:</strong> {error}
+          </div>
+        )}
+
+        {drafts.length === 0 ? (
+          <div class="bg-white border-2 border-ink p-12 text-center shadow-hard">
+            <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" fill="none" viewBox="0 0 256 256" class="mx-auto mb-4 text-neutral-400">
+              <path d="M224,177.32117V78.67883a8,8,0,0,0-4.07791-6.9726l-88-49.5a8,8,0,0,0-7.84418,0l-88,49.5A8,8,0,0,0,32,78.67883v98.64234a8,8,0,0,0,4.07791,6.9726l88,49.5a8,8,0,0,0,7.84418,0l88-49.5A8,8,0,0,0,224,177.32117Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <polyline points="177 152.5 177 100.5 80 47" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <polyline points="222.897 74.626 128.949 128 33.108 74.617" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+              <line x1="128.94915" y1="128" x2="128" y2="234.82482" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            </svg>
+            <p class="text-xl font-bold text-neutral-700 mb-2">Nenhuma vaga pendente</p>
+            <p class="text-neutral-500">Todas as vagas pagas já foram processadas.</p>
+          </div>
+        ) : (
+          <div class="space-y-6">
+            {drafts.map((draft) => {
+              const data = draft.draft_data;
+              const paidDate = new Date(draft.paid_at);
+              
+              return (
+                <div class="bg-white border-2 border-ink shadow-hard overflow-hidden">
+                  <!-- Draft Header -->
+                  <div class="bg-brazil-yellow/10 border-b-2 border-ink p-4 flex items-center justify-between">
+                    <div>
+                      <h2 class="font-display text-xl font-bold text-ink mb-1">
+                        {data.title}
+                      </h2>
+                      <p class="text-sm text-neutral-600">
+                        {data.company_name} • Pago em {paidDate.toLocaleDateString('pt-BR')} às {paidDate.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' })}
+                      </p>
+                    </div>
+                    
+                    <div class="flex items-center gap-2">
+                      <span class="inline-block bg-brazil-green text-white text-xs font-bold uppercase px-3 py-1 border border-ink">
+                        Pago
+                      </span>
+                    </div>
+                  </div>
+
+                  <!-- Draft Content -->
+                  <div class="p-6 grid md:grid-cols-2 gap-6">
+                    <!-- Left Column: Job Details -->
+                    <div class="space-y-4">
+                      <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Contato</h3>
+                        <p class="text-ink">{draft.email}</p>
+                      </div>
+                      
+                      <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Categoria</h3>
+                        <span class="inline-block bg-neutral-100 border border-neutral-300 px-2 py-1 text-sm">
+                          {data.category}
+                        </span>
+                      </div>
+                      
+                      <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Tipo de Contrato</h3>
+                        <p class="text-ink capitalize">{data.contract_type}</p>
+                      </div>
+                      
+                      <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Localização</h3>
+                        <p class="text-ink capitalize">
+                          {data.location_scope}
+                          {data.location_text && ` - ${data.location_text}`}
+                        </p>
+                      </div>
+                      
+                      {(data.salary_min || data.salary_max) && (
+                        <div>
+                          <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Salário</h3>
+                          <p class="text-ink">
+                            {data.salary_currency} {data.salary_min?.toLocaleString()} - {data.salary_max?.toLocaleString()}
+                          </p>
+                        </div>
+                      )}
+                      
+                      <div>
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-1">Link de Aplicação</h3>
+                        <a 
+                          href={data.application_url.startsWith('http') ? data.application_url : `https://${data.application_url}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          class="text-brazil-blue hover:underline break-all"
+                        >
+                          {data.application_url}
+                        </a>
+                      </div>
+                    </div>
+
+                    <!-- Right Column: Description -->
+                    <div>
+                      <h3 class="text-xs font-bold uppercase tracking-wider text-neutral-500 mb-2">Descrição</h3>
+                      <div class="prose prose-sm max-w-none bg-neutral-50 border border-neutral-200 p-4 rounded max-h-96 overflow-y-auto">
+                        <pre class="whitespace-pre-wrap font-sans text-sm">{data.description}</pre>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Actions -->
+                  <div class="border-t-2 border-ink bg-neutral-50 p-4 flex items-center justify-end gap-3">
+                    <button
+                      data-draft-id={draft.id}
+                      data-action="reject"
+                      class="reject-btn bg-white text-neutral-700 font-bold uppercase tracking-wider px-6 py-2 border-2 border-neutral-300 hover:border-neutral-400 transition-colors"
+                    >
+                      Rejeitar
+                    </button>
+                    
+                    <button
+                      data-draft-id={draft.id}
+                      data-action="approve"
+                      class="approve-btn bg-brazil-green text-white font-bold uppercase tracking-wider px-6 py-2 border-2 border-brazil-green hover:bg-brazil-green/90 transition-colors"
+                    >
+                      Aprovar & Publicar
+                    </button>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    )}
+  </main>
+</Layout>
+
+<script>
+  // Handle approve/reject actions
+  document.addEventListener('DOMContentLoaded', () => {
+    const approveButtons = document.querySelectorAll('.approve-btn');
+    const rejectButtons = document.querySelectorAll('.reject-btn');
+
+    approveButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const draftId = (e.target as HTMLElement).dataset.draftId;
+        
+        if (!confirm('Aprovar e publicar esta vaga?')) return;
+        
+        (e.target as HTMLButtonElement).disabled = true;
+        (e.target as HTMLElement).textContent = 'Aprovando...';
+        
+        try {
+          const response = await fetch('/api/admin/approve-draft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ draft_id: draftId }),
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert('Vaga aprovada e publicada com sucesso!');
+            window.location.reload();
+          } else {
+            alert(`Erro: ${result.error}`);
+            (e.target as HTMLButtonElement).disabled = false;
+            (e.target as HTMLElement).textContent = 'Aprovar & Publicar';
+          }
+        } catch (error) {
+          console.error('Error approving draft:', error);
+          alert('Erro ao aprovar vaga. Tente novamente.');
+          (e.target as HTMLButtonElement).disabled = false;
+          (e.target as HTMLElement).textContent = 'Aprovar & Publicar';
+        }
+      });
+    });
+
+    rejectButtons.forEach(btn => {
+      btn.addEventListener('click', async (e) => {
+        const draftId = (e.target as HTMLElement).dataset.draftId;
+        const reason = prompt('Motivo da rejeição (será enviado por email):');
+        
+        if (!reason) return;
+        
+        (e.target as HTMLButtonElement).disabled = true;
+        (e.target as HTMLElement).textContent = 'Rejeitando...';
+        
+        try {
+          const response = await fetch('/api/admin/reject-draft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ draft_id: draftId, reason }),
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            alert('Vaga rejeitada. Email enviado ao cliente.');
+            window.location.reload();
+          } else {
+            alert(`Erro: ${result.error}`);
+            (e.target as HTMLButtonElement).disabled = false;
+            (e.target as HTMLElement).textContent = 'Rejeitar';
+          }
+        } catch (error) {
+          console.error('Error rejecting draft:', error);
+          alert('Erro ao rejeitar vaga. Tente novamente.');
+          (e.target as HTMLButtonElement).disabled = false;
+          (e.target as HTMLElement).textContent = 'Rejeitar';
+        }
+      });
+    });
+  });
+</script>
+

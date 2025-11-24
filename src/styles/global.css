@@ -104,6 +104,37 @@
     transition: color 0.2s ease;
   }
 
+  /* Form inputs - Explicit styles for Electron/Cursor compatibility */
+  input[type="text"],
+  input[type="email"],
+  input[type="url"],
+  input[type="number"],
+  input[type="tel"],
+  textarea,
+  select {
+    background-color: white !important;
+    color: theme('colors.neutral.900') !important;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  /* Ensure placeholder text is visible */
+  input::placeholder,
+  textarea::placeholder {
+    color: theme('colors.neutral.400') !important;
+    opacity: 1;
+  }
+
+  /* Select dropdown styling */
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3E%3Cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3E%3C/svg%3E");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+  }
+
   /* Enhanced focus indicators for accessibility */
   *:focus-visible {
     outline: 2px solid theme('colors.primary.DEFAULT');

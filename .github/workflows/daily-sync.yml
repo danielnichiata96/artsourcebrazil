@@ -1,0 +1,32 @@
+name: Daily Job Sync
+
+on:
+  schedule:
+    - cron: '0 12 * * *' # 12:00 UTC = 09:00 BRT
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Sync
+        run: npm run sync:greenhouse:supabase:full
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+
+      - name: Trigger Vercel Rebuild
+        if: success() && secrets.VERCEL_DEPLOY_HOOK
+        run: curl -X POST ${{ secrets.VERCEL_DEPLOY_HOOK }}

@@ -16,16 +16,15 @@ This file is the single source of truth for what to do next. Coding agents and h
 
 <!-- AI-ANCHOR:IMMEDIATE-TASKS-START -->
 
-- [ ] **🔄 Sistema de Vagas - Expansão e Automação**
-  - [ ] **GitHub Actions (Sync Diário)**
-    - [ ] Configurar workflow `.github/workflows/daily-sync.yml`
-    - [ ] Agendar cron job (ex: `0 9 * * *` - 9am BRT)
-    - [ ] Configurar secrets (SUPABASE_URL, SUPABASE_KEY, etc.)
-    - [ ] Adicionar passo de "Rebuild Vercel" após sync bem-sucedido
-  - [ ] **Adaptadores Adicionais (Fase 8)**
-    - [ ] Criar adaptador Lever (`scripts/fetch-lever-jobs.mjs`)
-    - [ ] Criar adaptador Ashby (`scripts/fetch-ashby-jobs.mjs`)
-    - [ ] Unificar normalização de dados entre todas as fontes
+- [x] **GitHub Actions (Sync Diário)**
+  - [x] Configurar workflow `.github/workflows/daily-sync.yml`
+  - [x] Agendar cron job (ex: `0 9 * * *` - 9am BRT)
+  - [x] Configurar secrets (SUPABASE_URL, SUPABASE_KEY, etc.)
+  - [x] Adicionar passo de "Rebuild Vercel" após sync bem-sucedido
+  - [x] **Adaptadores Adicionais (Fase 8)**
+    - [x] Criar adaptador Lever (`scripts/fetch-lever-jobs.mjs`)
+    - [x] Criar adaptador Ashby (`scripts/fetch-ashby-jobs.mjs`)
+    - [x] Unificar normalização de dados entre todas as fontes
   - [ ] **Busca Server-Side (Supabase)**
     - [ ] Configurar PostgreSQL Full Text Search na tabela `jobs`
     - [ ] Criar índice `search_vector` (title, description, company name)
@@ -195,6 +194,8 @@ This file is the single source of truth for what to do next. Coding agents and h
 <!-- AI-ANCHOR:CHANGELOG-START -->
 
 - 2025-11-23: **Reestruturação de Categorias**: Adicionado `CATEGORY_META` em `categories.ts` com slugs (para URLs), cores (Canvas design), e descrições. Corrigida lógica de mapeamento em `fetch-greenhouse-jobs.mjs` para priorizar "3D" explícito no título (fix: "3D Game Artist" agora categoria "3D", não "2D Art"). Renomeado "Disciplina" → "ÁREA" em i18n e UI. Removidos ícones emoji (seguindo Canvas design). Adicionado fallback category com logging. Build passando.
+- 2025-11-24: **Lever & Ashby Adapters**: Criados scripts `fetch-lever-jobs.mjs` e `fetch-ashby-jobs.mjs` para buscar vagas de APIs públicas do Lever e Ashby. Scripts normalizam dados para o formato padrão do projeto, incluindo mapeamento de categorias e detecção de escopo de localização. Adicionados scripts `fetch:lever` e `fetch:ashby` ao package.json.
+- 2025-11-24: **GitHub Actions Daily Sync**: Configurado workflow `.github/workflows/daily-sync.yml` para rodar diariamente às 09:00 BRT. O workflow instala dependências, roda o script de sync completo (`npm run sync:greenhouse:supabase:full`) e dispara um rebuild na Vercel (se configurado). Requer secrets `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY` e opcionalmente `VERCEL_DEPLOY_HOOK`.
 - 2025-11-23: **Tag Extraction & Dynamic Filtering**: Corrigida extração da tag "Go" para evitar falsos positivos de "Google", "Mongo", etc. Regex atualizado em `extract-tags.mjs` para ser mais rigoroso (case-sensitive para "Go", aceita "golang"). Implementado filtro dinâmico de tags na sidebar: tags agora refletem apenas as vagas visíveis após filtragem por categoria/busca. Aplicado em `index.astro` e `en/index.astro`. Build passando.
 - 2025-11-23: **ShareButtons Canvas & i18n**: Atualizado componente `ShareButtons.astro` para seguir estritamente o design system Canvas (bordas grossas, sombras duras, cantos quadrados, hovers coloridos). Implementado suporte completo a i18n para labels e links de compartilhamento. Feedback de "Link copiado" agora usa verde Brasil. Build verificado.
 - 2025-11-19: **Canvas Design Tokens Fase 1**: Atualizada a paleta no `tailwind.config.mjs` com os tons oficiais (amarelo Brasil, azul tech, verde bandeira) e gradiente `bg-brazil-hero`. Criado `docs/DESIGN_SYSTEM_CANVAS.md` com guidelines de uso (CTA, hero, chips e hovers) garantindo que futuros componentes sigam o mesmo sistema cromático.

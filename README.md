@@ -133,17 +133,40 @@ If you deploy to a real domain, update the `site` field in `astro.config.mjs` an
 
 ## Monetization (Post a Job)
 
-Use environment variables (see `.env.example`):
+### Environment Variables
 
-```
-PUBLIC_STRIPE_PAYMENT_LINK="https://buy.stripe.com/your-payment-link"
-PUBLIC_JOB_FORM_URL="https://tally.so/r/your-form-id"
+```bash
+# Stripe Configuration
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_PRICE_ID=price_...
+STRIPE_WEBHOOK_SECRET=whsec_...  # Para desenvolvimento local, veja docs/STRIPE_WEBHOOK_SETUP.md
+
+# Supabase Configuration
+SUPABASE_URL=https://xxx.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=sb_secret_...
+PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+PUBLIC_SUPABASE_ANON_KEY=sb_publishable_...
 ```
 
-- Fill your `.env` with real values (the file is ignored by Git).
-- In Stripe Payment Link settings, set the success redirect to:
-  - `https://YOUR-DOMAIN/post-a-job/success`
-- The success page shows a button to the external job submission form (PUBLIC_JOB_FORM_URL).
+### Testing Webhooks Locally
+
+Para testar webhooks do Stripe em desenvolvimento:
+
+1. **Iniciar servidor:**
+   ```bash
+   npm run dev
+   ```
+
+2. **Em outro terminal, iniciar webhook forwarding:**
+   ```bash
+   npm run stripe:webhook
+   ```
+
+3. **Copiar o webhook secret** mostrado e adicionar ao `.env`
+
+4. **Reiniciar servidor** para carregar a nova variável
+
+Veja documentação completa: `docs/STRIPE_WEBHOOK_SETUP.md` ou `docs/QUICK_START_WEBHOOK.md`
 
 ## Formatting
 
