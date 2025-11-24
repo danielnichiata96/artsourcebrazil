@@ -1,102 +1,93 @@
 import { test, expect } from '@playwright/test';
+import path from 'path';
 
 /**
  * E2E tests for Admin Dashboard
  * Tests the job approval/rejection flow
+ * 
+ * Uses authenticated storage state for dashboard tests
  */
 
-test.describe('Admin Dashboard', () => {
-  // We'll skip these tests in CI if ADMIN_TOKEN is not set
-  const adminToken = process.env.ADMIN_TOKEN || 'admin123';
-  const baseUrl = 'http://localhost:4321';
+const adminToken = process.env.ADMIN_TOKEN || 'admin123';
+const baseUrl = 'http://localhost:4321';
 
+test.describe('Admin Dashboard - Unauthenticated', () => {
   // Set shorter timeout for admin tests
   test.setTimeout(15000);
 
-  test.describe('Authentication', () => {
-    test('should show login form when not authenticated', async ({ page }) => {
-      await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
+  test('should show login form when not authenticated', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
 
-      // Should see login form - look for specific heading
-      const loginHeading = page.locator('h1:has-text("Admin Login")');
-      await expect(loginHeading).toBeVisible({ timeout: 5000 });
-      await expect(page.locator('input#password[type="password"]')).toBeVisible();
-      await expect(page.locator('button:has-text("Login")')).toBeVisible();
-    });
-
-    test('should login with correct password', async ({ page }) => {
-      await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
-
-      // Fill in password
-      await page.fill('input#password[type="password"]', adminToken);
-      
-      // Wait for navigation after submit
-      await Promise.all([
-        page.waitForNavigation({ timeout: 5000 }),
-        page.locator('button:has-text("Login")').click(),
-      ]);
-
-      // Should see dashboard title
-      const dashboardHeading = page.locator('h1:has-text("Aprovação de Vagas")');
-      await expect(dashboardHeading).toBeVisible({ timeout: 5000 });
-    });
-
-    test('should reject login with incorrect password', async ({ page }) => {
-      await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
-
-      // Fill in wrong password
-      await page.fill('input#password[type="password"]', 'wrongpassword123');
-      await page.locator('button:has-text("Login")').click();
-
-      // Wait a bit for any potential redirect (shouldn't happen)
-      await page.waitForTimeout(1000);
-
-      // Should still be on login page
-      const loginHeading = page.locator('h1:has-text("Admin Login")');
-      await expect(loginHeading).toBeVisible({ timeout: 5000 });
-      await expect(page.locator('input#password[type="password"]')).toBeVisible();
-    });
+    // Should see login form - look for specific heading
+    const loginHeading = page.locator('h1:has-text("Admin Login")');
+    await expect(loginHeading).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('input#password[type="password"]')).toBeVisible();
+    await expect(page.locator('button:has-text("Login")')).toBeVisible();
   });
 
-  test.describe('Dashboard UI (authenticated via login)', () => {
-    test('should display dashboard after login', async ({ page }) => {
-      // Login first
-      await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
-      await page.fill('input#password[type="password"]', adminToken);
-      
-      await Promise.all([
-        page.waitForNavigation({ timeout: 5000 }),
-        page.locator('button:has-text("Login")').click(),
-      ]);
+  test('should reject login with incorrect password', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
 
-      // Verify dashboard is loaded
-      const dashboardHeading = page.locator('h1:has-text("Aprovação de Vagas")');
-      await expect(dashboardHeading).toBeVisible({ timeout: 5000 });
+    // Fill in wrong password
+    await page.fill('input#password[type="password"]', 'wrongpassword123');
+    await page.locator('button:has-text("Login")').click();
 
-      // Check page shows either empty state or draft cards
-      const pageContent = await page.content();
-      const hasExpectedContent = pageContent.includes('Nenhuma vaga pendente') || 
-                                  pageContent.includes('Aprovar') ||
-                                  pageContent.includes('Pendentes');
-      
-      expect(hasExpectedContent).toBe(true);
-    });
+    // Wait a bit for any potential redirect (shouldn't happen)
+    await page.waitForTimeout(1000);
 
-    test('should have logout button after login', async ({ page }) => {
-      // Login first
-      await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
-      await page.fill('input#password[type="password"]', adminToken);
-      
-      await Promise.all([
-        page.waitForNavigation({ timeout: 5000 }),
-        page.locator('button:has-text("Login")').click(),
-      ]);
-
-      // Should see logout button
-      const logoutButton = page.locator('button:has-text("Logout")');
-      await expect(logoutButton).toBeVisible({ timeout: 5000 });
-    });
+    // Should still be on login page
+    const loginHeading = page.locator('h1:has-text("Admin Login")');
+    await expect(loginHeading).toBeVisible({ timeout: 5000 });
+    await expect(page.locator('input#password[type="password"]')).toBeVisible();
   });
+});
+
+// Tests that require authentication
+test.describe('Admin Dashboard - Authenticated', () => {
+  // Use authenticated state for these tests
+  test.use({ 
+    storageState: path.join(__dirname, '../../playwright/.auth/admin.json') 
+  });
+
+  test.setTimeout(15000);
+
+  test('should display dashboard when authenticated', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
+
+    // Should see dashboard (not login form)
+    const dashboardHeading = page.locator('h1:has-text("Aprovação de Vagas")');
+    await expect(dashboardHeading).toBeVisible({ timeout: 5000 });
+
+    // Should not see login form
+    await expect(page.locator('h1:has-text("Admin Login")')).not.toBeVisible();
+  });
+
+  test('should show empty state or draft cards', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
+
+    // Check page shows either empty state or draft cards
+    const hasEmptyState = await page.locator('text=Nenhuma vaga pendente').isVisible({ timeout: 3000 }).catch(() => false);
+    const hasDrafts = (await page.locator('button:has-text("Aprovar")').count()) > 0;
+
+    // Should have one or the other
+    expect(hasEmptyState || hasDrafts).toBe(true);
+  });
+
+  test('should display logout button', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
+
+    // Should see logout button
+    const logoutButton = page.locator('button:has-text("Logout")');
+    await expect(logoutButton).toBeVisible({ timeout: 5000 });
+  });
+
+  test('should display pending drafts count', async ({ page }) => {
+    await page.goto(`${baseUrl}/admin/drafts`, { waitUntil: 'domcontentloaded' });
+
+    // Should see "Pendentes:" label with count
+    await expect(page.locator('text=/Pendentes:/')).toBeVisible({ timeout: 5000 });
+  });
+});
 
   // Skip tests that require database data by default
   // Uncomment and run manually when testing with populated database

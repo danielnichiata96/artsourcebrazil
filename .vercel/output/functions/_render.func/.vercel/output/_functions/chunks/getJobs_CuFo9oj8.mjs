@@ -1,0 +1,121 @@
+import { createClient } from '@supabase/supabase-js';
+import { config } from 'dotenv';
+
+config();
+const supabaseUrl = process.env.SUPABASE_URL;
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+if (!supabaseUrl) {
+  throw new Error("Missing SUPABASE_URL environment variable");
+}
+if (!supabaseServiceKey && !supabaseAnonKey) {
+  throw new Error("Missing SUPABASE_SERVICE_ROLE_KEY or SUPABASE_ANON_KEY environment variable");
+}
+const supabaseKey = supabaseServiceKey || supabaseAnonKey;
+const supabase = createClient(supabaseUrl, supabaseKey, {
+  auth: {
+    autoRefreshToken: false,
+    persistSession: false
+  }
+});
+
+function transformSupabaseJob(supabaseJob) {
+  const company = Array.isArray(supabaseJob.companies) ? supabaseJob.companies[0] : supabaseJob.companies;
+  const category = Array.isArray(supabaseJob.categories) ? supabaseJob.categories[0] : supabaseJob.categories;
+  const jobTags = Array.isArray(supabaseJob.job_tags) ? supabaseJob.job_tags : [];
+  const tags = jobTags.map((jt) => {
+    const tag = Array.isArray(jt.tags) ? jt.tags[0] : jt.tags;
+    return tag?.name;
+  }).filter(Boolean);
+  let companyLogo = company?.logo_url || "/images/company-placeholder.svg";
+  if (companyLogo && !companyLogo.startsWith("/") && !companyLogo.startsWith("http")) {
+    companyLogo = "/images/company-placeholder.svg";
+  }
+  let postedDate = supabaseJob.date_posted;
+  if (typeof postedDate === "string" && !postedDate.includes("T")) {
+    postedDate = (/* @__PURE__ */ new Date(postedDate + "T00:00:00Z")).toISOString();
+  } else if (postedDate) {
+    postedDate = new Date(postedDate).toISOString();
+  } else {
+    postedDate = (/* @__PURE__ */ new Date()).toISOString();
+  }
+  const shortDesc = supabaseJob.description && supabaseJob.description.length > 300 ? supabaseJob.description.slice(0, 297) + "..." : supabaseJob.short_description || null;
+  const location = {
+    scope: supabaseJob.location_scope || "remote-brazil",
+    note: supabaseJob.location_detail || null,
+    countryCode: supabaseJob.location_country_code || null
+  };
+  const salary = supabaseJob.salary_min || supabaseJob.salary_max || supabaseJob.salary_currency ? {
+    min: supabaseJob.salary_min || null,
+    max: supabaseJob.salary_max || null,
+    currency: supabaseJob.salary_currency || "BRL"
+  } : null;
+  return {
+    id: supabaseJob.id,
+    companyName: company?.name || "Unknown",
+    companyLogo,
+    companyWebsite: company?.website || null,
+    jobTitle: supabaseJob.job_title,
+    description: supabaseJob.description || "Descrição não disponível.",
+    shortDescription: shortDesc,
+    applyLink: supabaseJob.apply_link,
+    postedDate,
+    category: category?.name || "Game Dev",
+    tags: tags.length > 0 ? tags : ["General"],
+    location,
+    contractType: supabaseJob.contract_type || null,
+    salary
+  };
+}
+async function getJobs() {
+  try {
+    const { data: jobs, error } = await supabase.from("jobs").select(`
+        *,
+        companies:company_id (
+          id,
+          name,
+          logo_url,
+          website
+        ),
+        categories:category_id (
+          id,
+          name
+        ),
+        job_tags (
+          tags:tag_id (
+            id,
+            name
+          )
+        )
+      `).eq("status", "ativa").order("date_posted", { ascending: false });
+    if (error) {
+      console.error("❌ Error fetching jobs from Supabase:", error.message);
+      throw error;
+    }
+    if (!jobs || jobs.length === 0) {
+      console.warn("⚠️  No active jobs found in Supabase");
+      return [];
+    }
+    const transformedJobs = jobs.map((job) => {
+      try {
+        return transformSupabaseJob(job);
+      } catch (err) {
+        console.error(`❌ Error transforming job ${job.id}:`, err);
+        return null;
+      }
+    }).filter((job) => job !== null);
+    return transformedJobs;
+  } catch (error) {
+    console.error("❌ Failed to fetch jobs from Supabase:", error);
+    return [];
+  }
+}
+let cachedJobs = null;
+async function getCachedJobs() {
+  if (cachedJobs === null) {
+    cachedJobs = await getJobs();
+  }
+  return cachedJobs;
+}
+
+export { getCachedJobs as a, getJobs as g };

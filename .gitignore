@@ -1,20 +1,40 @@
-# Environment variables
-.env
-.env.*
-!/.env.example
-
-# Dependencies & output
+# dependencies
 node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# testing
+coverage/
+playwright-report/
+test-results/
+playwright/.auth/
+
+# build output
 dist/
 .astro/
 
-# Tooling & platform
-.vscode/
-.vercel/
-.netlify/
-coverage/
+# generated types
+.astro/
 
-# Locks (managed by CI or local preference)
-package-lock.json
-pnpm-lock.yaml
-yarn.lock
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+.vercel/

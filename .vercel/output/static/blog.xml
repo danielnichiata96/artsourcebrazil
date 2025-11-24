@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <rss version="2.0">
+    <channel>
+      <title>Art Source Brazil — Blog</title>
+      <link>https://artsourcebrazil.vercel.app/blog</link>
+      <description>Guides and updates from Art Source Brazil</description>
+      
+      <item>
+        <title><![CDATA[How to Post a Successful Job Listing on Art Source Brazil]]></title>
+        <link>https://artsourcebrazil.vercel.app/blog/how-to-post-a-successful-job</link>
+        <guid isPermaLink="true">https://artsourcebrazil.vercel.app/blog/how-to-post-a-successful-job</guid>
+        <pubDate>Thu, 06 Nov 2025 00:00:00 GMT</pubDate>
+        <description><![CDATA[A step-by-step guide for companies to attract the best creative talent in Brazil by crafting the perfect job description.]]></description>
+      </item>
+    
+    </channel>
+  </rss>

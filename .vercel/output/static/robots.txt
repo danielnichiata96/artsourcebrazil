@@ -1,0 +1,6 @@
+# robots.txt for Art Source Brazil
+User-agent: *
+Allow: /
+
+# Update this URL if you change the domain in astro.config.mjs
+Sitemap: https://artsourcebrazil.vercel.app/sitemap-index.xml
