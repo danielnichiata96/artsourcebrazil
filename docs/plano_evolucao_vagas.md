@@ -136,31 +136,47 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 - [ ] Testar Ashby com Deel (aguardando execução)
 - [ ] Validar outputs e ajustar mapeamentos se necessário
 
-### 🚨 Problema Identificado: Garbage Collection
-- [ ] **Vagas Fantasmas:** Fetchers atuais não fecham vagas que foram removidas da API
-- [ ] Implementar estratégia de Sync Sessions (sync_id)
-- [ ] Atualizar schema do Supabase (sync_id, last_synced_at, closed_at)
-- [ ] Modificar os 3 fetchers para incluir GC
-- [ ] Testar processo completo de GC
-- [ ] Documentação criada: `docs/GARBAGE_COLLECTION.md`
+### 📋 Fase 2 - Pós-Lançamento (Sprint 2)
+**Garbage Collection** - Documentado, mas NÃO PRIORITÁRIO para MVP
+- [ ] **Motivo do adiamento:** Vagas não desaparecem no primeiro dia
+- [ ] No Dia 1 do lançamento, todas as vagas são novas
+- [ ] GC só é necessário após alguns dias/semanas de operação
+- [ ] ✅ Documentação criada: `docs/GARBAGE_COLLECTION.md` (referência futura)
+- [ ] ⏳ Implementar GC na semana seguinte ao lançamento
+- [ ] ⏳ Prioridade atual: Popular o banco e lançar o site!
 
-### 📋 Próximas Ações:
-1. **Testar os fetchers criados:**
+### 🚀 PRIORIDADE IMEDIATA - Popular o Banco (MVP)
+**Objetivo:** Ter vagas no site o mais rápido possível
+
+1. **✅ AGORA: Testar os fetchers criados**
    ```bash
    node scripts/fetch-lever-jobs.mjs
    node scripts/fetch-ashby-jobs.mjs
+   node scripts/fetch-greenhouse-jobs.mjs
    ```
 
-2. **Revisar outputs:**
-   - `scripts/lever-jobs-output.json`
-   - `scripts/ashby-jobs-output.json`
+2. **✅ AGORA: Revisar outputs**
+   - Verificar se categorias estão corretas
+   - Verificar se location scopes estão corretos
+   - Validar links de aplicação
 
-3. **Ajustar mapeamentos** se necessário (categorias, location scopes)
+3. **✅ AGORA: Garantir que upsert funciona**
+   - Testar que não cria duplicatas
+   - Validar que updates funcionam
+   - Confirmar schema do Supabase está correto
 
-4. **Adicionar mais empresas** usando os mesmos fetchers
+4. **✅ AGORA: Popular Supabase**
+   - Executar fetchers e salvar no banco
+   - Verificar dados no Supabase Table Editor
+   - Confirmar que frontend carrega as vagas
 
-5. **Criar orquestrador** para executar todos os fetchers
+5. **🚀 LANÇAR O SITE**
+   - Deploy para produção
+   - Marketing e divulgação
+   - Monitorar feedback inicial
 
-6. **Integrar com Supabase** para salvar vagas no banco
-
-7. **Automatizar** com GitHub Actions (daily sync)
+### 📅 Fase 2 - Pós-Lançamento (Semana seguinte)
+6. **Adicionar mais empresas** aos fetchers existentes
+7. **Criar orquestrador** para executar todos de uma vez
+8. **Implementar Garbage Collection** (agora sim, quando houver vagas antigas)
+9. **Automatizar** com GitHub Actions (daily sync)
