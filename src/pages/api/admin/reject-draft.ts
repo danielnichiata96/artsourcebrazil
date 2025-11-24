@@ -9,6 +9,7 @@
 import type { APIRoute } from 'astro';
 import { supabase } from '../../../lib/supabase';
 import { sendJobRejectedEmail } from '../../../lib/email';
+import { logAdminAction } from '../../../lib/admin-log';
 
 export const prerender = false;
 
@@ -24,6 +25,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 { status: 401, headers: { 'Content-Type': 'application/json' } }
             );
         }
+
+        const adminIdentifier = `token:${validToken.slice(-4)}`;
 
         const body = await request.json();
         const { draft_id, reason } = body;
@@ -70,6 +73,15 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         }
 
         console.log(`❌ Draft ${draft_id} rejected. Reason: ${reason}`);
+
+        await logAdminAction('reject_draft', {
+            draft_id,
+            admin_identifier: adminIdentifier,
+            details: {
+                reason,
+                title: draft.draft_data?.title,
+            },
+        });
 
         // Send rejection email to customer
         try {

@@ -1,0 +1,70 @@
+---
+/**
+ * Cloudflare Turnstile Widget Component.
+ *
+ * Embeds an invisible or managed CAPTCHA widget for bot protection.
+ * The widget automatically submits a token when the form is submitted.
+ *
+ * @see https://developers.cloudflare.com/turnstile/get-started/client-side-rendering/
+ */
+
+interface Props {
+  /**
+   * Optional action identifier for analytics/debugging.
+   * Max 32 alphanumeric characters.
+   */
+  action?: string;
+
+  /**
+   * Widget theme: 'light', 'dark', or 'auto'.
+   * Default: 'auto' (follows system preference).
+   */
+  theme?: 'light' | 'dark' | 'auto';
+
+  /**
+   * Widget size: 'normal', 'compact', or 'invisible'.
+   * Default: 'invisible' (no visible widget unless challenge needed).
+   */
+  size?: 'normal' | 'compact' | 'invisible';
+}
+
+const { action, theme = 'auto', size = 'invisible' } = Astro.props;
+
+// Site key is public - safe to expose in client-side code
+const siteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY || '';
+
+// Show placeholder in development if no key configured
+const isDev = import.meta.env.DEV;
+---
+
+{siteKey ? (
+  <div
+    class="cf-turnstile"
+    data-sitekey={siteKey}
+    data-theme={theme}
+    data-size={size}
+    data-action={action}
+    data-callback="onTurnstileSuccess"
+    data-error-callback="onTurnstileError"
+  ></div>
+) : isDev ? (
+  <div class="text-xs text-neutral-400 py-2">
+    [Dev] Turnstile widget (configure PUBLIC_TURNSTILE_SITE_KEY)
+  </div>
+) : null}
+
+<script is:inline src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
+<script is:inline>
+  // Global callbacks for Turnstile events
+  window.onTurnstileSuccess = function(token) {
+    console.log('[Turnstile] Challenge completed successfully');
+    // Token is automatically added to form as hidden input by Turnstile
+  };
+
+  window.onTurnstileError = function(error) {
+    console.error('[Turnstile] Error:', error);
+    // Optionally show user-friendly message
+  };
+</script>
+

@@ -9,6 +9,7 @@
 import type { APIRoute } from 'astro';
 import { supabase } from '../../../lib/supabase';
 import { sendJobApprovedEmail } from '../../../lib/email';
+import { logAdminAction } from '../../../lib/admin-log';
 
 export const prerender = false;
 
@@ -24,6 +25,8 @@ export const POST: APIRoute = async ({ request, cookies }) => {
                 { status: 401, headers: { 'Content-Type': 'application/json' } }
             );
         }
+
+        const adminIdentifier = `token:${validToken.slice(-4)}`;
 
         const body = await request.json();
         const { draft_id } = body;
@@ -131,6 +134,16 @@ export const POST: APIRoute = async ({ request, cookies }) => {
         }
 
         console.log(`✅ Draft ${draft_id} approved and published as job ${jobId}`);
+
+        await logAdminAction('approve_draft', {
+            draft_id,
+            job_id: jobId,
+            admin_identifier: adminIdentifier,
+            details: {
+                title: data.title,
+                company: data.company_name,
+            },
+        });
 
         // Send approval email to customer
         const siteUrl = import.meta.env.SITE || 'https://remotejobsbr.com';

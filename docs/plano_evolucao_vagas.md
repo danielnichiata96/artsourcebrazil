@@ -180,3 +180,4 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 7. **Criar orquestrador** para executar todos de uma vez
 8. **Implementar Garbage Collection** (agora sim, quando houver vagas antigas)
 9. **Automatizar** com GitHub Actions (daily sync)
+

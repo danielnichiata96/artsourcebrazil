@@ -1,13 +1,17 @@
 ---
 /**
  * Report Job Button Component
- * 
+ *
  * Displays a discrete button for users to report issues with a job posting.
  * Used for free QA - helps identify broken links, closed jobs, etc.
- * 
+ *
+ * Protected by: Cloudflare Turnstile (anti-bot)
+ *
  * Props:
  * - jobId: string - The ID of the job to report
  */
+
+import TurnstileWidget from './TurnstileWidget.astro';
 
 interface Props {
   jobId: string;
@@ -74,6 +78,11 @@ const { jobId } = Astro.props;
             <input type="radio" name="reason" value="Outro problema">
             <span>Outro problema</span>
           </label>
+        </div>
+
+        <!-- Turnstile Widget (invisible by default) -->
+        <div class="mt-4 flex justify-center">
+          <TurnstileWidget action="report-job" />
         </div>
 
         <div class="mt-6 flex gap-3 justify-end">
@@ -316,12 +325,16 @@ const { jobId } = Astro.props;
       submitBtn.textContent = 'Enviando...';
 
       try {
+        // Get Turnstile token if available
+        const turnstileInput = modal.querySelector('input[name="cf-turnstile-response"]') as HTMLInputElement;
+        const turnstileToken = turnstileInput?.value || '';
+
         const response = await fetch('/api/report-job', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ job_id: jobId, reason }),
+          body: JSON.stringify({ job_id: jobId, reason, turnstileToken }),
         });
 
         if (response.ok) {

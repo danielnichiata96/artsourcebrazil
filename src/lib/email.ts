@@ -10,8 +10,8 @@ const resend = new Resend(import.meta.env.RESEND_API_KEY);
 
 // Use Resend's test domain for development, custom domain for production
 const FROM_EMAIL = import.meta.env.PROD 
-    ? 'RemoteJobsBR <noreply@remotejobsbr.com>' 
-    : 'RemoteJobsBR <onboarding@resend.dev>';
+    ? 'Art Source Brazil <noreply@artsourcebrazil.com>' 
+    : 'Art Source Brazil <onboarding@resend.dev>';
 const REPLY_TO_EMAIL = 'artsourcebrazil@gmail.com';
 const SITE_URL = import.meta.env.SITE || 'https://remotejobsbr.com';
 
@@ -82,11 +82,11 @@ export async function sendPaymentConfirmationEmail(
             
             <p>Alguma dúvida? Responda este email.</p>
             
-            <p>Obrigado,<br><strong>Equipe RemoteJobsBR</strong></p>
+            <p>Obrigado,<br><strong>Equipe Art Source Brazil</strong></p>
         </div>
         
         <div class="footer">
-            <p>© ${new Date().getFullYear()} RemoteJobsBR - Vagas remotas para talentos brasileiros</p>
+            <p>© ${new Date().getFullYear()} Art Source Brazil - Vagas remotas para artistas criativos</p>
         </div>
     </div>
 </body>
@@ -161,11 +161,11 @@ export async function sendJobApprovedEmail(
             
             <p>Alguma dúvida? Responda este email.</p>
             
-            <p>Obrigado por usar RemoteJobsBR,<br><strong>Equipe RemoteJobsBR</strong></p>
+            <p>Obrigado por usar RemoteJobsBR,<br><strong>Equipe Art Source Brazil</strong></p>
         </div>
         
         <div class="footer">
-            <p>© ${new Date().getFullYear()} RemoteJobsBR - Vagas remotas para talentos brasileiros</p>
+            <p>© ${new Date().getFullYear()} Art Source Brazil - Vagas remotas para artistas criativos</p>
         </div>
     </div>
 </body>
@@ -250,11 +250,11 @@ export async function sendJobRejectedEmail(
             
             <p>Precisa de ajuda? Responda este email.</p>
             
-            <p>Obrigado pela compreensão,<br><strong>Equipe RemoteJobsBR</strong></p>
+            <p>Obrigado pela compreensão,<br><strong>Equipe Art Source Brazil</strong></p>
         </div>
         
         <div class="footer">
-            <p>© ${new Date().getFullYear()} RemoteJobsBR - Vagas remotas para talentos brasileiros</p>
+            <p>© ${new Date().getFullYear()} Art Source Brazil - Vagas remotas para artistas criativos</p>
         </div>
     </div>
 </body>
@@ -353,7 +353,7 @@ export async function sendJobReportEmail(data: {
         </div>
         
         <div class="footer">
-            <p>© ${new Date().getFullYear()} RemoteJobsBR - Sistema de Quality Assurance</p>
+            <p>© ${new Date().getFullYear()} Art Source Brazil - Sistema de Quality Assurance</p>
         </div>
     </div>
 </body>

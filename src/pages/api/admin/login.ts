@@ -7,11 +7,21 @@
  */
 
 import type { APIRoute } from 'astro';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../../../lib/rate-limit';
 
 export const prerender = false;
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     try {
+        const clientIp = getClientIp(request);
+        const rateKey = `admin-login:${clientIp}`;
+        const rateLimit = checkRateLimit(rateKey, RATE_LIMITS.ADMIN_LOGIN);
+
+        if (!rateLimit.allowed) {
+            console.warn('Admin login rate limited for IP:', clientIp);
+            return redirect('/admin/drafts?error=rate-limit');
+        }
+
         const formData = await request.formData();
         const password = formData.get('password') as string;
         

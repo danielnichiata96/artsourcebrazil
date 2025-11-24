@@ -18,6 +18,21 @@ const validToken = import.meta.env.ADMIN_TOKEN || 'admin123'; // Change in produ
 // Check for login error
 const loginError = Astro.url.searchParams.get('error');
 
+const contractOptions = [
+  { value: 'full-time', label: 'CLT (tempo integral)' },
+  { value: 'part-time', label: 'PJ (meio período)' },
+  { value: 'contract', label: 'Contrato/B2B' },
+  { value: 'freelance', label: 'Freelancer' },
+];
+
+const locationOptions = [
+  { value: 'remote-brazil', label: 'Remoto - Brasil' },
+  { value: 'remote-latam', label: 'Remoto - LATAM' },
+  { value: 'remote-worldwide', label: 'Remoto - Global' },
+  { value: 'hybrid', label: 'Híbrido' },
+  { value: 'onsite', label: 'Presencial' },
+];
+
 // Fetch pending drafts (paid, awaiting approval)
 let drafts: any[] = [];
 let error: string | null = null;
@@ -55,7 +70,12 @@ if (authToken === validToken) {
           
           {loginError && (
             <div class="bg-red-100 border-2 border-red-500 text-red-700 px-4 py-3 mb-4">
-              <strong>Erro:</strong> {loginError === 'invalid' ? 'Senha incorreta' : 'Erro ao fazer login'}
+              <strong>Erro:</strong>{' '}
+              {loginError === 'invalid'
+                ? 'Senha incorreta'
+                : loginError === 'rate-limit'
+                  ? 'Muitas tentativas. Aguarde alguns minutos e tente novamente.'
+                  : 'Erro ao fazer login'}
             </div>
           )}
           
@@ -218,7 +238,14 @@ if (authToken === validToken) {
                   </div>
 
                   <!-- Actions -->
-                  <div class="border-t-2 border-ink bg-neutral-50 p-4 flex items-center justify-end gap-3">
+                  <div class="border-t-2 border-ink bg-neutral-50 p-4 flex flex-wrap gap-3 justify-end">
+                    <button
+                      data-draft-id={draft.id}
+                      class="edit-btn bg-white text-neutral-700 font-bold uppercase tracking-wider px-6 py-2 border-2 border-neutral-300 hover:border-neutral-400 transition-colors"
+                    >
+                      Editar
+                    </button>
+
                     <button
                       data-draft-id={draft.id}
                       data-action="reject"
@@ -234,6 +261,108 @@ if (authToken === validToken) {
                     >
                       Aprovar & Publicar
                     </button>
+                  </div>
+
+                  <div class="edit-panel border-t border-neutral-200 bg-neutral-50 hidden" data-draft-id={draft.id}>
+                    <form class="edit-form p-6 space-y-4" data-draft-id={draft.id}>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Título da vaga
+                          <input name="title" value={data.title} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Empresa
+                          <input name="company_name" value={data.company_name} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Categoria
+                          <input name="category" value={data.category} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Email de contato
+                          <input name="email" value={draft.email} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Tipo de contrato
+                          <select name="contract_type" class="mt-1 w-full border-2 border-neutral-300 px-3 py-2">
+                            {contractOptions.map((option) => (
+                              <option value={option.value} selected={data.contract_type === option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Localização (escopo)
+                          <select name="location_scope" class="mt-1 w-full border-2 border-neutral-300 px-3 py-2">
+                            {locationOptions.map((option) => (
+                              <option value={option.value} selected={data.location_scope === option.value}>
+                                {option.label}
+                              </option>
+                            ))}
+                          </select>
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Localização (texto)
+                          <input name="location_text" value={data.location_text} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Link de aplicação
+                          <input name="application_url" value={data.application_url} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Logo da empresa (URL)
+                          <input name="company_logo_url" value={data.company_logo_url} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Salário mínimo
+                          <input type="number" name="salary_min" value={data.salary_min} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Salário máximo
+                          <input type="number" name="salary_max" value={data.salary_max} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+
+                        <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                          Moeda
+                          <input name="salary_currency" value={data.salary_currency || 'BRL'} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2" />
+                        </label>
+                      </div>
+
+                      <label class="block text-xs font-bold uppercase tracking-wider text-neutral-500">
+                        Descrição
+                        <textarea name="description" rows={6} class="mt-1 w-full border-2 border-neutral-300 px-3 py-2">{data.description}</textarea>
+                      </label>
+
+                      <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
+                        <div class="edit-status text-sm text-neutral-600" data-draft-id={draft.id}></div>
+                        <div class="flex gap-3 justify-end">
+                          <button
+                            type="button"
+                            class="edit-cancel-btn bg-white text-neutral-600 font-bold uppercase tracking-wider px-4 py-2 border-2 border-neutral-300"
+                            data-draft-id={draft.id}
+                          >
+                            Cancelar
+                          </button>
+                          <button
+                            type="submit"
+                            class="save-edit-btn bg-ink text-white font-bold uppercase tracking-wider px-6 py-2 border-2 border-ink"
+                          >
+                            Salvar alterações
+                          </button>
+                        </div>
+                      </div>
+                    </form>
                   </div>
                 </div>
               );
@@ -318,6 +447,82 @@ if (authToken === validToken) {
           alert('Erro ao rejeitar vaga. Tente novamente.');
           (e.target as HTMLButtonElement).disabled = false;
           (e.target as HTMLElement).textContent = 'Rejeitar';
+        }
+      });
+    });
+
+    const editPanels = document.querySelectorAll('.edit-panel');
+    const editButtons = document.querySelectorAll('.edit-btn');
+    const editForms = document.querySelectorAll('.edit-form');
+    const cancelButtons = document.querySelectorAll('.edit-cancel-btn');
+
+    const hideAllPanels = () => {
+      editPanels.forEach(panel => panel.classList.add('hidden'));
+    };
+
+    editButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const draftId = (btn as HTMLElement).dataset.draftId;
+        const targetPanel = document.querySelector(`.edit-panel[data-draft-id="${draftId}"]`);
+        if (!targetPanel) return;
+        if (targetPanel.classList.contains('hidden')) {
+          hideAllPanels();
+          targetPanel.classList.remove('hidden');
+        } else {
+          targetPanel.classList.add('hidden');
+        }
+      });
+    });
+
+    cancelButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const draftId = (btn as HTMLElement).dataset.draftId;
+        const targetPanel = document.querySelector(`.edit-panel[data-draft-id="${draftId}"]`);
+        targetPanel?.classList.add('hidden');
+      });
+    });
+
+    editForms.forEach(form => {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const draftId = (form as HTMLElement).dataset.draftId;
+        if (!draftId) return;
+
+        const submitBtn = form.querySelector('.save-edit-btn') as HTMLButtonElement;
+        const statusEl = form.querySelector('.edit-status') as HTMLDivElement;
+
+        const formData = new FormData(form as HTMLFormElement);
+        const updates: Record<string, string> = {};
+        formData.forEach((value, key) => {
+          updates[key] = (value as string).toString();
+        });
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Salvando...';
+        statusEl.textContent = 'Salvando alterações...';
+
+        try {
+          const response = await fetch('/api/admin/update-draft', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ draft_id: draftId, updates }),
+          });
+
+          const result = await response.json();
+
+          if (response.ok) {
+            statusEl.textContent = 'Alterações salvas com sucesso!';
+            setTimeout(() => window.location.reload(), 800);
+          } else {
+            statusEl.textContent = result.error || 'Erro ao salvar alterações.';
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Salvar alterações';
+          }
+        } catch (error) {
+          console.error('Error updating draft:', error);
+          statusEl.textContent = 'Erro inesperado. Tente novamente.';
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Salvar alterações';
         }
       });
     });

@@ -58,7 +58,14 @@ A página mostra todas as vagas com `status = 'paid'`:
    - Status do draft atualizado para `published`
    - Publicada no site imediatamente
 
-### 4. Rejeitar Vaga
+### 4. Editar Vaga Antes de Aprovar
+
+1. Clique em **"Editar"** no card da vaga
+2. Atualize título, empresa, categoria, link, salários ou descrição
+3. Clique em **"Salvar alterações"** (o sistema registra a edição e atualiza o draft)
+4. Após salvar, aprove normalmente (ou rejeite se necessário)
+
+### 5. Rejeitar Vaga
 
 1. Revise os detalhes da vaga
 2. Clique em **"Rejeitar"**
@@ -66,9 +73,9 @@ A página mostra todas as vagas com `status = 'paid'`:
 4. O draft será:
    - Status atualizado para `rejected`
    - Motivo salvo no banco
-   - Email enviado ao cliente (TODO)
+   - Email enviado ao cliente
 
-### 5. Fazer Logout
+### 6. Fazer Logout
 
 Clique em **"Logout"** no canto superior direito.
 
@@ -142,6 +149,31 @@ Rejeita um draft e salva o motivo.
 }
 ```
 
+### POST `/api/admin/update-draft`
+
+Atualiza campos do draft (corrigir título, descrição, etc.).
+
+**Body:**
+```json
+{
+  "draft_id": "uuid-do-draft",
+  "updates": {
+    "title": "Novo título",
+    "salary_min": 8000
+  }
+}
+```
+
+**Autenticação:** Cookie `admin_token`
+
+**Resposta:**
+```json
+{
+  "success": true,
+  "message": "Draft updated successfully"
+}
+```
+
 ### POST `/api/admin/logout`
 
 Remove o cookie de autenticação.
@@ -153,20 +185,20 @@ Remove o cookie de autenticação.
 - Cookie com `sameSite: 'lax'` e `secure` em produção
 - Validação de token em todas as APIs
 - Expiração de sessão (24 horas)
+- Rate limit: 5 tentativas de login/IP/hora
+- Audit log automático (`admin_activity_log`)
 
 ### Melhorias Futuras:
-- [ ] Múltiplos usuários admin (com banco de dados)
 - [ ] Autenticação OAuth (Google, GitHub)
-- [ ] Logs de auditoria (quem aprovou/rejeitou o quê)
 - [ ] Permissões granulares (aprovar vs editar vs deletar)
 - [ ] 2FA (autenticação de dois fatores)
 
 ## TODOs
 
-- [ ] Enviar email de aprovação para o cliente
-- [ ] Enviar email de rejeição com o motivo
+- [x] Enviar email de aprovação para o cliente
+- [x] Enviar email de rejeição com o motivo
 - [ ] Adicionar campo de observações do admin
-- [ ] Permitir editar draft antes de aprovar
+- [x] Permitir editar draft antes de aprovar
 - [ ] Dashboard com estatísticas (vagas aprovadas/rejeitadas)
 - [ ] Filtros por data, empresa, categoria
 - [ ] Busca de drafts

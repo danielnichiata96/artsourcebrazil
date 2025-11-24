@@ -130,12 +130,21 @@ export const RATE_LIMITS = {
   },
   
   /**
-   * Job posting: 1 submission per IP per 10 minutes
-   * Prevents accidental double-posts
+   * Job posting: 5 submissions per IP per 10 minutes
+   * Prevents accidental double-posts while allowing retries
    */
   JOB_POST: {
-    maxRequests: 1,
+    maxRequests: 5,
     windowSeconds: 10 * 60, // 10 minutes
+  },
+
+  /**
+   * Admin login: 5 attempts per IP per hour
+   * Prevents brute-force on the single admin token
+   */
+  ADMIN_LOGIN: {
+    maxRequests: 5,
+    windowSeconds: 60 * 60, // 1 hour
   },
 } as const;
 

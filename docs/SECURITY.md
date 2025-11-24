@@ -124,6 +124,16 @@ const sanitizedHtml = sanitizeHtml(rawHtml, {
 
 **Scope**: Sanitizes job descriptions and blog content from Markdown
 
+### 6. Admin Dashboard Hardening
+
+**Status: ✅ Implemented**
+
+- `/admin/drafts` é protegido por senha única (`ADMIN_TOKEN`) + cookie HTTP-only
+- Rate limit de 5 tentativas/IP/hora para evitar brute force
+- Todas as ações sensíveis (aprovar, rejeitar, editar) registradas em `admin_activity_log`
+- Histórico guarda `draft_id`, `job_id`, detalhes da ação e timestamp
+- Última edição manual registrada em `job_drafts.last_admin_edit_at`
+
 ## 🔍 Security Audit Checklist
 
 ### Completed ✅
@@ -138,13 +148,95 @@ const sanitizedHtml = sanitizeHtml(rawHtml, {
 - [x] JSON-LD schema properly escaped via `JSON.stringify()`
 
 ### Recommended Future Improvements 📋
-- [ ] Add rate limiting for "Post a Job" flow (prevent spam)
-- [ ] Implement CSRF tokens for form submissions
-- [ ] Add SRI (Subresource Integrity) for external scripts
-- [ ] Consider migrating to stricter CSP with `style-src-attr` + `style-src-elem`
-- [ ] Add security headers via middleware (X-Frame-Options, X-Content-Type-Options)
-- [ ] Implement CSP reporting endpoint to monitor violations
-- [ ] Add dependency scanning in CI (npm audit, Snyk, Dependabot)
+- [x] ~~Add rate limiting for "Post a Job" flow~~ ✅ *Implemented via Turnstile + IP rate limiting*
+- [ ] Consider migrating to stricter CSP with `style-src-attr` + `style-src-elem` *(deprioritized for MVP)*
+- [x] ~~Add security headers via middleware~~ ✅ *Added in `netlify.toml`*
+- [x] ~~Add dependency scanning in CI~~ ✅ *Dependabot + npm audit in CI*
+
+## 🚨 MVP Security Priorities
+
+### 1. ✅ Cloudflare Turnstile on Public Forms (IMPLEMENTED)
+
+**Status: Ready for activation**
+
+Turnstile is integrated into:
+- `/post-a-job/preview` - Job posting checkout flow
+- `ReportJobButton.astro` - Job reporting modal
+
+**Files:**
+- `src/lib/turnstile.ts` - Server-side token verification
+- `src/components/TurnstileWidget.astro` - Client-side widget component
+
+**To Activate:**
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/) → Turnstile
+2. Create a new site widget (choose "Invisible" mode)
+3. Copy keys to your `.env`:
+   ```bash
+   PUBLIC_TURNSTILE_SITE_KEY="0x..."   # Public (client-side)
+   TURNSTILE_SECRET_KEY="0x..."         # Secret (server-side only)
+   ```
+4. Add to Netlify environment variables
+
+**How it works:**
+- Widget loads invisibly on form pages
+- On submit, client sends `cf-turnstile-response` token
+- Server validates token via Cloudflare API before processing
+
+### 2. ✅ Dependency Scanning (IMPLEMENTED)
+
+**Status: Active**
+
+**Dependabot** configured in `.github/dependabot.yml`:
+- Weekly scans for npm vulnerabilities
+- Weekly scans for GitHub Actions updates
+- Auto-creates PRs for security patches
+- Groups minor/patch updates to reduce PR noise
+
+**CI/CD Security Step** in `.github/workflows/ci.yml`:
+```yaml
+- name: Security audit
+  run: npm audit --audit-level=moderate
+
+- name: Check for high/critical vulnerabilities
+  run: npm audit --audit-level=high
+```
+- Warns on moderate vulnerabilities
+- **Fails build** on high/critical vulnerabilities
+
+**To Enable Dependabot Alerts:**
+1. Go to GitHub repo → Settings → Code security and analysis
+2. Enable "Dependabot alerts" and "Dependabot security updates"
+
+### 3. ✅ Security Headers (IMPLEMENTED)
+
+**Status: Active**
+
+Configured in `netlify.toml`:
+
+```toml
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-DNS-Prefetch-Control = "on"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+```
+
+**What these do:**
+- `X-Frame-Options: DENY` → Prevents clickjacking attacks
+- `X-Content-Type-Options: nosniff` → Prevents MIME-type sniffing
+- `Referrer-Policy` → Controls referrer information in requests
+- `Permissions-Policy` → Disables unnecessary browser APIs
+
+## 🗑️ Deprioritized for MVP (Do NOT spend time now)
+
+- **Strict CSP / `style-src-elem`**: breaks icons/Stripe scripts; revisit post-launch.
+- **CSP Reporting Endpoint**: no security team to read reports yet.
+- **Subresource Integrity (SRI)**: very low risk vs. current priorities.
+- **CSRF tokens**: no authenticated user actions right now; Turnstile already blocks spam.
+- **Advanced auth (OAuth/2FA)**: plan for future admin multi-user support after launch.
 
 ## 🚨 Reporting Security Issues
 
@@ -161,6 +253,14 @@ If you discover a security vulnerability, please email: **artsourcebrazil@gmail.
 
 ---
 
-**Last Updated**: November 16, 2025  
+**Last Updated**: November 24, 2025  
 **Security Audit**: Passed ✅  
 **Next Review**: Before production launch
+
+ Próximos Passos
+Ativar Dependabot no GitHub:
+Repo → Settings → Code security and analysis → Enable Dependabot
+Criar site Turnstile no Cloudflare:
+https://dash.cloudflare.com/ → Turnstile → Create
+Copiar keys para variáveis de ambiente
+Deploy - As configurações serão aplicadas automaticamente

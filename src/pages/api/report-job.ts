@@ -1,21 +1,24 @@
 import type { APIRoute } from 'astro';
 import { supabase } from '../../lib/supabase';
 import { checkRateLimit, getClientIp, RATE_LIMITS } from '../../lib/rate-limit';
+import { verifyTurnstile } from '../../lib/turnstile';
 
 export const prerender = false;
 
 /**
  * API route to report a job
- * 
+ *
  * POST /api/report-job
- * Body: { job_id: string, reason?: string }
- * 
+ * Body: { job_id: string, reason?: string, turnstileToken?: string }
+ *
  * Rate limit: 3 reports per IP per hour
- * 
+ * Protected by: Cloudflare Turnstile (anti-bot)
+ *
  * Actions:
- * 1. Check rate limit (prevent spam)
- * 2. Mark job as reported in Supabase
- * 3. Send email notification to admin
+ * 1. Verify Turnstile token (anti-bot)
+ * 2. Check rate limit (prevent spam)
+ * 3. Mark job as reported in Supabase
+ * 4. Send email notification to admin
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
@@ -63,7 +66,19 @@ export const POST: APIRoute = async ({ request }) => {
       );
     }
 
-    const { job_id, reason } = JSON.parse(body);
+    const { job_id, reason, turnstileToken } = JSON.parse(body);
+
+    // 2.1 TURNSTILE VERIFICATION - Anti-bot protection
+    const turnstileResult = await verifyTurnstile(turnstileToken || '', clientIp);
+    if (!turnstileResult.success) {
+      return new Response(
+        JSON.stringify({
+          error: 'Captcha verification failed',
+          message: 'Por favor, tente novamente.',
+        }),
+        { status: 403, headers: { 'Content-Type': 'application/json' } }
+      );
+    }
 
     if (!job_id) {
       return new Response(
