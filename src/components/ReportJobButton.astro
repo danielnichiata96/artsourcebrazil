@@ -330,7 +330,15 @@ const { jobId } = Astro.props;
           successMsg.style.display = 'block';
         } else {
           const data = await response.json();
-          alert(`Erro ao reportar vaga: ${data.error || 'Tente novamente mais tarde'}`);
+          
+          // Handle rate limit specially
+          if (response.status === 429) {
+            const minutes = data.retryAfter || 60;
+            alert(`⚠️ Limite de reports atingido.\n\n${data.message || `Aguarde ${minutes} minutos antes de reportar novamente.`}`);
+          } else {
+            alert(`Erro ao reportar vaga: ${data.error || 'Tente novamente mais tarde'}`);
+          }
+          
           submitBtn.disabled = false;
           submitBtn.textContent = 'Enviar Report';
         }

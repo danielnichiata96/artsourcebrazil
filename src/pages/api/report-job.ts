@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { supabase } from '../../lib/supabase';
+import { checkRateLimit, getClientIp, RATE_LIMITS } from '../../lib/rate-limit';
 
 export const prerender = false;
 
@@ -9,13 +10,43 @@ export const prerender = false;
  * POST /api/report-job
  * Body: { job_id: string, reason?: string }
  * 
+ * Rate limit: 3 reports per IP per hour
+ * 
  * Actions:
- * 1. Mark job as reported in Supabase
- * 2. Send email notification to admin
+ * 1. Check rate limit (prevent spam)
+ * 2. Mark job as reported in Supabase
+ * 3. Send email notification to admin
  */
 export const POST: APIRoute = async ({ request }) => {
   try {
-    // Parse request body
+    // 1. RATE LIMITING - Prevent spam
+    const clientIp = getClientIp(request);
+    const rateLimit = checkRateLimit(clientIp, RATE_LIMITS.JOB_REPORT);
+    
+    if (!rateLimit.allowed) {
+      const resetDate = new Date(rateLimit.resetAt);
+      const minutesUntilReset = Math.ceil((rateLimit.resetAt - Date.now()) / 60000);
+      
+      return new Response(
+        JSON.stringify({ 
+          error: 'Rate limit exceeded. Too many reports from your IP address.',
+          retryAfter: minutesUntilReset,
+          message: `Você pode reportar novamente em ${minutesUntilReset} minutos.`
+        }),
+        { 
+          status: 429, // Too Many Requests
+          headers: { 
+            'Content-Type': 'application/json',
+            'Retry-After': String(Math.ceil((rateLimit.resetAt - Date.now()) / 1000)),
+            'X-RateLimit-Limit': String(RATE_LIMITS.JOB_REPORT.maxRequests),
+            'X-RateLimit-Remaining': String(rateLimit.remaining),
+            'X-RateLimit-Reset': String(Math.floor(rateLimit.resetAt / 1000)),
+          } 
+        }
+      );
+    }
+
+    // 2. Parse request body
     const contentType = request.headers.get('content-type');
     if (!contentType || !contentType.includes('application/json')) {
       return new Response(
@@ -93,9 +124,21 @@ export const POST: APIRoute = async ({ request }) => {
     return new Response(
       JSON.stringify({ 
         success: true, 
-        message: 'Job reported successfully. Thank you for helping us maintain quality!' 
+        message: 'Job reported successfully. Thank you for helping us maintain quality!',
+        rateLimit: {
+          remaining: rateLimit.remaining,
+          resetAt: rateLimit.resetAt,
+        }
       }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      { 
+        status: 200, 
+        headers: { 
+          'Content-Type': 'application/json',
+          'X-RateLimit-Limit': String(RATE_LIMITS.JOB_REPORT.maxRequests),
+          'X-RateLimit-Remaining': String(rateLimit.remaining),
+          'X-RateLimit-Reset': String(Math.floor(rateLimit.resetAt / 1000)),
+        } 
+      }
     );
 
   } catch (error) {

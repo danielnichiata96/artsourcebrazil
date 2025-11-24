@@ -78,6 +78,8 @@ CREATE INDEX idx_jobs_reported ON jobs(reported) WHERE reported = TRUE;
 
 ### `POST /api/report-job`
 
+**Rate Limit:** 3 reports per IP per hour
+
 **Request:**
 ```json
 {
@@ -86,15 +88,33 @@ CREATE INDEX idx_jobs_reported ON jobs(reported) WHERE reported = TRUE;
 }
 ```
 
-**Response (Success):**
+**Response (Success - 200):**
 ```json
 {
   "success": true,
-  "message": "Job reported successfully. Thank you for helping us maintain quality!"
+  "message": "Job reported successfully. Thank you for helping us maintain quality!",
+  "rateLimit": {
+    "remaining": 2,
+    "resetAt": 1700000000000
+  }
 }
 ```
 
-**Response (Error):**
+**Headers:**
+- `X-RateLimit-Limit: 3`
+- `X-RateLimit-Remaining: 2`
+- `X-RateLimit-Reset: 1700000000` (Unix timestamp)
+
+**Response (Rate Limited - 429):**
+```json
+{
+  "error": "Rate limit exceeded. Too many reports from your IP address.",
+  "retryAfter": 45,
+  "message": "Você pode reportar novamente em 45 minutos."
+}
+```
+
+**Response (Not Found - 404):**
 ```json
 {
   "error": "Job not found"
@@ -260,6 +280,33 @@ WHERE id = 'JOB-ID-HERE';
 
 ---
 
+## 🛡️ Proteção Anti-Spam
+
+### Rate Limiting (In-Memory)
+
+**Configuração:**
+- **Limite:** 3 reports por IP por hora
+- **Implementação:** In-memory store (simples e eficaz para MVP)
+- **Escala:** Suporta até ~10K requests/hora sem problemas
+- **Migração futura:** Se crescer, migre para Redis/Upstash
+
+**Por que funciona:**
+- ✅ Impede spam automatizado
+- ✅ Permite usuários legítimos reportarem múltiplas vagas
+- ✅ Zero custo adicional
+- ✅ Zero dependências externas
+- ✅ Reset automático em server restart (feature, não bug!)
+
+**Quando migrar para Redis:**
+- Quando tiver 50+ reports/dia consistentemente
+- Quando precisar de persistência entre deploys
+- Quando tiver múltiplas instâncias serverless
+
+**Filosofia:**
+> "Use a solução mais simples que funciona. Otimize quando doer." - YAGNI
+
+---
+
 ## ⚙️ Configuração
 
 ### Variáveis de Ambiente:
@@ -299,9 +346,32 @@ Sistema completo e pronto para produção. Basta:
 
 1. **Responda rápido**: Usuários que reportam se sentem ouvidos quando você age rápido
 2. **Agradeça**: Considere um email de follow-up agradecendo pelo report
-3. **Monitore**: Crie uma planilha ou dashboard para track reports
+3. **Monitore**: Use queries SQL no Supabase (não crie dashboard até ter 50+ reports/dia)
 4. **Melhore**: Use os reports para identificar padrões (ex: empresa X sempre tem links quebrados)
-5. **Automatize**: Futuramente, auto-hide vagas com 3+ reports
+5. **Confie no email**: Não construa admin UI até realmente precisar
+6. **KISS**: Keep It Simple, Stupid - a solução mais simples geralmente é a melhor
+
+---
+
+## 🚫 O Que NÃO Fazer (Ainda)
+
+### Não construa até precisar:
+- ❌ Admin dashboard customizado (use Supabase + email)
+- ❌ Sistema de moderação complexo (manual é OK até 50/dia)
+- ❌ Rate limiting com Redis (in-memory é suficiente)
+- ❌ Histórico de reports por vaga (query SQL quando precisar)
+- ❌ Notificações em tempo real (email é suficiente)
+- ❌ Sistema de pontos/gamificação (foco na qualidade primeiro)
+
+### Construa quando:
+- ✅ Receber 50+ reports/dia consistentemente
+- ✅ Não conseguir mais gerenciar manualmente
+- ✅ Email virar spam na sua caixa de entrada
+- ✅ Queries SQL começarem a travar
+
+**Filosofia:**
+> "Premature optimization is the root of all evil" - Donald Knuth  
+> "Make it work, make it right, make it fast - in that order" - Kent Beck
 
 ---
 
