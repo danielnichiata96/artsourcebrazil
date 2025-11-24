@@ -10,15 +10,16 @@
     "postedDate": "2025-11-10T13:03:22-05:00",
     "category": "3D",
     "tags": [
-      "Senior",
+      "Unity",
+      "Git",
       "3D",
       "2D",
-      "Artist",
       "Animation",
+      "Artist",
       "AI",
+      "Mobile",
       "Game Dev",
-      "Unity",
-      "Git"
+      "Engine"
     ],
     "location": {
       "scope": "hybrid",
@@ -39,7 +40,10 @@
     "category": "Game Dev",
     "tags": [
       "Unity",
-      "Mobile"
+      "Design",
+      "Artist",
+      "Mobile",
+      "Game Dev"
     ],
     "location": {
       "scope": "hybrid",
@@ -59,9 +63,14 @@
     "postedDate": "2025-10-24T15:58:09-04:00",
     "category": "Game Dev",
     "tags": [
+      "Python",
+      "Go",
+      "AWS",
       "Kubernetes",
-      "Git",
-      "CI/CD"
+      "CI/CD",
+      "Design",
+      "Mobile",
+      "Game Dev"
     ],
     "location": {
       "scope": "remote-worldwide",
@@ -104,12 +113,15 @@
     "postedDate": "2025-09-09T17:47:02-04:00",
     "category": "2D Art",
     "tags": [
-      "Senior",
+      "3D",
       "2D",
+      "Animation",
+      "Design",
       "Artist",
-      "Game Dev",
       "AI",
-      "Mobile"
+      "Mobile",
+      "Game Dev",
+      "Senior"
     ],
     "location": {
       "scope": "hybrid",
@@ -129,12 +141,14 @@
     "postedDate": "2025-11-13T13:19:07-05:00",
     "category": "2D Art",
     "tags": [
+      "3D",
       "2D",
+      "Animation",
+      "Design",
       "Artist",
       "AI",
       "Mobile",
       "Game Dev",
-      "Design",
       "Senior"
     ],
     "location": {
@@ -180,6 +194,9 @@
     "category": "Game Dev",
     "tags": [
       "Python",
+      "AI",
+      "Mobile",
+      "Game Dev",
       "Senior"
     ],
     "location": {
@@ -200,16 +217,13 @@
     "postedDate": "2025-07-30T15:04:50-04:00",
     "category": "Game Dev",
     "tags": [
-      "Senior",
-      "Game Dev",
-      "Mobile",
-      "C++",
-      "Java",
-      "C#",
       "Unity",
       "JavaScript",
-      "Node.js",
-      "Kubernetes"
+      "Java",
+      "Kubernetes",
+      "Mobile",
+      "Game Dev",
+      "Senior"
     ],
     "location": {
       "scope": "hybrid",
@@ -229,16 +243,13 @@
     "postedDate": "2025-09-09T19:12:31-04:00",
     "category": "Game Dev",
     "tags": [
-      "Senior",
-      "Game Dev",
-      "Mobile",
-      "C++",
-      "Java",
-      "C#",
       "Unity",
       "JavaScript",
-      "Node.js",
-      "Kubernetes"
+      "Java",
+      "Kubernetes",
+      "Mobile",
+      "Game Dev",
+      "Senior"
     ],
     "location": {
       "scope": "hybrid",
@@ -260,13 +271,12 @@
     "tags": [
       "JavaScript",
       "TypeScript",
-      "C#",
-      "Senior",
-      "2D",
-      "Animation",
+      "Node.js",
+      "Git",
       "Design",
-      "Artist",
-      "Game Dev"
+      "Mobile",
+      "Game Dev",
+      "Senior"
     ],
     "location": {
       "scope": "hybrid",
@@ -286,11 +296,15 @@
     "postedDate": "2025-10-24T14:09:24-04:00",
     "category": "Game Dev",
     "tags": [
+      "Unity",
       "Python",
       "Go",
+      "AWS",
       "Kubernetes",
-      "Git",
       "CI/CD",
+      "Design",
+      "Mobile",
+      "Game Dev",
       "Senior"
     ],
     "location": {
@@ -311,6 +325,7 @@
     "postedDate": "2025-09-16T12:17:35-04:00",
     "category": "Game Dev",
     "tags": [
+      "Design",
       "Mobile",
       "Game Dev"
     ],
