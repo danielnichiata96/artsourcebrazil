@@ -3,7 +3,6 @@ import {
   FILTER_CONFIG,
   SITE_CONFIG,
   FILTER_DEFAULTS,
-  CATEGORY_ICONS,
   FALLBACK_NAVBAR_HEIGHT,
 } from '../../src/lib/constants';
 
@@ -19,23 +18,36 @@ describe('constants', () => {
     });
   });
 
-  describe('CATEGORY_ICONS', () => {
-    it('has icons for all main categories', () => {
-      expect(CATEGORY_ICONS['Game Dev']).toBeDefined();
-      expect(CATEGORY_ICONS['3D']).toBeDefined();
-      expect(CATEGORY_ICONS['2D Art']).toBeDefined();
-      expect(CATEGORY_ICONS['Animation']).toBeDefined();
-      expect(CATEGORY_ICONS['Design']).toBeDefined();
-      expect(CATEGORY_ICONS['VFX']).toBeDefined();
+  describe('SITE_CONFIG', () => {
+    it('has valid site URL', () => {
+      expect(SITE_CONFIG.SITE_URL).toMatch(/^https?:\/\//);
     });
 
-    it('has correct emoji mapping', () => {
-      expect(CATEGORY_ICONS['Game Dev']).toBe('🎮');
-      expect(CATEGORY_ICONS['3D']).toBe('🎨');
-      expect(CATEGORY_ICONS['2D Art']).toBe('🖼️');
-      expect(CATEGORY_ICONS['Animation']).toBe('🎬');
-      expect(CATEGORY_ICONS['Design']).toBe('🎯');
-      expect(CATEGORY_ICONS['VFX']).toBe('✨');
+    it('has site name defined', () => {
+      expect(SITE_CONFIG.SITE_NAME).toBeTruthy();
+      expect(SITE_CONFIG.SITE_NAME.length).toBeGreaterThan(0);
+    });
+
+    it('has default metadata', () => {
+      expect(SITE_CONFIG.META.TITLE).toBeTruthy();
+      expect(SITE_CONFIG.META.DESCRIPTION).toBeTruthy();
+    });
+  });
+
+  describe('FILTER_DEFAULTS', () => {
+    it('has default category as "all"', () => {
+      expect(FILTER_DEFAULTS.CATEGORY).toBe('all');
+    });
+
+    it('has empty search by default', () => {
+      expect(FILTER_DEFAULTS.SEARCH).toBe('');
+    });
+
+    it('has empty array defaults for advanced filters', () => {
+      expect(Array.isArray(FILTER_DEFAULTS.LEVEL)).toBe(true);
+      expect(Array.isArray(FILTER_DEFAULTS.TOOLS)).toBe(true);
+      expect(Array.isArray(FILTER_DEFAULTS.CONTRACT)).toBe(true);
+      expect(Array.isArray(FILTER_DEFAULTS.LOCATION)).toBe(true);
     });
   });
 });
