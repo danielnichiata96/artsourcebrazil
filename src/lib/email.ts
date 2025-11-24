@@ -275,3 +275,102 @@ export async function sendJobRejectedEmail(
     }
 }
 
+/**
+ * Send job report notification to admin
+ * Sent when a user reports a problem with a job
+ */
+export async function sendJobReportEmail(data: {
+  jobId: string;
+  jobTitle: string;
+  companyName: string;
+  applyLink: string;
+  reason: string;
+}) {
+  try {
+    const { data: emailData, error } = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: [REPLY_TO_EMAIL], // Send to admin
+      reply_to: REPLY_TO_EMAIL,
+      subject: `⚠️ Vaga Reportada: ${data.jobTitle}`,
+      html: `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; line-height: 1.6; color: #333; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background: #FF6B6B; border: 2px solid #000; padding: 20px; margin-bottom: 20px; color: #fff; }
+        .content { background: #fff; border: 2px solid #000; padding: 30px; }
+        .footer { margin-top: 20px; padding: 20px; text-align: center; font-size: 14px; color: #666; }
+        h1 { margin: 0 0 10px 0; font-size: 24px; }
+        .details { background: #f9f9f9; border: 1px solid #ddd; padding: 20px; margin: 20px 0; }
+        .reason { background: #fff3cd; border-left: 4px solid #ffc107; padding: 15px; margin: 20px 0; }
+        .actions { background: #e3f2fd; border: 1px solid #0284c7; padding: 20px; margin: 20px 0; }
+        .actions ul { margin: 10px 0; padding-left: 20px; }
+        .button { display: inline-block; background: #000; color: #fff; padding: 12px 24px; text-decoration: none; font-weight: bold; margin: 10px 0; border-radius: 4px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>⚠️ Vaga Reportada por Usuário</h1>
+        </div>
+        
+        <div class="content">
+            <p>Um usuário reportou um problema com uma vaga publicada no site.</p>
+            
+            <div class="details">
+                <p><strong>📋 Detalhes da Vaga:</strong></p>
+                <ul style="margin: 10px 0; padding-left: 20px;">
+                    <li><strong>ID:</strong> <code>${data.jobId}</code></li>
+                    <li><strong>Título:</strong> ${data.jobTitle}</li>
+                    <li><strong>Empresa:</strong> ${data.companyName}</li>
+                    <li><strong>Link:</strong> <a href="${data.applyLink}">${data.applyLink}</a></li>
+                </ul>
+            </div>
+            
+            <div class="reason">
+                <p><strong>🚨 Motivo do Report:</strong></p>
+                <p><em>"${data.reason}"</em></p>
+            </div>
+            
+            <div class="actions">
+                <p><strong>✅ Ações Recomendadas:</strong></p>
+                <ul>
+                    <li>Verificar se o link de aplicação está funcionando</li>
+                    <li>Confirmar se a vaga ainda está aberta</li>
+                    <li>Atualizar informações se necessário</li>
+                    <li>Remover a vaga se estiver fechada</li>
+                </ul>
+            </div>
+            
+            <p style="text-align: center;">
+                <a href="https://app.supabase.com/project/gngikjgqarfeyxfvgzhp/editor" class="button">Acessar Supabase</a>
+            </p>
+            
+            <p><small>⚙️ Este report foi gerado automaticamente pelo sistema de QA gratuito. A vaga foi marcada como <code>reported: true</code> no banco de dados.</small></p>
+        </div>
+        
+        <div class="footer">
+            <p>© ${new Date().getFullYear()} RemoteJobsBR - Sistema de Quality Assurance</p>
+        </div>
+    </div>
+</body>
+</html>
+      `,
+    });
+
+    if (error) {
+      console.error('❌ Failed to send job report email:', error);
+      throw error;
+    }
+
+    console.log(`📧 Job report email sent for ${data.jobId}`);
+    return emailData;
+  } catch (error) {
+    console.error('Email sending error:', error);
+    return null;
+  }
+}
+

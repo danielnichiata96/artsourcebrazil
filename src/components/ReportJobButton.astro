@@ -1,0 +1,346 @@
+---
+/**
+ * Report Job Button Component
+ * 
+ * Displays a discrete button for users to report issues with a job posting.
+ * Used for free QA - helps identify broken links, closed jobs, etc.
+ * 
+ * Props:
+ * - jobId: string - The ID of the job to report
+ */
+
+interface Props {
+  jobId: string;
+}
+
+const { jobId } = Astro.props;
+---
+
+<div class="report-job-container">
+  <button
+    type="button"
+    data-job-id={jobId}
+    class="report-job-btn"
+    aria-label="Reportar problema com esta vaga"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 256 256">
+      <path d="M236.8,188.09,149.35,36.22h0a24.76,24.76,0,0,0-42.7,0L19.2,188.09a23.51,23.51,0,0,0,0,23.72A24.35,24.35,0,0,0,40.55,224h174.9a24.35,24.35,0,0,0,21.33-12.19A23.51,23.51,0,0,0,236.8,188.09ZM222.93,203.8a8.5,8.5,0,0,1-7.48,4.2H40.55a8.5,8.5,0,0,1-7.48-4.2,7.59,7.59,0,0,1,0-7.72L120.52,44.21a8.75,8.75,0,0,1,15,0l87.45,151.87A7.59,7.59,0,0,1,222.93,203.8ZM120,144V104a8,8,0,0,1,16,0v40a8,8,0,0,1-16,0Zm20,36a12,12,0,1,1-12-12A12,12,0,0,1,140,180Z"></path>
+    </svg>
+    <span>Reportar problema</span>
+  </button>
+
+  <!-- Modal -->
+  <div class="report-modal" id="report-modal" role="dialog" aria-labelledby="report-modal-title" aria-hidden="true">
+    <div class="report-modal-backdrop"></div>
+    <div class="report-modal-content">
+      <div class="report-modal-header">
+        <h3 id="report-modal-title" class="font-display text-xl font-bold text-ink">
+          Reportar Problema
+        </h3>
+        <button type="button" class="report-modal-close" aria-label="Fechar">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 256 256">
+            <path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <form class="report-form">
+        <p class="text-sm text-neutral-600 mb-4">
+          Ajude-nos a manter a qualidade! Selecione o problema encontrado:
+        </p>
+
+        <div class="space-y-2">
+          <label class="report-radio-label">
+            <input type="radio" name="reason" value="Link quebrado ou não funciona" checked>
+            <span>Link quebrado ou não funciona</span>
+          </label>
+
+          <label class="report-radio-label">
+            <input type="radio" name="reason" value="Vaga já foi preenchida">
+            <span>Vaga já foi preenchida</span>
+          </label>
+
+          <label class="report-radio-label">
+            <input type="radio" name="reason" value="Informações incorretas">
+            <span>Informações incorretas</span>
+          </label>
+
+          <label class="report-radio-label">
+            <input type="radio" name="reason" value="Vaga duplicada">
+            <span>Vaga duplicada</span>
+          </label>
+
+          <label class="report-radio-label">
+            <input type="radio" name="reason" value="Outro problema">
+            <span>Outro problema</span>
+          </label>
+        </div>
+
+        <div class="mt-6 flex gap-3 justify-end">
+          <button
+            type="button"
+            class="report-cancel-btn"
+          >
+            Cancelar
+          </button>
+          
+          <button
+            type="submit"
+            class="report-submit-btn"
+          >
+            Enviar Report
+          </button>
+        </div>
+      </form>
+
+      <!-- Success message (hidden by default) -->
+      <div class="report-success" style="display: none;">
+        <div class="text-center py-8">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="currentColor" viewBox="0 0 256 256" class="mx-auto text-brazil-green mb-4">
+            <path d="M173.66,98.34a8,8,0,0,1,0,11.32l-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35A8,8,0,0,1,173.66,98.34ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path>
+          </svg>
+          <h4 class="font-display text-lg font-bold text-ink mb-2">
+            Obrigado pelo report!
+          </h4>
+          <p class="text-sm text-neutral-600">
+            Vamos verificar e corrigir o problema em breve.
+          </p>
+        </div>
+        <button type="button" class="report-modal-close-success w-full mt-4 bg-ink text-white font-bold uppercase tracking-wider px-6 py-3 border-2 border-ink hover:bg-white hover:text-ink transition-colors">
+          Fechar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .report-job-container {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e5e5;
+  }
+
+  .report-job-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: #737373;
+    background: transparent;
+    border: none;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    transition: color 0.2s;
+  }
+
+  .report-job-btn:hover {
+    color: #171717;
+  }
+
+  .report-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .report-modal.active {
+    display: flex;
+  }
+
+  .report-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+  }
+
+  .report-modal-content {
+    position: relative;
+    background: white;
+    border: 2px solid #171717;
+    max-width: 500px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 8px 8px 0 rgba(23, 23, 23, 1);
+  }
+
+  .report-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .report-modal-close {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #737373;
+    transition: color 0.2s;
+  }
+
+  .report-modal-close:hover {
+    color: #171717;
+  }
+
+  .report-radio-label {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    border: 2px solid #e5e5e5;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .report-radio-label:hover {
+    border-color: #171717;
+    background: #fafafa;
+  }
+
+  .report-radio-label input[type="radio"] {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+  }
+
+  .report-radio-label input[type="radio"]:checked + span {
+    font-weight: 600;
+  }
+
+  .report-cancel-btn {
+    background: white;
+    color: #737373;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #e5e5e5;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .report-cancel-btn:hover {
+    border-color: #171717;
+    color: #171717;
+  }
+
+  .report-submit-btn {
+    background: #171717;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.75rem 1.5rem;
+    border: 2px solid #171717;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .report-submit-btn:hover {
+    background: white;
+    color: #171717;
+  }
+
+  .report-submit-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const reportBtn = document.querySelector('.report-job-btn') as HTMLButtonElement;
+    const modal = document.getElementById('report-modal') as HTMLDivElement;
+    const closeBtn = modal?.querySelector('.report-modal-close') as HTMLButtonElement;
+    const cancelBtn = modal?.querySelector('.report-cancel-btn') as HTMLButtonElement;
+    const closeSuccessBtn = modal?.querySelector('.report-modal-close-success') as HTMLButtonElement;
+    const backdrop = modal?.querySelector('.report-modal-backdrop') as HTMLDivElement;
+    const form = modal?.querySelector('.report-form') as HTMLFormElement;
+    const successMsg = modal?.querySelector('.report-success') as HTMLDivElement;
+
+    if (!reportBtn || !modal || !form) return;
+
+    // Open modal
+    reportBtn.addEventListener('click', () => {
+      modal.classList.add('active');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    });
+
+    // Close modal
+    const closeModal = () => {
+      modal.classList.remove('active');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      
+      // Reset form after closing
+      setTimeout(() => {
+        form.style.display = '';
+        successMsg.style.display = 'none';
+        form.reset();
+      }, 300);
+    };
+
+    closeBtn?.addEventListener('click', closeModal);
+    cancelBtn?.addEventListener('click', closeModal);
+    closeSuccessBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && modal.classList.contains('active')) {
+        closeModal();
+      }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const jobId = reportBtn.dataset.jobId;
+      const reason = (form.querySelector('input[name="reason"]:checked') as HTMLInputElement)?.value;
+      const submitBtn = form.querySelector('.report-submit-btn') as HTMLButtonElement;
+
+      if (!jobId || !reason) return;
+
+      // Disable button
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+
+      try {
+        const response = await fetch('/api/report-job', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ job_id: jobId, reason }),
+        });
+
+        if (response.ok) {
+          // Show success message
+          form.style.display = 'none';
+          successMsg.style.display = 'block';
+        } else {
+          const data = await response.json();
+          alert(`Erro ao reportar vaga: ${data.error || 'Tente novamente mais tarde'}`);
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar Report';
+        }
+      } catch (error) {
+        console.error('Error reporting job:', error);
+        alert('Erro ao reportar vaga. Tente novamente mais tarde.');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar Report';
+      }
+    });
+  });
+</script>
+

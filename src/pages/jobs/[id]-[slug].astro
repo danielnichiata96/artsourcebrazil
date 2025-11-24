@@ -11,6 +11,7 @@ import Badge from '../../components/ui/Badge.astro';
 import Card from '../../components/ui/Card.astro';
 import Link from '../../components/ui/Link.astro';
 import Breadcrumb from '../../components/ui/Breadcrumb.astro';
+import ReportJobButton from '../../components/ReportJobButton.astro';
 import { slugify } from '../../lib/jobs';
 import type { Job } from '../../lib/jobs';
 import { renderMarkdownToHtml, markdownToPlainText } from '../../lib/helpers/markdown';
@@ -197,6 +198,9 @@ const breadcrumbs = {
           <div class="mt-6 pt-6 border-t-2 border-ink">
             <ShareButtons url={canonicalUrl} title={job.jobTitle} locale={locale} className="justify-start" />
           </div>
+
+          <!-- Report Job Button -->
+          <ReportJobButton jobId={job.id} />
         </Card>
       </article>
 
