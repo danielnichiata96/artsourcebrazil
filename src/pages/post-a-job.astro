@@ -1,65 +1,654 @@
 ---
 import Layout from '../layouts/Layout.astro';
-import Card from '../components/ui/Card.astro';
 import Button from '../components/ui/Button.astro';
-import Link from '../components/ui/Link.astro';
+import { CATEGORIES } from '../lib/categories';
 
-const site = Astro.site ?? new URL('http://localhost:4321');
-const canonicalUrl = new URL(Astro.url.pathname, site).href;
 const seo = {
-  title: 'Post a Job — Art Source Brazil',
-  description:
-    "Reach Brazil's top creative talent in Game Dev, 3D & Animation, and UI/UX. Post your remote role in minutes.",
-  image: new URL('/images/og-default.svg', site).href,
-  url: canonicalUrl,
+  title: 'Postar Vaga — Art Source Brazil',
+  description: 'Publique sua vaga remota e alcance os melhores talentos criativos do Brasil em Game Dev, 3D, VFX e Animation.',
 };
-// Safe fallbacks for envs so builds don't fail if not configured yet
-const paymentLink = import.meta.env.PUBLIC_STRIPE_PAYMENT_LINK ?? '#';
-const jobFormUrl = import.meta.env.PUBLIC_JOB_FORM_URL ?? '#';
 ---
 
 <Layout seo={seo}>
-  <main class="container mx-auto px-container py-12">
-    <div class="mx-auto max-w-3xl text-center">
+  <main class="container mx-auto px-4 py-12 max-w-4xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
       <div class="inline-flex items-center gap-2 border-2 border-ink bg-white px-3 py-1 mb-6 shadow-hard-sm">
-          <span class="w-2 h-2 rounded-full bg-brazil-green animate-pulse"></span>
-          <span class="text-xs font-bold uppercase tracking-widest">Contratação Simplificada</span>
+        <span class="w-2 h-2 rounded-full bg-brazil-green animate-pulse"></span>
+        <span class="text-xs font-bold uppercase tracking-widest">Preencha Primeiro, Pague Depois</span>
       </div>
       
-      <div class="border-2 border-ink bg-white p-8 md:p-12 shadow-hard relative overflow-hidden">
-        <div class="absolute top-0 left-0 w-full h-2 bg-brazil-hero"></div>
-        
-        <h1 class="font-display text-4xl md:text-5xl font-bold text-ink mb-6">Anunciar Vaga</h1>
-        <p class="text-xl leading-relaxed text-neutral-600 mb-10">
-          Seu anúncio fica 30 dias no ar e chega direto nos melhores talentos criativos do Brasil.
-        </p>
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-ink mb-4">
+        Publicar Vaga
+      </h1>
+      <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+        Preencha os detalhes da vaga, veja o preview, e publique por <span class="font-bold text-ink">$99 USD</span> (30 dias no ar).
+      </p>
+    </div>
 
-        <div class="mb-10 bg-neutral-50 border-2 border-dashed border-neutral-300 p-8 rounded-lg">
-          <div class="flex items-center justify-center gap-2 mb-2">
-             <span class="text-5xl font-bold text-ink">$99</span>
-             <span class="text-xl font-bold text-neutral-500 self-end mb-2">USD</span>
-          </div>
-          <p class="text-neutral-600 font-medium">
-            Sua vaga fica 30 dias no ar pra uma comunidade focada em arte e games.
-          </p>
-        </div>
-
-        <Button
-          href={paymentLink}
-          size="lg"
-          variant="primary"
-          class="w-full md:w-auto md:px-12"
-          aria-label="Ir para pagamento"
-        >
-          Pagar e anunciar vaga
-        </Button>
-
-        <p class="mt-8 text-sm text-neutral-500 max-w-lg mx-auto">
-          Depois do pagamento, você preenche um formulário rápido com os detalhes da vaga.
-          Se não abrir automaticamente, é só <Link href={jobFormUrl} target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">clicar aqui</Link>.
-          Dúvidas? Manda email pra <Link href="mailto:artsourcebrazil@gmail.com" class="font-bold text-primary hover:underline">artsourcebrazil@gmail.com</Link>
-        </p>
+    <!-- Progress Steps -->
+    <div class="mb-12 flex items-center justify-center gap-4">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-brazil-yellow flex items-center justify-center font-bold text-sm">1</div>
+        <span class="font-semibold text-sm uppercase">Preencher</span>
+      </div>
+      <div class="w-12 h-0.5 bg-neutral-300"></div>
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-neutral-300 bg-white flex items-center justify-center font-bold text-sm">2</div>
+        <span class="font-semibold text-sm uppercase">Preview</span>
+      </div>
+      <div class="w-12 h-0.5 bg-neutral-300"></div>
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-neutral-300 bg-white flex items-center justify-center font-bold text-sm">3</div>
+        <span class="font-semibold text-sm uppercase">Publicar</span>
       </div>
     </div>
+
+    <!-- Form -->
+    <form id="job-post-form" class="border-2 border-ink bg-white p-8 shadow-hard space-y-8">
+      <!-- Contact Info (First!) -->
+      <div class="bg-brazil-yellow/10 border-2 border-brazil-yellow p-6 space-y-4">
+        <h2 class="font-display text-xl font-bold text-ink mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 256 256">
+            <polyline points="224 56 128 144 32 56" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+            <path d="M32,56H224a0,0,0,0,1,0,0V192a8,8,0,0,1-8,8H40a8,8,0,0,1-8-8V56A0,0,0,0,1,32,56Z" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+            <line x1="110.55" y1="128" x2="34.47" y2="197.74" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+            <line x1="221.53" y1="197.74" x2="145.45" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+          Informações de Contato
+        </h2>
+        
+        <div>
+          <label for="email" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Seu Email <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            required
+            value="test@artsourcebrazil.com"
+            placeholder="recrutador@empresa.com"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+          <p class="text-xs text-neutral-600 mt-1">Para recuperar seu rascunho e receber confirmação</p>
+        </div>
+
+        <div>
+          <label for="company_name" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Nome da Empresa <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="company_name"
+            name="company_name"
+            required
+            value="Art Source Brazil"
+            placeholder="Ex: Wildlife Studios"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+        </div>
+      </div>
+
+      <!-- Job Details -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl font-bold text-ink border-b-2 border-ink pb-2">Detalhes da Vaga</h2>
+        
+        <div>
+          <label for="title" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Título da Vaga <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="title"
+            name="title"
+            required
+            maxlength="100"
+            value="Senior 3D Artist - Game Characters"
+            placeholder="Ex: Senior 3D Artist - Game Characters"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+          <p class="text-xs text-neutral-600 mt-1">Máximo 100 caracteres</p>
+        </div>
+
+        <div>
+          <label for="description" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Descrição <span class="text-red-500">*</span>
+          </label>
+          <textarea
+            id="description"
+            name="description"
+            required
+            rows="12"
+            maxlength="5000"
+            placeholder="Descreva a vaga, responsabilidades, requisitos, benefícios...
+
+Você pode usar Markdown para formatação:
+- **Negrito**
+- *Itálico*
+- # Títulos
+- - Listas"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue font-mono text-sm"
+          >Estamos procurando um Senior 3D Artist para criar personagens incríveis para nossos jogos.
+
+**Responsabilidades:**
+- Criar modelos 3D de alta qualidade
+- Trabalhar com Blender e Maya
+- Colaborar com a equipe de arte
+
+**Requisitos:**
+- 5+ anos de experiência
+- Portfólio forte
+- Conhecimento em Unity</textarea>
+          <p class="text-xs text-neutral-600 mt-1">Máximo 5000 caracteres. Suporta Markdown.</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label for="category" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+              Categoria <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="category"
+              name="category"
+              required
+              class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+            >
+              <option value="">Selecione...</option>
+              {CATEGORIES.map(cat => (
+                <option value={cat}>{cat}</option>
+              ))}
+            </select>
+          </div>
+
+          <div>
+            <label for="contract_type" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+              Tipo de Contrato <span class="text-red-500">*</span>
+            </label>
+            <select
+              id="contract_type"
+              name="contract_type"
+              required
+              class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+            >
+              <option value="">Selecione...</option>
+              <option value="full-time">Full-time</option>
+              <option value="part-time">Part-time</option>
+              <option value="contract">Contract</option>
+              <option value="freelance">Freelance</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Location -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl font-bold text-ink border-b-2 border-ink pb-2">Localização</h2>
+        
+        <div>
+          <label for="location_scope" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Escopo <span class="text-red-500">*</span>
+          </label>
+          <select
+            id="location_scope"
+            name="location_scope"
+            required
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          >
+            <option value="">Selecione...</option>
+            <option value="remote-brazil">Remoto (Brasil)</option>
+            <option value="remote-worldwide">Remoto (Global)</option>
+            <option value="hybrid">Híbrido</option>
+            <option value="onsite">Presencial</option>
+          </select>
+        </div>
+
+        <div id="location-text-container" class="hidden">
+          <label for="location_text" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Cidade/Estado
+          </label>
+          <input
+            type="text"
+            id="location_text"
+            name="location_text"
+            placeholder="Ex: São Paulo, SP"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+          <p class="text-xs text-neutral-600 mt-1">Obrigatório para híbrido/presencial</p>
+        </div>
+      </div>
+
+      <!-- Salary (Optional) -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl font-bold text-ink border-b-2 border-ink pb-2">Salário (Opcional)</h2>
+        
+        <div class="grid md:grid-cols-3 gap-4">
+          <div>
+            <label for="salary_min" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+              Mínimo
+            </label>
+            <input
+              type="number"
+              id="salary_min"
+              name="salary_min"
+              min="0"
+              step="1000"
+              placeholder="5000"
+              class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+            />
+          </div>
+
+          <div>
+            <label for="salary_max" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+              Máximo
+            </label>
+            <input
+              type="number"
+              id="salary_max"
+              name="salary_max"
+              min="0"
+              step="1000"
+              placeholder="10000"
+              class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+            />
+          </div>
+
+          <div>
+            <label for="salary_currency" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+              Moeda
+            </label>
+            <select
+              id="salary_currency"
+              name="salary_currency"
+              class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+            >
+              <option value="BRL">BRL (R$)</option>
+              <option value="USD">USD ($)</option>
+              <option value="EUR">EUR (€)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- Company Info -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl font-bold text-ink border-b-2 border-ink pb-2">Informações da Empresa</h2>
+        
+        <div>
+          <label for="company_logo_url" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Logo da Empresa (URL)
+          </label>
+          <input
+            type="url"
+            id="company_logo_url"
+            name="company_logo_url"
+            placeholder="https://exemplo.com/logo.png"
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+          <p class="text-xs text-neutral-600 mt-1">Link direto para a imagem do logo (PNG, JPG, SVG)</p>
+        </div>
+      </div>
+
+      <!-- Application -->
+      <div class="space-y-6">
+        <h2 class="font-display text-xl font-bold text-ink border-b-2 border-ink pb-2">Como Aplicar</h2>
+        
+        <div>
+          <label for="application_url" class="block text-sm font-bold uppercase tracking-wider text-neutral-700 mb-2">
+            Link de Aplicação <span class="text-red-500">*</span>
+          </label>
+          <input
+            type="text"
+            id="application_url"
+            name="application_url"
+            required
+            value="artsourcebrazil.com/apply"
+            placeholder="empresa.com/careers/job-123 ou https://..."
+            class="w-full border-2 border-ink px-4 py-3 focus:ring-2 focus:ring-brazil-blue focus:border-brazil-blue"
+          />
+          <p class="text-xs text-neutral-600 mt-1">Link para a página de aplicação (pode começar com ou sem https://)</p>
+        </div>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex justify-end pt-6 border-t-2 border-neutral-200">
+        <Button
+          type="submit"
+          variant="primary"
+          class="flex items-center justify-center gap-2 px-8"
+        >
+          Ver Preview
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 256 256" class="inline-block">
+            <line x1="40" y1="128" x2="216" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+            <polyline points="144 56 216 128 144 200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+        </Button>
+      </div>
+
+      <!-- Auto-save indicator -->
+      <div id="autosave-indicator" class="text-center text-sm text-neutral-500 hidden">
+        <span class="inline-flex items-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+          Rascunho salvo automaticamente
+        </span>
+      </div>
+    </form>
   </main>
 </Layout>
+
+<script>
+  import { createClient } from '@supabase/supabase-js';
+
+  // Create client-side Supabase client
+  // Use PUBLIC_ prefixed env vars for client-side access (required in Astro)
+  const supabaseUrl = import.meta.env.PUBLIC_SUPABASE_URL;
+  const supabaseAnonKey = import.meta.env.PUBLIC_SUPABASE_ANON_KEY;
+  
+  let supabase: ReturnType<typeof createClient> | null = null;
+  
+  if (supabaseUrl && supabaseAnonKey) {
+    supabase = createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: false,
+        persistSession: false,
+      },
+    });
+  } else {
+    console.warn('Supabase credentials not available. Auto-save to Supabase will be disabled.');
+  }
+
+  // Form state management
+  let draftId: string | null = null;
+  let autoSaveTimeout: number | null = null;
+
+  // Get form data
+  function getFormData() {
+    const form = document.getElementById('job-post-form') as HTMLFormElement;
+    const formData = new FormData(form);
+    
+    // Normalize application URL (add https:// if missing)
+    let applicationUrl = formData.get('application_url') as string;
+    if (applicationUrl && !applicationUrl.match(/^https?:\/\//i)) {
+      applicationUrl = 'https://' + applicationUrl;
+    }
+    
+    return {
+      email: formData.get('email') as string,
+      company_name: formData.get('company_name') as string,
+      draft_data: {
+        title: formData.get('title') as string,
+        description: formData.get('description') as string,
+        category: formData.get('category') as string,
+        contract_type: formData.get('contract_type') as string,
+        location_scope: formData.get('location_scope') as string,
+        location_text: formData.get('location_text') as string || null,
+        salary_min: formData.get('salary_min') ? parseInt(formData.get('salary_min') as string) : null,
+        salary_max: formData.get('salary_max') ? parseInt(formData.get('salary_max') as string) : null,
+        salary_currency: formData.get('salary_currency') as string,
+        company_logo_url: formData.get('company_logo_url') as string || null,
+        application_url: applicationUrl,
+      }
+    };
+  }
+
+  // Auto-save to localStorage
+  function autoSaveLocal() {
+    const data = getFormData();
+    localStorage.setItem('job_draft', JSON.stringify(data));
+    
+    // Show indicator
+    const indicator = document.getElementById('autosave-indicator');
+    if (indicator) {
+      indicator.classList.remove('hidden');
+      setTimeout(() => indicator.classList.add('hidden'), 2000);
+    }
+  }
+
+  // Save to Supabase (upsert)
+  async function saveToSupabase() {
+    // Skip if Supabase client is not available
+    if (!supabase) {
+      console.log('Supabase client not available, skipping save');
+      return;
+    }
+
+    const data = getFormData();
+    
+    // Validate email exists
+    if (!data.email || !data.company_name) {
+      console.log('Email or company name missing, skipping Supabase save');
+      return;
+    }
+
+    try {
+      const { data: result, error } = await supabase
+        .from('job_drafts')
+        .upsert({
+          id: draftId || undefined, // Use existing ID if available
+          email: data.email,
+          company_name: data.company_name,
+          draft_data: data.draft_data,
+          status: 'draft',
+          updated_at: new Date().toISOString(),
+        }, {
+          onConflict: 'id',
+          ignoreDuplicates: false,
+        })
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Supabase save error:', error);
+        return;
+      }
+
+      // Store draft ID for future updates
+      if (result && result.id) {
+        draftId = result.id;
+        localStorage.setItem('job_draft_id', draftId);
+        console.log('Draft saved to Supabase:', draftId);
+      }
+    } catch (e) {
+      console.error('Failed to save to Supabase:', e);
+    }
+  }
+
+  // Load data from URL query params
+  function loadFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    if (params.toString() === '') return null;
+
+    const form = document.getElementById('job-post-form') as HTMLFormElement;
+    if (!form) return null;
+
+    const data: any = {
+      email: params.get('email') || '',
+      company_name: params.get('company_name') || '',
+      draft_data: {
+        title: params.get('title') || '',
+        description: decodeURIComponent(params.get('description') || ''),
+        category: params.get('category') || '',
+        contract_type: params.get('contract_type') || '',
+        location_scope: params.get('location_scope') || '',
+        location_text: params.get('location_text') || null,
+        salary_min: params.get('salary_min') ? parseInt(params.get('salary_min')!) : null,
+        salary_max: params.get('salary_max') ? parseInt(params.get('salary_max')!) : null,
+        salary_currency: params.get('salary_currency') || 'BRL',
+        company_logo_url: params.get('company_logo_url') || null,
+        application_url: params.get('application_url') || '',
+      }
+    };
+
+    // Populate form from URL params
+    Object.keys(data).forEach(key => {
+      if (key === 'draft_data') {
+        Object.keys(data.draft_data).forEach(field => {
+          const input = form.querySelector(`[name="${field}"]`) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+          if (input && data.draft_data[field] !== null && data.draft_data[field] !== '') {
+            const value = String(data.draft_data[field]);
+            input.value = value;
+            // Trigger change event for selects to update UI (especially location_scope)
+            if (input.tagName === 'SELECT') {
+              // Use setTimeout to ensure DOM is ready
+              setTimeout(() => {
+                input.dispatchEvent(new Event('change', { bubbles: true }));
+              }, 0);
+            }
+          }
+        });
+      } else {
+        const input = form.querySelector(`[name="${key}"]`) as HTMLInputElement;
+        if (input && data[key]) {
+          input.value = String(data[key]);
+        }
+      }
+    });
+
+    // Save to localStorage
+    localStorage.setItem('job_draft', JSON.stringify(data));
+    console.log('Data loaded from URL and saved to localStorage');
+
+    return data;
+  }
+
+  // Load draft from localStorage
+  function loadDraft() {
+    const saved = localStorage.getItem('job_draft');
+    const savedId = localStorage.getItem('job_draft_id');
+    
+    if (savedId) {
+      draftId = savedId;
+    }
+
+    if (!saved) return;
+
+    try {
+      const data = JSON.parse(saved);
+      const form = document.getElementById('job-post-form') as HTMLFormElement;
+      
+      // Populate form
+      Object.keys(data).forEach(key => {
+        if (key === 'draft_data') {
+          Object.keys(data.draft_data).forEach(field => {
+            const input = form.querySelector(`[name="${field}"]`) as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
+            if (input && data.draft_data[field] !== null && data.draft_data[field] !== '') {
+              const value = String(data.draft_data[field]);
+              input.value = value;
+              // Trigger change event for selects to update UI (especially location_scope)
+              if (input.tagName === 'SELECT') {
+                setTimeout(() => {
+                  input.dispatchEvent(new Event('change', { bubbles: true }));
+                }, 0);
+              }
+            }
+          });
+        } else {
+          const input = form.querySelector(`[name="${key}"]`) as HTMLInputElement;
+          if (input && data[key]) {
+            input.value = String(data[key]);
+          }
+        }
+      });
+
+      console.log('Draft loaded from localStorage');
+    } catch (e) {
+      console.error('Failed to load draft:', e);
+    }
+  }
+
+  // Initialize
+  document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('job-post-form') as HTMLFormElement;
+    const emailInput = document.getElementById('email') as HTMLInputElement;
+    
+    // First, try to load from URL params (takes precedence)
+    const urlData = loadFromURL();
+    
+    // If no URL params, load from localStorage
+    if (!urlData) {
+      loadDraft();
+    }
+
+    // Auto-save to localStorage on input (debounced)
+    form.addEventListener('input', () => {
+      if (autoSaveTimeout) clearTimeout(autoSaveTimeout);
+      autoSaveTimeout = window.setTimeout(autoSaveLocal, 2000);
+    });
+
+    // Save to Supabase when email loses focus (safety net!)
+    emailInput.addEventListener('blur', async () => {
+      const email = emailInput.value;
+      if (email && email.includes('@')) {
+        await saveToSupabase();
+      }
+    });
+
+    // Show/hide location text based on scope
+    const locationScope = document.getElementById('location_scope') as HTMLSelectElement;
+    const locationTextContainer = document.getElementById('location-text-container');
+    
+    locationScope.addEventListener('change', () => {
+      const value = locationScope.value;
+      if (value === 'hybrid' || value === 'onsite') {
+        locationTextContainer?.classList.remove('hidden');
+        document.getElementById('location_text')?.setAttribute('required', 'required');
+      } else {
+        locationTextContainer?.classList.add('hidden');
+        document.getElementById('location_text')?.removeAttribute('required');
+      }
+    });
+
+    // Form submission (go to preview)
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log('Form submitted, preventing default and processing...');
+      
+      // Get form data for debugging
+      const formData = getFormData();
+      console.log('Form data:', formData);
+      
+      // Validate
+      if (!form.checkValidity()) {
+        console.log('Form validation failed');
+        const invalidFields = Array.from(form.querySelectorAll(':invalid')) as HTMLElement[];
+        console.log('Invalid fields:', invalidFields.map(f => ({ name: (f as HTMLInputElement).name, value: (f as HTMLInputElement).value })));
+        form.reportValidity();
+        return;
+      }
+
+      console.log('Form is valid, saving data...');
+
+      // Save to localStorage
+      autoSaveLocal();
+      console.log('Data saved to localStorage');
+      
+      // Verify localStorage was written
+      const saved = localStorage.getItem('job_draft');
+      console.log('Verifying localStorage save:', saved ? 'Success' : 'Failed');
+
+      // Save to Supabase before navigating (non-blocking)
+      saveToSupabase().catch(err => {
+        console.error('Error saving to Supabase:', err);
+        // Don't block navigation if Supabase fails
+      });
+
+      // Small delay to ensure localStorage is written
+      setTimeout(() => {
+        console.log('Navigating to preview...');
+        window.location.href = '/post-a-job/preview';
+      }, 100);
+    });
+    
+    // Also handle button click directly as fallback
+    const submitButton = form.querySelector('button[type="submit"]');
+    if (submitButton) {
+      submitButton.addEventListener('click', (e) => {
+        console.log('Submit button clicked');
+        // Let the form submit handler take care of it
+      });
+    }
+    
+    console.log('Form event listener attached successfully');
+  });
+</script>

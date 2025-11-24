@@ -31,7 +31,7 @@ export default defineConfig({
         'style-src': ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'],
         'img-src': ["'self'", 'data:', 'https:'],
         'font-src': ["'self'", 'data:', 'https://fonts.gstatic.com'],
-        'connect-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com'],
+        'connect-src': ["'self'", 'https://plausible.io', 'https://*.vercel-insights.com', 'https://*.supabase.co'],
         'frame-ancestors': ["'self'"],
         'object-src': ["'none'"],
         'base-uri': ["'self'"],

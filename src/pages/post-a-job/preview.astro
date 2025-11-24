@@ -1,0 +1,274 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import JobCard from '../../components/JobCard.astro';
+import Button from '../../components/ui/Button.astro';
+import type { Job } from '../../lib/jobs';
+
+const seo = {
+  title: 'Preview da Vaga — Art Source Brazil',
+  description: 'Veja como sua vaga ficará antes de publicar.',
+};
+
+// In a real implementation, we'd get this from URL params or session
+// For now, we'll handle it client-side with localStorage
+---
+
+<Layout seo={seo}>
+  <main class="container mx-auto px-4 py-12 max-w-5xl">
+    <!-- Header -->
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 border-2 border-ink bg-white px-3 py-1 mb-6 shadow-hard-sm">
+        <span class="w-2 h-2 rounded-full bg-brazil-blue animate-pulse"></span>
+        <span class="text-xs font-bold uppercase tracking-widest">Quase Lá!</span>
+      </div>
+      
+      <h1 class="font-display text-4xl md:text-5xl font-bold text-ink mb-4">
+        Preview da Vaga
+      </h1>
+      <p class="text-lg text-neutral-600 max-w-2xl mx-auto">
+        Veja como sua vaga ficará no site. Se estiver tudo certo, publique por <span class="font-bold text-ink">$99 USD</span>.
+      </p>
+    </div>
+
+    <!-- Progress Steps -->
+    <div class="mb-12 flex items-center justify-center gap-4">
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-white flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 256 256">
+            <polyline points="216 72 104 184 48 128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="24"/>
+          </svg>
+        </div>
+        <span class="font-semibold text-sm uppercase">Preencher</span>
+      </div>
+      <div class="w-12 h-0.5 bg-ink"></div>
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full border-2 border-ink bg-brazil-blue text-white flex items-center justify-center font-bold text-sm">2</div>
+        <span class="font-semibold text-sm uppercase">Preview</span>
+      </div>
+      <div class="w-12 h-0.5 bg-neutral-300"></div>
+      <div class="flex items-center gap-2 opacity-50">
+        <div class="w-8 h-8 rounded-full border-2 border-neutral-300 bg-white flex items-center justify-center font-bold text-sm">3</div>
+        <span class="font-semibold text-sm uppercase">Publicar</span>
+      </div>
+    </div>
+
+    <!-- Preview Container -->
+    <div class="space-y-8">
+      <!-- Info Box -->
+      <div class="bg-brazil-yellow/10 border-2 border-brazil-yellow p-6 flex items-start gap-4">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 256 256" class="flex-shrink-0 mt-1">
+          <circle cx="128" cy="128" r="96" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <line x1="128" y1="120" x2="128" y2="176" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          <circle cx="128" cy="84" r="12" fill="currentColor"/>
+        </svg>
+        <div>
+          <p class="font-bold text-ink mb-1">Esta é uma prévia de como sua vaga aparecerá no site</p>
+          <p class="text-sm text-neutral-700">
+            Revise todas as informações. Se precisar fazer alterações, clique em "Editar". 
+            Quando estiver pronto, clique em "Publicar" para prosseguir com o pagamento.
+          </p>
+        </div>
+      </div>
+
+      <!-- Job Preview -->
+      <div id="job-preview-container" class="border-2 border-ink bg-white p-6 shadow-hard">
+        <p class="text-center text-neutral-500 py-12">Carregando preview...</p>
+      </div>
+
+      <!-- Pricing Info -->
+      <div class="bg-neutral-50 border-2 border-dashed border-neutral-300 p-8 text-center">
+        <div class="flex items-center justify-center gap-2 mb-2">
+          <span class="text-5xl font-bold text-ink">$99</span>
+          <span class="text-xl font-bold text-neutral-500 self-end mb-2">USD</span>
+        </div>
+        <p class="text-neutral-600 font-medium mb-4">
+          Sua vaga fica 30 dias no ar para uma comunidade focada em arte e games.
+        </p>
+        <p class="text-sm text-neutral-500">
+          Após o pagamento, sua vaga será revisada e publicada em até 24 horas.
+        </p>
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-4">
+        <Button
+          href="/post-a-job"
+          variant="secondary"
+          class="flex-1 flex items-center justify-center gap-2"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 256 256">
+            <line x1="216" y1="128" x2="40" y2="128" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            <polyline points="112 56 40 128 112 200" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          </svg>
+          Editar
+        </Button>
+        
+        <Button
+          id="publish-btn"
+          variant="primary"
+          class="flex-1 flex items-center justify-center gap-2"
+        >
+          Publicar ($99)
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 256 256">
+            <polyline points="134.1 109.1 184 128 134.1 146.9" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            <path d="M184,128H69.2a8,8,0,0,1-7.2-4.4L32,72" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            <path d="M32,184l30-51.6a8,8,0,0,1,7.2-4.4H184" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+            <circle cx="184" cy="128" r="40" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+          </svg>
+        </Button>
+      </div>
+    </div>
+  </main>
+</Layout>
+
+<script>
+  import type { Job } from '../../lib/jobs';
+
+  // Load draft from localStorage and render preview
+  document.addEventListener('DOMContentLoaded', () => {
+    const saved = localStorage.getItem('job_draft');
+    console.log('Preview page loaded, checking localStorage...');
+    console.log('Saved data:', saved);
+    
+    if (!saved) {
+      console.warn('No draft found in localStorage, redirecting to form...');
+      window.location.href = '/post-a-job';
+      return;
+    }
+
+    try {
+      const draft = JSON.parse(saved);
+      console.log('Draft parsed successfully:', draft);
+      renderPreview(draft);
+    } catch (e) {
+      console.error('Failed to load draft:', e);
+      window.location.href = '/post-a-job';
+    }
+
+    // Publish button
+    document.getElementById('publish-btn')?.addEventListener('click', () => {
+      // TODO: Create draft in Supabase, redirect to Stripe
+      alert('Integração com Stripe em desenvolvimento!\n\nEm breve você poderá:\n1. Salvar rascunho no Supabase\n2. Redirecionar para pagamento Stripe\n3. Receber confirmação por email');
+    });
+  });
+
+  function renderPreview(draft: any) {
+    const container = document.getElementById('job-preview-container');
+    if (!container) return;
+
+    // Create mock job object matching Job interface
+    const mockJob: Job = {
+      id: 'preview',
+      jobTitle: draft.draft_data.title || 'Título da Vaga',
+      companyName: draft.company_name || 'Nome da Empresa',
+      category: draft.draft_data.category || 'Game Dev',
+      location: {
+        scope: draft.draft_data.location_scope || 'remote-brazil',
+        text: draft.draft_data.location_text || getLocationLabel(draft.draft_data.location_scope),
+      },
+      description: draft.draft_data.description || '',
+      tags: extractTags(draft.draft_data.description || ''),
+      postedDate: new Date().toISOString(),
+      applicationUrl: draft.draft_data.application_url || '#',
+      companyLogo: draft.draft_data.company_logo_url || null,
+      salary: draft.draft_data.salary_min || draft.draft_data.salary_max ? {
+        min: draft.draft_data.salary_min || null,
+        max: draft.draft_data.salary_max || null,
+        currency: draft.draft_data.salary_currency || 'USD',
+      } : null,
+      contractType: draft.draft_data.contract_type || null,
+      isActive: true,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+
+    // Import and render JobCard component dynamically
+    // Since we can't use Astro components in client-side JS, we'll create the HTML manually
+    // but match the exact structure of JobCard.astro
+    
+    const timeAgo = "PUBLICADO AGORA";
+    const isNew = true;
+    const categoryAccents: Record<string, string> = {
+      'Game Dev': 'bg-accent-teal',
+      '3D': 'bg-accent-purple',
+      '2D Art': 'bg-accent-pink',
+      'Animation': 'bg-accent-orange',
+      'Design': 'bg-accent-lime',
+      'VFX': 'bg-accent-teal',
+    };
+    const accentColor = categoryAccents[mockJob.category] || 'bg-accent-lime';
+    const companyLogo = mockJob.companyLogo || '/images/company-placeholder.svg';
+
+    container.innerHTML = `
+      <article class="job-card group relative flex flex-col md:flex-row border-2 border-ink bg-white p-0 shadow-hard">
+        <div class="${accentColor} w-full md:w-4 border-b-2 md:border-b-0 md:border-r-2 border-ink h-4 md:h-auto flex-shrink-0"></div>
+        <div class="flex-1 flex flex-col md:flex-row">
+          <div class="flex-1 p-6 flex flex-col justify-between">
+            <div>
+              <div class="flex items-start justify-between gap-4 mb-3">
+                <div class="flex items-center gap-4">
+                  <div class="h-14 w-14 border-2 border-ink bg-white shadow-hard-sm flex items-center justify-center">
+                    <img src="${companyLogo}" alt="${mockJob.companyName} logo" loading="lazy" class="h-12 w-12 object-contain" />
+                  </div>
+                  <div>
+                    <h3 class="font-display text-xl font-bold leading-tight">${mockJob.jobTitle}</h3>
+                    <p class="text-base font-medium text-stone-500 mt-1">${mockJob.companyName}</p>
+                  </div>
+                </div>
+                ${isNew ? '<span class="border-2 border-ink bg-accent-lime px-2 py-0.5 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000]">New</span>' : ''}
+              </div>
+              <div class="flex flex-wrap gap-3 mt-4 text-xs font-bold uppercase tracking-wider text-stone-500">
+                <span class="flex items-center gap-1 text-ink">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path><path d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                  ${mockJob.location.text}
+                </span>
+                ${mockJob.contractType ? `
+                  <span class="flex items-center gap-1 text-ink">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    ${mockJob.contractType}
+                  </span>
+                ` : ''}
+                ${mockJob.salary ? `<span class="text-emerald-700 bg-emerald-100 px-1 border border-emerald-200">${formatSalary(mockJob.salary)}</span>` : ''}
+              </div>
+            </div>
+            <div class="mt-6 flex flex-wrap gap-2 relative z-10">
+              ${mockJob.tags.map(tag => `<span class="border border-ink bg-white px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#e5e5e5] hover:bg-ink hover:text-white transition-colors">${tag}</span>`).join('')}
+            </div>
+          </div>
+          <div class="p-6 pt-0 md:pt-6 md:border-l-2 md:border-ink flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 bg-stone-50 md:bg-transparent">
+            <time class="text-xs font-bold text-stone-400 uppercase tracking-widest">${timeAgo}</time>
+            <div class="hidden md:flex w-10 h-10 border-2 border-ink rounded-full items-center justify-center">
+              <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+            </div>
+          </div>
+        </div>
+      </article>
+    `;
+  }
+
+  function getLocationLabel(scope: string): string {
+    const labels: Record<string, string> = {
+      'remote-brazil': 'Remoto (Brasil)',
+      'remote-worldwide': 'Remoto (Global)',
+      'hybrid': 'Híbrido',
+      'onsite': 'Presencial',
+    };
+    return labels[scope] || 'Remoto';
+  }
+
+  function extractTags(description: string): string[] {
+    // Simple tag extraction from common keywords
+    const keywords = ['Unity', 'Unreal', 'Blender', 'Maya', 'C#', 'C++', 'Python', 'React', 'Vue', 'Angular', '3D', '2D', 'VFX', 'Animation'];
+    return keywords.filter(keyword => description.toLowerCase().includes(keyword.toLowerCase())).slice(0, 6);
+  }
+
+  function formatSalary(salary: any): string {
+    const symbol = salary.currency === 'BRL' ? 'R$' : salary.currency === 'EUR' ? '€' : '$';
+    if (salary.min && salary.max) {
+      return `${symbol}${salary.min.toLocaleString()} - ${symbol}${salary.max.toLocaleString()}`;
+    }
+    if (salary.min) return `A partir de ${symbol}${salary.min.toLocaleString()}`;
+    if (salary.max) return `Até ${symbol}${salary.max.toLocaleString()}`;
+    return '';
+  }
+</script>
