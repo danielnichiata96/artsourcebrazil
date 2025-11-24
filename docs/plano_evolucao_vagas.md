@@ -116,6 +116,7 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 
 - **`docs/SUPABASE_MIGRATION.md`** - Plano completo de migração do Airtable para Supabase
 - **`docs/FETCHERS_GUIDE.md`** - Guia completo dos fetchers de vagas (Greenhouse, Lever, Ashby)
+- **`docs/GARBAGE_COLLECTION.md`** - 🚨 Estratégia para evitar "vagas fantasmas" (sync sessions)
 - **`archive/AIRTABLE_SCHEMA_OPTIMIZED.md`** - Schema anterior (Airtable) - arquivado como referência histórica
 
 ## 7. Status Atual da Implementação
@@ -134,6 +135,14 @@ Após uma análise detalhada, foram escolhidas **APIs de ATS públicos** como fo
 - [ ] Testar Lever com Fanatee (aguardando execução)
 - [ ] Testar Ashby com Deel (aguardando execução)
 - [ ] Validar outputs e ajustar mapeamentos se necessário
+
+### 🚨 Problema Identificado: Garbage Collection
+- [ ] **Vagas Fantasmas:** Fetchers atuais não fecham vagas que foram removidas da API
+- [ ] Implementar estratégia de Sync Sessions (sync_id)
+- [ ] Atualizar schema do Supabase (sync_id, last_synced_at, closed_at)
+- [ ] Modificar os 3 fetchers para incluir GC
+- [ ] Testar processo completo de GC
+- [ ] Documentação criada: `docs/GARBAGE_COLLECTION.md`
 
 ### 📋 Próximas Ações:
 1. **Testar os fetchers criados:**
