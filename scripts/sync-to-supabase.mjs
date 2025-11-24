@@ -37,7 +37,7 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY);
 const INPUT_FILES = [
   'lever-jobs-output.json',
   'greenhouse-jobs-output.json',
-  // 'ashby-jobs-output.json', // Not working yet
+  'ashby-jobs-output.json', // ✅ FIXED!
 ];
 
 // ============================================================================

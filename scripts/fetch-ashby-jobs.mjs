@@ -25,9 +25,9 @@ const __dirname = dirname(__filename);
 // CONFIGURATION
 // ============================================================================
 
-const COMPANY_SLUG = 'deel'; // Change this for different companies
+const COMPANY_SLUG = 'ashby'; // Options: 'ashby', 'deel', 'ramp', 'notion', 'loom'
 const REST_ENDPOINT = `https://api.ashbyhq.com/posting-api/job-board/${COMPANY_SLUG}`;
-const OUTPUT_FILE = join(__dirname, 'ashby-jobs-output.json');
+const OUTPUT_FILE = join(__dirname, `${COMPANY_SLUG}-jobs-output.json`);
 
 // ============================================================================
 // CATEGORY MAPPING
@@ -267,7 +267,7 @@ function normalizeJob(job) {
   }
   
   // Determine location scope
-  const locationScope = determineLocationScope(job.locationName || 'Remote');
+  const locationScope = determineLocationScope(job.location || 'Remote');
   
   // Extract salary if available
   let salary = null;
@@ -311,7 +311,7 @@ function normalizeJob(job) {
     tags: tags,
     location: {
       scope: locationScope,
-      text: job.locationName || 'Remote',
+      text: job.location || 'Remote',
     },
     contractType: contractType,
     salary: salary,
@@ -357,8 +357,8 @@ async function main() {
         }
         
         // Check location
-        if (!isRelevantLocation(job.locationName || '')) {
-          console.log(`  ⏭️  Filtered out (location: ${job.locationName})`);
+        if (!isRelevantLocation(job.location || '')) {
+          console.log(`  ⏭️  Filtered out (location: ${job.location})`);
           continue;
         }
         
