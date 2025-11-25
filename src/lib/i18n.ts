@@ -17,7 +17,7 @@ const translations = {
       items: [
         { label: 'Vagas', href: '/vagas' },
         { label: 'Blog', href: '/blog' },
-        { label: 'Preços', href: '/post-a-job' },
+        { label: 'Sobre', href: '/about' },
       ],
       cta: 'Anunciar Vaga',
       tagline: 'Remote Creative Jobs',
@@ -208,7 +208,7 @@ const translations = {
       items: [
         { label: 'Jobs', href: '/vagas' },
         { label: 'Blog', href: '/blog' },
-        { label: 'Pricing', href: '/post-a-job' },
+        { label: 'About', href: '/about' },
       ],
       cta: 'Post a Job',
       tagline: 'Remote Creative Jobs',

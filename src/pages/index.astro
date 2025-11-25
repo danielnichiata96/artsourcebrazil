@@ -232,16 +232,18 @@ function initLogic() {
         
         cards.forEach(card => {
             // Improved search: split search term and check if ANY word in title/company/tags contains the search term
+            // Improved search: split search term and check if ALL words are present in title/company/tags
             const matchS = state.search === '' || (() => {
-                const searchTerm = state.search.toLowerCase();
+                const searchTerms = state.search.toLowerCase().trim().split(/\s+/);
                 const title = card.dataset.title.toLowerCase();
                 const company = card.dataset.company.toLowerCase();
                 const tags = card.dataset.tags.toLowerCase();
                 
-                // Check if search term is in title, company or any tag
-                return title.includes(searchTerm) || 
-                       company.includes(searchTerm) || 
-                       tags.split(',').some(tag => tag.trim().includes(searchTerm));
+                return searchTerms.every(term => 
+                    title.includes(term) || 
+                    company.includes(term) || 
+                    tags.includes(term)
+                );
             })();
             
             const matchC = state.category === 'all' || card.dataset.category === state.category;
