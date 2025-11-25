@@ -1,5 +1,6 @@
 ---
-import { Image } from 'astro:assets';
+// Note: Using regular <img> for external logos (logo.dev) since astro:assets
+// requires additional configuration for remote images
 import { getCachedJobs } from '../../lib/getJobs';
 import Layout from '../../layouts/Layout.astro';
 import JobCard from '../../components/JobCard.astro';
@@ -211,13 +212,13 @@ const breadcrumbs = {
         <Card padding="lg" class="bg-white border-2 border-ink shadow-hard-sm">
           <h2 class="mb-4 font-display text-xl font-bold uppercase tracking-wide text-ink">Sobre {job.companyName}</h2>
           <div class="space-y-4">
-            <Image
-              src={job.companyLogo}
+            <img
+              src={job.companyLogo || '/images/company-placeholder.svg'}
               alt={`${job.companyName} logo`}
-              width={64}
-              height={64}
+              width="64"
+              height="64"
               loading="lazy"
-              class="h-16 w-16 rounded-lg border border-neutral-300 object-cover mx-auto"
+              class="h-16 w-16 rounded-lg border border-neutral-300 object-contain mx-auto"
             />
             <p class="text-sm text-neutral-700">
               {job.companyName} está contratando para posições de {job.category}. Confira outras oportunidades

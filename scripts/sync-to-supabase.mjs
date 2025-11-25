@@ -62,13 +62,25 @@ function mapCategory(category) {
 
 /**
  * Map contract types to database enum values
+ * 
+ * Note: CLT is Brazil-specific. For international jobs, we use more generic types.
+ * 
+ * @param {string} contractType - Contract type from job data
+ * @param {string} locationScope - Location scope (remote-worldwide, remote-brazil, etc.)
+ * @returns {string} Mapped contract type
  */
-function mapContractType(contractType) {
-  if (!contractType) return 'PJ';
+function mapContractType(contractType, locationScope = 'remote-worldwide') {
+  if (!contractType) {
+    // Default based on location
+    if (locationScope === 'remote-brazil' || locationScope === 'hybrid') {
+      return 'PJ'; // Default for Brazil
+    }
+    return null; // Unknown for international
+  }
 
   const typeMap = {
-    'Full-time': 'CLT',
-    'full-time': 'CLT',
+    'Full-time': locationScope === 'remote-brazil' || locationScope === 'hybrid' ? 'CLT' : null,
+    'full-time': locationScope === 'remote-brazil' || locationScope === 'hybrid' ? 'CLT' : null,
     'Part-time': 'PJ',
     'part-time': 'PJ',
     'Contract': 'B2B',
@@ -80,7 +92,7 @@ function mapContractType(contractType) {
     'Intern': 'Estágio',
   };
 
-  return typeMap[contractType] || 'PJ';
+  return typeMap[contractType] || (locationScope === 'remote-brazil' || locationScope === 'hybrid' ? 'PJ' : null);
 }
 
 /**
@@ -96,6 +108,53 @@ function mapLocationScope(scope) {
   };
 
   return scopeMap[scope] || 'Remoto - Internacional';
+}
+
+/**
+ * Detect salary currency based on location and job data
+ * 
+ * @param {string} providedCurrency - Currency from job data
+ * @param {string} locationScope - Location scope
+ * @param {string} locationText - Location detail text
+ * @returns {string} Detected currency
+ */
+function detectSalaryCurrency(providedCurrency, locationScope, locationText = '') {
+  // If currency is explicitly provided, use it
+  if (providedCurrency) {
+    return providedCurrency.toUpperCase();
+  }
+
+  // Detect based on location
+  const locationLower = (locationText || '').toLowerCase();
+  
+  // Brazil-specific locations
+  if (locationScope === 'remote-brazil' || locationScope === 'hybrid') {
+    if (locationLower.includes('brasil') || locationLower.includes('brazil') || locationLower.includes('são paulo')) {
+      return 'BRL';
+    }
+  }
+
+  // US-specific locations
+  if (locationLower.includes('us') || locationLower.includes('united states') || locationLower.includes('americas')) {
+    return 'USD';
+  }
+
+  // Europe-specific locations
+  if (locationLower.includes('europe') || locationLower.includes('eu') || locationLower.includes('uk')) {
+    return 'EUR';
+  }
+
+  // LATAM
+  if (locationScope === 'remote-latam') {
+    return 'USD'; // Most LATAM companies use USD
+  }
+
+  // Default: BRL for Brazil-focused, USD for international
+  if (locationScope === 'remote-brazil' || locationScope === 'hybrid') {
+    return 'BRL';
+  }
+
+  return 'USD'; // Default for international
 }
 
 /**
@@ -138,6 +197,77 @@ async function ensureCategory(categorySlug) {
   }
 
   return created.id;
+}
+
+/**
+ * Get or create a tag and return its ID
+ */
+async function ensureTag(tagName) {
+  if (!tagName || tagName.trim() === '') return null;
+  
+  const normalizedTag = tagName.trim();
+
+  // Try to get existing tag
+  const { data: existing } = await supabase
+    .from('tags')
+    .select('id')
+    .eq('name', normalizedTag)
+    .single();
+
+  if (existing) {
+    return existing.id;
+  }
+
+  // Create if doesn't exist
+  const { data: created, error: insertError } = await supabase
+    .from('tags')
+    .insert({ name: normalizedTag })
+    .select('id')
+    .single();
+
+  if (insertError) {
+    // Tag might have been created by another process
+    const { data: retry } = await supabase
+      .from('tags')
+      .select('id')
+      .eq('name', normalizedTag)
+      .single();
+    
+    return retry?.id || null;
+  }
+
+  return created?.id || null;
+}
+
+/**
+ * Sync tags for a job
+ */
+async function syncJobTags(jobId, tags) {
+  if (!tags || tags.length === 0) return;
+
+  // First, delete existing tags for this job
+  await supabase
+    .from('job_tags')
+    .delete()
+    .eq('job_id', jobId);
+
+  // Then add new tags
+  for (const tagName of tags) {
+    const tagId = await ensureTag(tagName);
+    
+    if (tagId) {
+      const { error } = await supabase
+        .from('job_tags')
+        .upsert(
+          { job_id: jobId, tag_id: tagId },
+          { onConflict: 'job_id,tag_id', ignoreDuplicates: true }
+        );
+
+      if (error && !error.message.includes('duplicate')) {
+        console.warn(`    ⚠️ Error adding tag "${tagName}": ${error.message}`);
+      }
+    }
+  }
 }
 
 /**
@@ -199,7 +329,7 @@ async function normalizeJobForSupabase(job) {
   let source = 'manual';
   if (job.id.startsWith('WIL-')) source = 'greenhouse';
   else if (job.id.startsWith('FAN-')) source = 'lever';
-  else if (job.id.startsWith('DEL-')) source = 'ashby';
+  else if (job.id.startsWith('DEL-') || job.id.startsWith('ASH-')) source = 'ashby';
 
   return {
     id: job.id,
@@ -212,10 +342,10 @@ async function normalizeJobForSupabase(job) {
     date_posted: job.postedDate ? job.postedDate.split('T')[0] : new Date().toISOString().split('T')[0],
     location_scope: job.location.scope, // Use original scope (not mapped)
     location_detail: job.location.text || '',
-    contract_type: mapContractType(job.contractType),
+    contract_type: mapContractType(job.contractType, job.location.scope),
     salary_min: job.salary?.min || null,
     salary_max: job.salary?.max || null,
-    salary_currency: job.salary?.currency || 'BRL',
+    salary_currency: detectSalaryCurrency(job.salary?.currency, job.location.scope, job.location.text),
     company_logo_url: job.companyLogo || 'https://remotejobsbr.com/images/company-placeholder.svg',
     source: source,
     status: 'ativa',
@@ -294,7 +424,12 @@ async function syncJobsToSupabase(jobs) {
         continue;
       }
 
-      console.log(`  ✅ [${i + 1}/${jobs.length}] Synced: ${job.id} - ${job.jobTitle}`);
+      // Sync tags for this job
+      if (job.tags && job.tags.length > 0) {
+        await syncJobTags(job.id, job.tags);
+      }
+
+      console.log(`  ✅ [${i + 1}/${jobs.length}] Synced: ${job.id} - ${job.jobTitle} (${job.tags?.length || 0} tags)`);
       successCount++;
 
       // Small delay to avoid rate limiting

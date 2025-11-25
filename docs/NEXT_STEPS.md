@@ -124,7 +124,7 @@ This file is the single source of truth for what to do next. Coding agents and h
 - [ ] Basic admin script to lint/normalize job entries
 - [ ] Scheduled data validation in CI (nightly)
 - [ ] Tag popularity insights
-- [ ] Intake automation (no backend): Tally → GitHub Issue/PR via Zapier/Make
+- [ ] Intake automation (no backend): Form submission → GitHub Issue/PR via Zapier/Make
   - Each new submission becomes an Issue or PR with a filled job JSON stub
 - [x] i18n (PT → EN) minimal ✅
   - Static alternate homepage in PT-BR and `/post-a-job` page copy for BR companies

@@ -79,7 +79,6 @@ PUBLIC_SUPABASE_ANON_KEY=""
 ```bash
 # 🌐 Safe to expose (public URLs)
 PUBLIC_STRIPE_PAYMENT_LINK=""
-PUBLIC_JOB_FORM_URL=""
 PUBLIC_PLAUSIBLE_DOMAIN=""
 PUBLIC_NEWSLETTER_SUBSCRIBE_URL=""
 ```
@@ -175,7 +174,7 @@ Turnstile is integrated into:
    PUBLIC_TURNSTILE_SITE_KEY="0x..."   # Public (client-side)
    TURNSTILE_SECRET_KEY="0x..."         # Secret (server-side only)
    ```
-4. Add to Netlify environment variables
+4. Add to Vercel environment variables
 
 **How it works:**
 - Widget loads invisibly on form pages
@@ -211,17 +210,23 @@ Turnstile is integrated into:
 
 **Status: Active**
 
-Configured in `netlify.toml`:
+Configured in `vercel.json`:
 
-```toml
-[[headers]]
-  for = "/*"
-  [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
-    X-DNS-Prefetch-Control = "on"
-    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+```json
+{
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
+        { "key": "X-DNS-Prefetch-Control", "value": "on" },
+        { "key": "Permissions-Policy", "value": "camera=(), microphone=(), geolocation=()" }
+      ]
+    }
+  ]
+}
 ```
 
 **What these do:**

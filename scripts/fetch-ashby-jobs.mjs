@@ -17,6 +17,7 @@
 import { writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -25,7 +26,54 @@ const __dirname = dirname(__filename);
 // CONFIGURATION
 // ============================================================================
 
-const COMPANY_SLUG = 'ashby'; // Options: 'ashby', 'deel', 'ramp', 'notion', 'loom'
+// Logo.dev API for company logos (Ashby API doesn't provide logos)
+const LOGO_DEV_TOKEN = process.env.LOGO_DEV_TOKEN || 'pk_X-1ZO13GSgeOoUrIuJ6GMQ';
+
+/**
+ * Get company logo URL using logo.dev service
+ * @param {string} domain - Company domain (e.g., 'ashbyhq.com')
+ * @returns {string} Logo URL
+ */
+function getCompanyLogoUrl(domain) {
+  return `https://img.logo.dev/${domain}?token=${LOGO_DEV_TOKEN}&size=128`;
+}
+
+// Company configurations for Ashby
+const ASHBY_COMPANIES = {
+  ashby: {
+    slug: 'ashby',
+    name: 'Ashby',
+    domain: 'ashbyhq.com',
+  },
+  deel: {
+    slug: 'deel',
+    name: 'Deel',
+    domain: 'deel.com',
+  },
+  ramp: {
+    slug: 'ramp',
+    name: 'Ramp',
+    domain: 'ramp.com',
+  },
+  notion: {
+    slug: 'notion',
+    name: 'Notion',
+    domain: 'notion.so',
+  },
+  loom: {
+    slug: 'loom',
+    name: 'Loom',
+    domain: 'loom.com',
+  },
+};
+
+// Current company to fetch
+const CURRENT_COMPANY = 'ashby'; // Options: 'ashby', 'deel', 'ramp', 'notion', 'loom'
+const COMPANY_CONFIG = ASHBY_COMPANIES[CURRENT_COMPANY];
+const COMPANY_SLUG = COMPANY_CONFIG.slug;
+const COMPANY_NAME = COMPANY_CONFIG.name;
+const COMPANY_LOGO = getCompanyLogoUrl(COMPANY_CONFIG.domain);
+
 const REST_ENDPOINT = `https://api.ashbyhq.com/posting-api/job-board/${COMPANY_SLUG}`;
 const OUTPUT_FILE = join(__dirname, `${COMPANY_SLUG}-jobs-output.json`);
 
@@ -53,7 +101,7 @@ const excludedKeywords = [
  */
 function determineCategory(title) {
   const titleLower = title.toLowerCase();
-  
+
   // Check for excluded keywords
   for (const keyword of excludedKeywords) {
     if (titleLower.includes(keyword)) {
@@ -234,16 +282,16 @@ async function fetchJobs() {
   try {
     const response = await fetch(REST_ENDPOINT, {
       method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
 
     if (!response.ok) {
       throw new Error(`REST request failed: ${response.status} ${response.statusText}`);
     }
 
-    const data = await response.json();
+        const data = await response.json();
     return data.jobs || [];
   } catch (error) {
     throw new Error(`Failed to fetch jobs: ${error.message}`);
@@ -258,7 +306,9 @@ async function fetchJobs() {
  * Normalize job from Ashby REST format to our standard format
  */
 function normalizeJob(job) {
-  const jobId = `DEL-${job.id}`;
+  // Generate ID prefix from company name (e.g., "Ashby" -> "ASH", "Deel" -> "DEE")
+  const idPrefix = COMPANY_NAME.toUpperCase().substring(0, 3);
+  const jobId = `${idPrefix}-${job.id}`;
   
   // Determine category
   const category = determineCategory(job.title);
@@ -283,11 +333,16 @@ function normalizeJob(job) {
     }
   }
   
-  // Clean description
-  const description = job.descriptionPlain || htmlToPlainText(job.descriptionHtml) || 'No description available';
+  // Convert HTML to Markdown for rich formatting
+  // Ashby may have relative links, resolve them
+  const descriptionMarkdown = job.descriptionHtml 
+    ? htmlToMarkdown(job.descriptionHtml, { baseUrl: `https://jobs.ashbyhq.com/${COMPANY_SLUG}` }) 
+    : (job.descriptionPlain || 'No description available');
+  // Plain text for search/categorization
+  const descriptionPlain = job.descriptionPlain || htmlToPlainText(job.descriptionHtml) || 'No description available';
   
   // Extract tags
-  const tags = extractTags(job.title, description);
+  const tags = extractTags(job.title, descriptionPlain);
   
   // Map employment type
   const contractTypeMap = {
@@ -297,22 +352,22 @@ function normalizeJob(job) {
     'Intern': 'Internship',
   };
   const contractType = contractTypeMap[job.employmentType] || 'Full-time';
-  
-  return {
+
+            return {
     id: jobId,
-    companyName: 'Deel',
-    companyLogo: null,
-    jobTitle: job.title,
-    description: description,
-    shortDescription: description.substring(0, 200) + '...',
+    companyName: COMPANY_NAME,
+    companyLogo: COMPANY_LOGO,
+                jobTitle: job.title,
+    description: descriptionMarkdown, // Rich Markdown formatting
+    shortDescription: descriptionPlain.substring(0, 200) + '...',
     applyLink: job.jobUrl || `https://jobs.ashbyhq.com/${COMPANY_SLUG}/${job.id}`,
     postedDate: job.publishedDate || new Date().toISOString(),
     category: category,
     tags: tags,
-    location: {
+                location: {
       scope: locationScope,
       text: job.location || 'Remote',
-    },
+                },
     contractType: contractType,
     salary: salary,
   };
@@ -372,12 +427,12 @@ async function main() {
         
         normalizedJobs.push(normalized);
         console.log(`  ✅ Created: ${normalized.id} - ${normalized.category}`);
-        
-      } catch (error) {
+
+    } catch (error) {
         console.error(`  ❌ Error processing job: ${error.message}`);
-      }
     }
-    
+}
+
     // Save to file
     console.log('\n' + '═'.repeat(60));
     console.log(`✅ Successfully processed ${normalizedJobs.length} jobs`);

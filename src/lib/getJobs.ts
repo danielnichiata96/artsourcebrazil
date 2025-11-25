@@ -32,8 +32,9 @@ function transformSupabaseJob(supabaseJob: any): Job {
     })
     .filter(Boolean);
 
-  // Get company logo (with fallback)
-  let companyLogo = company?.logo_url || '/images/company-placeholder.svg';
+  // Get company logo (with fallback chain: job logo > company logo > placeholder)
+  let companyLogo = supabaseJob.company_logo_url || company?.logo_url || '/images/company-placeholder.svg';
+  // Validate URL format
   if (companyLogo && !companyLogo.startsWith('/') && !companyLogo.startsWith('http')) {
     companyLogo = '/images/company-placeholder.svg';
   }

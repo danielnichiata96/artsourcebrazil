@@ -15,12 +15,91 @@
 
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 
 // Configuration
 const LEVER_API_BASE = 'https://api.lever.co/v0/postings';
-const COMPANY_SLUG = 'fanatee';
-const COMPANY_NAME = 'Fanatee';
-const COMPANY_LOGO = null; // Will use placeholder
+
+// Logo.dev API for company logos (Lever API doesn't provide logos)
+// Free tier: 1000 requests/month
+const LOGO_DEV_TOKEN = process.env.LOGO_DEV_TOKEN || 'pk_X-1ZO13GSgeOoUrIuJ6GMQ';
+
+/**
+ * Generate logo URL using logo.dev service
+ * @param {string} domain - Company domain (e.g., 'fanatee.com')
+ * @param {number} size - Logo size in pixels (default: 128 for better quality)
+ * @returns {string} Logo URL
+ */
+function getCompanyLogoUrl(domain, size = 128) {
+  return `https://img.logo.dev/${domain}?token=${LOGO_DEV_TOKEN}&size=${size}`;
+}
+
+/**
+ * Check if a job is relevant for Brazilian audience
+ * Filters out jobs that are specifically for other regions
+ * 
+ * @param {object} leverJob - Raw Lever job data
+ * @param {string} locationScope - Determined location scope
+ * @param {string} description - Job description text
+ * @returns {boolean} True if job should be included
+ */
+function isRelevantForBrazil(leverJob, locationScope, description) {
+  const descLower = description.toLowerCase();
+  const titleLower = (leverJob.text || '').toLowerCase();
+  
+  // FIRST: Check exclusion patterns (these override location detection)
+  // Because some companies misconfigure Lever with Country: BR for all jobs
+  const excludePatterns = [
+    // Regional editors/roles for specific non-Brazil countries
+    /regional\s+(?:editor|manager|coordinator).*(?:polish|indonesian|south\s+africa|german|french|italian|spanish|japanese|korean|chinese|indian|vietnamese|thai|arabic|turkish|russian|portuguese\s+-\s+portugal)/i,
+    // Explicit language requirements for non-Portuguese
+    /(?:english|polish|indonesian|german|french|italian|spanish|japanese|korean|chinese)\s+(?:fluent|native|speaker|language\s+focus)/i,
+    // Based in specific regions (not Brazil/LATAM)
+    /based\s+in\s+(?:poland|indonesia|europe|us|usa|uk|germany|france|italy|spain|japan|korea|china|india|canada|australia|south\s+africa)/i,
+    // Location requirements in description
+    /location:\s*based\s+in\s+(?:poland|indonesia|europe|us|usa|uk|germany)/i,
+    // Must be located in (exclude Brazil/LATAM)
+    /must\s+be\s+(?:located|based)\s+in\s+(?!brazil|brasil|latam|latin\s+america|são\s+paulo|rio)/i,
+    // Timezone requirements for non-LATAM
+    /(?:cet|gmt|pst|apac|emea)\s+timezone/i,
+  ];
+  
+  for (const pattern of excludePatterns) {
+    if (pattern.test(titleLower) || pattern.test(descLower)) {
+      return false;
+    }
+  }
+  
+  // SECOND: Include Brazil-specific jobs
+  if (locationScope === 'remote-brazil' || locationScope === 'hybrid' || locationScope === 'onsite') {
+    return true;
+  }
+  
+  // THIRD: Include LATAM jobs
+  if (locationScope === 'remote-latam') {
+    return true;
+  }
+  
+  // FOURTH: For worldwide jobs without exclusions, include them
+  // (These are jobs that accept applicants from anywhere, including Brazil)
+  return true;
+}
+
+// Company configurations (Lever slug → company info)
+const LEVER_COMPANIES = {
+  fanatee: {
+    slug: 'fanatee',
+    name: 'Fanatee',
+    domain: 'fanatee.com',
+    description: 'Mobile game company behind CodyCross and other word games',
+  },
+};
+
+// Current company to fetch
+const CURRENT_COMPANY = 'fanatee';
+const COMPANY_SLUG = LEVER_COMPANIES[CURRENT_COMPANY].slug;
+const COMPANY_NAME = LEVER_COMPANIES[CURRENT_COMPANY].name;
+const COMPANY_LOGO = getCompanyLogoUrl(LEVER_COMPANIES[CURRENT_COMPANY].domain);
 
 // Reuse same category mapping from Greenhouse
 const titleCategoryMap = {
@@ -101,36 +180,75 @@ function mapCategory(title = '', description = '') {
 
 /**
  * Determine location scope from Lever data
+ * 
+ * Lever API provides multiple location indicators:
+ * - workplaceType: "hybrid" | "remote" | "onsite" (most reliable)
+ * - categories.location: "Hybrid" | "Remote" | city name
+ * - categories.commitment: "Full-time" | "Part-time" etc
+ * - country: "BR" | "US" etc
  */
-function determineLocationScope(location = '', commitment = '', categories = {}) {
-  const lowerLocation = location.toLowerCase();
-  const lowerCommitment = commitment.toLowerCase();
+function determineLocationScope(leverJob, description = '') {
+  const workplaceType = (leverJob.workplaceType || '').toLowerCase();
+  const categoryLocation = (leverJob.categories?.location || '').toLowerCase();
+  const country = (leverJob.country || '').toUpperCase();
+  const allLocations = (leverJob.categories?.allLocations || []).map(l => l.toLowerCase());
+  const descLower = description.toLowerCase();
   
-  // Check if remote
-  if (lowerLocation.includes('remote') || lowerCommitment.includes('remote')) {
-    // Check for Brazil-specific
-    if (lowerLocation.includes('brazil') || lowerLocation.includes('brasil')) {
-      return 'remote-brazil';
-    }
-    // Check for LATAM
-    if (lowerLocation.includes('latin america') || lowerLocation.includes('latam')) {
-      return 'remote-latam';
-    }
-    // Otherwise worldwide
-    return 'remote-worldwide';
-  }
-
-  // Check for hybrid
-  if (lowerCommitment.includes('hybrid')) {
+  // Priority 0: Check description for explicit non-Brazil locations
+  // Some companies misconfigure Lever with BR but the role is actually elsewhere
+  const internationalKeywords = [
+    'based in europe', 'based in poland', 'based in us', 'based in usa',
+    'europe only', 'us only', 'emea', 'apac', 'americas',
+    'north america', 'european', 'uk based', 'us based',
+  ];
+  const hasInternationalLocation = internationalKeywords.some(kw => descLower.includes(kw));
+  
+  // Priority 1: Use workplaceType if available (most reliable)
+  if (workplaceType === 'hybrid' && !hasInternationalLocation) {
     return 'hybrid';
   }
-
-  // Default to onsite if location specified
-  if (location) {
+  
+  if (workplaceType === 'onsite' && !hasInternationalLocation) {
     return 'onsite';
   }
-
-  return 'remote-worldwide'; // Fallback
+  
+  // Priority 2: Check categories.location
+  if (categoryLocation.includes('hybrid') || allLocations.some(l => l.includes('hybrid'))) {
+    if (!hasInternationalLocation) {
+      return 'hybrid';
+    }
+  }
+  
+  // Priority 3: Check for remote indicators
+  const isRemote = workplaceType === 'remote' || 
+                   categoryLocation.includes('remote') || 
+                   allLocations.some(l => l.includes('remote'));
+  
+  if (isRemote || hasInternationalLocation) {
+    // If description mentions international locations, it's worldwide
+    if (hasInternationalLocation) {
+      return 'remote-worldwide';
+    }
+    // Check country for Brazil-specific remote
+    if (country === 'BR') {
+      return 'remote-brazil';
+    }
+    // Check location text for LATAM
+    if (categoryLocation.includes('latam') || categoryLocation.includes('latin america')) {
+      return 'remote-latam';
+    }
+    return 'remote-worldwide';
+  }
+  
+  // Priority 4: If country is BR but not explicitly remote, could be hybrid/onsite
+  if (country === 'BR') {
+    // Assume remote-brazil for BR-based companies with remote-friendly culture
+    // This can be overridden by explicit workplaceType
+    return 'remote-brazil';
+  }
+  
+  // Fallback: worldwide remote (most Lever jobs are remote-friendly)
+  return 'remote-worldwide';
 }
 
 /**
@@ -186,10 +304,16 @@ function generateJobId(leverId, companyName) {
  */
 async function normalizeJob(leverJob) {
   const title = leverJob.text || '';
-  const description = leverJob.description || '';
-  const descriptionPlain = leverJob.descriptionPlain || description;
+  const descriptionHtml = leverJob.description || '';
+  const descriptionPlain = leverJob.descriptionPlain || descriptionHtml;
 
-  // Limit description
+  // Convert HTML to Markdown for rich formatting
+  // Lever may have relative links, resolve them to jobs.lever.co
+  const descriptionMarkdown = htmlToMarkdown(descriptionHtml, {
+    baseUrl: `https://jobs.lever.co/${COMPANY_SLUG}`
+  });
+
+  // Short description from plain text (no markdown)
   const shortDescription = descriptionPlain.length > 300
     ? descriptionPlain.slice(0, 297) + '...'
     : descriptionPlain;
@@ -202,37 +326,146 @@ async function normalizeJob(leverJob) {
   }
 
   const tags = await extractTags(title, descriptionPlain);
-  const locationScope = determineLocationScope(
-    leverJob.location || '',
-    leverJob.commitment || '',
-    leverJob.categories || {}
-  );
+  const locationScope = determineLocationScope(leverJob, descriptionPlain);
+
+  // Filter out jobs not relevant for Brazilian audience
+  if (!isRelevantForBrazil(leverJob, locationScope, descriptionPlain)) {
+    return null; // Skip this job
+  }
 
   const contractType = detectContractType(
     `${title} ${descriptionPlain}`,
-    leverJob.commitment || ''
+    leverJob.categories?.commitment || ''
   );
 
   const id = generateJobId(leverJob.id, COMPANY_NAME);
+
+  // Build location text based on determined scope
+  const locationText = buildLocationText(leverJob, locationScope);
+  
+  // Enhance tags with team info from Lever
+  const enhancedTags = enhanceTagsWithLeverData(tags, leverJob);
 
   return {
     id,
     companyName: COMPANY_NAME,
     companyLogo: COMPANY_LOGO,
     jobTitle: title,
-    description: descriptionPlain,
+    description: descriptionMarkdown, // Rich Markdown formatting
     shortDescription,
     applyLink: leverJob.hostedUrl || leverJob.applyUrl,
     postedDate: leverJob.createdAt ? new Date(leverJob.createdAt).toISOString() : new Date().toISOString(),
     category,
-    tags: tags.length > 0 ? tags : [category],
+    tags: enhancedTags.length > 0 ? enhancedTags : [category],
     location: {
       scope: locationScope,
-      text: leverJob.location || 'Remote',
+      text: locationText,
     },
     contractType,
     salary: null,
+    // Additional metadata from Lever
+    meta: {
+      team: leverJob.categories?.team || null,
+      commitment: leverJob.categories?.commitment || null,
+      workplaceType: leverJob.workplaceType || null,
+      country: leverJob.country || null,
+    },
   };
+}
+
+/**
+ * Build descriptive location text based on determined location scope
+ */
+function buildLocationText(leverJob, locationScope) {
+  const workplaceType = leverJob.workplaceType || '';
+  const categoryLocation = leverJob.categories?.location || '';
+  
+  // Build descriptive text based on determined scope (not raw Lever data)
+  switch (locationScope) {
+    case 'hybrid':
+      return 'Híbrido • Brasil';
+    case 'onsite':
+      if (categoryLocation && !categoryLocation.toLowerCase().includes('onsite')) {
+        return `Presencial • ${categoryLocation}`;
+      }
+      return 'Presencial • Brasil';
+    case 'remote-brazil':
+      return 'Remoto • Brasil';
+    case 'remote-latam':
+      return 'Remoto • LATAM';
+    case 'remote-worldwide':
+      return 'Remoto • Global';
+    default:
+      // Fallback to category location
+      if (categoryLocation) {
+        return categoryLocation;
+      }
+      return 'Remoto';
+  }
+}
+
+/**
+ * Enhance tags with data from Lever categories and job title
+ */
+function enhanceTagsWithLeverData(tags, leverJob) {
+  const enhanced = [...tags];
+  const team = (leverJob.categories?.team || '').toLowerCase();
+  const commitment = (leverJob.categories?.commitment || '').toLowerCase();
+  const title = (leverJob.text || '').toLowerCase();
+  
+  // Map Lever team to our tag system
+  const teamTagMap = {
+    'engineering': 'Game Dev',
+    'development': 'Game Dev',
+    'product': 'Design',
+    'design': 'Design',
+    'art': 'Artist',
+    'marketing': 'Marketing',
+    'data': 'Data',
+    'content': 'Content',
+    'localization': 'Localization',
+    'qa': 'QA',
+    'community': 'Community',
+  };
+  
+  for (const [teamKey, tag] of Object.entries(teamTagMap)) {
+    if (team.includes(teamKey) && !enhanced.includes(tag)) {
+      enhanced.push(tag);
+    }
+  }
+  
+  // Add commitment-based tags
+  if (commitment.includes('freelance') && !enhanced.includes('Freelance')) {
+    enhanced.push('Freelance');
+  }
+  if (commitment.includes('part-time') && !enhanced.includes('Part-time')) {
+    enhanced.push('Part-time');
+  }
+  if (commitment.includes('intern') && !enhanced.includes('Estágio')) {
+    enhanced.push('Estágio');
+  }
+  
+  // Add title-based tags for common keywords
+  const titleTagMap = {
+    'editor': 'Content',
+    'regional': 'Localization',
+    'localization': 'Localization',
+    'translator': 'Localization',
+    'motion': 'Motion',
+    'video': 'Video',
+    'community': 'Community',
+    'analyst': 'Data',
+    'data': 'Data',
+  };
+  
+  for (const [keyword, tag] of Object.entries(titleTagMap)) {
+    if (title.includes(keyword) && !enhanced.includes(tag)) {
+      enhanced.push(tag);
+    }
+  }
+  
+  // Remove duplicates and limit to 10 tags max
+  return [...new Set(enhanced)].slice(0, 10);
 }
 
 /**

@@ -11,10 +11,58 @@
 
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 
 // Configuration
 const GREENHOUSE_API_BASE = 'https://boards-api.greenhouse.io/v1/boards';
-const COMPANY_SLUG = 'wildlifestudios';
+
+// Logo.dev API for company logos
+const LOGO_DEV_TOKEN = process.env.LOGO_DEV_TOKEN || 'pk_X-1ZO13GSgeOoUrIuJ6GMQ';
+
+/**
+ * Get company logo URL using logo.dev service
+ * @param {string} domain - Company domain (e.g., 'wildlifestudios.com')
+ * @returns {string} Logo URL
+ */
+function getCompanyLogoUrl(domain) {
+  return `https://img.logo.dev/${domain}?token=${LOGO_DEV_TOKEN}&size=128`;
+}
+
+// Company configurations for Greenhouse
+const GREENHOUSE_COMPANIES = {
+  wildlifestudios: {
+    slug: 'wildlifestudios',
+    name: 'Wildlife Studios',
+    domain: 'wildlifestudios.com',
+  },
+  automattic: {
+    slug: 'automattic',
+    name: 'Automattic',
+    domain: 'automattic.com',
+  },
+  gitlab: {
+    slug: 'gitlab',
+    name: 'GitLab',
+    domain: 'gitlab.com',
+  },
+  monks: {
+    slug: 'monks',
+    name: 'Monks',
+    domain: 'monks.com',
+  },
+  aestudio: {
+    slug: 'aestudio',
+    name: 'AE.Studio',
+    domain: 'ae.studio',
+  },
+};
+
+// Current company to fetch
+const CURRENT_COMPANY = 'wildlifestudios';
+const COMPANY_CONFIG = GREENHOUSE_COMPANIES[CURRENT_COMPANY];
+const COMPANY_SLUG = COMPANY_CONFIG.slug;
+const COMPANY_NAME = COMPANY_CONFIG.name;
+const COMPANY_LOGO = getCompanyLogoUrl(COMPANY_CONFIG.domain);
 
 // Category mapping: Map Greenhouse departments/metadata to our categories
 const departmentCategoryMap = {
@@ -355,17 +403,24 @@ async function normalizeJob(greenhouseJob) {
 
   const title = greenhouseJob.title || details.title || '';
   const content = details.content || '';
-  const description = htmlToText(content); // This now decodes HTML entities
+  
+  // Convert HTML to Markdown for rich formatting
+  // Greenhouse may have relative links, resolve them
+  const descriptionMarkdown = htmlToMarkdown(content, {
+    baseUrl: `https://job-boards.greenhouse.io/${COMPANY_SLUG}`
+  });
+  // Plain text for search/categorization
+  const descriptionPlain = htmlToText(content);
 
   // Limit description length for shortDescription (max 300 chars)
-  const shortDescription = description.length > 300
-    ? description.slice(0, 297) + '...'
-    : description;
+  const shortDescription = descriptionPlain.length > 300
+    ? descriptionPlain.slice(0, 297) + '...'
+    : descriptionPlain;
 
   // Map category with description context for better detection
   const category = mapCategory(
     title,
-    description,
+    descriptionPlain,
     details.departments || greenhouseJob.departments || []
   );
 
@@ -374,23 +429,23 @@ async function normalizeJob(greenhouseJob) {
     return null;
   }
 
-  const tags = await extractTags(title, description);
+  const tags = await extractTags(title, descriptionPlain);
   const locationScope = determineLocationScope(
     details.metadata || greenhouseJob.metadata || [],
     details.location || greenhouseJob.location || {}
   );
 
   // Detect contract type
-  const contractType = detectContractType(title, description);
+  const contractType = detectContractType(title, descriptionPlain);
 
   const id = generateJobId(greenhouseJob.id, greenhouseJob.company_name || 'WLF');
 
   return {
     id,
-    companyName: greenhouseJob.company_name || 'Wildlife Studios',
-    companyLogo: '/images/companies/wildlifestudios.svg', // Use existing logo
+    companyName: greenhouseJob.company_name || COMPANY_NAME,
+    companyLogo: COMPANY_LOGO,
     jobTitle: title,
-    description, // Now with decoded HTML entities
+    description: descriptionMarkdown, // Rich Markdown formatting
     shortDescription,
     applyLink: greenhouseJob.absolute_url || details.absolute_url,
     postedDate: greenhouseJob.first_published || new Date().toISOString(),
