@@ -11,7 +11,10 @@
 
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
+import { enhanceDescription } from './enhance-description.mjs';
+import { garbageCollectJobsWithGracePeriod, safetyCheckJobCount } from './gc-utils.mjs';
 
 // Configuration
 const GREENHOUSE_API_BASE = 'https://boards-api.greenhouse.io/v1/boards';
@@ -104,9 +107,9 @@ const titleCategoryMap = {
     'sprite animation', '2d animation', '3d animation',
   ],
   'Design': [
-    'designer', 'ux', 'ui', 'user experience', 'user interface',
+    'design engineer', 'designer', 'ux', 'ui', 'user experience', 'user interface',
     'product designer', 'visual designer', 'graphic designer',
-    'ux designer', 'ui designer',
+    'ux designer', 'ui designer', 'ux/ui',
   ],
   'Game Dev': [
     'game engineer', 'game developer', 'software engineer',
@@ -170,17 +173,19 @@ function mapCategory(title = '', description = '', departments = []) {
     return 'Animation';
   }
 
-  // PRIORITY 4: 2D Art (after 3D and Animation checks)
-  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
-    return '2D Art';
-  }
-
-  // PRIORITY 5: Design
+  // PRIORITY 4: Design (BEFORE checking for generic "engineer" keyword)
+  // Must check "design engineer" before "engineer" in Game Dev
   if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
     return 'Design';
   }
 
+  // PRIORITY 5: 2D Art (after 3D, Animation and Design checks)
+  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
+    return '2D Art';
+  }
+
   // PRIORITY 6: Game Dev (catch-all for tech roles)
+  // This comes last because "engineer" is very broad
   if (titleCategoryMap['Game Dev'].some(keyword => allText.includes(keyword))) {
     return 'Game Dev';
   }
@@ -395,15 +400,20 @@ function detectContractType(title = '', description = '') {
 /**
  * Normalize Greenhouse job to our Job format
  * @param {object} greenhouseJob - Job from Greenhouse API
+ * @param {string} syncId - Current sync session ID
+ * @param {string} syncTimestamp - Current sync timestamp
  * @returns {Promise<object>} - Normalized job
  */
-async function normalizeJob(greenhouseJob) {
+async function normalizeJob(greenhouseJob, syncId, syncTimestamp) {
   // Fetch full job details
   const details = await fetchJobDetails(greenhouseJob.id);
 
   const title = greenhouseJob.title || details.title || '';
   const content = details.content || '';
-  
+
+  // Store raw description as backup
+  const rawDescription = content;
+
   // Convert HTML to Markdown for rich formatting
   // Greenhouse may have relative links, resolve them
   const descriptionMarkdown = htmlToMarkdown(content, {
@@ -411,6 +421,14 @@ async function normalizeJob(greenhouseJob) {
   });
   // Plain text for search/categorization
   const descriptionPlain = htmlToText(content);
+
+  // Enhance description with AI (concise, ~400 words)
+  console.log('  🤖 Enhancing description with AI...');
+  const enhancedDescription = await enhanceDescription(
+    rawDescription,
+    title,
+    COMPANY_NAME
+  );
 
   // Limit description length for shortDescription (max 300 chars)
   const shortDescription = descriptionPlain.length > 300
@@ -445,7 +463,8 @@ async function normalizeJob(greenhouseJob) {
     companyName: greenhouseJob.company_name || COMPANY_NAME,
     companyLogo: COMPANY_LOGO,
     jobTitle: title,
-    description: descriptionMarkdown, // Rich Markdown formatting
+    description: enhancedDescription, // AI-enhanced, concise description
+    raw_description: rawDescription, // Original HTML for backup
     shortDescription,
     applyLink: greenhouseJob.absolute_url || details.absolute_url,
     postedDate: greenhouseJob.first_published || new Date().toISOString(),
@@ -457,6 +476,9 @@ async function normalizeJob(greenhouseJob) {
     },
     contractType, // Now detects Estágio for internships
     salary: null,
+    // GC tracking fields
+    sync_id: syncId,
+    last_synced_at: syncTimestamp,
   };
 }
 
@@ -464,8 +486,14 @@ async function normalizeJob(greenhouseJob) {
  * Main function to fetch and process Greenhouse jobs
  */
 async function fetchGreenhouseJobs() {
+  // Generate sync session ID
+  const syncId = randomUUID();
+  const syncTimestamp = new Date().toISOString();
+
   console.log('🚀 Fetching jobs from Greenhouse API...');
   console.log(`📋 Company: ${COMPANY_SLUG}`);
+  console.log(`🔄 Sync Session: ${syncId}`);
+  console.log(`⏰ Timestamp: ${syncTimestamp}`);
   console.log('═'.repeat(60));
 
   try {
@@ -490,7 +518,7 @@ async function fetchGreenhouseJobs() {
       const job = jobs[i];
       try {
         console.log(`[${i + 1}/${jobs.length}] Processing: ${job.title}`);
-        const normalized = await normalizeJob(job);
+        const normalized = await normalizeJob(job, syncId, syncTimestamp);
 
         if (!normalized) {
           console.log(`  ⏭️  Filtered out (not relevant for creative/tech focus)`);
@@ -529,6 +557,20 @@ async function fetchGreenhouseJobs() {
     console.log('\n📊 Summary:');
     console.log('Categories:', categories);
     console.log('Location Scopes:', locationScopes);
+
+    // ============================================================================
+    // GARBAGE COLLECTION
+    // ============================================================================
+
+    // Safety check: Ensure we got enough jobs before running GC
+    if (safetyCheckJobCount(normalizedJobs.length, 5)) {
+      console.log('\n🧹 Running Garbage Collection...');
+      console.log('   Strategy: Grace period (7 days)');
+      console.log('   Note: This is a DRY RUN - actual GC happens in sync-to-supabase script');
+      console.log('   Jobs will be marked with sync_id for GC tracking');
+    } else {
+      console.log('\n⚠️  Skipping GC safety check failed');
+    }
 
   } catch (error) {
     console.error('❌ Error fetching Greenhouse jobs:', error.message);

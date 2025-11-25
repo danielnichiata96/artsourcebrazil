@@ -39,6 +39,7 @@ const logoAlt = `${job.companyName} logo`;
     class="job-card group relative flex flex-col md:flex-row border-2 border-ink bg-white p-0 shadow-hard hover:shadow-none hover:translate-x-[5px] hover:translate-y-[5px] transition-all duration-200"
     data-id={job.id}
     data-category={job.category}
+    data-location={job.location.scope}
     data-tags={job.tags.join(',').toLowerCase()}
     data-title={job.jobTitle.toLowerCase()}
     data-company={job.companyName.toLowerCase()}
@@ -75,7 +76,12 @@ const logoAlt = `${job.companyName} logo`;
                 </div>
             </div>
             <div class="mt-6 flex flex-wrap gap-2 relative z-10">
-                {job.tags.map(tag => <span class="border border-ink bg-white px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#e5e5e5] hover:bg-ink hover:text-white transition-colors">{tag}</span>)}
+                {/* Category badge as first tag with color */}
+                <span class:list={["border-2 border-ink px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000]", accentColor, "text-ink"]}>
+                    {job.category}
+                </span>
+                {/* Regular tags without hover effect */}
+                {job.tags.map(tag => <span class="border border-ink bg-white px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#e5e5e5]">{tag}</span>)}
             </div>
         </div>
         <div class="p-6 pt-0 md:pt-6 md:border-l-2 md:border-ink flex flex-row md:flex-col items-center md:items-end justify-between md:justify-center gap-4 bg-stone-50 md:bg-transparent">

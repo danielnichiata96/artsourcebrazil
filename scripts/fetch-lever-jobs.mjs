@@ -15,7 +15,11 @@
 
 import { writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
+import { randomUUID } from 'node:crypto';
 import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
+import { extractTagsIntelligently } from './extract-tags.mjs';
+import { enhanceDescription } from './enhance-description.mjs';
+import { garbageCollectJobsWithGracePeriod, safetyCheckJobCount } from './gc-utils.mjs';
 
 // Configuration
 const LEVER_API_BASE = 'https://api.lever.co/v0/postings';
@@ -46,7 +50,7 @@ function getCompanyLogoUrl(domain, size = 128) {
 function isRelevantForBrazil(leverJob, locationScope, description) {
   const descLower = description.toLowerCase();
   const titleLower = (leverJob.text || '').toLowerCase();
-  
+
   // FIRST: Check exclusion patterns (these override location detection)
   // Because some companies misconfigure Lever with Country: BR for all jobs
   const excludePatterns = [
@@ -63,23 +67,23 @@ function isRelevantForBrazil(leverJob, locationScope, description) {
     // Timezone requirements for non-LATAM
     /(?:cet|gmt|pst|apac|emea)\s+timezone/i,
   ];
-  
+
   for (const pattern of excludePatterns) {
     if (pattern.test(titleLower) || pattern.test(descLower)) {
       return false;
     }
   }
-  
+
   // SECOND: Include Brazil-specific jobs
   if (locationScope === 'remote-brazil' || locationScope === 'hybrid' || locationScope === 'onsite') {
     return true;
   }
-  
+
   // THIRD: Include LATAM jobs
   if (locationScope === 'remote-latam') {
     return true;
   }
-  
+
   // FOURTH: For worldwide jobs without exclusions, include them
   // (These are jobs that accept applicants from anywhere, including Brazil)
   return true;
@@ -124,8 +128,9 @@ const titleCategoryMap = {
     'sprite animation', '2d animation', '3d animation',
   ],
   'Design': [
-    'designer', 'ux', 'ui', 'user experience', 'user interface',
+    'design engineer', 'designer', 'ux', 'ui', 'user experience', 'user interface',
     'product designer', 'visual designer', 'graphic designer',
+    'ux designer', 'ui designer', 'ux/ui',
   ],
   'Game Dev': [
     'game engineer', 'game developer', 'software engineer',
@@ -167,11 +172,29 @@ function mapCategory(title = '', description = '') {
     return '3D';
   }
 
-  // Priority 2-6: Check each category
-  for (const [category, keywords] of Object.entries(titleCategoryMap)) {
-    if (keywords.some(keyword => allText.includes(keyword))) {
-      return category;
-    }
+  // Priority 2: VFX (very specific)
+  if (titleCategoryMap['VFX'].some(keyword => allText.includes(keyword))) {
+    return 'VFX';
+  }
+
+  // Priority 3: Animation
+  if (titleCategoryMap['Animation'].some(keyword => lowerTitle.includes(keyword))) {
+    return 'Animation';
+  }
+
+  // Priority 4: Design (BEFORE checking for generic "engineer" keyword)
+  if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
+    return 'Design';
+  }
+
+  // Priority 5: 2D Art
+  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
+    return '2D Art';
+  }
+
+  // Priority 6: Game Dev (catch-all, comes last because "engineer" is very broad)
+  if (titleCategoryMap['Game Dev'].some(keyword => allText.includes(keyword))) {
+    return 'Game Dev';
   }
 
   console.warn(`⚠️  No category match for "${title}", using fallback: ${DEFAULT_CATEGORY}`);
@@ -193,7 +216,7 @@ function determineLocationScope(leverJob, description = '') {
   const country = (leverJob.country || '').toUpperCase();
   const allLocations = (leverJob.categories?.allLocations || []).map(l => l.toLowerCase());
   const descLower = description.toLowerCase();
-  
+
   // Priority 0: Check description for explicit non-Brazil locations
   // Some companies misconfigure Lever with BR but the role is actually elsewhere
   const internationalKeywords = [
@@ -202,28 +225,28 @@ function determineLocationScope(leverJob, description = '') {
     'north america', 'european', 'uk based', 'us based',
   ];
   const hasInternationalLocation = internationalKeywords.some(kw => descLower.includes(kw));
-  
+
   // Priority 1: Use workplaceType if available (most reliable)
   if (workplaceType === 'hybrid' && !hasInternationalLocation) {
     return 'hybrid';
   }
-  
+
   if (workplaceType === 'onsite' && !hasInternationalLocation) {
     return 'onsite';
   }
-  
+
   // Priority 2: Check categories.location
   if (categoryLocation.includes('hybrid') || allLocations.some(l => l.includes('hybrid'))) {
     if (!hasInternationalLocation) {
       return 'hybrid';
     }
   }
-  
+
   // Priority 3: Check for remote indicators
-  const isRemote = workplaceType === 'remote' || 
-                   categoryLocation.includes('remote') || 
-                   allLocations.some(l => l.includes('remote'));
-  
+  const isRemote = workplaceType === 'remote' ||
+    categoryLocation.includes('remote') ||
+    allLocations.some(l => l.includes('remote'));
+
   if (isRemote || hasInternationalLocation) {
     // If description mentions international locations, it's worldwide
     if (hasInternationalLocation) {
@@ -239,14 +262,14 @@ function determineLocationScope(leverJob, description = '') {
     }
     return 'remote-worldwide';
   }
-  
+
   // Priority 4: If country is BR but not explicitly remote, could be hybrid/onsite
   if (country === 'BR') {
     // Assume remote-brazil for BR-based companies with remote-friendly culture
     // This can be overridden by explicit workplaceType
     return 'remote-brazil';
   }
-  
+
   // Fallback: worldwide remote (most Lever jobs are remote-friendly)
   return 'remote-worldwide';
 }
@@ -256,7 +279,6 @@ function determineLocationScope(leverJob, description = '') {
  */
 async function extractTags(title = '', description = '') {
   try {
-    const { extractTagsIntelligently } = await import('./extract-tags.mjs');
     return await extractTagsIntelligently(title, description);
   } catch (error) {
     // Fallback to simple extraction
@@ -301,17 +323,32 @@ function generateJobId(leverId, companyName) {
 
 /**
  * Normalize Lever job to our format
+ * @param {object} leverJob - Job from Lever API
+ * @param {string} syncId - Current sync session ID
+ * @param {string} syncTimestamp - Current sync timestamp
+ * @returns {Promise<object>} - Normalized job
  */
-async function normalizeJob(leverJob) {
+async function normalizeJob(leverJob, syncId, syncTimestamp) {
   const title = leverJob.text || '';
   const descriptionHtml = leverJob.description || '';
   const descriptionPlain = leverJob.descriptionPlain || descriptionHtml;
+
+  // Store raw description as backup
+  const rawDescription = descriptionHtml;
 
   // Convert HTML to Markdown for rich formatting
   // Lever may have relative links, resolve them to jobs.lever.co
   const descriptionMarkdown = htmlToMarkdown(descriptionHtml, {
     baseUrl: `https://jobs.lever.co/${COMPANY_SLUG}`
   });
+
+  // Enhance description with AI (concise, ~400 words)
+  console.log('  🤖 Enhancing description with AI...');
+  const enhancedDescription = await enhanceDescription(
+    rawDescription,
+    title,
+    COMPANY_NAME
+  );
 
   // Short description from plain text (no markdown)
   const shortDescription = descriptionPlain.length > 300
@@ -342,7 +379,7 @@ async function normalizeJob(leverJob) {
 
   // Build location text based on determined scope
   const locationText = buildLocationText(leverJob, locationScope);
-  
+
   // Enhance tags with team info from Lever
   const enhancedTags = enhanceTagsWithLeverData(tags, leverJob);
 
@@ -351,7 +388,8 @@ async function normalizeJob(leverJob) {
     companyName: COMPANY_NAME,
     companyLogo: COMPANY_LOGO,
     jobTitle: title,
-    description: descriptionMarkdown, // Rich Markdown formatting
+    description: enhancedDescription, // AI-enhanced, concise description
+    raw_description: rawDescription, // Original HTML for backup
     shortDescription,
     applyLink: leverJob.hostedUrl || leverJob.applyUrl,
     postedDate: leverJob.createdAt ? new Date(leverJob.createdAt).toISOString() : new Date().toISOString(),
@@ -363,6 +401,9 @@ async function normalizeJob(leverJob) {
     },
     contractType,
     salary: null,
+    // GC tracking fields
+    sync_id: syncId,
+    last_synced_at: syncTimestamp,
     // Additional metadata from Lever
     meta: {
       team: leverJob.categories?.team || null,
@@ -379,7 +420,7 @@ async function normalizeJob(leverJob) {
 function buildLocationText(leverJob, locationScope) {
   const workplaceType = leverJob.workplaceType || '';
   const categoryLocation = leverJob.categories?.location || '';
-  
+
   // Build descriptive text based on determined scope (not raw Lever data)
   switch (locationScope) {
     case 'hybrid':
@@ -412,7 +453,7 @@ function enhanceTagsWithLeverData(tags, leverJob) {
   const team = (leverJob.categories?.team || '').toLowerCase();
   const commitment = (leverJob.categories?.commitment || '').toLowerCase();
   const title = (leverJob.text || '').toLowerCase();
-  
+
   // Map Lever team to our tag system
   const teamTagMap = {
     'engineering': 'Game Dev',
@@ -427,13 +468,13 @@ function enhanceTagsWithLeverData(tags, leverJob) {
     'qa': 'QA',
     'community': 'Community',
   };
-  
+
   for (const [teamKey, tag] of Object.entries(teamTagMap)) {
     if (team.includes(teamKey) && !enhanced.includes(tag)) {
       enhanced.push(tag);
     }
   }
-  
+
   // Add commitment-based tags
   if (commitment.includes('freelance') && !enhanced.includes('Freelance')) {
     enhanced.push('Freelance');
@@ -444,7 +485,7 @@ function enhanceTagsWithLeverData(tags, leverJob) {
   if (commitment.includes('intern') && !enhanced.includes('Estágio')) {
     enhanced.push('Estágio');
   }
-  
+
   // Add title-based tags for common keywords
   const titleTagMap = {
     'editor': 'Content',
@@ -457,13 +498,13 @@ function enhanceTagsWithLeverData(tags, leverJob) {
     'analyst': 'Data',
     'data': 'Data',
   };
-  
+
   for (const [keyword, tag] of Object.entries(titleTagMap)) {
     if (title.includes(keyword) && !enhanced.includes(tag)) {
       enhanced.push(tag);
     }
   }
-  
+
   // Remove duplicates and limit to 10 tags max
   return [...new Set(enhanced)].slice(0, 10);
 }
@@ -472,8 +513,14 @@ function enhanceTagsWithLeverData(tags, leverJob) {
  * Main function
  */
 async function fetchLeverJobs() {
+  // Generate sync session ID
+  const syncId = randomUUID();
+  const syncTimestamp = new Date().toISOString();
+
   console.log('🚀 Fetching jobs from Lever API...');
   console.log(`📋 Company: ${COMPANY_SLUG}`);
+  console.log(`🔄 Sync Session: ${syncId}`);
+  console.log(`⏰ Timestamp: ${syncTimestamp}`);
   console.log('═'.repeat(60));
 
   try {
@@ -494,7 +541,7 @@ async function fetchLeverJobs() {
       const job = jobs[i];
       try {
         console.log(`[${i + 1}/${jobs.length}] Processing: ${job.text}`);
-        const normalized = await normalizeJob(job);
+        const normalized = await normalizeJob(job, syncId, syncTimestamp);
 
         if (!normalized) {
           console.log(`  ⏭️  Filtered out (not relevant)`);
@@ -531,6 +578,13 @@ async function fetchLeverJobs() {
     console.log('\n📊 Summary:');
     console.log('Categories:', categories);
     console.log('Location Scopes:', locationScopes);
+
+    // GC safety check
+    if (safetyCheckJobCount(normalizedJobs.length, 5)) {
+      console.log('\n🧹 Garbage Collection ready');
+      console.log('   Strategy: Grace period (7 days)');
+      console.log('   Jobs marked with sync_id for tracking');
+    }
 
   } catch (error) {
     console.error('❌ Error fetching Lever jobs:', error.message);

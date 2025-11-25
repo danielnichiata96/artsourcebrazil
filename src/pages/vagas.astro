@@ -216,7 +216,19 @@ function initLogic() {
         const visibleJobs = [];
         
         cards.forEach(card => {
-            const matchS = state.search === '' || card.dataset.title.includes(state.search) || card.dataset.company.includes(state.search) || card.dataset.tags.includes(state.search);
+            // Improved search: split search term and check if ANY word in title/company/tags contains the search term
+            const matchS = state.search === '' || (() => {
+                const searchTerm = state.search.toLowerCase();
+                const title = card.dataset.title.toLowerCase();
+                const company = card.dataset.company.toLowerCase();
+                const tags = card.dataset.tags.toLowerCase();
+                
+                // Check if search term is in title, company or any tag
+                return title.includes(searchTerm) || 
+                       company.includes(searchTerm) || 
+                       tags.split(',').some(tag => tag.trim().includes(searchTerm));
+            })();
+            
             const matchC = state.category === 'all' || card.dataset.category === state.category;
             const matchL = state.location === 'all' || card.dataset.location === state.location;
             const matchT = state.tag === null || card.dataset.tags.includes(state.tag.toLowerCase());
@@ -240,8 +252,15 @@ function initLogic() {
         document.getElementById('job-count').textContent = count;
     };
 
-    // Search
-    searchInput.addEventListener('input', (e) => { state.search = e.target.value.toLowerCase(); runFilter(); });
+    // Search with debounce
+    let searchTimeout;
+    searchInput.addEventListener('input', (e) => { 
+        clearTimeout(searchTimeout);
+        searchTimeout = setTimeout(() => {
+            state.search = e.target.value.toLowerCase(); 
+            runFilter();
+        }, 300); // Wait 300ms after user stops typing
+    });
 
     // Categories & Location
     document.addEventListener('change', (e) => {
