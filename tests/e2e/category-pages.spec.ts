@@ -2,14 +2,14 @@ import { test, expect } from '@playwright/test';
 
 test.describe('Category Pages', () => {
   test('Category page loads with filtered jobs', async ({ page }) => {
-    await page.goto('/category/game-dev');
+    await page.goto('/category/art-animation');
 
     // Check title includes category
-    await expect(page).toHaveTitle(/Game Dev/);
+    await expect(page).toHaveTitle(/Art & Animation/);
 
     // Check heading
     await expect(
-      page.getByRole('heading', { level: 1, name: /Game Dev/i }),
+      page.getByRole('heading', { level: 1, name: /Art & Animation/i }),
     ).toBeVisible();
 
     // Check that jobs are visible
@@ -17,29 +17,29 @@ test.describe('Category Pages', () => {
     const count = await jobCards.count();
     expect(count).toBeGreaterThan(0);
 
-    // Verify at least one job shows Game Dev category (use first to avoid strict mode)
-    await expect(jobCards.first().getByText('Game Dev').first()).toBeVisible();
+    // Verify at least one job shows Art & Animation category (use first to avoid strict mode)
+    await expect(jobCards.first().getByText('Art & Animation').first()).toBeVisible();
   });
 
   test('Navigate from homepage category filter to category page', async ({ page }) => {
     await page.goto('/');
 
-    // Click Game Dev category button on homepage
-    const categoryButton = page.locator('button:has-text("Game Dev")').first();
+    // Click Art & Animation category button on homepage
+    const categoryButton = page.locator('button:has-text("Art & Animation")').first();
     
     if (await categoryButton.isVisible()) {
       await categoryButton.click();
 
       // Should update URL with category filter parameter
-      await page.waitForURL(/\?category=Game\+Dev/, { timeout: 5000 });
-      await expect(page).toHaveURL(/\?category=Game\+Dev/);
+      await page.waitForURL(/\?category=Art/, { timeout: 5000 });
+      await expect(page).toHaveURL(/\?category=Art/);
     } else {
       test.skip();
     }
   });
 
   test('Jobs on category page link to individual job pages', async ({ page }) => {
-    await page.goto('/category/game-dev');
+    await page.goto('/category/art-animation');
 
     // Get first visible job link to individual posting
     const jobLink = page.locator('[data-testid="job-card"] a[href^="/jobs/"]').first();
@@ -51,7 +51,7 @@ test.describe('Category Pages', () => {
   });
 
   test('Category page has proper SEO meta tags', async ({ page }) => {
-    await page.goto('/category/game-dev');
+    await page.goto('/category/art-animation');
 
     // Check meta description
     const metaDescription = page.locator('meta[name="description"]');
@@ -59,21 +59,21 @@ test.describe('Category Pages', () => {
   });
 
   test('Different category pages show different jobs', async ({ page }) => {
-    // Visit Game Dev category
-    await page.goto('/category/game-dev');
-    const gameDevJobs = await page.locator('[data-testid="job-card"]').count();
+    // Visit Art & Animation category
+    await page.goto('/category/art-animation');
+    const artJobs = await page.locator('[data-testid="job-card"]').count();
 
-    // Visit Design category
-    await page.goto('/category/design');
-    const designJobs = await page.locator('[data-testid="job-card"]').count();
+    // Visit Engineering & Code category
+    await page.goto('/category/engineering-code');
+    const engineeringJobs = await page.locator('[data-testid="job-card"]').count();
 
     // Both should have jobs
-    expect(gameDevJobs).toBeGreaterThan(0);
-    expect(designJobs).toBeGreaterThan(0);
+    expect(artJobs).toBeGreaterThan(0);
+    expect(engineeringJobs).toBeGreaterThan(0);
   });
 
   test('Category page has JobPosting JSON-LD', async ({ page }) => {
-    await page.goto('/category/game-dev');
+    await page.goto('/category/art-animation');
 
     // Check for JSON-LD scripts (there will be multiple - Organization + JobPostings array)
     const jsonLdScripts = await page.locator('script[type="application/ld+json"]').all();

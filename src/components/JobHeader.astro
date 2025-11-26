@@ -24,13 +24,12 @@ const timeAgo = (dateStr: string) => {
 
 const salary = formatSalaryRange(job.salary);
 const isNew = (new Date().getTime() - new Date(job.postedDate).getTime()) < (3 * 86400000);
+// 4-Pillar Category Colors (Canvas Design System)
 const categoryAccents: Record<string, string> = {
-    'Game Dev': 'bg-accent-teal',
-    '3D': 'bg-accent-purple',
-    '2D Art': 'bg-accent-pink',
-    'Animation': 'bg-accent-orange',
-    'Design': 'bg-accent-lime',
-    'VFX': 'bg-accent-teal',
+    'Engineering & Code': 'bg-accent-purple',  // Purple - Tech/Engineering
+    'Art & Animation': 'bg-accent-pink',       // Pink/Orange - Art/Creative
+    'Design & Product': 'bg-accent-teal',      // Teal - Design
+    'Production': 'bg-accent-lime',            // Lime - Production/Management
 };
 
 const accentColor = categoryAccents[job.category] ?? 'bg-accent-lime';

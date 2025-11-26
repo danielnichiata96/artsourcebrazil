@@ -14,7 +14,9 @@ import type { Job } from '../../lib/jobs';
  * Usage in frontend:
  *   fetch('/api/vagas.json')
  *     .then(res => res.json())
- *     .then(data => console.log(data.jobs))
+ *   fetch('/api/vagas.json')
+ *     .then(res => res.json())
+ *     .then(data => console.log(data.jobs)) // Example usage
  * 
  * @returns JSON response with jobs array
  */
@@ -33,7 +35,7 @@ export const GET: APIRoute = async ({ request }) => {
   try {
     // Fetch fresh jobs from Supabase
     const jobs = await getJobs();
-    
+
     // Sort by date (newest first)
     const sortedJobs = jobs.sort(
       (a, b) => new Date(b.postedDate).getTime() - new Date(a.postedDate).getTime(),
@@ -63,10 +65,10 @@ export const GET: APIRoute = async ({ request }) => {
     );
   } catch (error) {
     console.error('Error fetching jobs from Supabase:', error);
-    
+
     // Return error response
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: 'Failed to fetch jobs',
         message: error instanceof Error ? error.message : 'Unknown error',
       }),

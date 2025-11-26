@@ -231,4 +231,65 @@
     border-left: 4px solid theme('colors.editorial.accent');
     padding-left: 1rem;
   }
+
+  /* Active Filter Pills Animations */
+  @keyframes fade-in-up {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes pill-pop-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.8) translateY(10px);
+    }
+    60% {
+      transform: scale(1.05) translateY(-2px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+
+  @keyframes pill-pop-out {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.8);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.3s ease-out forwards;
+  }
+
+  .active-filter-pill {
+    animation: pill-pop-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .active-filter-pill.removing {
+    animation: pill-pop-out 0.2s ease-out forwards;
+  }
+
+  /* Hover effect for pills */
+  .active-filter-pill:hover svg {
+    transform: rotate(90deg);
+  }
+
+  /* Staggered animation for multiple pills */
+  .active-filter-pill:nth-child(1) { animation-delay: 0s; }
+  .active-filter-pill:nth-child(2) { animation-delay: 0.05s; }
+  .active-filter-pill:nth-child(3) { animation-delay: 0.1s; }
+  .active-filter-pill:nth-child(4) { animation-delay: 0.15s; }
+  .active-filter-pill:nth-child(5) { animation-delay: 0.2s; }
 }

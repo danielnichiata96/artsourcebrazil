@@ -19,7 +19,7 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY;
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 const GEMINI_API_VERSION = process.env.GEMINI_API_VERSION || 'v1beta';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/${GEMINI_API_VERSION}/models/${GEMINI_MODEL}:generateContent`;
-const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.1-8b-instant'; // Updated: llama-3.1-70b-versatile was decommissioned
+const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile'; // Updated model
 const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
 // Valid technology tags (to validate AI output)
@@ -41,21 +41,27 @@ const ALL_VALID_TAGS = new Set([...VALID_TECH_TAGS, ...VALID_ROLE_TAGS]);
  * Build prompt for AI tag extraction
  */
 function buildTagExtractionPrompt(title = '', description = '') {
-  return `You are a job tagging expert. Extract ONLY relevant technology and skill tags from the following job posting.
+  return `You are a job tagging expert. Extract ONLY relevant technology and skill tags from this job posting.
 
-IMPORTANT RULES:
-1. Extract ONLY technologies and skills explicitly mentioned or clearly required
-2. DO NOT include tags from partial word matches (e.g., "Go" from "Google", "Mongo", or "Django")
-3. Return ONLY the tags as a comma-separated list
-4. Use these exact tag names (case-sensitive): Unity, Unreal, Python, JavaScript, TypeScript, C#, Go, Java, C++, React, Node.js, AWS, Docker, Kubernetes, Git, CI/CD, 3D, 2D, Animation, VFX, Design, Artist, AI, Mobile, Game Dev, Engine
-5. If no relevant tags found, return "none"
-6. Maximum 10 tags
-7. Include "Senior" if the title contains "Senior", "Lead", "Principal", or "Staff"
+CRITICAL RULES:
+1. Extract tags ONLY from job requirements, responsibilities, and qualifications
+2. IGNORE background stories, company history, or founder experiences (e.g., "founder worked in VFX" does NOT mean the job needs VFX skills)
+3. IGNORE technologies mentioned only as examples of what the company builds (unless explicitly required for the role)
+4. DO NOT include tags from partial word matches (e.g., "Go" from "Google", "Mongo", or "Django")
+5. DO NOT include creative/game tags (Unity, Unreal, 3D, 2D, VFX, Animation) for software engineering roles UNLESS explicitly required in job responsibilities
+6. Return ONLY technologies and skills the candidate MUST or SHOULD have
+7. Return tags as a comma-separated list
+8. Use these exact tag names (case-sensitive): Unity, Unreal, Python, JavaScript, TypeScript, C#, Go, Java, C++, Rust, PHP, Ruby, React, Vue, Angular, Node.js, Next.js, Django, Flask, Rails, AWS, GCP, Azure, Docker, Kubernetes, Postgres, MongoDB, Redis, Git, CI/CD, GraphQL, REST API, 3D, 2D, Animation, VFX, Design, UI/UX, Mobile, Game Dev, Engine, DevOps, Backend, Frontend, Full-stack
+9. If no relevant tags found, return "none"
+10. Maximum 10 tags
+11. Include "Senior" ONLY if title contains "Senior", "Lead", "Principal", or "Staff"
 
 Job Title: ${title}
 
-Description (first 2000 chars):
+Description (focus on Requirements and Responsibilities):
 ${description.substring(0, 2000)}${description.length > 2000 ? '...' : ''}
+
+REMEMBER: Extract tags ONLY from what the CANDIDATE needs to know/do, NOT from company background or examples.
 
 Tags (comma-separated, or "none"):`;
 }
@@ -250,6 +256,7 @@ export async function extractTagsIntelligently(title = '', description = '') {
   }
 
   // Fallback: Smart keyword matching with word boundaries
+  console.log('  ✅ Extracted tags using: Keyword Matching (fallback)');
   return extractTagsWithKeywordMatching(title, description);
 }
 

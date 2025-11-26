@@ -1,5 +1,10 @@
+import 'dotenv/config';
 import { test, expect } from '@playwright/test';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 /**
  * E2E tests for Admin Dashboard
@@ -129,7 +134,7 @@ test.describe('Admin Dashboard - Authenticated', () => {
     });
   });
 
-  test.describe.skip('Actions (requires DB data)', () => {
+test.describe.skip('Actions (requires DB data)', () => {
     test('should show confirmation dialog when approving', async ({ page, context }) => {
       await context.addCookies([
         {
@@ -184,5 +189,3 @@ test.describe('Admin Dashboard - Authenticated', () => {
       }
     });
   });
-});
-

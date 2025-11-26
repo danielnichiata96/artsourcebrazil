@@ -12,11 +12,12 @@
 
 import { config } from 'dotenv';
 config();
-
+// Configuration
 const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-const GEMINI_API_KEY_2 = process.env.GEMINI_API_KEY_2; // Optional second key
-const GROQ_API_KEY = process.env.GROQ_API_KEY; // Optional Groq key (FREE tier available)
-// Gemini API configuration
+const GEMINI_API_KEY_2 = process.env.GEMINI_API_KEY_2; // Optional second key for fallback
+const GROQ_API_KEY = process.env.GROQ_API_KEY;
+
+// Google Gemini configuration
 // Available models (verified):
 // - gemini-2.0-flash (fast, recommended for most use cases)
 // - gemini-2.5-flash (latest, faster)
@@ -26,45 +27,70 @@ const GROQ_API_KEY = process.env.GROQ_API_KEY; // Optional Groq key (FREE tier a
 const GEMINI_MODEL = process.env.GEMINI_MODEL || 'gemini-2.0-flash';
 const GEMINI_API_VERSION = process.env.GEMINI_API_VERSION || 'v1beta';
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/${GEMINI_API_VERSION}/models/${GEMINI_MODEL}:generateContent`;
-// Groq API (FREE tier: 7,400 requests/min, very fast GPU-accelerated)
-const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.1-70b-versatile'; // Fast and free
-const GROQ_API_URL = 'https://api.groq.com/openai/v1/chat/completions';
 
-// Rate limiting
-const RATE_LIMIT_DELAY = 1000; // 1 second between requests
-const cache = new Map(); // In-memory cache
+// Groq API configuration (FREE tier: 30 req/min for 70b model)
+const GROQ_MODEL = process.env.GROQ_MODEL || 'llama-3.3-70b-versatile'; // Updated model
+const GROQ_ENDPOINT = 'https://api.groq.com/openai/v1/chat/completions';
+
+// Rate limiting (increased to preserve API quotas)
+const RATE_LIMIT_DELAY = 500; // 500ms between requests (was 100ms)
+const RETRY_DELAY = 2000; // 2s delay when hitting rate limits
+const cache = new Map(); // In-memory cache by content hash
+
+/**
+ * Generate cache key from description content
+ * @param {string} rawDescription - Raw job description
+ * @param {string} jobTitle - Job title
+ * @returns {string} - Cache key (simple hash)
+ */
+function getCacheKey(rawDescription, jobTitle) {
+  // Simple hash based on content length + title for cache
+  const contentHash = `${jobTitle}-${rawDescription.length}-${rawDescription.substring(0, 50)}`;
+  return contentHash.replace(/[^a-zA-Z0-9-]/g, '').substring(0, 100);
+}
 
 /**
  * Build enhancement prompt for AI
  */
 function buildPrompt(rawDescription, jobTitle = '', companyName = '') {
-  return `Você é um especialista em redação de descrições de vagas de emprego.
+  return `Você é um editor implacável de descrições de vagas. Sua missão é transformar "paredes de texto" em sumários concisos e diretos.
 
-IMPORTANTE - Regras de limpeza obrigatórias:
-1. **NÃO inclua placeholders** como "[A empresa incluirá aqui...]", "[Informações sobre benefícios...]", "[A empresa deve listar...]", etc.
-2. **Remova completamente** seções vazias ou genéricas (Benefícios apenas se houver lista real e específica de benefícios)
-3. **Remova completamente** declarações legais redundantes ("Equal Opportunity", "We are an equal opportunity employer", "embraces diversity and inclusion", etc.)
-4. **Só inclua** seções com conteúdo real e útil
-5. **Se não houver benefícios específicos na descrição original, NÃO crie uma seção de Benefícios**
+REGRAS CRÍTICAS DE ELIMINAÇÃO (O QUE REMOVER):
+1. DELETE COMPLETAMENTE seções "Sobre a empresa", "Nossa História", "Cultura", "Por que trabalhar aqui", "Benefícios" (a menos que sejam únicos), "Processo de Entrevista", "Primeiros 3 meses".
+2. DELETE histórias de fundadores, background da empresa ou filosofia (ex: "I started my career...", "Our engineering culture is motivated by...").
+3. DELETE declarações legais, de diversidade ou igualdade (ex: "Equal Opportunity Employer").
+4. DELETE introduções longas ou saudações (ex: "Hi 👋 I’m Abhik...").
 
-Melhore a seguinte descrição de vaga, mantendo todas as informações importantes, mas:
-1. **Organize** em seções claras (Sobre a vaga, Responsabilidades, Requisitos)
-2. **Remova completamente** informações legais genéricas (Equal Opportunity, diversity statements, etc.)
-3. **Remova** seções vazias ou com placeholders (Benefícios apenas se houver lista real de benefícios na descrição original)
-4. **Simplifique** linguagem corporativa excessiva, mas mantenha profissionalismo
-5. **Formatte** com parágrafos bem estruturados
-6. **Mantenha** todos os detalhes técnicos importantes
-7. **Traduza para português brasileiro** se necessário, mantendo termos técnicos em inglês quando apropriado
-8. **Preserve** quebras de linha e estrutura quando relevantes
+ESTRUTURA OBRIGATÓRIA (Siga exatamente):
+
+## Sobre a vaga
+[Um único parágrafo curto (max 3 linhas) resumindo o objetivo principal da função. Sem fluff.]
+
+## Responsabilidades
+* [Bullet point direto e técnico]
+* [Bullet point direto e técnico]
+* [Max 5-7 bullets mais importantes]
+
+## Requisitos
+* [Bullet point direto e técnico]
+* [Bullet point direto e técnico]
+* [Max 5-7 bullets mais importantes]
+
+DIRETRIZES FINAIS:
+1. MÁXIMO 300 palavras no total.
+2. Traduza para Português do Brasil (mantendo termos técnicos em inglês).
+3. Se a descrição original for uma "parede de texto", extraia apenas o que importa (o que a pessoa vai fazer e o que ela precisa saber).
+4. Seja frio e direto. Corte todo o "marketing" da vaga.
 
 **Título da vaga:** ${jobTitle}
 **Empresa:** ${companyName}
 
 **Descrição original:**
-${rawDescription.substring(0, 3000)}${rawDescription.length > 3000 ? '...' : ''}
+${rawDescription.substring(0, 4000)}${rawDescription.length > 4000 ? '...' : ''}
 
-**Descrição melhorada (apenas o texto, sem comentários ou explicações, SEM placeholders, SEM seções vazias, SEM declarações legais genéricas):**`;
+**Descrição Otimizada (apenas o texto final, sem comentários):**`;
 }
+
 
 /**
  * Clean up AI-generated text - remove placeholders and empty sections
@@ -149,7 +175,7 @@ async function tryGemini(apiKey, rawDescription, jobTitle, companyName) {
     }
 
     const data = await response.json();
-    
+
     if (!data.candidates || !data.candidates[0]?.content?.parts?.[0]?.text) {
       // Check for safety ratings (Gemini may block some content)
       if (data.promptFeedback?.blockReason) {
@@ -159,13 +185,19 @@ async function tryGemini(apiKey, rawDescription, jobTitle, companyName) {
     }
 
     let enhancedDescription = data.candidates[0].content.parts[0].text.trim();
-    
+
     // Clean up placeholders and empty sections
     enhancedDescription = cleanupEnhancedText(enhancedDescription);
-    
+
     // Validate enhanced description quality
-    if (enhancedDescription.length < rawDescription.length * 0.3) {
-      throw new Error('Enhanced description too short after cleanup');
+    // Accept if either:
+    // 1. At least 300 characters (reasonable minimum - some jobs are concise)
+    // 2. OR at least 15% of original (for very long originals)
+    const MIN_LENGTH = 300;
+    const MIN_PERCENTAGE = 0.15;
+
+    if (enhancedDescription.length < MIN_LENGTH && enhancedDescription.length < rawDescription.length * MIN_PERCENTAGE) {
+      throw new Error(`Enhanced description too short: ${enhancedDescription.length} chars (min: ${MIN_LENGTH} or ${Math.floor(rawDescription.length * MIN_PERCENTAGE)} chars)`);
     }
 
     return enhancedDescription;
@@ -189,7 +221,7 @@ async function tryGroq(rawDescription, jobTitle, companyName) {
   try {
     const prompt = buildPrompt(rawDescription, jobTitle, companyName);
 
-    const response = await fetch(GROQ_API_URL, {
+    const response = await fetch(GROQ_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -213,19 +245,25 @@ async function tryGroq(rawDescription, jobTitle, companyName) {
     }
 
     const data = await response.json();
-    
+
     if (!data.choices || !data.choices[0]?.message?.content) {
       throw new Error('Invalid response from Groq API');
     }
 
     let enhancedDescription = data.choices[0].message.content.trim();
-    
+
     // Clean up placeholders and empty sections
     enhancedDescription = cleanupEnhancedText(enhancedDescription);
-    
-    // Validate enhanced description quality
-    if (enhancedDescription.length < rawDescription.length * 0.3) {
-      throw new Error('Enhanced description too short after cleanup');
+
+    // Validate enhanced description quality  
+    // Accept if either:
+    // 1. At least 300 characters (reasonable minimum - some jobs are concise)
+    // 2. OR at least 15% of original (for very long originals)
+    const MIN_LENGTH = 300;
+    const MIN_PERCENTAGE = 0.15;
+
+    if (enhancedDescription.length < MIN_LENGTH && enhancedDescription.length < rawDescription.length * MIN_PERCENTAGE) {
+      throw new Error(`Enhanced description too short: ${enhancedDescription.length} chars (min: ${MIN_LENGTH} or ${Math.floor(rawDescription.length * MIN_PERCENTAGE)} chars)`);
     }
 
     return enhancedDescription;
@@ -239,15 +277,15 @@ async function tryGroq(rawDescription, jobTitle, companyName) {
 
 /**
  * Clean HTML using basic text processing (fallback)
- * Removes HTML tags, entities, and formats text
+ * Converts HTML to proper Markdown format
  * @param {string} html - HTML text
- * @returns {string} - Cleaned text
+ * @returns {string} - Clean Markdown text (NEVER returns HTML)
  */
 function cleanHtmlFallback(html = '') {
   if (!html) return '';
 
   let text = html
-    // Decode HTML entities
+    // Decode HTML entities FIRST
     .replace(/&amp;/g, '&')
     .replace(/&lt;/g, '<')
     .replace(/&gt;/g, '>')
@@ -256,34 +294,71 @@ function cleanHtmlFallback(html = '') {
     .replace(/&#39;/g, "'")
     .replace(/&#x27;/g, "'")
     .replace(/&#x2F;/g, '/')
-    // Remove HTML tags but preserve structure
-    .replace(/<p[^>]*>/gi, '\n\n')
-    .replace(/<\/p>/gi, '')
-    .replace(/<br[^>]*>/gi, '\n')
-    .replace(/<li[^>]*>/gi, '• ')
-    .replace(/<\/li>/gi, '\n')
+    .replace(/&nbsp;/g, ' ')
+    
+    // Convert headings to proper Markdown
+    .replace(/<h1[^>]*>(.*?)<\/h1>/gis, '\n\n# $1\n\n')
+    .replace(/<h2[^>]*>(.*?)<\/h2>/gis, '\n\n## $1\n\n')
+    .replace(/<h3[^>]*>(.*?)<\/h3>/gis, '\n\n### $1\n\n')
+    .replace(/<h4[^>]*>(.*?)<\/h4>/gis, '\n\n#### $1\n\n')
+    .replace(/<h5[^>]*>(.*?)<\/h5>/gis, '\n\n##### $1\n\n')
+    .replace(/<h6[^>]*>(.*?)<\/h6>/gis, '\n\n###### $1\n\n')
+    
+    // Convert links to Markdown [text](url)
+    .replace(/<a[^>]*href=["']([^"']*)["'][^>]*>(.*?)<\/a>/gis, '[$2]($1)')
+    
+    // Convert bold/strong to Markdown **text**
+    .replace(/<strong[^>]*>(.*?)<\/strong>/gis, '**$1**')
+    .replace(/<b[^>]*>(.*?)<\/b>/gis, '**$1**')
+    
+    // Convert italic/em to Markdown *text*
+    .replace(/<em[^>]*>(.*?)<\/em>/gis, '*$1*')
+    .replace(/<i[^>]*>(.*?)<\/i>/gis, '*$1*')
+    
+    // Convert lists to Markdown (must be done before removing li tags)
+    .replace(/<li[^>]*>(.*?)<\/li>/gis, '* $1\n')
     .replace(/<ul[^>]*>/gi, '\n')
     .replace(/<\/ul>/gi, '\n')
     .replace(/<ol[^>]*>/gi, '\n')
     .replace(/<\/ol>/gi, '\n')
-    .replace(/<strong[^>]*>/gi, '**')
-    .replace(/<\/strong>/gi, '**')
-    .replace(/<b[^>]*>/gi, '**')
-    .replace(/<\/b>/gi, '**')
-    .replace(/<em[^>]*>/gi, '*')
-    .replace(/<\/em>/gi, '*')
-    .replace(/<i[^>]*>/gi, '*')
-    .replace(/<\/i>/gi, '*')
-    .replace(/<h[1-6][^>]*>/gi, '\n\n## ')
-    .replace(/<\/h[1-6]>/gi, '\n\n')
+    
+    // Convert paragraphs and breaks
+    .replace(/<p[^>]*>/gi, '\n\n')
+    .replace(/<\/p>/gi, '')
+    .replace(/<br[^>]*>/gi, '\n')
+    
+    // Remove style, script, iframe and other non-content tags
+    .replace(/<style[^>]*>[\s\S]*?<\/style>/gis, '')
+    .replace(/<script[^>]*>[\s\S]*?<\/script>/gis, '')
+    .replace(/<iframe[^>]*>[\s\S]*?<\/iframe>/gis, '')
+    
+    // Remove divs, spans (keep content)
     .replace(/<div[^>]*>/gi, '\n')
-    .replace(/<\/div>/gi, '')
-    // Remove remaining HTML tags
+    .replace(/<\/div>/gi, '\n')
+    .replace(/<span[^>]*>/gi, '')
+    .replace(/<\/span>/gi, '')
+    
+    // Remove ALL remaining HTML tags (safety net - ensures NO HTML survives)
     .replace(/<[^>]+>/g, '')
-    // Clean up whitespace
-    .replace(/\n{3,}/g, '\n\n')
-    .replace(/[ \t]+/g, ' ')
+    
+    // Clean up whitespace to proper Markdown formatting
+    .replace(/\n{3,}/g, '\n\n')  // Max 2 consecutive newlines
+    .replace(/[ \t]+/g, ' ')     // Normalize horizontal whitespace
     .trim();
+
+  // Smart truncation if too long (fallback for when AI is down)
+  const MAX_LENGTH = 2500;
+  if (text.length > MAX_LENGTH) {
+    // Find the last period before MAX_LENGTH to cut cleanly
+    const cutPoint = text.lastIndexOf('.', MAX_LENGTH);
+    if (cutPoint > MAX_LENGTH * 0.8) {
+      text = text.substring(0, cutPoint + 1);
+    } else {
+      text = text.substring(0, MAX_LENGTH);
+    }
+
+    text += '\n\n(Descrição resumida automaticamente. Clique em "Aplicar" para ver detalhes completos.)';
+  }
 
   return text;
 }
@@ -297,85 +372,100 @@ function cleanHtmlFallback(html = '') {
  * @returns {Promise<string>} - Enhanced description
  */
 export async function enhanceDescription(rawDescription, jobTitle = '', companyName = '', useCache = true) {
-  // Skip if description is too short or empty
-  if (!rawDescription || rawDescription.trim().length < 50) {
-    return rawDescription;
-  }
+  try {
+    // Skip if description is too short or empty
+    if (!rawDescription || rawDescription.trim().length < 50) {
+      return rawDescription;
+    }
 
-  // Check cache
-  if (useCache) {
-    const cacheKey = `${jobTitle}-${rawDescription.substring(0, 100)}`.toLowerCase();
-    if (cache.has(cacheKey)) {
+    // Check cache first
+    const cacheKey = getCacheKey(rawDescription, jobTitle);
+    if (useCache && cache.has(cacheKey)) {
+      console.log('  💾 Using cached description');
       return cache.get(cacheKey);
     }
-  }
 
-  // Rate limiting
-  await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY));
+    // Rate limiting between jobs
+    await new Promise(resolve => setTimeout(resolve, RATE_LIMIT_DELAY));
 
-  let enhanced = null;
-  let method = '';
+    let enhanced = null;
+    let method = '';
 
-  // Try 1: Gemini (primary)
-  if (GEMINI_API_KEY) {
-    console.log(`  🤖 Trying Gemini (primary)...`);
-    enhanced = await tryGemini(GEMINI_API_KEY, rawDescription, jobTitle, companyName);
-    if (enhanced) {
-      method = 'Gemini (primary)';
+    // Try 1: Gemini (primary key)
+    if (GEMINI_API_KEY) {
+      console.log(`  🤖 Trying Gemini (primary)...`);
+      enhanced = await tryGemini(GEMINI_API_KEY, rawDescription, jobTitle, companyName);
+      if (enhanced) {
+        method = 'Gemini (primary)';
+      }
     }
-  }
 
-  // Try 2: Groq (FREE) OR Gemini (secondary)
-  if (!enhanced) {
-    // Try Groq first (FREE and fast)
-    if (GROQ_API_KEY) {
+    // Try 2: Groq (FREE, GPU-accelerated)
+    if (!enhanced && GROQ_API_KEY) {
+      // Small delay before trying next API to respect rate limits
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+
       console.log(`  🤖 Trying Groq (FREE, GPU-accelerated)...`);
       enhanced = await tryGroq(rawDescription, jobTitle, companyName);
       if (enhanced) {
         method = 'Groq (FREE)';
       }
     }
-    
-    // If Groq failed, try Gemini secondary key
+
+    // Try 3: Gemini (secondary key)
     if (!enhanced && GEMINI_API_KEY_2) {
+      // Small delay before trying secondary Gemini
+      await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+
       console.log(`  🤖 Trying Gemini (secondary key)...`);
       enhanced = await tryGemini(GEMINI_API_KEY_2, rawDescription, jobTitle, companyName);
       if (enhanced) {
         method = 'Gemini (secondary)';
       }
     }
-  }
 
-  // Try 3: HTML cleaning fallback
-  if (!enhanced) {
-    console.log(`  🧹 Using HTML cleaning fallback...`);
-    enhanced = cleanHtmlFallback(rawDescription);
-    method = 'HTML cleaning (fallback)';
-  }
+    // Validate result
+    // We want aggressive summarization, so we DON'T check for % of original length anymore
+    // Just check if it's not empty and has a reasonable minimum length (e.g. 200 chars)
+    if (!enhanced || enhanced.length < 200) {
+      console.warn(`  ⚠️  Enhancement result too short (<200 chars) or failed, using HTML fallback`);
+      enhanced = null; // Force fallback to HTML cleaning
+    }
 
-  // Validate result
-  if (!enhanced || enhanced.length < rawDescription.length * 0.3) {
-    console.warn(`  ⚠️  Enhancement quality low, using original`);
-    enhanced = rawDescription;
-    method = 'original (validation failed)';
-  }
+    // Try 4: HTML cleaning fallback (converts HTML → Markdown)
+    if (!enhanced) {
+      console.log(`  🧹 Using HTML cleaning fallback...`);
+      enhanced = cleanHtmlFallback(rawDescription);
+      method = 'HTML cleaning (fallback)';
+    }
 
-  // Cache result (keep last 100 entries)
-  if (useCache && cache.size > 100) {
-    const firstKey = cache.keys().next().value;
-    cache.delete(firstKey);
-  }
-  
-  if (useCache) {
-    const cacheKey = `${jobTitle}-${rawDescription.substring(0, 100)}`.toLowerCase();
-    cache.set(cacheKey, enhanced);
-  }
+    // CRITICAL: Final safety check - ensure NO HTML is ever returned
+    // This is our last line of defense to guarantee Markdown output
+    if (enhanced && /<[a-z][\s\S]*>/i.test(enhanced)) {
+      console.warn(`  ⚠️  WARNING: HTML detected in output, stripping tags...`);
+      // Strip ALL remaining HTML tags as absolute last resort
+      enhanced = enhanced.replace(/<[^>]+>/g, ' ').replace(/\s+/g, ' ').trim();
+      method += ' (HTML stripped)';
+    }
 
-  if (method) {
+    // Cache the result for future use (keep last 100 entries)
+    if (useCache) {
+      if (cache.size > 100) {
+        const firstKey = cache.keys().next().value;
+        cache.delete(firstKey);
+      }
+      cache.set(cacheKey, enhanced);
+    }
+
     console.log(`  ✅ Enhanced using: ${method}`);
-  }
 
-  return enhanced;
+    return enhanced;
+
+  } catch (error) {
+    console.error(`  ❌ Enhancement error: ${error.message}`);
+    // Return cleaned HTML as ultimate fallback
+    return cleanHtmlFallback(rawDescription);
+  }
 }
 
 /**

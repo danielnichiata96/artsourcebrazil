@@ -20,6 +20,7 @@ import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 import { extractTagsIntelligently } from './extract-tags.mjs';
 import { enhanceDescription } from './enhance-description.mjs';
 import { garbageCollectJobsWithGracePeriod, safetyCheckJobCount } from './gc-utils.mjs';
+import { categorizeJob } from '../src/lib/categories.ts';
 
 // Configuration
 const LEVER_API_BASE = 'https://api.lever.co/v0/postings';
@@ -105,100 +106,25 @@ const COMPANY_SLUG = LEVER_COMPANIES[CURRENT_COMPANY].slug;
 const COMPANY_NAME = LEVER_COMPANIES[CURRENT_COMPANY].name;
 const COMPANY_LOGO = getCompanyLogoUrl(LEVER_COMPANIES[CURRENT_COMPANY].domain);
 
-// Reuse same category mapping from Greenhouse
-const titleCategoryMap = {
-  'VFX': [
-    'vfx', 'visual effects', 'effects artist', 'fx artist',
-    'particle', 'real-time vfx', 'special effects',
-  ],
-  '3D': [
-    '3d artist', '3d game artist', '3d modeler', '3d modeller',
-    '3d modelling', '3d modeling', 'character artist 3d',
-    'environment artist 3d', '3d generalist', '3d specialist',
-    '3d designer', 'modeling', 'modelling', 'modeller',
-    'texturing', 'lighting artist', '3d environment',
-  ],
-  '2D Art': [
-    '2d artist', '2d game artist', 'concept artist', 'illustrator',
-    '2d art', 'game artist', 'art 2d',
-  ],
-  'Animation': [
-    'animator', 'character animator', 'environment animator',
-    'rigging', 'animation artist', 'motion graphics',
-    'sprite animation', '2d animation', '3d animation',
-  ],
-  'Design': [
-    'design engineer', 'designer', 'ux', 'ui', 'user experience', 'user interface',
-    'product designer', 'visual designer', 'graphic designer',
-    'ux designer', 'ui designer', 'ux/ui',
-  ],
-  'Game Dev': [
-    'game engineer', 'game developer', 'software engineer',
-    'engineer', 'developer', 'programmer', 'qa', 'sre',
-    'site reliability', 'data engineer', 'data scientist',
-  ],
-};
-
-const excludedKeywords = [
-  'fp&a', 'finance', 'accounting', 'head of marketing',
-  'marketing manager', 'hr', 'human resources', 'recruiter',
-  'sales', 'business development', 'legal', 'lawyer',
-];
-
-const DEFAULT_CATEGORY = 'Game Dev';
-
 /**
- * Check if job should be filtered out
- */
-function shouldFilterJob(title = '') {
-  const lowerTitle = title.toLowerCase();
-  return excludedKeywords.some(keyword => lowerTitle.includes(keyword));
-}
-
-/**
- * Map job title to our category
+ * Map job title and description to our 4-pillar category system
+ * Uses the intelligent categorizeJob() function from categories.ts
+ * @param {string} title - Job title
+ * @param {string} description - Job description (for context)
+ * @returns {string | null} - Mapped category or null if should be filtered
  */
 function mapCategory(title = '', description = '') {
-  const lowerTitle = title.toLowerCase();
-  const lowerDescription = description.toLowerCase();
-  const allText = `${lowerTitle} ${lowerDescription}`;
-
-  if (shouldFilterJob(title)) {
+  // Use the smart categorization function
+  const category = categorizeJob(title, description);
+  
+  // If categorizeJob returns null, it means the job should be filtered out
+  if (!category) {
+    console.log(`  ❌ Rejected: "${title}" (não é indústria criativa)`);
     return null;
   }
-
-  // Priority 1: Explicit "3D" in title
-  if (/\b3d\b/i.test(title)) {
-    return '3D';
-  }
-
-  // Priority 2: VFX (very specific)
-  if (titleCategoryMap['VFX'].some(keyword => allText.includes(keyword))) {
-    return 'VFX';
-  }
-
-  // Priority 3: Animation
-  if (titleCategoryMap['Animation'].some(keyword => lowerTitle.includes(keyword))) {
-    return 'Animation';
-  }
-
-  // Priority 4: Design (BEFORE checking for generic "engineer" keyword)
-  if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
-    return 'Design';
-  }
-
-  // Priority 5: 2D Art
-  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
-    return '2D Art';
-  }
-
-  // Priority 6: Game Dev (catch-all, comes last because "engineer" is very broad)
-  if (titleCategoryMap['Game Dev'].some(keyword => allText.includes(keyword))) {
-    return 'Game Dev';
-  }
-
-  console.warn(`⚠️  No category match for "${title}", using fallback: ${DEFAULT_CATEGORY}`);
-  return DEFAULT_CATEGORY;
+  
+  console.log(`  ✅ Categorized: "${title}" → ${category}`);
+  return category;
 }
 
 /**

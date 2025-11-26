@@ -14,18 +14,18 @@ test.describe('Homepage Job Filters', () => {
     const initialJobCount = await visibleJobContainers.count();
     expect(initialJobCount).toBeGreaterThan(0);
 
-    // Find and click a category button (if exists)
-    const categoryButton = page.locator('button:has-text("Game Dev")').first();
+    // Find and click a category button (if exists) - using new category structure
+    const categoryButton = page.locator('button:has-text("Engineering & Code")').first();
 
     // Only run the filter test if the button exists
     if (await categoryButton.isVisible()) {
       await categoryButton.click();
 
       // Wait for URL to update with query param (accepts both + and %20 encoding)
-      await expect(page).toHaveURL(/category=Game/);
+      await expect(page).toHaveURL(/category=Engineering/);
 
       // Verify jobs are still visible (filtered list)
-      // The filtered count should be <= initial (or possibly same if all are Game Dev)
+      // The filtered count should be <= initial (or possibly same if all are Engineering & Code)
       const filteredJobCount = await visibleJobContainers.count();
       const emptyState = page.locator('[data-filter-empty]');
       const isEmptyVisible = await emptyState.isVisible();

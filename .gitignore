@@ -38,3 +38,7 @@ dist/
 # OS
 Thumbs.db
 .vercel/
+
+# Fetcher outputs (temporários, regenerados a cada sync)
+scripts/*-jobs-output.json
+scripts/*-output.json

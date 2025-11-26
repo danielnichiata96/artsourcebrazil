@@ -22,6 +22,7 @@ import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 import { enhanceDescription } from './enhance-description.mjs';
 import { extractTagsIntelligently } from './extract-tags.mjs';
 import { garbageCollectJobsWithGracePeriod, safetyCheckJobCount } from './gc-utils.mjs';
+import { categorizeJob } from '../src/lib/categories.ts';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -82,69 +83,25 @@ const REST_ENDPOINT = `https://api.ashbyhq.com/posting-api/job-board/${COMPANY_S
 const OUTPUT_FILE = join(__dirname, `${COMPANY_SLUG}-jobs-output.json`);
 
 // ============================================================================
-// CATEGORY MAPPING
+// CATEGORY MAPPING (4 PILLARS)
 // ============================================================================
 
-const titleCategoryMap = {
-  'VFX': ['vfx', 'visual effects', 'effects artist', 'fx artist', 'particle'],
-  '3D': ['3d artist', '3d game artist', '3d modeler', '3d modeller', 'modeling', 'texturing', 'lighting artist'],
-  '2D Art': ['2d artist', '2d game artist', 'concept artist', 'illustrator', '2d art'],
-  'Animation': ['animator', 'character animator', 'rigging', 'animation artist', 'motion graphics'],
-  'Design': ['design engineer', 'designer', 'ux', 'ui', 'user experience', 'user interface', 'product designer', 'ux designer', 'ui designer', 'ux/ui'],
-  'Game Dev': ['game engineer', 'game developer', 'software engineer', 'engineer', 'developer', 'programmer'],
-};
-
-const excludedKeywords = [
-  'fp&a', 'finance', 'accounting', 'head of marketing',
-  'marketing manager', 'hr', 'human resources', 'recruiter',
-  'sales', 'business development', 'legal', 'lawyer',
-];
-
 /**
- * Determine category from job title
+ * Determine category using intelligent categorization function
+ * @param {string} title - Job title
+ * @param {string} description - Job description (optional but recommended)
+ * @returns {string | null} - Category or null if should be filtered
  */
-function determineCategory(title) {
-  const titleLower = title.toLowerCase();
-
-  // Check for excluded keywords
-  for (const keyword of excludedKeywords) {
-    if (titleLower.includes(keyword)) {
-      return null; // Filter out
-    }
+function determineCategory(title, description = '') {
+  const category = categorizeJob(title, description);
+  
+  if (!category) {
+    console.log(`  ❌ Rejected: "${title}" (não é indústria criativa)`);
+    return null;
   }
-
-  // Priority 1: Explicit "3D" in title
-  if (/\b3d\b/i.test(title)) {
-    return '3D';
-  }
-
-  // Priority 2: VFX (very specific)
-  if (titleCategoryMap['VFX'].some(keyword => titleLower.includes(keyword))) {
-    return 'VFX';
-  }
-
-  // Priority 3: Animation
-  if (titleCategoryMap['Animation'].some(keyword => titleLower.includes(keyword))) {
-    return 'Animation';
-  }
-
-  // Priority 4: Design (BEFORE checking for generic "engineer" keyword)
-  // This ensures "Design Engineer" is categorized as Design, not Game Dev
-  if (titleCategoryMap['Design'].some(keyword => titleLower.includes(keyword))) {
-    return 'Design';
-  }
-
-  // Priority 5: 2D Art
-  if (titleCategoryMap['2D Art'].some(keyword => titleLower.includes(keyword))) {
-    return '2D Art';
-  }
-
-  // Priority 6: Game Dev (catch-all, comes last because "engineer" is very broad)
-  if (titleCategoryMap['Game Dev'].some(keyword => titleLower.includes(keyword))) {
-    return 'Game Dev';
-  }
-
-  return 'Game Dev'; // Default fallback
+  
+  console.log(`  ✅ Categorized: "${title}" → ${category}`);
+  return category;
 }
 
 // ============================================================================
@@ -383,8 +340,9 @@ async function normalizeJob(job, syncId, syncTimestamp) {
   const idPrefix = COMPANY_NAME.toUpperCase().substring(0, 3);
   const jobId = `${idPrefix}-${job.id}`;
 
-  // Determine category
-  const category = determineCategory(job.title);
+  // Determine category (pass description for better detection)
+  const descriptionPlain = job.descriptionPlain || htmlToPlainText(job.descriptionHtml) || 'No description available';
+  const category = determineCategory(job.title, descriptionPlain);
   if (!category) {
     return null; // Filtered out
   }
@@ -409,17 +367,17 @@ async function normalizeJob(job, syncId, syncTimestamp) {
   // Store raw description as backup
   const rawDescriptionHtml = job.descriptionHtml || job.descriptionPlain || 'No description available';
 
-  // Convert HTML to plain text for AI processing (AI works better with clean text)
-  const descriptionPlain = job.descriptionPlain || htmlToPlainText(job.descriptionHtml) || 'No description available';
-
   // Enhance description with AI (concise, ~400 words)
-  // Pass plain text to AI, it will format better
+  // enhanceDescription() is GUARANTEED to return Markdown (never HTML)
+  // It handles HTML → Markdown conversion internally if needed
   console.log('  🤖 Enhancing description with AI...');
   const enhancedDescription = await enhanceDescription(
     descriptionPlain, // Use plain text, not HTML
     job.title,
     COMPANY_NAME
   );
+
+  // No need for HTML detection here - enhanceDescription() guarantees Markdown output
 
   // Extract tags with AI (more accurate than keyword matching)
   const tags = await extractTagsIntelligently(job.title, descriptionPlain);

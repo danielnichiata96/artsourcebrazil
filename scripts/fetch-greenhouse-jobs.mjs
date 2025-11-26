@@ -6,7 +6,8 @@
  * 1. Fetches jobs from Greenhouse board API
  * 2. Gets detailed information for each job
  * 3. Normalizes data to our Job type format
- * 4. Maps categories and determines location scope
+ * 4. Maps categories using intelligent categorization (4 pillars)
+ * 5. Filters out non-creative industry jobs
  */
 
 import { writeFileSync } from 'node:fs';
@@ -15,6 +16,9 @@ import { randomUUID } from 'node:crypto';
 import { htmlToMarkdown } from './lib/html-to-markdown.mjs';
 import { enhanceDescription } from './enhance-description.mjs';
 import { garbageCollectJobsWithGracePeriod, safetyCheckJobCount } from './gc-utils.mjs';
+
+// Import the smart categorization function
+import { categorizeJob } from '../src/lib/categories.ts';
 
 // Configuration
 const GREENHOUSE_API_BASE = 'https://boards-api.greenhouse.io/v1/boards';
@@ -67,148 +71,26 @@ const COMPANY_SLUG = COMPANY_CONFIG.slug;
 const COMPANY_NAME = COMPANY_CONFIG.name;
 const COMPANY_LOGO = getCompanyLogoUrl(COMPANY_CONFIG.domain);
 
-// Category mapping: Map Greenhouse departments/metadata to our categories
-const departmentCategoryMap = {
-  'Game Development Hub': 'Game Dev',
-  'Game Dev': 'Game Dev',
-  'Game Tech': 'Game Dev',
-  'Cloud Platform Engineering': 'Game Dev',
-  'Social Gaming': 'Game Dev',
-  'Creatives Studio': '3D', // Default to 3D for creatives, will be refined by title
-  'Marketing Tech': 'Game Dev', // Data roles related to games
-};
-
-// Category mapping based on job title keywords
-// Priority: Check for specific categories first, then broader ones
-const titleCategoryMap = {
-  // VFX - Most specific, check first
-  'VFX': [
-    'vfx', 'visual effects', 'effects artist', 'fx artist',
-    'particle', 'real-time vfx', 'special effects',
-  ],
-  // 3D - Focus on modeling, texturing, lighting (not animation)
-  '3D': [
-    '3d artist', '3d game artist', '3d modeler', '3d modeler',
-    '3d modelling', '3d modeling', 'character artist 3d',
-    'environment artist 3d', '3d generalist', '3d specialist',
-    '3d designer', 'modeling', 'modelling', 'modeller',
-    'texturing', 'lighting artist', '3d environment',
-    // Only 3D-specific roles (without animation keywords)
-  ],
-  // 2D Art - Focus on 2D art/illustration (not animation)
-  '2D Art': [
-    '2d artist', '2d game artist', 'concept artist', 'illustrator',
-    '2d art', 'game artist', 'art 2d',
-  ],
-  // Animation - Focus on animation-specific roles (rigging, character animation)
-  'Animation': [
-    'animator', 'character animator', 'environment animator',
-    'rigging', 'animation artist', 'motion graphics',
-    'sprite animation', '2d animation', '3d animation',
-  ],
-  'Design': [
-    'design engineer', 'designer', 'ux', 'ui', 'user experience', 'user interface',
-    'product designer', 'visual designer', 'graphic designer',
-    'ux designer', 'ui designer', 'ux/ui',
-  ],
-  'Game Dev': [
-    'game engineer', 'game developer', 'software engineer',
-    'engineer', 'developer', 'programmer', 'qa', 'sre',
-    'site reliability', 'data engineer', 'data scientist',
-  ],
-};
-
-// Jobs to filter out (not relevant for creative/tech focus)
-const excludedKeywords = [
-  'fp&a', 'finance', 'accounting', 'head of marketing',
-  'marketing manager', 'hr', 'human resources', 'recruiter',
-  'sales', 'business development', 'legal', 'lawyer',
-];
-
-// Default category if no match found
-const DEFAULT_CATEGORY = 'Game Dev';
-
 /**
- * Check if job should be filtered out
- * @param {string} title - Job title
- * @returns {boolean} - True if should be filtered out
- */
-function shouldFilterJob(title = '') {
-  const lowerTitle = title.toLowerCase();
-  return excludedKeywords.some(keyword => lowerTitle.includes(keyword));
-}
-
-/**
- * Map job title and departments to our category
- * Intelligently separates 3D, 2D Art, and Animation
+ * Map job title and description to our 4-pillar category system
+ * Uses the intelligent categorizeJob() function from categories.ts
  * @param {string} title - Job title
  * @param {string} description - Job description (for context)
- * @param {string[]} departments - Array of department names
+ * @param {string[]} departments - Array of department names (legacy, not used)
  * @returns {string | null} - Mapped category or null if should be filtered
  */
 function mapCategory(title = '', description = '', departments = []) {
-  const lowerTitle = title.toLowerCase();
-  const lowerDescription = description.toLowerCase();
-  const allText = `${lowerTitle} ${lowerDescription}`;
-
-  // Filter out irrelevant jobs
-  if (shouldFilterJob(title)) {
-    return null; // Signal to filter out
+  // Use the smart categorization function
+  const category = categorizeJob(title, description);
+  
+  // If categorizeJob returns null, it means the job should be filtered out
+  if (!category) {
+    console.log(`  ❌ Rejected: "${title}" (não é indústria criativa)`);
+    return null;
   }
-
-  // PRIORITY 1: Explicit "3D" in title (most specific)
-  // This prevents "3D Game Artist" from being categorized as "2D Art"
-  if (/\b3d\b/i.test(title)) {
-    return '3D';
-  }
-
-  // PRIORITY 2: VFX (very specific keywords)
-  if (titleCategoryMap['VFX'].some(keyword => allText.includes(keyword))) {
-    return 'VFX';
-  }
-
-  // PRIORITY 3: Animation (before 2D Art, as some 2D artists also animate)
-  const hasAnimationKeywords = titleCategoryMap['Animation'].some(keyword => lowerTitle.includes(keyword));
-  if (hasAnimationKeywords && /animation|rigging/i.test(lowerTitle)) {
-    return 'Animation';
-  }
-
-  // PRIORITY 4: Design (BEFORE checking for generic "engineer" keyword)
-  // Must check "design engineer" before "engineer" in Game Dev
-  if (titleCategoryMap['Design'].some(keyword => lowerTitle.includes(keyword))) {
-    return 'Design';
-  }
-
-  // PRIORITY 5: 2D Art (after 3D, Animation and Design checks)
-  if (titleCategoryMap['2D Art'].some(keyword => allText.includes(keyword))) {
-    return '2D Art';
-  }
-
-  // PRIORITY 6: Game Dev (catch-all for tech roles)
-  // This comes last because "engineer" is very broad
-  if (titleCategoryMap['Game Dev'].some(keyword => allText.includes(keyword))) {
-    return 'Game Dev';
-  }
-
-  // Then try departments
-  for (const dept of departments) {
-    const name = dept.name || dept;
-    if (departmentCategoryMap[name]) {
-      return departmentCategoryMap[name];
-    }
-
-    // Check for partial matches
-    const lowerName = name.toLowerCase();
-    for (const [key, value] of Object.entries(departmentCategoryMap)) {
-      if (lowerName.includes(key.toLowerCase())) {
-        return value;
-      }
-    }
-  }
-
-  // FALLBACK: Log warning and use default category
-  console.warn(`⚠️  No category match for "${title}", using fallback: ${DEFAULT_CATEGORY}`);
-  return DEFAULT_CATEGORY;
+  
+  console.log(`  ✅ Categorized: "${title}" → ${category}`);
+  return category;
 }
 
 /**

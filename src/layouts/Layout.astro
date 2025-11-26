@@ -86,7 +86,7 @@ const withLocale = (href: string) => {
     <meta name="twitter:image" content={ogImage} />
 
     <slot name="head" />
-    <style>
+    <style is:global>
         /* Base Setup & Texture */
         body {
             background-color: #f4f3f0;
@@ -111,6 +111,7 @@ const withLocale = (href: string) => {
         
         /* Custom Checkbox */
         .studio-checkbox {
+            -webkit-appearance: none;
             appearance: none;
             width: 1.25rem;
             height: 1.25rem;
@@ -132,6 +133,35 @@ const withLocale = (href: string) => {
             transform: scale(1);
         }
         .studio-checkbox:checked {
+            background: #F7DD00; /* Brazil Yellow accent on check */
+        }
+
+        /* Custom Radio Button (Round) */
+        .studio-radio {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 1.25rem;
+            height: 1.25rem;
+            border: 2px solid #1a1918;
+            border-radius: 50%; /* Round shape */
+            background: white;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s;
+        }
+        .studio-radio::before {
+            content: "";
+            width: 0.65rem;
+            height: 0.65rem;
+            border-radius: 50%; /* Round inner circle */
+            background: #1a1918;
+            transform: scale(0);
+            transition: 0.2s transform ease-in-out;
+        }
+        .studio-radio:checked::before {
+            transform: scale(1);
+        }
+        .studio-radio:checked {
             background: #F7DD00; /* Brazil Yellow accent on check */
         }
 

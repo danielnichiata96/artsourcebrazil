@@ -1,28 +1,32 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Post-a-Job Success Page', () => {
-  test('Submit Job Details button opens Tally form in new tab', async ({ page }) => {
+  test('Success page displays correctly after payment', async ({ page }) => {
     // Navigate to the success page
     await page.goto('/post-a-job/success');
 
     // Verify the page loaded correctly
-    await expect(page.getByRole('heading', { level: 1, name: /Thank You/i })).toBeVisible();
-    await expect(page.locator('text=Your payment was successful')).toBeVisible();
+    await expect(page.getByRole('heading', { level: 1, name: /Pagamento Confirmado/i })).toBeVisible();
+    await expect(page.locator('text=Obrigado! Sua vaga foi enviada')).toBeVisible();
 
-    // Find the button
-    const button = page.locator('a:has-text("Submit Job Details")');
-    await expect(button).toBeVisible();
+    // Verify progress steps are visible
+    await expect(page.locator('text=Preencher')).toBeVisible();
+    await expect(page.locator('text=Preview')).toBeVisible();
+    await expect(page.locator('text=Publicar')).toBeVisible();
 
-    // Verify the href attribute points to Tally
-    const href = await button.getAttribute('href');
-    expect(href).toContain('tally.so');
+    // Verify action buttons
+    const homeButton = page.locator('a:has-text("Voltar para Home")');
+    await expect(homeButton).toBeVisible();
+    expect(await homeButton.getAttribute('href')).toBe('/');
 
-    // Click and verify it opens in a new tab with target="_blank"
-    const target = await button.getAttribute('target');
-    expect(target).toBe('_blank');
+    const jobsButton = page.locator('a:has-text("Ver Vagas Publicadas")');
+    await expect(jobsButton).toBeVisible();
+    expect(await jobsButton.getAttribute('href')).toBe('/vagas');
 
-    // Optional: Verify the link would navigate to Tally (without actually opening)
-    // This avoids flaky tests with popup blockers
-    expect(href).toMatch(/^https:\/\/tally\.so\/r\//);
+    // Verify "What happens next" section
+    await expect(page.locator('text=O que acontece agora?')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Revisão Manual' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Publicação' })).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Notificação por Email' })).toBeVisible();
   });
 });

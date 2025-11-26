@@ -114,6 +114,26 @@ const translations = {
       hiringTitle: 'Contratando?',
       hiringSubtitle: 'Alcance 5.000+ criativos brasileiros.',
       postNow: 'Postar Agora',
+      activeFilters: {
+        title: 'Filtros ativos',
+        clearAll: 'Limpar tudo',
+        remove: 'Remover',
+        search: 'Busca',
+        category: 'Área',
+        tag: 'Skill',
+      },
+    },
+    categories: {
+      'Engineering & Code': 'Engenharia & Código',
+      'Art & Animation': 'Arte & Animação',
+      'Design & Product': 'Design & Produto',
+      'Production': 'Produção',
+      descriptions: {
+        'Engineering & Code': 'Game dev, Unity, Unreal, Pipeline TD, QA, Creative Coders',
+        'Art & Animation': '3D, 2D, VFX, Motion Graphics, Rigging, Concept Art',
+        'Design & Product': 'Game Design, Level Design, UI/UX, Product Design',
+        'Production': 'Producers, Project Managers, Product Owners, Scrum Masters',
+      },
     },
     job: {
       new: 'Nova',
@@ -157,12 +177,10 @@ const translations = {
         jobs: {
           title: 'Explorar Vagas',
           links: [
-            { label: 'Vagas de Game Dev', href: '/category/game-dev' },
-            { label: 'Vagas de 3D Art', href: '/category/3d' },
-            { label: 'Vagas de 2D Art', href: '/category/2d-art' },
-            { label: 'Vagas de Animation', href: '/category/animation' },
-            { label: 'Vagas de VFX', href: '/category/vfx' },
-            { label: 'Vagas de Design', href: '/category/design' },
+            { label: 'Engenharia & Código', href: '/category/engineering-code' },
+            { label: 'Arte & Animação', href: '/category/art-animation' },
+            { label: 'Design & Produto', href: '/category/design-product' },
+            { label: 'Produção', href: '/category/production' },
           ],
           viewAll: { label: 'Ver todas as categorias', href: '/' },
         },
@@ -305,6 +323,26 @@ const translations = {
       hiringTitle: 'Hiring?',
       hiringSubtitle: 'Reach 5,000+ Brazilian creatives.',
       postNow: 'Post Now',
+      activeFilters: {
+        title: 'Active filters',
+        clearAll: 'Clear all',
+        remove: 'Remove',
+        search: 'Search',
+        category: 'Category',
+        tag: 'Skill',
+      },
+    },
+    categories: {
+      'Engineering & Code': 'Engineering & Code',
+      'Art & Animation': 'Art & Animation',
+      'Design & Product': 'Design & Product',
+      'Production': 'Production',
+      descriptions: {
+        'Engineering & Code': 'Game dev, Unity, Unreal, Pipeline TD, QA, Creative Coders',
+        'Art & Animation': '3D, 2D, VFX, Motion Graphics, Rigging, Concept Art',
+        'Design & Product': 'Game Design, Level Design, UI/UX, Product Design',
+        'Production': 'Producers, Project Managers, Product Owners, Scrum Masters',
+      },
     },
     job: {
       new: 'New',
@@ -348,7 +386,10 @@ const translations = {
         jobs: {
           title: 'Browse Jobs',
           links: [
-            { label: 'Game Dev Jobs', href: '/category/game-dev' },
+            { label: 'Engineering & Code', href: '/category/engineering-code' },
+            { label: 'Art & Animation', href: '/category/art-animation' },
+            { label: 'Design & Product', href: '/category/design-product' },
+            { label: 'Production', href: '/category/production' },
             { label: '3D Art Jobs', href: '/category/3d' },
             { label: '2D Art Jobs', href: '/category/2d-art' },
             { label: 'Animation Jobs', href: '/category/animation' },

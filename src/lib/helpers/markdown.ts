@@ -18,7 +18,13 @@ const markdown = new MarkdownIt({
  * @returns Sanitized HTML string safe to inject via set:html.
  */
 export function renderMarkdownToHtml(source: string): string {
-  const rendered = markdown.render(source || '');
+  if (!source) return '';
+  
+  // Note: All job descriptions are now guaranteed to be in Markdown format
+  // The enhanceDescription() function ensures HTML is converted to Markdown before saving
+  // So we can safely render without additional HTML detection
+  
+  const rendered = markdown.render(source);
   // Reason: We still sanitize even though the content is curated to prevent accidental HTML.
   return sanitizeHtml(rendered, {
     allowedTags: [

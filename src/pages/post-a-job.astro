@@ -340,7 +340,7 @@ Você pode usar Markdown para formatação:
       },
     });
   } else {
-    console.warn('Supabase credentials not available. Auto-save to Supabase will be disabled.');
+    // console.warn('Supabase credentials not available. Auto-save to Supabase will be disabled.');
   }
 
   // Form state management
@@ -394,7 +394,7 @@ Você pode usar Markdown para formatação:
   async function saveToSupabase() {
     // Skip if Supabase client is not available
     if (!supabase) {
-      console.log('Supabase client not available, skipping save');
+      // console.log('Supabase client not available, skipping save');
       return;
     }
 
@@ -402,7 +402,7 @@ Você pode usar Markdown para formatação:
     
     // Validate email exists
     if (!data.email || !data.company_name) {
-      console.log('Email or company name missing, skipping Supabase save');
+      // console.log('Email or company name missing, skipping Supabase save');
       return;
     }
 
@@ -432,7 +432,7 @@ Você pode usar Markdown para formatação:
       if (result && result.id) {
         draftId = result.id;
         localStorage.setItem('job_draft_id', draftId);
-        console.log('Draft saved to Supabase:', draftId);
+        // console.log('Draft saved to Supabase:', draftId);
       }
     } catch (e) {
       console.error('Failed to save to Supabase:', e);
@@ -492,7 +492,7 @@ Você pode usar Markdown para formatação:
 
     // Save to localStorage
     localStorage.setItem('job_draft', JSON.stringify(data));
-    console.log('Data loaded from URL and saved to localStorage');
+    // console.log('Data loaded from URL and saved to localStorage');
 
     return data;
   }
@@ -536,7 +536,7 @@ Você pode usar Markdown para formatação:
         }
       });
 
-      console.log('Draft loaded from localStorage');
+      // console.log('Draft loaded from localStorage');
     } catch (e) {
       console.error('Failed to load draft:', e);
     }
@@ -588,30 +588,30 @@ Você pode usar Markdown para formatação:
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       e.stopPropagation();
-      console.log('Form submitted, preventing default and processing...');
+      // console.log('Form submitted, preventing default and processing...');
       
       // Get form data for debugging
       const formData = getFormData();
-      console.log('Form data:', formData);
+      // console.log('Form data:', formData);
       
       // Validate
       if (!form.checkValidity()) {
-        console.log('Form validation failed');
+        // console.log('Form validation failed');
         const invalidFields = Array.from(form.querySelectorAll(':invalid')) as HTMLElement[];
-        console.log('Invalid fields:', invalidFields.map(f => ({ name: (f as HTMLInputElement).name, value: (f as HTMLInputElement).value })));
+        // console.log('Invalid fields:', invalidFields.map(f => ({ name: (f as HTMLInputElement).name, value: (f as HTMLInputElement).value })));
         form.reportValidity();
         return;
       }
 
-      console.log('Form is valid, saving data...');
+      // console.log('Form is valid, saving data...');
 
       // Save to localStorage
       autoSaveLocal();
-      console.log('Data saved to localStorage');
+      // console.log('Data saved to localStorage');
       
       // Verify localStorage was written
       const saved = localStorage.getItem('job_draft');
-      console.log('Verifying localStorage save:', saved ? 'Success' : 'Failed');
+      // console.log('Verifying localStorage save:', saved ? 'Success' : 'Failed');
 
       // Save to Supabase before navigating (non-blocking)
       saveToSupabase().catch(err => {
@@ -621,7 +621,7 @@ Você pode usar Markdown para formatação:
 
       // Small delay to ensure localStorage is written
       setTimeout(() => {
-        console.log('Navigating to preview...');
+        // console.log('Navigating to preview...');
         window.location.href = '/post-a-job/preview';
       }, 100);
     });
@@ -635,6 +635,6 @@ Você pode usar Markdown para formatação:
       });
     }
     
-    console.log('Form event listener attached successfully');
+    // console.log('Form event listener attached successfully');
   });
 </script>
