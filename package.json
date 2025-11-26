@@ -18,6 +18,8 @@
     "fetch:ashby": "node scripts/fetch-ashby-jobs.mjs",
     "fetch:all": "npm run fetch:greenhouse && npm run fetch:lever && npm run fetch:ashby",
     "sync:greenhouse": "node scripts/sync-greenhouse-to-supabase.mjs",
+    "sync:ashby": "node scripts/sync-ashby-to-supabase.mjs",
+    "sync:lever": "node scripts/sync-lever-to-supabase.mjs",
     "sync:greenhouse:supabase": "node scripts/sync-greenhouse-to-supabase.mjs",
     "sync:greenhouse:supabase:full": "npm run fetch:greenhouse && npm run sync:greenhouse:supabase",
     "sync:supabase": "node scripts/sync-supabase.mjs",

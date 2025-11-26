@@ -21,9 +21,8 @@ import { execSync } from 'node:child_process';
 
 const sources = [
   { name: 'Greenhouse', fetch: 'npm run fetch:greenhouse', sync: 'npm run sync:greenhouse' },
-  // TODO: Criar sync:ashby e sync:lever
-  // { name: 'Ashby', fetch: 'npm run fetch:ashby', sync: 'npm run sync:ashby' },
-  // { name: 'Lever', fetch: 'npm run fetch:lever', sync: 'npm run sync:lever' },
+  { name: 'Ashby', fetch: 'npm run fetch:ashby', sync: 'npm run sync:ashby' },
+  { name: 'Lever', fetch: 'npm run fetch:lever', sync: 'npm run sync:lever' },
 ];
 
 console.log('🚀 Starting full job sync pipeline...\n');
