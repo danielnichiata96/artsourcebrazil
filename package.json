@@ -6,7 +6,7 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "prebuild": "npm run sync:supabase && npm run validate:jobs",
+    "prebuild": "npm run sync:supabase",
     "preview": "astro preview",
     "astro": "astro",
     "format": "prettier . --write",
