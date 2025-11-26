@@ -55,6 +55,27 @@ function cleanHtmlEntities(text = '') {
 }
 
 /**
+ * Check if job needs AI enhancement (compare with existing)
+ * @returns {Promise<boolean>} true if enhancement is needed
+ */
+async function needsEnhancement(jobId, newDescription, newTitle) {
+  const { data: existing } = await supabase
+    .from('jobs')
+    .select('description, job_title')
+    .eq('id', jobId)
+    .single();
+
+  // New job - needs enhancement
+  if (!existing) return true;
+
+  // Check if description or title changed significantly
+  const descChanged = existing.description !== newDescription;
+  const titleChanged = existing.job_title !== newTitle;
+
+  return descChanged || titleChanged;
+}
+
+/**
  * Get or create company in Supabase
  */
 async function getOrCreateCompany(companyName, logoUrl = null) {
@@ -199,15 +220,29 @@ async function syncJob(job) {
       datePosted = datePosted.split('T')[0];
     }
 
-    // Enhance description using AI (with fallback chain)
+    // Enhance description using AI (only if job is new or changed)
     let description = job.description;
-    if (isEnhancementAvailable()) {
+    const shouldEnhance = await needsEnhancement(job.id, job.description, job.jobTitle);
+    
+    if (shouldEnhance && isEnhancementAvailable()) {
       console.log(`  ✨ Enhancing description for ${job.id}...`);
       description = await enhanceDescription(
         job.description,
         job.jobTitle,
         job.companyName
       );
+    } else if (!shouldEnhance) {
+      // Job unchanged - keep existing enhanced description
+      const { data: existing } = await supabase
+        .from('jobs')
+        .select('description')
+        .eq('id', job.id)
+        .single();
+      
+      if (existing?.description) {
+        description = existing.description;
+        console.log(`  ♻️  ${job.id} - Using cached enhanced description`);
+      }
     }
 
     // Generate short description from enhanced text

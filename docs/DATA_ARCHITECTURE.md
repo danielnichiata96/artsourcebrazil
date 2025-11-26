@@ -114,8 +114,9 @@ const jobs = await getJobs(); // Queries Supabase at build time
 
 **Build triggers:**
 1. Manual: `git push origin main` → Vercel auto-deploys
-2. Cron: GitHub Actions can trigger rebuilds after sync
-3. Webhook: Supabase can notify Vercel of data changes
+2. **Automatic (Recommended)**: `sync:all` script triggers Vercel rebuild via webhook
+3. Cron: GitHub Actions runs sync + rebuild every 6h
+4. Webhook: Supabase can notify Vercel of data changes (future)
 
 ---
 
@@ -250,15 +251,19 @@ npm run dev
 Every 6 hours:
 ├─> GitHub Action runs
 ├─> npm run sync:all
-│   ├─> fetch:greenhouse → sync:greenhouse
-│   ├─> fetch:ashby → sync:ashby (TODO)
-│   └─> fetch:lever → sync:lever (TODO)
+│   ├─> fetch:greenhouse → sync:greenhouse ✅
+│   ├─> fetch:ashby → sync:ashby ✅
+│   └─> fetch:lever → sync:lever ✅
 ├─> Jobs updated in Supabase
-└─> Trigger Vercel rebuild (webhook)
-    └─> Astro queries Supabase
-        └─> Generates static pages
-            └─> Deploys to Vercel
+├─> 🆕 Auto-trigger Vercel rebuild (VERCEL_DEPLOY_HOOK)
+│   └─> Astro queries Supabase
+│       └─> Generates fresh static pages
+│           └─> Deploys to Vercel
+└─> ✅ Site updated with latest jobs!
 ```
+
+**🚨 CRITICAL**: Without the Vercel rebuild webhook, your site will show stale data!
+Set `VERCEL_DEPLOY_HOOK` in your environment to enable auto-rebuilds.
 
 ---
 
@@ -287,6 +292,88 @@ Every 6 hours:
 |--------|-------------|
 | `sync:greenhouse:supabase:full` | Fetch Greenhouse + Sync to Supabase |
 | `sync:all` | **Fetch ALL + Sync ALL** (master script) |
+
+---
+
+## ⚠️ The "Stale Site" Problem & Solution
+
+### **🔴 The Problem:**
+
+Astro uses **Static Site Generation (SSG)** by default. This means:
+
+1. `npm run build` → Queries Supabase → Generates HTML → Deploys
+2. Cron runs at 08:00 → Updates Supabase with 10 new jobs
+3. **Site still shows old build from 02:00** ❌
+
+**Result**: Site is 6 hours out of date, even though database has fresh jobs!
+
+### **✅ The Solution (Implemented):**
+
+After syncing jobs to Supabase, automatically trigger a Vercel rebuild:
+
+```javascript
+// sync-all-jobs.mjs (lines 40-55)
+if (VERCEL_DEPLOY_HOOK) {
+  await fetch(VERCEL_DEPLOY_HOOK, { method: 'POST' });
+  // ✅ Vercel rebuilds site with fresh Supabase data
+}
+```
+
+**Flow:**
+```
+Cron (08:00) → Sync Jobs → Supabase Updated
+    ↓
+Trigger VERCEL_DEPLOY_HOOK
+    ↓
+Vercel rebuilds site (08:01)
+    ↓
+✅ Fresh jobs appear on site (08:02)
+```
+
+### **🔧 Setup Instructions:**
+
+1. **Get Deploy Hook from Vercel:**
+   - Go to: Project Settings → Git → Deploy Hooks
+   - Create hook: Name it "Cron Job Sync"
+   - Copy URL (e.g., `https://api.vercel.com/v1/integrations/...`)
+
+2. **Set Environment Variable:**
+   ```bash
+   # Local (.env)
+   VERCEL_DEPLOY_HOOK=https://api.vercel.com/v1/integrations/...
+
+   # GitHub Actions (Repository Secrets)
+   VERCEL_DEPLOY_HOOK → Add as secret
+
+   # Vercel (if using Vercel Cron)
+   VERCEL_DEPLOY_HOOK → Add in Environment Variables
+   ```
+
+3. **Test:**
+   ```bash
+   npm run sync:all
+   # Should see: "✅ Vercel rebuild triggered successfully!"
+   ```
+
+### **🎯 Alternative: Hybrid Rendering (Future)**
+
+If rebuild times become too slow (>2 minutes), consider:
+
+```javascript
+// astro.config.mjs
+export default {
+  output: 'hybrid',  // Mix static + server
+  adapter: vercel()
+}
+
+// src/pages/index.astro
+export const prerender = false;  // Force SSR for this page
+```
+
+**Pros**: Instant updates (no rebuild needed)  
+**Cons**: Slightly slower page loads, higher Vercel costs
+
+**Recommendation**: Start with SSG + Webhooks (current approach). Only switch to Hybrid if you need real-time updates (<1 minute).
 
 ---
 
@@ -325,11 +412,13 @@ Every 6 hours:
 
 ## 📝 TODO
 
-- [ ] Create `sync-ashby-to-supabase.mjs`
-- [ ] Create `sync-lever-to-supabase.mjs`
-- [ ] Implement GitHub Actions cron
-- [ ] Add Vercel deploy webhook to cron
+- [x] Create `sync-ashby-to-supabase.mjs` ✅
+- [x] Create `sync-lever-to-supabase.mjs` ✅
+- [x] Add Vercel deploy webhook to sync:all ✅
+- [ ] **CRITICAL**: Set `VERCEL_DEPLOY_HOOK` env var (get from Vercel dashboard)
+- [ ] Implement GitHub Actions cron workflow
 - [ ] Monitor: Set up alerts for failed syncs
+- [ ] Optimize: Add `last_synced_at` field to track unchanged jobs
 - [ ] Decide: Keep or remove `src/data/jobs.json`
 
 ---

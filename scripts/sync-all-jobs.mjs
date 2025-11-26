@@ -70,3 +70,22 @@ if (results.failed.length > 0) {
 
 console.log('\n✨ All jobs synced successfully!');
 
+// Trigger Vercel rebuild if webhook is configured
+const VERCEL_DEPLOY_HOOK = process.env.VERCEL_DEPLOY_HOOK;
+if (VERCEL_DEPLOY_HOOK) {
+  console.log('\n🚀 Triggering Vercel rebuild...');
+  try {
+    const response = await fetch(VERCEL_DEPLOY_HOOK, { method: 'POST' });
+    if (response.ok) {
+      console.log('✅ Vercel rebuild triggered successfully!');
+    } else {
+      console.warn(`⚠️  Vercel webhook returned status ${response.status}`);
+    }
+  } catch (error) {
+    console.error('❌ Failed to trigger Vercel rebuild:', error.message);
+  }
+} else {
+  console.warn('\n⚠️  VERCEL_DEPLOY_HOOK not set - site will not auto-rebuild');
+  console.warn('   Set this env var to trigger automatic deploys after sync');
+}
+
