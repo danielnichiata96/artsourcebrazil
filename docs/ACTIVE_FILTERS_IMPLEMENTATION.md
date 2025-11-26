@@ -1,3 +1,4 @@
+
 # ✅ Active Filters Pills - Implementação Completa
 
 ## 📅 Data: 26 Nov 2025

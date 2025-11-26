@@ -2,286 +2,263 @@
   {
     "id": "FAN-df3e3b906ebe",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Community Management Internship",
-    "description": "Are you passionate about games and connecting with people? We’re looking for someone to help grow our communities, support players throughout their journey, and create meaningful experiences. Here, players are at the heart of everything — and you’ll be part of the team that turns that connection into real engagement.\n\nResponsibilities\n- Assist players with features and functionalities throughout their gaming experience.\n- Respond to customer queries in a timely and accurate way. \n-  Keep track of useful data from customers.\n- Expose feature requests and effective workarounds with team members. \n- Share needs and solutions from users to help the development of the product.\n- Inform customers about new features and functionalities.\n- Follow up with customers to ensure their technical issues are resolved. \n- Gather customer feedback and share with our Product team. \n- Interact with players across social platforms (public and private messages).\n- Identify Social Media trends that could be useful for our brands.\n- Help the team create content for our Social Media channels\n\nRequirements\n- Currently studying Business, Marketing, Communication or or related fields.\n- Fluent in Portuguese and comfortable communicating in English. \n- Passion for mobile, word, and trivia games.\n- Willingness to develop communication and problem-solving skills.\n- Proactive attitude and natural curiosity to learn, experiment, and contribute.\n- Interest in learning how to manage multiple tasks and stay organized.\n- Analytical thinking and attention to detail.\n- Customer-focused mindset.\n- Familiarity with AI tools.\n- Interest in social media and ability to understand how it works.\n\n\nNice to Have\n- Additional language skills. \n- Experience with help desk tools or remote support.\n",
+    "description": "## Sobre a vaga\nEstágio para auxiliar no crescimento das comunidades de jogos, dar suporte aos jogadores e criar experiências relevantes. O foco principal é a interação com os jogadores e o feedback para melhoria contínua.\n\n## Responsabilidades\n*   Auxiliar jogadores com recursos e funcionalidades dos jogos.\n*   Responder a dúvidas dos clientes de forma oportuna e precisa.\n*   Interagir com jogadores nas plataformas sociais (mensagens públicas e privadas).\n*   Identificar tendências de mídia social relevantes para as marcas.\n*   Ajudar a equipe a criar conteúdo para os canais de mídia social.\n*   Coletar feedback dos clientes e compartilhar com a equipe de Produto.\n*   Acompanhar clientes para garantir a resolução de problemas técnicos.\n\n## Requisitos\n*   Cursando graduação em Administração, Marketing, Comunicação ou áreas relacionadas.\n*   Fluente em português e confortável em se comunicar em inglês.\n*   Paixão por jogos mobile, de palavras e trivia.\n*   Atitude proativa e curiosidade para aprender, experimentar e contribuir.\n*   Interesse em gerenciar múltiplas tarefas e manter a organização.\n*   Pensamento analítico e atenção aos detalhes.\n*   Familiaridade com ferramentas de IA.",
+    "raw_description": "<div><span style=\"font-size: 16px;\">Are you passionate about games and connecting with people? We’re looking for someone to help grow our communities, support players throughout their journey, and create meaningful experiences. Here, players are at the heart of everything — and you’ll be part of the team that turns that connection into real engagement.</span></div><div><br></div><div><b style=\"font-size: 16px;\">Responsibilities</b></div><div><span style=\"font-size: 16px;\">- Assist players with features and functionalities throughout their gaming experience.</span></div><div><span style=\"font-size: 16px;\">- Respond to customer queries in a timely and accurate way. </span></div><div><span style=\"font-size: 16px;\">-  Keep track of useful data from customers.</span></div><div><span style=\"font-size: 16px;\">- Expose feature requests and effective workarounds with team members. </span></div><div><span style=\"font-size: 16px;\">- Share needs and solutions from users to help the development of the product.</span></div><div><span style=\"font-size: 16px;\">- Inform customers about new features and functionalities.</span></div><div><span style=\"font-size: 16px;\">- Follow up with customers to ensure their technical issues are resolved. </span></div><div><span style=\"font-size: 16px;\">- Gather customer feedback and share with our Product team. </span></div><div><span style=\"font-size: 16px;\">- Interact with players across social platforms (public and private messages).</span></div><div><span style=\"font-size: 16px;\">- Identify Social Media trends that could be useful for our brands.</span></div><div><span style=\"font-size: 16px;\">- Help the team create content for our Social Media channels</span></div><div><br></div><div><b style=\"font-size: 16px;\">Requirements</b></div><div><span style=\"font-size: 16px;\">- Currently studying Business, Marketing, Communication or or related fields.</span></div><div><span style=\"font-size: 16px;\">- </span><span style=\"font-size: 11pt;\">Fluent in Portuguese and comfortable communicating in English. </span></div><div><span style=\"font-size: 11pt;\">- Passion for mobile, word, and trivia games.</span></div><div><span style=\"font-size: 16px;\">- </span>Willingness to develop communication and problem-solving skills.</div><div>- <span style=\"font-size: 11pt;\">Proactive attitude and natural curiosity to learn, experiment, and contribute.</span></div><div><span style=\"font-size: 16px;\">- </span><span style=\"font-size: 11pt;\">Interest in learning how to manage multiple tasks and stay organized.</span></div><div><span style=\"font-size: 16px;\">- Analytical thinking and attention to detail.</span></div><div><span style=\"font-size: 16px;\">- Customer-focused mindset.</span></div><div><span style=\"font-size: 11pt;\">- Familiarity with AI tools.</span></div><div>- <span style=\"font-size: 11pt;\">Interest in social media and ability to understand how it </span><a rel=\"noopener noreferrer\" class=\"postings-link\" style=\"font-size: 11pt;\" href=\"http://works.Proactive\">works.</a></div><div><br></div><div><br></div><div><b style=\"font-size: 16px;\">Nice to Have</b></div><div><span style=\"font-size: 16px;\">- Additional language skills.&nbsp;</span></div><div><span style=\"font-size: 16px;\">- Experience with help desk tools or remote support.</span></div>",
     "shortDescription": "Are you passionate about games and connecting with people? We’re looking for someone to help grow our communities, support players throughout their journey, and create meaningful experiences. Here, players are at the heart of everything — and you’ll be part of the team that turns that connection ...",
     "applyLink": "https://jobs.lever.co/fanatee/8c1d49e1-d701-41b2-ba44-df3e3b906ebe",
     "postedDate": "2025-10-07T19:07:10.074Z",
-    "category": "Design",
+    "category": "Engineering & Code",
     "tags": [
       "AI",
       "Mobile",
-      "Game Dev"
+      "Game Dev",
+      "Community",
+      "Estágio"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
     "contractType": "Internship",
-    "salary": null
-  },
-  {
-    "id": "FAN-35f68077c4b0",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Content Creation Intern – Mobile Games",
-    "description": "Se você ama redes sociais, vídeos curtos e cultura gamer, essa é a sua chance de criar conteúdos que serão vistos por milhões de jogadores ao redor do mundo!  Procuramos uma pessoa comunicativa e criativa para integrar nossa equipe de marketing. Aqui, você vai aprender a unir criatividade com dados para escalar campanhas que realmente performam. Confira a  descrição abaixo e vem aprender com a gente!\n\nATIVIDADES\n- Auxiliar na produção de conteúdos verticais com o smartphone, incluindo gravação e presença em frente às câmeras, aplicando técnicas básicas de composição, iluminação e áudio.\n- Apoiar na edição de vídeos no CapCut ou Premiere e aplicar títulos animados, stickers, outras animações e cortes dinâmicos no After Effects.\n- Propor ideias de vídeos curtos (scripts, ganchos, memes).\n- Interagir com a comunidade nas contas de TikTok, Instagram e YouTube Shorts da Fanatee.\n- Acompanhar  métricas (views, engajamento, CTR, CPI).\n- Buscar UGC de jogadores e adaptar para novas peças orgânicas ou de mídia paga.\n- Monitorar tendências e benchmark de criadores mobile, trazendo insights frescos para a rotina.\n\nREQUISITOS\n- Estar cursando Comunicação, Publicidade, Marketing, Design ou áreas correlatas \n- Ter paixão por redes sociais,  cultura pop e criatividade.\n- Conhecimento básico em captação e edição de vídeo mobile (CapCut, Premiere). \n- Conforto diante das câmeras e senso de humor para trends. \n- Noções de design gráfico (tipografia e composição).\n- Interesse por motion design com After Effects.\n\nDIFERENCIAIS\n- Experiência pessoal criando conteúdo para TikTok/Reels ou gerindo contas públicas. \n- Familiaridade com jogos mobile ou comunidade gamer. \n- Interesse por automação leve (templates CapCut, presets, IA generativa).\n- Inglês avançado para acompanhar briefings e tendências globais de creators.\n\n",
-    "shortDescription": "Se você ama redes sociais, vídeos curtos e cultura gamer, essa é a sua chance de criar conteúdos que serão vistos por milhões de jogadores ao redor do mundo!  Procuramos uma pessoa comunicativa e criativa para integrar nossa equipe de marketing. Aqui, você vai aprender a unir criatividade com dad...",
-    "applyLink": "https://jobs.lever.co/fanatee/37e67f04-2a36-432f-a971-35f68077c4b0",
-    "postedDate": "2025-08-21T15:06:16.952Z",
-    "category": "Design",
-    "tags": [
-      "VFX",
-      "Design",
-      "Mobile"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": "Internship",
-    "salary": null
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Community",
+      "commitment": "Intern",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   },
   {
     "id": "FAN-d0e53ea7d770",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Jr Marketing Performance Analyst (USER ACQUISITION)",
-    "description": "Jr Marketing Performance Analyst (USER ACQUISITION)\n\nJob Overview:\n\nWe are seeking a detail-oriented and analytical Junior Marketing Performance Analyst to join our marketing team. The ideal candidate will play a crucial role in optimizing our marketing strategies by analyzing data, identifying trends, and providing actionable insights to enhance campaign performance for our games.\n\nResponsibilities:\n\nAssist in the implementation of user acquisition campaigns across various digital channels.\nMonitor and analyze key performance indicators (KPIs) to assess the effectiveness of user acquisition campaigns.\nCollaborate with cross-functional teams to gather data and insights for campaign planning and optimization.\nGenerate reports on campaign performance and provide insights for continuous improvement.\nConduct A/B testing and provide recommendations based on data-driven insights.\nConduct market research to identify trends, competitors, and opportunities for user acquisition.\nStay updated on industry trends and best practices in user acquisition and digital marketing.\n\nQualifications:\n\nBachelor's degree in Marketing, Business, Engineer, Information Technology or a related field.\nKnowledge of basic marketing principles and concepts.\nProficient in English at an intermediate or advanced level - Ability to articulate ideas clearly and concisely.\n1 year of experience with management of online advertising campaigns.\nStrong analytical and quantitative skills with the ability to interpret complex data sets.\nFamiliarity with data visualization tools and techniques.\nDetail-oriented with the ability to manage multiple tasks simultaneously.\nProficient in Microsoft Office suite, especially Excel, or Google Sheets.\n\nPreferred Skills:\n\nPrevious work with mobile game advertising.\nFamiliarity with digital advertising platforms such as Google Ads, Facebook Ads, Unity Ads, etc.\n\nPersonal Attributes:\n\nProactive and self-motivated.\nAbility to adapt to a fast-paced and dynamic work environment.\nAbility to work collaboratively in a team environment.\nEagerness to learn and adapt to new challenges.\nStrong problem-solving skills.\nEnthusiastic about the digital marketing landscape.\nProactive mindset with the ability to work independently and collaboratively within a team.\nStrong communication and interpersonal skills.\nMust be a São Paulo resident.\n\nWhat We Offer:\n\nIn addition to a vibrant and enjoyable work atmosphere, we provide competitive compensation aligned with industry standards, flexible benefits, health and dental insurance, profit sharing, opportunities for career development, and direct engagement with professionals from major advertising companies, including Google Ads, TikTok Ads, Applovin Ads, and many others in the global market. Although the position is primarily remote, our São Paulo office serves as a hub for those seeking a dedicated workspace. Here, you can focus, unwind, and take advantage of amenities such as a stocked fridge with a variety of food and beverages. Also, for a bit of fun, why not play some friendly ping-pong? Join us in shaping the future of our amazing team!\n\n\n",
+    "description": "## Sobre a vaga\nO(A) Jr. Analista de Performance de Marketing (Aquisição de Usuários) irá otimizar estratégias de marketing através da análise de dados, identificação de tendências e fornecimento de insights acionáveis para melhorar o desempenho de campanhas.\n\n## Responsabilidades\n* Auxiliar na implementação de campanhas de aquisição de usuários em diversos canais digitais.\n* Monitorar e analisar KPIs para avaliar a eficácia das campanhas de aquisição de usuários.\n* Colaborar com equipes multifuncionais para coletar dados e insights para o planejamento e otimização de campanhas.\n* Gerar relatórios sobre o desempenho da campanha e fornecer insights para melhoria contínua.\n* Conduzir testes A/B e fornecer recomendações com base em dados.\n\n## Requisitos\n* Bacharelado em Marketing, Administração, Engenharia, Tecnologia da Informação ou área relacionada.\n* Conhecimento de princípios e conceitos básicos de marketing.\n* Inglês intermediário/avançado.\n* 1 ano de experiência com gestão de campanhas de publicidade online.\n* Fortes habilidades analíticas e quantitativas com capacidade de interpretar conjuntos de dados complexos.\n* Familiaridade com ferramentas e técnicas de visualização de dados.\n* Proficiência no Microsoft Office, especialmente Excel, ou Google Sheets.\n* Residir em São Paulo.",
+    "raw_description": "<div><b>Jr Marketing Performance Analyst (USER ACQUISITION)</b></div><div><br></div><div><b>Job Overview:</b></div><div><br></div><div>We are seeking a detail-oriented and analytical Junior Marketing Performance Analyst to join our marketing team. The ideal candidate will play a crucial role in optimizing our marketing strategies by analyzing data, identifying trends, and providing actionable insights to enhance campaign performance for our games.</div><div><br></div><div><b>Responsibilities:</b></div><div><br></div><div>Assist in the implementation of user acquisition campaigns across various digital channels.</div><div>Monitor and analyze key performance indicators (KPIs) to assess the effectiveness of user acquisition campaigns.</div><div>Collaborate with cross-functional teams to gather data and insights for campaign planning and optimization.</div><div>Generate reports on campaign performance and provide insights for continuous improvement.</div><div>Conduct A/B testing and provide recommendations based on data-driven insights.</div><div>Conduct market research to identify trends, competitors, and opportunities for user acquisition.</div><div>Stay updated on industry trends and best practices in user acquisition and digital marketing.</div><div><br></div><div><b>Qualifications:</b></div><div><br></div><div>Bachelor's degree in Marketing, Business, Engineer, Information Technology or a related field.</div><div>Knowledge of basic marketing principles and concepts.</div><div>Proficient in English at an intermediate or advanced level - Ability to articulate ideas clearly and concisely.</div><div>1 year of experience with management of online advertising campaigns.</div><div>Strong analytical and quantitative skills with the ability to interpret complex data sets.</div><div>Familiarity with data visualization tools and techniques.</div><div>Detail-oriented with the ability to manage multiple tasks simultaneously.</div><div>Proficient in Microsoft Office suite, especially Excel, or Google Sheets.</div><div><br></div><div><b>Preferred Skills:</b></div><div><br></div><div>Previous work with mobile game advertising.</div><div>Familiarity with digital advertising platforms such as Google Ads, Facebook Ads, Unity Ads, etc.</div><div><br></div><div><b>Personal Attributes:</b></div><div><br></div><div>Proactive and self-motivated.</div><div>Ability to adapt to a fast-paced and dynamic work environment.</div><div>Ability to work collaboratively in a team environment.</div><div>Eagerness to learn and adapt to new challenges.</div><div>Strong problem-solving skills.</div><div>Enthusiastic about the digital marketing landscape.</div><div>Proactive mindset with the ability to work independently and collaboratively within a team.</div><div>Strong communication and interpersonal skills.</div><div>Must be a São Paulo resident.</div><div><br></div><div><b>What We Offer:</b></div><div><br></div><div>In addition to a vibrant and enjoyable work atmosphere, we provide competitive compensation aligned with industry standards, flexible benefits, health and dental insurance, profit sharing, opportunities for career development, and direct engagement with professionals from major advertising companies, including Google Ads, TikTok Ads, Applovin Ads, and many others in the global market. Although the position is primarily remote, our São Paulo office serves as a hub for those seeking a dedicated workspace. Here, you can focus, unwind, and take advantage of amenities such as a stocked fridge with a variety of food and beverages. Also, for a bit of fun, why not play some friendly ping-pong? Join us in shaping the future of our amazing team!</div><div><br></div><div><br></div>",
     "shortDescription": "Jr Marketing Performance Analyst (USER ACQUISITION)\n\nJob Overview:\n\nWe are seeking a detail-oriented and analytical Junior Marketing Performance Analyst to join our marketing team. The ideal candidate will play a crucial role in optimizing our marketing strategies by analyzing data, identifying t...",
     "applyLink": "https://jobs.lever.co/fanatee/5f3cf507-f63d-4457-9aed-d0e53ea7d770",
     "postedDate": "2024-06-14T20:32:35.008Z",
-    "category": "Design",
+    "category": "Engineering & Code",
     "tags": [
       "Unity",
       "Mobile",
-      "Game Dev"
+      "Game Dev",
+      "Marketing",
+      "Data"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
-    "contractType": null,
-    "salary": null
+    "contractType": "CLT",
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Marketing",
+      "commitment": "Full-time",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   },
   {
     "id": "FAN-7d02b064815a",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Monetization Analyst",
-    "description": "We’re looking for a curious, analytical, and creative Ad Monetization Analyst to help us boost game performance through smart monetization strategies. As part of our team, you’ll optimize ad auctions, automate reporting processes, and generate insights that directly impact player experience and business outcomes.\n\nRESPONSIBILITIES:\n- Optimize ad auction;\n- Monitor and analyze monetization KPIs to ensure strategy effectiveness and stability of our games;\n- Conduct A/B testing and provide recommendations based on data-driven insights;\n- Report monetization results to product teams, providing insights to boost LTV;\n- Monitor industry trends and benchmarks to establish monetization best practices;\n- Develop automated reports using API integrations;\n- Automate processes using JavaScript and Python for improved efficiency.\n\nREQUIREMENTS\n- Bachelor's degree in Business Administration, Economics, or Engineering;\n- Experience in any research area based on data (finance, gaming,consumer products and others);\n- Proficient in English at an advanced level;\n- Experience creating analysis tools in Excel or Google Sheets;\n- Skilled in JavaScript, Python, and SQL;\n- Strong analytical skills with the ability to draw data-driven business insights;\n- Detail-oriented.\n\n",
+    "description": "## Sobre a vaga\nO Analista de Monetização irá otimizar estratégias de monetização de anúncios para melhorar o desempenho dos jogos, automatizar processos de relatórios e gerar insights para impactar a experiência do jogador e os resultados de negócios.\n\n## Responsabilidades\n* Otimizar o leilão de anúncios.\n* Monitorar e analisar KPIs de monetização para garantir a eficácia da estratégia e a estabilidade dos jogos.\n* Conduzir testes A/B e fornecer recomendações com base em insights orientados por dados.\n* Reportar resultados de monetização às equipes de produto, fornecendo insights para aumentar o LTV (Lifetime Value).\n* Desenvolver relatórios automatizados usando integrações de API.\n* Automatizar processos usando JavaScript e Python para melhorar a eficiência.\n\n## Requisitos\n* Bacharelado em Administração de Empresas, Economia ou Engenharia.\n* Experiência em qualquer área de pesquisa baseada em dados (finanças, jogos, produtos de consumo e outros).\n* Inglês avançado.\n* Experiência na criação de ferramentas de análise em Excel ou Google Sheets.\n* Habilidade em JavaScript, Python e SQL.\n* Fortes habilidades analíticas com capacidade de extrair insights de negócios orientados por dados.\n* Orientação a detalhes.",
+    "raw_description": "<div><span style=\"font-size: 16px;\">We’re looking for a curious, analytical, and creative Ad Monetization Analyst to help us boost game performance through smart monetization strategies. As part of our team, you’ll optimize ad auctions, automate reporting processes, and generate insights that directly impact player experience and business outcomes.</span></div><div><br></div><div><b style=\"font-size: 16px;\">RESPONSIBILITIES:</b></div><div><span style=\"font-size: 16px;\">- Optimize ad auction;</span></div><div><span style=\"font-size: 16px;\">- Monitor and analyze monetization KPIs to ensure strategy effectiveness and stability of our games;</span></div><div><span style=\"font-size: 16px;\">- Conduct A/B testing and provide recommendations based on data-driven insights;</span></div><div><span style=\"font-size: 16px;\">- Report monetization results to product teams, providing insights to boost LTV;</span></div><div><span style=\"font-size: 16px;\">- Monitor industry trends and benchmarks to establish monetization best practices;</span></div><div><span style=\"font-size: 16px;\">- Develop automated reports using API integrations;</span></div><div><span style=\"font-size: 16px;\">- Automate processes using JavaScript and Python for improved efficiency.</span></div><div><br></div><div><b style=\"font-size: 16px;\">REQUIREMENTS</b></div><div><span style=\"font-size: 16px;\">- Bachelor's degree in Business Administration, Economics, or Engineering;</span></div><div><span style=\"font-size: 16px;\">- Experience in any research area based on data (finance, gaming,consumer products and others);</span></div><div><span style=\"font-size: 16px;\">- Proficient in English at an advanced level;</span></div><div><span style=\"font-size: 16px;\">- Experience creating analysis tools in Excel or Google Sheets;</span></div><div><span style=\"font-size: 16px;\">- Skilled in JavaScript, Python, and SQL;</span></div><div><span style=\"font-size: 16px;\">- Strong analytical skills with the ability to draw data-driven business insights;</span></div><div><span style=\"font-size: 16px;\">- Detail-oriented.</span></div><div><br></div>",
     "shortDescription": "We’re looking for a curious, analytical, and creative Ad Monetization Analyst to help us boost game performance through smart monetization strategies. As part of our team, you’ll optimize ad auctions, automate reporting processes, and generate insights that directly impact player experience and b...",
     "applyLink": "https://jobs.lever.co/fanatee/3da0cced-9661-4cd7-87f2-7d02b064815a",
     "postedDate": "2024-10-28T19:06:41.540Z",
-    "category": "Design",
+    "category": "Engineering & Code",
     "tags": [
       "Python",
       "JavaScript",
-      "Game Dev"
+      "Data"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
     "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "FAN-2cc59180a031",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Motion Designer (Mid-Level)",
-    "description": "Na Fanatee, a área de marketing está em expansão para dar suporte à demanda crescente e produção constante dos nossos jogos. Por isso, estamos em busca de um Motion Designer dedicado e organizado, que possua conhecimentos de edição de vídeo e animação em After Effects e Adobe Premiere para dar suporte à nossa equipe. Precisa ter muita vontade de aprender sobre o mercado mobile. Você irá trabalhar junto de motion designers e da equipe de user acquisition, contribuindo com a produção de anúncios em vídeo, ajudando a distribuir nossos jogos para diversos idiomas.\n\nResponsabilidades\n- Produzir e adaptar para diversos formatos e idiomas de vídeos que serão veiculados em forma de anúncios para a divulgação dos jogos nas principais plataformas de marketing digital (Facebook Ads, Google Ads, Twitter, entre outros).\n- Contribuir junto da equipe com benchmarks e brainstorms para produção de novos conceitos de vídeo.\n- Produção e adaptação de banners e outros formatos de anúncio.\n- Criação de postagens para redes sociais.\n- Criação de peças de screenshots e videos de app preview para as app stores.\n\nRequisitos\n- Pacote Adobe, especialmente After Effects, Premiere e Photoshop.\n- Conhecimentos sobre edição de áudio e vídeo.\n- Conhecimentos sobre design, como tipografia e diagramação.\n- Atenção a detalhes e organização.\n- Alguma experiência prévia com produção/tratamento de imagens e vídeos.\n- Portfólio com trabalhos que comprovem experiência com design e/ou produção de vídeo.\n- Inglês avançado ou fluente.\n\nDiferencial\n- Conhecimento e experiência sobre o mercado de jogos mobile.\n- Interesse em fazer cenas curtas para stories e reels. \n- Criador de conteúdo para redes sociais.  Caso tenha redes ativas, manda para gente.\n\n",
-    "shortDescription": "Na Fanatee, a área de marketing está em expansão para dar suporte à demanda crescente e produção constante dos nossos jogos. Por isso, estamos em busca de um Motion Designer dedicado e organizado, que possua conhecimentos de edição de vídeo e animação em After Effects e Adobe Premiere para dar su...",
-    "applyLink": "https://jobs.lever.co/fanatee/9c7d2621-4324-4515-8ea5-2cc59180a031",
-    "postedDate": "2025-09-03T14:23:42.104Z",
-    "category": "Design",
-    "tags": [
-      "VFX",
-      "Design",
-      "Mobile"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": null,
-    "salary": null
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Monetization",
+      "commitment": null,
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   },
   {
     "id": "FAN-11586ee61093",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Quality Assurance Engineer",
-    "description": "Na Fanatee, o time de Desenvolvimento trabalha para que todos os nossos jogos sejam perfeitamente funcionais. Como um Engenheiro de Controle de Qualidade, você vai identificar e reportar qualquer erro que encontrar em nossos produtos e trabalhar em nossas iniciativas de automação de testes e processos. Nós procuramos por pessoas dedicadas e como integrante de nossa área de qualidade, seu trabalho será fundamental para que nosso gameplay seja de alto nível. Acreditamos que entusiasmo e boa comunicação entre equipes são as melhores ferramentas para atingirmos os resultados esperados, então esteja pronto para compartilhar e absorver conhecimento no seu dia a dia!\n\nSobre a vaga\nEstamos em busca de alguém motivado a entregar e manter produtos de alto nível, que serão jogados por milhões de consumidores ao redor do mundo. Sua atuação em Controle de Qualidade vai auxiliar o time de Desenvolvedores a produzir e manter jogos perfeitamente funcionais. Acreditamos que o trabalho fluí melhor quando bem planejado, portanto é importante que você esteja preparado para seguir os cronogramas definidos pela equipe e esteja sempre atento para sugerir melhorias, otimizar processos e pensar em novas rotinas para tornar nosso QA mais eficiente. Esperamos que você esteja interessado em conhecer o processo de criação de um Game do início ao fim e que performe suas funções em alta qualidade.\n",
+    "description": "## Sobre a vaga\nO Engenheiro de Controle de Qualidade (QA) garantirá a funcionalidade e a qualidade dos jogos da empresa, identificando e reportando erros, além de contribuir para a automação de testes e otimização de processos.\n\n## Responsabilidades\n*   Identificar, documentar e reportar bugs e defeitos nos jogos.\n*   Desenvolver e executar planos e casos de teste.\n*   Participar na criação e manutenção de testes automatizados.\n*   Colaborar com desenvolvedores para garantir a correção dos bugs.\n*   Analisar e monitorar os resultados dos testes.\n\n## Requisitos\n*   Experiência em testes de software, preferencialmente em jogos.\n*   Familiaridade com ferramentas de rastreamento de bugs (e.g., Jira).\n*   Conhecimento de metodologias de teste (e.g., Agile, Waterfall).\n*   Experiência com automação de testes (e.g., Selenium, Appium).\n*   Habilidade de comunicação e trabalho em equipe.",
+    "raw_description": "<div><span style=\"font-size: 10pt;\">Na Fanatee, o time de Desenvolvimento trabalha para que todos os nossos jogos sejam perfeitamente funcionais. Como um Engenheiro de Controle de Qualidade, você vai identificar e reportar qualquer erro que encontrar em nossos produtos e trabalhar em nossas iniciativas de automação de testes e processos. Nós procuramos por pessoas dedicadas e como integrante de nossa área de qualidade, seu trabalho será fundamental para que nosso gameplay seja de alto nível. Acreditamos que entusiasmo e boa comunicação entre equipes são as melhores ferramentas para atingirmos os resultados esperados, então esteja pronto para compartilhar e absorver conhecimento no seu dia a dia!</span></div><div><br></div><div><b style=\"font-size: 10pt;\">Sobre a vaga</b></div><div><span style=\"font-size: 10pt;\">Estamos em busca de alguém motivado a entregar e manter produtos de alto nível, que serão jogados por milhões de consumidores ao redor do mundo. Sua atuação em Controle de Qualidade vai auxiliar o time de Desenvolvedores a produzir e manter jogos perfeitamente funcionais. Acreditamos que o trabalho fluí melhor quando bem planejado, portanto é importante que você esteja preparado para seguir os cronogramas definidos pela equipe e esteja sempre atento para sugerir melhorias, otimizar processos e pensar em novas rotinas para tornar nosso QA mais eficiente. Esperamos que você esteja interessado em conhecer o processo de criação de um Game do início ao fim e que performe suas funções em alta qualidade.</span></div>",
     "shortDescription": "Na Fanatee, o time de Desenvolvimento trabalha para que todos os nossos jogos sejam perfeitamente funcionais. Como um Engenheiro de Controle de Qualidade, você vai identificar e reportar qualquer erro que encontrar em nossos produtos e trabalhar em nossas iniciativas de automação de testes e proc...",
     "applyLink": "https://jobs.lever.co/fanatee/dba54b32-0096-4a01-9230-11586ee61093",
     "postedDate": "2024-11-01T13:19:49.323Z",
-    "category": "Design",
+    "category": "Engineering & Code",
     "tags": [
       "Game Dev"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
     "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "FAN-921d2e9e8f3c",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Regional Editor – English - South Africa (Freelance/Part-Time)",
-    "description": "Location: Based in South Africa | Hours: Approx. 20 hours/month | Language Focus: English (South Africa)\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the South African English market. We are specifically looking for candidates based in South Africa who are actively engaged with local culture, trends, and language usage. Your expertise will ensure our in-game content feels authentic, engaging, and relevant for English-speaking players in South Africa.\n\nResponsibilities\n- Review and validate in-game content, ensuring it reflects South African English and local cultural nuances.\n- Curate culturally relevant references, sayings, and themes for localized in-game features.\n- Provide feedback and editorial insights to improve the player experience.\n- Collaborate with the content team to define and maintain editorial standards for South African English.\n\nRequirements\n- We prefer to hire someone who currently lives in South Africa and is fully immersed in local culture, trends, and idioms.\n- Native fluency and conversational English proficiency is required.\n- Strong command of South African English grammar, spelling, and usage.\n- Deep familiarity with South African customs, slang, entertainment, and pop culture.\n- Degree in Communications, Linguistics, English Language, Writing, or a related field preferred.\n- Prior experience in content editing, localization, or game content is a plus.\n- Passion for word games, language, and cultural storytelling.\n- Excellent attention to detail and communication skills.\n\n",
-    "shortDescription": "Location: Based in South Africa | Hours: Approx. 20 hours/month | Language Focus: English (South Africa)\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the South African English market. We are specifically looking for ...",
-    "applyLink": "https://jobs.lever.co/fanatee/de12bfd4-878f-4ff7-bda9-921d2e9e8f3c",
-    "postedDate": "2025-11-14T16:37:13.929Z",
-    "category": "Design",
-    "tags": [
-      "Game Dev"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": "Freelance",
-    "salary": null
-  },
-  {
-    "id": "FAN-2128d2592723",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Regional Editor – Indonesian (Freelance/Part-Time)",
-    "description": "Location: Based in Indonesia | Hours: Approx. 20 hours/month | Language Focus: Indonesian\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the Indonesian market. This is a remote, part-time freelance role. We are specifically looking for candidates based in Indonesia who are actively engaged with Indonesian culture, trends, and language use. Your expertise will ensure our in-game content feels authentic, engaging, and relevant for Indonesian players.\n\nResponsibilities\n- Review and validate in-game content, ensuring it reflects Indonesian local cultural nuances.\n- Curate culturally relevant references, sayings, and themes for localized features.\n- Provide feedback and editorial insights to improve the player experience.\n- Collaborate with the content team to define and maintain editorial standards for Indonesian.\n\nRequirements\n- We prefer to hire someone who currently lives in Indonesia and is fully immersed in local culture, trends, and idioms.\n- Native fluency and conversational English proficiency is required.\n- Strong command of Indonesian grammar, spelling, and usage.\n- Deep familiarity with Indonesian customs, slang, entertainment, and pop culture.\n- Degree in Communications, Linguistics, Indonesian Language, Writing, or a related field preferred.\n- Prior experience in content editing, localization, or game content is a plus.\n- Passion for word games, language, and cultural storytelling.\n- Excellent attention to detail and communication skills.\n",
-    "shortDescription": "Location: Based in Indonesia | Hours: Approx. 20 hours/month | Language Focus: Indonesian\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the Indonesian market. This is a remote, part-time freelance role. We are specifi...",
-    "applyLink": "https://jobs.lever.co/fanatee/2e05054d-d91a-48ea-90ef-2128d2592723",
-    "postedDate": "2025-11-14T16:43:30.781Z",
-    "category": "Design",
-    "tags": [
-      "Game Dev"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": "Freelance",
-    "salary": null
-  },
-  {
-    "id": "FAN-9663f0f076ba",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Regional Editor – Polish (Freelance/Part-Time)",
-    "description": "Location: Based in Poland/Europe | Hours: Approx. 20 hours/month | Language Focus: Polish\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the Polish market. This is a remote, part-time freelance role. We are specifically looking for candidates based in Poland/Europe who are actively engaged with Polish culture, trends, and language use. Your expertise will ensure our in-game content feels authentic, engaging, and relevant for Polish players. \n\nResponsibilities\n- Review and validate in-game content, ensuring it reflects Polish local cultural nuances.\n- Curate culturally relevant references, sayings, and themes for localized features.\n- Provide feedback and editorial insights to improve the player experience.\n- Collaborate with the content team to define and maintain editorial standards for Polish.\n\nRequirements\n- We prefer to hire someone who currently lives in Poland and is fully immersed in local culture, trends, and idioms.\n- Native fluency and conversational English proficiency is required.\n- Strong command of Polish grammar, spelling, and usage.\n- Deep familiarity with Indian customs, slang, entertainment, and pop culture.\n- Degree in Communications, Linguistics, Polish Language, Writing, or a related field preferred.\n- Prior experience in content editing, localization, or game content is a plus.\n- Passion for word games, language, and cultural storytelling.\n- Excellent attention to detail and communication skills.\n",
-    "shortDescription": "Location: Based in Poland/Europe | Hours: Approx. 20 hours/month | Language Focus: Polish\n\nAbout the Role\nFanatee is seeking a detail-oriented and culturally fluent Regional Editor to refine and validate content for the Polish market. This is a remote, part-time freelance role. We are specificall...",
-    "applyLink": "https://jobs.lever.co/fanatee/30d980ca-f087-4ff8-aed4-9663f0f076ba",
-    "postedDate": "2025-11-14T16:28:51.948Z",
-    "category": "Design",
-    "tags": [
-      "Game Dev"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": "Freelance",
-    "salary": null
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Quality Assurance",
+      "commitment": null,
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   },
   {
     "id": "FAN-00f150ee52cd",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Senior Marketing Performance Analyst",
-    "description": "We’re looking for a strategic and experienced Senior Marketing Performance Analyst to lead our marketing team. This role is key to optimizing our marketing strategies through deep data analysis, trend identification, and actionable insights—driving campaign performance across our game portfolio.\n\nResponsibilities\n- Lead the design and execution of user acquisition campaigns across diverse digital channels, ensuring alignment with overarching business objectives.\n- Spearhead the monitoring and analysis of key performance indicators (KPIs) to evaluate the effectiveness of user acquisition campaigns, providing strategic recommendations for optimization.\n- Drive collaboration with cross-functional teams to leverage data insights for informed campaign planning and continuous enhancement.\n- Produce in-depth reports on campaign performance, offering strategic insights and recommendations for iterative improvements.\n- Conduct A/B testing initiatives, leveraging data-driven insights to refine and optimize marketing strategies.\n- Conduct comprehensive market research to identify emerging trends, competitive landscapes, and untapped opportunities for user acquisition.\n- Stay abreast of industry trends and best practices in user acquisition and digital marketing, driving innovation and continuous improvement within the team.\n\nRequirements\n- Bachelor's degree in Marketing, Business, Engineering, Information Technology, or a related field.\nRobust understanding of advanced marketing principles and concepts, with demonstrated experience in strategic campaign management.\n- Exceptional proficiency in English, with the ability to articulate complex ideas clearly and succinctly.\n- Experience in managing online advertising campaigns, with a proven track record of driving measurable results.\n- Strong analytical prowess and quantitative skills, coupled with the ability to derive actionable insights from complex data sets.\n- Proficiency in utilizing advanced data visualization tools and techniques to communicate insights effectively.\n- Meticulous attention to detail, coupled with the ability to manage multiple projects concurrently within a dynamic environment.\n- Advanced proficiency in Microsoft Office suite, particularly Excel, or Google Sheets.\n",
+    "description": "## Sobre a vaga\nO(A) Analista Sênior de Marketing Performance liderará a otimização das estratégias de marketing através de análise de dados, identificação de tendências e insights acionáveis, impulsionando o desempenho de campanhas em nosso portfólio de jogos.\n\n## Responsabilidades\n* Liderar o design e a execução de campanhas de aquisição de usuários em diversos canais digitais.\n* Monitorar e analisar KPIs para avaliar a eficácia das campanhas, fornecendo recomendações estratégicas.\n* Colaborar com equipes multifuncionais para usar insights de dados no planejamento de campanhas.\n* Produzir relatórios sobre o desempenho da campanha, oferecendo insights e recomendações.\n* Conduzir testes A/B para refinar e otimizar estratégias de marketing.\n* Realizar pesquisas de mercado para identificar tendências e oportunidades de aquisição de usuários.\n\n## Requisitos\n* Bacharelado em Marketing, Business, Engenharia, Tecnologia da Informação ou área relacionada.\n* Experiência em gerenciamento de campanhas de publicidade online com resultados mensuráveis.\n* Forte capacidade analítica e quantitativa para extrair insights acionáveis de dados complexos.\n* Proficiência em ferramentas de visualização de dados.\n* Proficiência em Microsoft Office (Excel) ou Google Sheets.\n* Inglês avançado.",
+    "raw_description": "<div><span style=\"font-size: 16px;\">We’re looking for a strategic and experienced Senior Marketing Performance Analyst to lead our marketing team. This role is key to optimizing our marketing strategies through deep data analysis, trend identification, and actionable insights—driving campaign performance across our game portfolio.</span></div><div><br></div><div><b style=\"font-size: 16px;\">Responsibilities</b></div><div><span style=\"font-size: 16px;\">- Lead the design and execution of user acquisition campaigns across diverse digital channels, ensuring alignment with overarching business objectives.</span></div><div><span style=\"font-size: 16px;\">- Spearhead the monitoring and analysis of key performance indicators (KPIs) to evaluate the effectiveness of user acquisition campaigns, providing strategic recommendations for optimization.</span></div><div><span style=\"font-size: 16px;\">- Drive collaboration with cross-functional teams to leverage data insights for informed campaign planning and continuous enhancement.</span></div><div><span style=\"font-size: 16px;\">- Produce in-depth reports on campaign performance, offering strategic insights and recommendations for iterative improvements.</span></div><div><span style=\"font-size: 16px;\">- Conduct A/B testing initiatives, leveraging data-driven insights to refine and optimize marketing strategies.</span></div><div><span style=\"font-size: 16px;\">- Conduct comprehensive market research to identify emerging trends, competitive landscapes, and untapped opportunities for user acquisition.</span></div><div><span style=\"font-size: 16px;\">- Stay abreast of industry trends and best practices in user acquisition and digital marketing, driving innovation and continuous improvement within the team.</span></div><div><br></div><div><b style=\"font-size: 16px;\">Requirements</b></div><div><span style=\"font-size: 16px;\">- Bachelor's degree in Marketing, Business, Engineering, Information Technology, or a related field.</span></div><div><span style=\"font-size: 16px;\">Robust understanding of advanced marketing principles and concepts, with demonstrated experience in strategic campaign management.</span></div><div><span style=\"font-size: 16px;\">- Exceptional proficiency in English, with the ability to articulate complex ideas clearly and succinctly.</span></div><div><span style=\"font-size: 16px;\">- Experience in managing online advertising campaigns, with a proven track record of driving measurable results.</span></div><div><span style=\"font-size: 16px;\">- Strong analytical prowess and quantitative skills, coupled with the ability to derive actionable insights from complex data sets.</span></div><div><span style=\"font-size: 16px;\">- Proficiency in utilizing advanced data visualization tools and techniques to communicate insights effectively.</span></div><div><span style=\"font-size: 16px;\">- Meticulous attention to detail, coupled with the ability to manage multiple projects concurrently within a dynamic environment.</span></div><div><span style=\"font-size: 16px;\">- Advanced proficiency in Microsoft Office suite, particularly Excel, or Google Sheets.</span></div>",
     "shortDescription": "We’re looking for a strategic and experienced Senior Marketing Performance Analyst to lead our marketing team. This role is key to optimizing our marketing strategies through deep data analysis, trend identification, and actionable insights—driving campaign performance across our game portfolio.\n...",
     "applyLink": "https://jobs.lever.co/fanatee/6b377205-1198-4e9d-9a02-00f150ee52cd",
     "postedDate": "2024-05-06T19:56:59.850Z",
-    "category": "Design",
+    "category": "Engineering & Code",
     "tags": [
       "Design",
       "Game Dev",
-      "Senior"
+      "Senior",
+      "Marketing",
+      "Data"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
-    "contractType": null,
-    "salary": null
+    "contractType": "CLT",
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Marketing",
+      "commitment": "Full-time",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   },
   {
     "id": "FAN-e4d82c1b7398",
     "companyName": "Fanatee",
-    "companyLogo": null,
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
     "jobTitle": "Senior Technical Artist",
-    "description": "Buscamos um(a) Tech Artist Sênior que domine tanto o código quanto a estética visual para construir experiências multiplayer 3D inovadoras. Essa pessoa será a ponte entre arte e desenvolvimento, colaborando com designers e programadores para transformar ideias em experiências visuais fluidas e impactantes. Procuramos alguém com experiência sólida em Unity, shaders, animações e bots para jogos multiplayer.  Se você é apaixonado(a) por unir arte e tecnologia, essa vaga é para você!\n\n\n Responsabilidades\n- Integrar elementos artísticos diversos ao ambiente de jogo.\n- Criar e otimizar animações em tempo real para diferentes dispositivos.\n- Integrar interfaces visuais com foco em estética e funcionalidade.\n- Desenvolver shaders, scripts e ferramentas para apoiar a equipe.\n- Garantir performance visual em dispositivos de médio e baixo desempenho.\n- Criar bots para minigames em nosso jogo multiplayer 3D.\n- Pesquisar e compartilhar novas técnicas e tecnologias com o time.\n\n Requisitos\n- Ter lançado pelo menos um jogo ou projeto interativo.\n- Domínio de Unity e linguagem C#.\n- Experiência com efeitos visuais e criação de shaders.\n- Conhecimento em criação de bots e otimização de performance.\n- Vivência com jogos mobile.\n- Familiaridade com ferramentas de edição de imagem (ex.: Photoshop).\n- Compreensão de arte, design, animação e tendências da indústria de games.\n\n",
+    "description": "## Sobre a vaga\nEstamos buscando um(a) Technical Artist Sênior para integrar arte e desenvolvimento, focando na criação de experiências multiplayer 3D inovadoras. O profissional irá colaborar com designers e programadores, transformando ideias em visuais impactantes e performáticos.\n\n## Responsabilidades\n* Integrar elementos artísticos em jogos.\n* Criar e otimizar animações em tempo real.\n* Integrar interfaces visuais, focando em estética e funcionalidade.\n* Desenvolver shaders, scripts e ferramentas de apoio.\n* Garantir performance visual em dispositivos diversos.\n* Criar bots para minigames multiplayer 3D.\n* Pesquisar e compartilhar novas técnicas com a equipe.\n\n## Requisitos\n* Ter lançado pelo menos um jogo ou projeto interativo.\n* Domínio de Unity e C#.\n* Experiência com efeitos visuais e criação de shaders.\n* Conhecimento em criação de bots e otimização de performance.\n* Experiência com jogos mobile.\n* Familiaridade com ferramentas de edição de imagem (Photoshop).\n* Compreensão de arte, design, animação e tendências da indústria.",
+    "raw_description": "<div><span style=\"font-size: 11pt;\">Buscamos um(a) Tech Artist Sênior que domine tanto o código quanto a estética visual para construir </span><span style=\"font-size: 14.6667px;\">experiências multiplayer 3D inovadoras</span><span style=\"font-size: 11pt;\">. Essa pessoa será a ponte entre arte e desenvolvimento, colaborando com designers e programadores para transformar ideias em experiências visuais fluidas e impactantes. Procuramos alguém com experiência sólida em Unity, shaders, animações e bots para jogos multiplayer.&nbsp; Se você é apaixonado(a) por unir arte e tecnologia, essa vaga é para você!</span></div><div><br></div><div><br></div><div><b style=\"font-size: 11pt;\">&nbsp;Responsabilidades</b></div><div><span style=\"font-size: 11pt;\">- Integrar elementos artísticos diversos ao ambiente de jogo.</span></div><div>- <span style=\"font-size: 11pt;\">Criar e otimizar animações em tempo real para diferentes dispositivos.</span></div><div>- <span style=\"font-size: 11pt;\">Integrar interfaces visuais com foco em estética e funcionalidade.</span></div><div>- <span style=\"font-size: 11pt;\">Desenvolver shaders, scripts e ferramentas para apoiar a equipe.</span></div><div>- <span style=\"font-size: 11pt;\">Garantir performance visual em dispositivos de médio e baixo desempenho.</span></div><div>- <span style=\"font-size: 11pt;\">Criar bots para minigames em nosso jogo multiplayer 3D.</span></div><div>- <span style=\"font-size: 11pt;\">Pesquisar e compartilhar novas técnicas e tecnologias com o time.</span></div><div><br></div><div><b style=\"font-size: 11pt;\">&nbsp;Requisitos</b></div><div><span style=\"font-size: 11pt;\">- Ter lançado pelo menos um jogo ou projeto interativo.</span></div><div>- <span style=\"font-size: 11pt;\">Domínio de Unity e linguagem C#.</span></div><div><span style=\"font-size: 11pt;\">- Experiência com efeitos visuais e criação de shaders.</span></div><div><span style=\"font-size: 14.6667px;\">- </span><span style=\"font-size: 11pt;\">Conhecimento em criação de bots e otimização de performance.</span></div><div><span style=\"font-size: 14.6667px;\">- </span><span style=\"font-size: 11pt;\">Vivência com jogos mobile.</span></div><div><span style=\"font-size: 14.6667px;\">- </span><span style=\"font-size: 11pt;\">Familiaridade com ferramentas de edição de imagem (ex.: Photoshop).</span></div><div><span style=\"font-size: 11pt;\">- Compreensão de arte, design, animação e tendências da indústria de games.</span></div><div><br></div>",
     "shortDescription": "Buscamos um(a) Tech Artist Sênior que domine tanto o código quanto a estética visual para construir experiências multiplayer 3D inovadoras. Essa pessoa será a ponte entre arte e desenvolvimento, colaborando com designers e programadores para transformar ideias em experiências visuais fluidas e im...",
     "applyLink": "https://jobs.lever.co/fanatee/51e64819-2fa2-4fc9-af96-e4d82c1b7398",
     "postedDate": "2025-10-27T15:57:28.182Z",
-    "category": "Design",
+    "category": "Art & Animation",
     "tags": [
+      "Senior",
       "Unity",
+      "C#",
       "3D",
-      "Design",
-      "Artist",
-      "Mobile",
-      "Senior"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "FAN-d94f94c37841",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Unity Software Engineer",
-    "description": "Na Fanatee, criamos jogos que divertem milhões de pessoas ao redor do mundo. Nosso time de desenvolvimento é o coração técnico por trás dessa missão — responsável por planejar, escrever e manter o código que dá vida às nossas experiências. Se você é apaixonado por tecnologia, inovação e jogos, essa vaga é pra você!\nComo parte da equipe, você vai colaborar com programadores experientes e interagir diretamente com os times de Produto, Design e BI, contribuindo para decisões estratégicas e técnicas que impactam nossos jogos globalmente.\n\nResponsabilidades\n- Participar do planejamento e desenvolvimento de jogos utilizando Unit.\n- Enfrentar desafios técnicos e propor soluções criativas para problemas complexos. \n- Colaborar com os times de backend e desenvolvimento para garantir entregas de alta qualidade.\n- Acompanhar o cronograma de desenvolvimento e reportar progresso de forma clara.\n- Atuar com autonomia, desenvolvendo códigos robustos e escaláveis.\n",
-    "shortDescription": "Na Fanatee, criamos jogos que divertem milhões de pessoas ao redor do mundo. Nosso time de desenvolvimento é o coração técnico por trás dessa missão — responsável por planejar, escrever e manter o código que dá vida às nossas experiências. Se você é apaixonado por tecnologia, inovação e jogos, es...",
-    "applyLink": "https://jobs.lever.co/fanatee/3cdcc244-14ba-4c43-8637-d94f94c37841",
-    "postedDate": "2021-02-18T13:27:09.319Z",
-    "category": "Design",
-    "tags": [
-      "Unity",
-      "Design"
-    ],
-    "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
-    },
-    "contractType": null,
-    "salary": null
-  },
-  {
-    "id": "FAN-040789f23fe5",
-    "companyName": "Fanatee",
-    "companyLogo": null,
-    "jobTitle": "Video Content Creator (UGC & Motion) – Games",
-    "description": "We’re hiring a creator who shoots, appears on camera, and edits vertical short-form (TikTok/IG Reels/Shorts) for performance ads — with a solid motion foundation to boost short storytelling. You’ll turn simple ideas into UGC ads that entertain and convert.\nCheck out the job description below. If it feels like a match, send us your UGC video links (TikTok, IG Reels, YouTube Shorts) and your @handle.\n\nResponsabilities\n- Script, shoot on smartphone, and appear on camera in trend/meme-inspired sketches optimized for UA.\n- Edit mobile-first videos (dynamic captions, strong early hooks, tight cuts, clear CTAs).\n- Build motion graphics, animated titles, and light VFX to strengthen the narrative.\n- Adapt creatives across formats while keeping brand consistency.\n- Monitor creative test metrics (CTR, CPI, ROAS) and propose frequent iterations.\n- Partner with UA and Product from concept to performance learnings.\n- Use automations in After Effects (scripts/GenAI) to scale production.\n- Own capture basics (lighting, lavalier audio, framing) in simple locations (street, office, home).\n\nRequirements\n- Experience in motion design or short-form video editing.\n- Proficiency in After Effects, Premiere, Photoshop/Illustrator; mobile capture/lighting fundamentals.\n- On-camera comfort (performance, improv, comedic timing) and trend fluency.\n- Advanced english to collaborate with global teams.\n- Strong organization to juggle multiple deadlines.\n\n\nNice to have\n- Prior experience with UA creatives or game ads.\n- Active creator on social platforms (share your profile).\n- Familiarity with Unity or 3D tools.\n- Automation skills (JavaScript, Python, AE Expressions) or custom plugins.\n- Background in mobile games or clear passion for the industry.\n- Voice-over/dubbing and on-camera delivery in PT/EN.\n\n",
-    "shortDescription": "We’re hiring a creator who shoots, appears on camera, and edits vertical short-form (TikTok/IG Reels/Shorts) for performance ads — with a solid motion foundation to boost short storytelling. You’ll turn simple ideas into UGC ads that entertain and convert.\nCheck out the job description below. If ...",
-    "applyLink": "https://jobs.lever.co/fanatee/b65571f5-991f-4466-88ba-040789f23fe5",
-    "postedDate": "2025-10-28T14:43:28.330Z",
-    "category": "VFX",
-    "tags": [
-      "Unity",
-      "Python",
-      "JavaScript",
-      "3D",
+      "Animation",
       "VFX",
       "Design",
       "Mobile",
       "Game Dev"
     ],
     "location": {
-      "scope": "remote-worldwide",
-      "text": "Remote"
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
     },
-    "contractType": null,
-    "salary": null
+    "contractType": "CLT",
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Engineering",
+      "commitment": "Full-time",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
+  },
+  {
+    "id": "FAN-d94f94c37841",
+    "companyName": "Fanatee",
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
+    "jobTitle": "Unity Software Engineer",
+    "description": "## Sobre a vaga\nBuscamos um(a) Unity Software Engineer para participar ativamente do planejamento e desenvolvimento de jogos, propondo soluções criativas para desafios técnicos e garantindo a entrega de código de alta qualidade.\n\n## Responsabilidades\n* Participar do planejamento e desenvolvimento de jogos utilizando Unity.\n* Propor soluções criativas para problemas técnicos complexos.\n* Colaborar com as equipes de backend e desenvolvimento para garantir entregas de alta qualidade.\n* Acompanhar o cronograma de desenvolvimento e reportar o progresso.\n* Desenvolver código robusto e escalável com autonomia.\n\n## Requisitos\n* Experiência com desenvolvimento em Unity.\n* Habilidade para resolver problemas técnicos complexos.\n* Capacidade de trabalhar em equipe e colaborar com diferentes áreas.\n* Conhecimento em desenvolvimento de código robusto e escalável.\n* Familiaridade com metodologias de acompanhamento de cronograma e reporte de progresso.",
+    "raw_description": "<div><span style=\"font-size: 16px;\">Na Fanatee, criamos jogos que divertem milhões de pessoas ao redor do mundo. Nosso time de desenvolvimento é o coração técnico por trás dessa missão — responsável por planejar, escrever e manter o código que dá vida às nossas experiências. Se você é apaixonado por tecnologia, inovação e jogos, essa vaga é pra você!</span></div><div><span style=\"font-size: 16px;\">Como parte da equipe, você vai colaborar com programadores experientes e interagir diretamente com os times de Produto, Design e BI, contribuindo para decisões estratégicas e técnicas que impactam nossos jogos globalmente.</span></div><div><br></div><div><b style=\"font-size: 16px;\">Responsabilidades</b></div><div><span style=\"font-size: 16px;\">- Participar do planejamento e desenvolvimento de jogos utilizando Unit.</span></div><div><span style=\"font-size: 16px;\">- Enfrentar desafios técnicos e propor soluções criativas para problemas complexos. </span></div><div><span style=\"font-size: 16px;\">- Colaborar com os times de backend e desenvolvimento para garantir entregas de alta qualidade.</span></div><div><span style=\"font-size: 16px;\">- Acompanhar o cronograma de desenvolvimento e reportar progresso de forma clara.</span></div><div><span style=\"font-size: 16px;\">- Atuar com autonomia, desenvolvendo códigos robustos e escaláveis.</span></div>",
+    "shortDescription": "Na Fanatee, criamos jogos que divertem milhões de pessoas ao redor do mundo. Nosso time de desenvolvimento é o coração técnico por trás dessa missão — responsável por planejar, escrever e manter o código que dá vida às nossas experiências. Se você é apaixonado por tecnologia, inovação e jogos, es...",
+    "applyLink": "https://jobs.lever.co/fanatee/3cdcc244-14ba-4c43-8637-d94f94c37841",
+    "postedDate": "2021-02-18T13:27:09.319Z",
+    "category": "Engineering & Code",
+    "tags": [
+      "Unity",
+      "Game Dev"
+    ],
+    "location": {
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
+    },
+    "contractType": "CLT",
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Engineering",
+      "commitment": "Full-time",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
+  },
+  {
+    "id": "FAN-040789f23fe5",
+    "companyName": "Fanatee",
+    "companyLogo": "https://img.logo.dev/fanatee.com?token=pk_DlFZ1S5XSdabNen0TUcuUA&size=128",
+    "jobTitle": "Video Content Creator (UGC & Motion) – Games",
+    "description": "## Sobre a vaga\nBuscamos um criador de conteúdo de vídeo para gravar, atuar e editar vídeos curtos verticais (TikTok/IG Reels/Shorts) para anúncios de performance, com forte base em motion design para aprimorar a narrativa.\n\n## Responsabilidades\n* Criar roteiros, gravar com smartphone e atuar em sketches inspirados em tendências/memes, otimizados para User Acquisition (UA).\n* Editar vídeos mobile-first (legendas dinâmicas, hooks iniciais fortes, cortes precisos, CTAs claros).\n* Construir motion graphics, títulos animados e VFX leves para fortalecer a narrativa.\n* Adaptar criativos entre formatos, mantendo a consistência da marca.\n* Monitorar métricas de testes criativos (CTR, CPI, ROAS) e propor iterações frequentes.\n* Utilizar automações no After Effects (scripts/GenAI) para escalar a produção.\n\n## Requisitos\n* Experiência em motion design ou edição de vídeos curtos.\n* Proficiência em After Effects, Premiere, Photoshop/Illustrator; fundamentos de captura/iluminação mobile.\n* Conforto em frente às câmeras (performance, improvisação, timing cômico) e familiaridade com tendências.\n* Inglês avançado para colaborar com equipes globais.\n* Forte organização para lidar com múltiplos prazos.",
+    "raw_description": "<div>We’re hiring a creator who shoots, appears on camera, and edits vertical short-form (TikTok/IG Reels/Shorts) for performance ads — with a solid motion foundation to boost short storytelling. You’ll turn simple ideas into UGC ads that entertain and convert.</div><div>Check out the job description below. If it feels like a match,&nbsp;send us your UGC video links (TikTok, IG Reels, YouTube Shorts) and your @handle.</div><div><br></div><div><b>Responsabilities</b></div><div>- Script, shoot on smartphone, and appear on camera in trend/meme-inspired sketches optimized for UA.</div><div>- Edit mobile-first videos (dynamic captions, strong early hooks, tight cuts, clear CTAs).</div><div>- Build motion graphics, animated titles, and light VFX to strengthen the narrative.</div><div>- Adapt creatives across formats while keeping brand consistency.</div><div>- Monitor creative test metrics (CTR, CPI, ROAS) and propose frequent iterations.</div><div>- Partner with UA and Product from concept to performance learnings.</div><div>- Use automations in After Effects (scripts/GenAI) to scale production.</div><div>- Own capture basics (lighting, lavalier audio, framing) in simple locations (street, office, home).</div><div><br></div><div><b>Requirements</b></div><div>- Experience in motion design or short-form video editing.</div><div>- Proficiency in After Effects, Premiere, Photoshop/Illustrator; mobile capture/lighting fundamentals.</div><div>- On-camera comfort (performance, improv, comedic timing) and trend fluency.</div><div>- Advanced english to collaborate with global teams.</div><div>- Strong organization to juggle multiple deadlines.</div><div><br></div><div><br></div><div><b style=\"font-size: 16px;\">Nice to have</b></div><div>- Prior experience with UA creatives or game ads.</div><div>- Active creator on social platforms (share your profile).</div><div>- Familiarity with Unity or 3D tools.</div><div>- Automation skills (JavaScript, Python, AE Expressions) or custom plugins.</div><div>- Background in mobile games or clear passion for the industry.</div><div>- Voice-over/dubbing and on-camera delivery in PT/EN.</div><div><br></div>",
+    "shortDescription": "We’re hiring a creator who shoots, appears on camera, and edits vertical short-form (TikTok/IG Reels/Shorts) for performance ads — with a solid motion foundation to boost short storytelling. You’ll turn simple ideas into UGC ads that entertain and convert.\nCheck out the job description below. If ...",
+    "applyLink": "https://jobs.lever.co/fanatee/b65571f5-991f-4466-88ba-040789f23fe5",
+    "postedDate": "2025-10-28T14:43:28.330Z",
+    "category": "Art & Animation",
+    "tags": [
+      "Python",
+      "JavaScript",
+      "Animation",
+      "VFX",
+      "3D",
+      "Marketing",
+      "Motion",
+      "Video"
+    ],
+    "location": {
+      "scope": "hybrid",
+      "text": "Híbrido • Brasil"
+    },
+    "contractType": "CLT",
+    "salary": null,
+    "sync_id": "60c7d89a-c2e8-4379-b706-36a53686c5e1",
+    "last_synced_at": "2025-11-26T10:50:41.112Z",
+    "meta": {
+      "team": "Marketing",
+      "commitment": "Full-time",
+      "workplaceType": "hybrid",
+      "country": "BR"
+    }
   }
 ]
