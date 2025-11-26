@@ -43,9 +43,10 @@ npm run fetch:all         # All sources (sequential)
 - Write to temporary JSON files
 
 **When to run:**
-- Every 6-12 hours via cron
-- Manually when adding new companies
+- **Daily (Manual)**: Once per day during your "coffee ritual" (08:00-09:00)
+- After adding new companies to fetchers
 - After updating categorization logic
+- **Future**: Automated via cron (6-12 hours)
 
 ---
 
@@ -230,40 +231,56 @@ export const GET: APIRoute = async ({ request }) => {
 
 ## 📋 Complete Workflow
 
-### **Development (Local)**
+### **Daily Manual Workflow (Current - Recommended for MVP)**
 
 ```bash
-# 1. Fetch jobs from APIs
+# ☕ Morning Ritual (08:00-09:00)
+
+# 1. Fetch jobs from APIs (5 min)
 npm run fetch:all
 
-# 2. Sync to Supabase
+# 2. Sync to Supabase with AI enhancement (5 min)
 npm run sync:all
 
-# 3. Start dev server (reads from Supabase)
-npm run dev
+# 3. Curate in Supabase Dashboard (15 min)
+# → https://supabase.com → jobs table
+# → Review: Keep good jobs, delete spam/irrelevant
+
+# 4. Rebuild site (automatic if VERCEL_DEPLOY_HOOK is set)
+# → Or: git push origin main
+
+# 5. Share best job on LinkedIn (5 min)
+# → Pick "Job of the Day" and promote
 ```
+
+**See**: [DAILY_WORKFLOW.md](./DAILY_WORKFLOW.md) for detailed checklist
 
 ---
 
-### **Production (Automated)**
+### **Future: Automated (When Ready to Scale)**
 
 ```
-Every 6 hours:
-├─> GitHub Action runs
+Every 24 hours (or 6h):
+├─> GitHub Action runs (08:00 daily)
 ├─> npm run sync:all
 │   ├─> fetch:greenhouse → sync:greenhouse ✅
 │   ├─> fetch:ashby → sync:ashby ✅
 │   └─> fetch:lever → sync:lever ✅
-├─> Jobs updated in Supabase
+├─> Jobs → Supabase (status: 'draft')
+├─> 📧 Email notification: "X new jobs pending review"
+├─> You review in /admin (10 min)
+├─> Approve → status: 'ativa'
 ├─> 🆕 Auto-trigger Vercel rebuild (VERCEL_DEPLOY_HOOK)
 │   └─> Astro queries Supabase
 │       └─> Generates fresh static pages
 │           └─> Deploys to Vercel
-└─> ✅ Site updated with latest jobs!
+└─> ✅ Site updated with curated jobs!
 ```
 
-**🚨 CRITICAL**: Without the Vercel rebuild webhook, your site will show stale data!
-Set `VERCEL_DEPLOY_HOOK` in your environment to enable auto-rebuilds.
+**Transition Timeline:**
+- **Weeks 1-4**: Manual daily (learn the market)
+- **Months 2-3**: Semi-automated (cron + manual approval)
+- **Month 4+**: Fully automated with smart rules
 
 ---
 
@@ -412,13 +429,27 @@ export const prerender = false;  // Force SSR for this page
 
 ## 📝 TODO
 
+### **MVP Phase (Manual - Current)**
 - [x] Create `sync-ashby-to-supabase.mjs` ✅
 - [x] Create `sync-lever-to-supabase.mjs` ✅
 - [x] Add Vercel deploy webhook to sync:all ✅
-- [ ] **CRITICAL**: Set `VERCEL_DEPLOY_HOOK` env var (get from Vercel dashboard)
-- [ ] Implement GitHub Actions cron workflow
+- [x] Document daily manual workflow ✅
+- [ ] **Optional**: Set `VERCEL_DEPLOY_HOOK` env var (or use git push)
+- [ ] Test daily workflow for 1 week
+- [ ] Create "Job of the Day" LinkedIn template
+
+### **Growth Phase (Semi-Automated - Month 2+)**
+- [ ] Change sync scripts to `status: 'draft'` by default
+- [ ] Enhance `/admin` dashboard to show today's jobs
+- [ ] Implement bulk approve/reject in admin
+- [ ] Set up GitHub Actions cron (daily at 08:00)
+- [ ] Add email notification for pending jobs
+
+### **Scale Phase (Automated - Month 4+)**
+- [ ] Implement auto-approval rules (whitelist companies)
 - [ ] Monitor: Set up alerts for failed syncs
 - [ ] Optimize: Add `last_synced_at` field to track unchanged jobs
+- [ ] A/B test: SSG vs Hybrid rendering
 - [ ] Decide: Keep or remove `src/data/jobs.json`
 
 ---
