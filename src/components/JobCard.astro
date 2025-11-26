@@ -19,15 +19,15 @@ const timeAgo = (dateStr: string) => {
 
 const salary = formatSalaryRange(job.salary);
 const isNew = (new Date().getTime() - new Date(job.postedDate).getTime()) < (3 * 86400000);
-// 4-Pillar Category Colors (Canvas Design System)
+// 4-Pillar Category Colors (Canvas Design System) - Using inline styles for Tailwind JIT
 const categoryAccents: Record<string, string> = {
-    'Engineering & Code': 'bg-accent-purple',  // Purple - Tech/Engineering
-    'Art & Animation': 'bg-accent-pink',       // Pink/Orange - Art/Creative
-    'Design & Product': 'bg-accent-teal',      // Teal - Design
-    'Production': 'bg-accent-lime',            // Lime - Production/Management
+    'Engineering & Code': '#b388ff',  // Purple - Tech/Engineering
+    'Art & Animation': '#ff99cc',       // Pink/Orange - Art/Creative
+    'Design & Product': '#00e5ff',      // Teal - Design
+    'Production': '#F7DD00',            // Lime - Production/Management
 };
 
-const accentColor = categoryAccents[job.category] ?? 'bg-accent-lime';
+const accentColor = categoryAccents[job.category] ?? '#F7DD00';
 const companyLogo = job.companyLogo || '/images/company-placeholder.svg';
 const jobHref = `/jobs/${job.id}-${slugify(job.jobTitle)}`;
 const logoAlt = `${job.companyName} logo`;
@@ -44,7 +44,7 @@ const logoAlt = `${job.companyName} logo`;
     data-company={job.companyName.toLowerCase()}
     data-testid="job-card"
 >
-    <div class:list={["w-full md:w-4 border-b-2 md:border-b-0 md:border-r-2 border-ink h-4 md:h-auto flex-shrink-0", accentColor]}></div>
+    <div class="w-full md:w-4 border-b-2 md:border-b-0 md:border-r-2 border-ink h-4 md:h-auto flex-shrink-0" style={`background-color: ${accentColor}`}></div>
     <a href={jobHref} class="flex-1 flex flex-col md:flex-row cursor-pointer focus-visible:outline-none" aria-label={`${job.jobTitle} na ${job.companyName}`}>
         <div class="flex-1 p-6 flex flex-col justify-between">
             <div>
@@ -76,7 +76,7 @@ const logoAlt = `${job.companyName} logo`;
             </div>
             <div class="mt-6 flex flex-wrap gap-2 relative z-10">
                 {/* Category badge as first tag with color */}
-                <span class:list={["border-2 border-ink px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000]", accentColor, "text-ink"]}>
+                <span class="border-2 border-ink px-2 py-1 text-xs font-bold uppercase shadow-[2px_2px_0px_0px_#000] text-ink" style={`background-color: ${accentColor}`}>
                     {job.category}
                 </span>
                 {/* Regular tags without hover effect */}
