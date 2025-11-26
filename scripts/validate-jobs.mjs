@@ -9,14 +9,12 @@ const __dirname = dirname(__filename);
 const root = resolve(__dirname, '..');
 const jobsPath = resolve(root, 'src', 'data', 'jobs.json');
 
-// Valid categories matching src/lib/categories.ts
+// Valid categories matching src/lib/categories.ts (4-pillar architecture)
 const Categories = z.enum([
-  'Game Dev',
-  '3D',
-  '2D Art',
-  'Animation',
-  'Design',
-  'VFX',
+  'Engineering & Code',
+  'Art & Animation',
+  'Design & Product',
+  'Production',
 ]);
 
 const LocationScope = z.enum([
